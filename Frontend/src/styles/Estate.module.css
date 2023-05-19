@@ -1,0 +1,1042 @@
+/***  LayOut  ***/
+.column1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.Logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.Logo2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: -75px;
+  margin-left: 15px;
+}
+/* .Container {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+} */
+.column2 {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.Buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: 30px;
+}
+.CountryFilterAndAdder {
+  display: flex;
+  align-content: center;
+  background-color: #fff;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
+}
+.EditAndDelete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+@media (min-width: 946px) {
+  .form1 {
+    width: 90%;
+  }
+  .form2 {
+    margin-top: 20px;
+    margin-left: 0%;
+    height: 50px;
+  }
+  .slideLeft {
+    background-color: transparent;
+    border: none;
+    padding: 0 0;
+    max-width: 4%;
+    min-width: 40px;
+    max-height: 4%;
+    min-height: 40px;
+    border-radius: 100%;
+    position: relative;
+    top: -75px;
+    /* right: -6%;*/
+    margin-left: 2%;
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 945px) {
+  .form1 {
+    width: 75%;
+  }
+  .form2 {
+    margin-top: 20px;
+    margin-left: 12%;
+    height: 50px;
+  }
+  .slideLeft {
+    background-color: transparent;
+    border: none;
+    padding: 0 0;
+    max-width: 4%;
+    min-width: 40px;
+    max-height: 4%;
+    min-height: 40px;
+    border-radius: 100%;
+    position: relative;
+    top: -75px;
+    margin-left: -2%;
+    font-size: 1.8rem;
+  }
+}
+@media (max-width: 710px) {
+  .Header {
+    height: 104.8px;
+  }
+  .LogoName {
+    display: none;
+  }
+  .column1 {
+    margin-top: 15px;
+  }
+}
+@media (max-width: 540px) {
+  .LogoImg {
+    display: none;
+  }
+  .column1 {
+    margin-top: 21px;
+  }
+}
+@media (max-width: 470px) {
+  .column2 {
+    margin-right: 2%;
+    gap: 10px;
+  }
+  .Buttons {
+    order: 2;
+    gap: 10px;
+  }
+  .Names {
+    order: 1;
+    margin-right: 20px;
+    margin-top: 26px;
+  }
+  .h3AdminName {
+    font-size: 0.8rem;
+  }
+  .h6AdminInformations {
+    font-size: 0.6rem;
+  }
+
+  .slideLeft {
+    display: none;
+  }
+  .slideRight {
+    display: none;
+  }
+
+  /***   Add button   ***/
+  .iconBtn {
+    margin-left: -30px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+  }
+  .iconBtn:hover {
+    background-color: #cdcdcd;
+  }
+  .addIcon {
+    color: green;
+    font-size: 2.3rem;
+  }
+  /***    ***/
+}
+@media (min-width: 471px) {
+  .Names {
+    margin-right: 40px;
+    margin-top: 10px;
+  }
+
+  /***   Add button   ***/
+  .iconBtn {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+  }
+  .iconBtn:hover {
+    background-color: #cdcdcd;
+  }
+  .addIcon {
+    color: green;
+    font-size: 2.3rem;
+  }
+  /***    ***/
+}
+
+@media (max-width: 347px) {
+  .Buttons {
+    gap: 2px;
+  }
+  .column2 {
+    gap: 0;
+  }
+  .h3AdminName {
+    font-size: 0.6rem;
+  }
+  .h6AdminInformations {
+    font-size: 0.4rem;
+  }
+}
+
+/*** SideNav  ***/
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #28282b;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  position: relative;
+  top: 40px;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+.OpenNav {
+  font-size: 35px;
+  cursor: pointer;
+  margin-left: 30px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+.Dashboard {
+  display: flex;
+  justify-content: left;
+  align-items: flex-end;
+  font-size: 1rem;
+}
+.DashboardIcn {
+  width: 30px;
+  height: 30px;
+  padding-right: 15px;
+}
+/***   ***/
+
+/***  Logo  ***/
+.LogoImage {
+  width: 45px;
+  height: 70px;
+  margin-left: 20px;
+  background-color: #ffffff;
+  border-radius: 3px;
+}
+.h1Name {
+  font-size: 2.5rem;
+  margin-left: 10px;
+}
+.LogoImage2 {
+  width: 29px;
+  height: 43px;
+  margin-left: 20px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  margin-top: 20px;
+}
+.h1Name2 {
+  font-size: 1.7rem;
+  margin-left: 10px;
+  margin-top: 30px;
+  color: #ffffff;
+}
+/***   ***/
+
+/***  Buttons  ***/
+/*  ChatBtn  */
+.ChatButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: none;
+  background: #dddddd;
+}
+.ChatButton:hover {
+  cursor: pointer;
+}
+.ChatButton:active {
+  background: #cccccc;
+}
+.ChatIcn {
+  width: 100%;
+  height: 100%;
+}
+/*   */
+
+/*  NotifBtn  */
+.icon-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  color: #333333;
+  background: #dddddd;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.icon-button:active {
+  background: #cccccc;
+}
+
+.icon-button__badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 25px;
+  height: 25px;
+  background: red;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.material-icons {
+  width: 35px;
+  height: 35px;
+}
+/*   */
+
+/*  ProfileBtn  */
+.ProfileButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: none;
+  background: #dddddd;
+  padding: 0;
+}
+.ProfileButton:hover {
+  cursor: pointer;
+}
+.ProfileButton:active {
+  background: #cccccc;
+}
+.ProfileIcn {
+  width: 50px;
+  height: 50px;
+}
+/*   */
+/***    ***/
+
+/***   Names  ***/
+.h3AdminName {
+  margin-bottom: 10px;
+}
+.h6AdminInformations {
+  color: #9ca1a8;
+  margin: 0;
+}
+/***    ***/
+
+/*** Filter ***/
+.CountryFilter {
+  padding: 10px 10px;
+  height: 80px;
+  z-index: 9999;
+  width: 100%;
+}
+.scrollbar {
+  width: 70%;
+  white-space: nowrap;
+  max-width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 3em;
+}
+.content {
+  margin-top: 10px;
+}
+.Container {
+  width: 80%;
+  margin: 0 auto 0 10%;
+  height: 80px;
+  margin-top: 10px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+.Container::-webkit-scrollbar {
+  height: 15px;
+  background-color: #fff;
+}
+.Container::-webkit-scrollbar:hover {
+  height: 25px;
+}
+.Container::-webkit-scrollbar-track {
+  height: 8px;
+  border-radius: 10px;
+}
+.Container::-webkit-scrollbar-thumb {
+  display: none;
+  height: 5px;
+  border: 1px solid #fff;
+  background: linear-gradient(to right, #fd292f, black);
+  border-radius: 15px;
+}
+.CountryTag {
+  text-align: center;
+  cursor: pointer;
+}
+.CountryImg:hover {
+  transform: scale(1.06);
+}
+.CountryName {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.CountryName:hover {
+  color: #adb1b8;
+  transform: scale(1.06);
+}
+
+.slideLeft:hover {
+  cursor: pointer;
+  color: #717171;
+}
+.slideRight {
+  background-color: transparent;
+  border: none;
+  margin-left: -45px;
+  padding: 0 0;
+  max-width: 4%;
+  min-width: 40px;
+  max-height: 4%;
+  min-height: 40px;
+  border-radius: 100%;
+  position: relative;
+  left: 89%;
+  top: -75px;
+  font-size: 1.8rem;
+}
+.slideRight:hover {
+  cursor: pointer;
+  color: #717171;
+}
+/***    ***/
+
+/***  State   ***/
+.StateDiv {
+  display: grid;
+  justify-content: space-around;
+  align-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 22%));
+  grid-auto-rows: 550px;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+.State {
+  margin: 5%;
+  width: 90%;
+  height: 93%;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: #fff;
+  transition: 0.5s;
+}
+.State:hover {
+  box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+/* Slideshow container */
+.slideshowContainer {
+  max-width: 600px;
+  position: relative;
+  margin: auto;
+  border-radius: 10px;
+}
+.mySlides {
+  border-radius: 10px;
+}
+
+.StateImg {
+  vertical-align: middle;
+  border-radius: 10px 10px 0 0;
+  width: 99.9%;
+  margin: 0.05%;
+}
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+.StateImg {
+  vertical-align: middle;
+  border-radius: 10px 10px 0 0;
+  width: 99.9%;
+  margin: 0.05%;
+}
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev,
+  .next,
+  .text {
+    font-size: 11px;
+  }
+}
+/* The dots/bullets/indicators */
+.DotDiv {
+  position: relative;
+  top: -10px;
+  text-align: center;
+}
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0px 1px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #717171;
+}
+
+/*  InformationForState  */
+.StateAndCountryName {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 0 0 0 10px;
+}
+.CityName {
+  margin: 0 0;
+}
+.And {
+  margin: 0 0;
+}
+.CountryName2 {
+  margin: 0 0;
+}
+.StateView {
+  margin: 0 0 0 10px;
+  color: #9ca1a8;
+}
+.StatePriceDiv {
+  display: flex;
+  flex-direction: row;
+}
+.StatePrice {
+  margin-left: 10px;
+  margin-top: 16px;
+}
+#Eth2 {
+  width: 35px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/*** Back to top button ***/
+.top {
+  --offset: 50px;
+
+  position: sticky;
+  bottom: 20px;
+  left: 90%;
+  margin-right: 20px;
+  place-self: end;
+  margin-top: calc(100vh + var(--offset));
+
+  /* visual styling */
+  text-decoration: none;
+  padding: 12px 10px 12px 10px;
+  font-family: sans-serif;
+
+  border-radius: 100%;
+  white-space: nowrap;
+}
+
+.TopImg {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  top: 8px;
+}
+
+/***  Edit And Delete  ***/
+.EditIcn {
+  width: 30px;
+  height: 30px;
+}
+.EditBtn {
+  width: 100px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #18181a;
+  border-radius: 5px;
+  color: #18181a;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 15px;
+  padding: 18px 18px 17px;
+  text-decoration: none;
+  cursor: pointer;
+  background: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.EditBtn span:first-child {
+  position: relative;
+  transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 10;
+}
+
+.EditBtn span:last-child {
+  color: white;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 100;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translateY(225%) translateX(-50%);
+  height: 14px;
+  line-height: 13px;
+}
+
+.EditBtn:after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffff00;
+  transform-origin: bottom center;
+  transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  transform: skewY(9.3deg) scaleY(0);
+  z-index: 50;
+}
+.EditBtn:hover {
+  border: 2px solid white;
+}
+.EditBtn:hover:after {
+  transform-origin: bottom center;
+  transform: skewY(9.3deg) scaleY(2);
+}
+
+.EditBtn:hover span:last-child {
+  transform: translateX(-50%) translateY(-100%);
+  opacity: 1;
+  transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+}
+
+.DeleteIcn {
+  width: 30px;
+  height: 30px;
+}
+.DeleteBtn {
+  width: 100px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #18181a;
+  border-radius: 5px;
+  color: #18181a;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 15px;
+  padding: 18px 18px 17px;
+  text-decoration: none;
+  cursor: pointer;
+  background: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.DeleteBtn span:first-child {
+  position: relative;
+  transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 10;
+}
+
+.DeleteBtn span:last-child {
+  color: white;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 100;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translateY(225%) translateX(-50%);
+  height: 14px;
+  line-height: 13px;
+}
+
+.DeleteBtn:after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fd292f;
+  transform-origin: bottom center;
+  transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  transform: skewY(9.3deg) scaleY(0);
+  z-index: 50;
+}
+.DeleteBtn:hover {
+  border: 2px solid white;
+}
+.DeleteBtn:hover:after {
+  transform-origin: bottom center;
+  transform: skewY(9.3deg) scaleY(2);
+}
+
+.DeleteBtn:hover span:last-child {
+  transform: translateX(-50%) translateY(-100%);
+  opacity: 1;
+  transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+}
+
+.myDIV {
+  /* display: none; */
+  position: absolute;
+  top: 80px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+
+  z-index: 999;
+  width: 330px;
+  max-width: 100%;
+  height: 570px;
+  padding: 10px 0;
+  text-align: center;
+  background-color: white;
+
+  border-radius: 10px;
+  border: 1px solid #18181a;
+}
+
+.page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+
+  display: grid;
+  grid-gap: 30px;
+}
+
+.FileInput {
+  flex-direction: row;
+  width: 100%;
+  height: 100px;
+  overflow-y: scroll;
+  gap: 1rem;
+}
+
+.wrapper {
+  position: relative;
+  top: 80%;
+  left: 66%;
+  transform: translate(-50%, -50%);
+}
+
+.SubmitBtn {
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all 0.35s;
+}
+
+.SubmitBtn span {
+  position: relative;
+  z-index: 2;
+}
+
+.SubmitBtn:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #ff003b;
+  transition: all 0.35s;
+}
+
+.SubmitBtn:hover {
+  color: #fff;
+}
+
+.SubmitBtn:hover:after {
+  width: 100%;
+}
+
+.group {
+  position: relative;
+}
+.TextInput {
+  font-size: 14px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 285px;
+  border: none;
+  border-bottom: 1px solid #757575;
+}
+.TextInput:focus {
+  outline: none;
+}
+
+/* LABEL ======================================= */
+.label {
+  color: #999;
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+.TextInput:focus ~ .label,
+input:valid ~ .label {
+  top: -10px;
+  font-size: 14px;
+  color: #fd292f;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+  position: relative;
+  display: block;
+  width: 300px;
+}
+.bar:before,
+.bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #fd292f;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+/* active state */
+.TextInput:focus ~ .bar:before,
+input:focus ~ .bar:after {
+  width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* active state */
+.TextInput:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #e6e3e3;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #f1e9ea;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: #eeebeb;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+/***  Add To Picture   ***/
+.AddToPicture {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1a1a1a;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #3b3b3b;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 10px;
+  margin-left: 34%;
+  min-height: 30px;
+  min-width: 0;
+  outline: none;
+  /* padding: 16px 24px; */
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 30%;
+
+  will-change: transform;
+}
+
+.AddToPicture:disabled {
+  pointer-events: none;
+}
+
+.AddToPicture:hover {
+  color: #fff;
+  background-color: #1a1a1a;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.AddToPicture:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+/***    ***/
