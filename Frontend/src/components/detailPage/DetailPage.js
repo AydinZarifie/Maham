@@ -46,7 +46,7 @@ const DetailPage = () => {
 export default DetailPage;
 
 async function loadEstate(id) {
-  const response = await fetch("http://localhost:8080/admin/posts" + id);
+  const response = await fetch("http://localhost:8080/estates/" + id);
 
   if (!response.ok) {
     throw json(
