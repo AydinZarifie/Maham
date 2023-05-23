@@ -1,4 +1,4 @@
-// 2023/05/08 added this file , this fiel is specified to starting the server
+// 2023/05/08 added this file , this field is specified to starting the server
 
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');

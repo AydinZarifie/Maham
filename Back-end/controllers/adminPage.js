@@ -22,7 +22,7 @@ exports.getAllEstates = async (req, res) => {
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = (req, res) => {
-    const title = req.body.title; 
+    const title = req.body.title;
     const estate = new estateDB({
         city_name: title,
     });

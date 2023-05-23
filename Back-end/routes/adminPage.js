@@ -8,7 +8,7 @@ const mainPage_Controller = require('../controllers/adminPage');
 router
     .route('/posts')
     .get(mainPage_Controller.getAllEstates)
-    .post(mainPage_Controller.createEstate);
+    .post(mainPage_Controller.checkBody, mainPage_Controller.createEstate);
 
 router
     .route('/posts/:id')
