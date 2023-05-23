@@ -15,7 +15,6 @@ exports.checkBody = (req, res, next) => {
     next();
 };
 
-/// uu
 exports.getAllEstates = async (req, res) => {
     const posts = await estateDB.find();
     res.status(200).json(posts);
