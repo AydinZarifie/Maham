@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const mainPage_Router = require('./routes/adminPage');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const app = express();
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 /* ERROR HANDLING 
   process.on('uncaughtException', err => {
@@ -13,7 +13,6 @@ const mongoose = require("mongoose");
       process.exit(1);
   });
 */
-
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -44,7 +43,7 @@ const upload = multer({
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(express.json());
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(upload.any('image'));
 app.use((req, res, next) => {
@@ -56,13 +55,6 @@ app.use((req, res, next) => {
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 app.use('/admin', mainPage_Router);
-
-mongoose.connect('mongodb://127.0.0.1:27017/Maham').then(() => {
-    app.listen(5000, () => {
-        console.log(`Server is runing on port...!`);
-    });
-});
-
 
 ////////////////////////////////////////////////
 /* ERROR HANDLING  
