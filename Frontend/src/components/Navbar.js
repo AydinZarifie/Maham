@@ -1,5 +1,5 @@
 import icon from "../images/Maham.png";
-import styles from '../styles/Maham.module.css';
+import styles from "../styles/Maham.module.css";
 
 export default function Navbar() {
   return (
@@ -17,14 +17,14 @@ export default function Navbar() {
         <div className={styles.column2}>
           <div>
             <div className={styles.search}>
-              <div >
+              <div>
                 <input
                   type="text"
                   className={styles.search_text}
                   id="search_text"
                   placeholder="Search by CountryName, CityName or ..."
                 />
-                <i ></i>
+                <i></i>
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function Navbar() {
         <div className={styles.column3}>
           <div className={styles.EthCon}>
             <div className={styles.ethPriceDiv}>
-              <i ></i>
+              <i></i>
               <p className={styles.ethPrice}>$10000.346</p>
             </div>
 

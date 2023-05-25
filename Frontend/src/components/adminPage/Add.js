@@ -1,7 +1,6 @@
 //!important
 //replaced with confingEstate
 
-
 import { useState } from "react";
 import styles from "../../styles/Estate.module.css";
 
