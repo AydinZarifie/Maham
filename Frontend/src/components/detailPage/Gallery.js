@@ -30,10 +30,7 @@ const Gallery = () => {
       </div>
       <div className={styles.Pic45}>
         <div className={styles.Pic4}>
-          <img
-            src={img4}
-            className={`${styles.Pictures} ${styles.Picture4}`}
-          />
+          <img src={img4} className={`${styles.Pictures} ${styles.Picture4}`} />
         </div>
         <div className={styles.Pic5}>
           <img src={img5} className={styles.Picture5} />

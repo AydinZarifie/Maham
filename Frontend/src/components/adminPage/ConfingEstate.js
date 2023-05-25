@@ -23,22 +23,21 @@ import { Form, json, redirect, useSubmit } from "react-router-dom";
 import { useState } from "react";
 
 const ConfingEstate = ({ method, estate }) => {
-
   const [information, setInformation] = useState({
     img: [],
     videos: [],
 
-    title: estate ? estate.title : "",//
-    countryName: estate ? estate.country : "",//
-    cityName: estate ? estate.city : "",//
-    streetName: estate ? estate.streetName : "",//
-    plate: estate ? estate.plate : "",//
-    numberOfPlate: estate ? estate.plateNumber : "",//
-    numberOfFloor: estate ? estate.floorNumber : "",//
-    numberOfUnit: estate ? estate.unit : "",//
-    location: estate ? estate.location : "",//
+    title: estate ? estate.title : "", //
+    countryName: estate ? estate.country : "", //
+    cityName: estate ? estate.city : "", //
+    streetName: estate ? estate.streetName : "", //
+    plate: estate ? estate.plate : "", //
+    numberOfPlate: estate ? estate.plateNumber : "", //
+    numberOfFloor: estate ? estate.floorNumber : "", //
+    numberOfUnit: estate ? estate.unit : "", //
+    location: estate ? estate.location : "", //
 
-    type: estate ? estate.type : "",//
+    type: estate ? estate.type : "", //
 
     bedroom: {
       checked: estate ? estate.bedroom.checked : false,
@@ -109,14 +108,6 @@ const ConfingEstate = ({ method, estate }) => {
     }));
   }
 
-  // function submitHandler() {
-  //   const proceed = window.confirm("Are you sure?");
-
-  //   if (proceed) {
-  //     submit(information, { method: method });
-  //   }
-  // }
-
   return (
     <Form method={method}>
       <div className={styles.EstateInfo}>
@@ -140,7 +131,11 @@ const ConfingEstate = ({ method, estate }) => {
               <label>Country</label>
             </div>
             <div className={styles.select}>
-              <select value={information.countryName} onChange={basicEventHandler} name="countryName">
+              <select
+                value={information.countryName}
+                onChange={basicEventHandler}
+                name="countryName"
+              >
                 <option value="Iran">Iran</option>
                 <option value="United State">United State</option>
                 <option value="Turkey">Turkey</option>
@@ -152,7 +147,11 @@ const ConfingEstate = ({ method, estate }) => {
               <label>City</label>
             </div>
             <div className={styles.select}>
-              <select value={information.cityName} onChange={basicEventHandler} name="cityName">
+              <select
+                value={information.cityName}
+                onChange={basicEventHandler}
+                name="cityName"
+              >
                 <option value="Tabriz">Tabriz</option>
                 <option value="Tehran">Tehran</option>
                 <option value="Esfahan">Esfahan</option>
@@ -259,7 +258,11 @@ const ConfingEstate = ({ method, estate }) => {
       </div>
 
       <div className={styles.select2}>
-        <select value={information.type} onChange={basicEventHandler} name="type">
+        <select
+          value={information.type}
+          onChange={basicEventHandler}
+          name="type"
+        >
           <option value="residential">residential</option>
           <option value="commercial">commercial</option>
         </select>
@@ -274,7 +277,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check1" name="checkBedroom" value="" />
+                    <input
+                      type="checkbox"
+                      id="check1"
+                      name="checkBedroom"
+                      value=""
+                    />
                     <label htmlFor="check1">
                       <span></span>
                     </label>
@@ -308,7 +316,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check2" name="checkLivingroom" value="" />
+                    <input
+                      type="checkbox"
+                      id="check2"
+                      name="checkLivingroom"
+                      value=""
+                    />
                     <label htmlFor="check2">
                       <span></span>
                     </label>
@@ -342,7 +355,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check3" name="checkKitchen" value="" />
+                    <input
+                      type="checkbox"
+                      id="check3"
+                      name="checkKitchen"
+                      value=""
+                    />
                     <label htmlFor="check3">
                       <span></span>
                     </label>
@@ -376,7 +394,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check4" name="checkDiningroom" value="" />
+                    <input
+                      type="checkbox"
+                      id="check4"
+                      name="checkDiningroom"
+                      value=""
+                    />
                     <label htmlFor="check4">
                       <span></span>
                     </label>
@@ -410,7 +433,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check5" name="checkGuestroom" value="" />
+                    <input
+                      type="checkbox"
+                      id="check5"
+                      name="checkGuestroom"
+                      value=""
+                    />
                     <label htmlFor="check5">
                       <span></span>
                     </label>
@@ -444,7 +472,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check6" name="checkBathroom" value="" />
+                    <input
+                      type="checkbox"
+                      id="check6"
+                      name="checkBathroom"
+                      value=""
+                    />
                     <label htmlFor="check6">
                       <span></span>
                     </label>
@@ -478,7 +511,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check7" name="checkGarden" value="" />
+                    <input
+                      type="checkbox"
+                      id="check7"
+                      name="checkGarden"
+                      value=""
+                    />
                     <label htmlFor="check7">
                       <span></span>
                     </label>
@@ -512,7 +550,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check8" name="checkBalcony" value="" />
+                    <input
+                      type="checkbox"
+                      id="check8"
+                      name="checkBalcony"
+                      value=""
+                    />
                     <label htmlFor="check8">
                       <span></span>
                     </label>
@@ -546,7 +589,12 @@ const ConfingEstate = ({ method, estate }) => {
               <tr>
                 <td>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check9" name="checkGarage" value="" />
+                    <input
+                      type="checkbox"
+                      id="check9"
+                      name="checkGarage"
+                      value=""
+                    />
                     <label htmlFor="check9">
                       <span></span>
                     </label>
@@ -590,7 +638,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check10" name="checkWifi" value="" />
+                    <input
+                      type="checkbox"
+                      id="check10"
+                      name="checkWifi"
+                      value=""
+                    />
                     <label htmlFor="check10">
                       <span></span>
                     </label>
@@ -606,7 +659,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check11" name="checkParking" value="" />
+                    <input
+                      type="checkbox"
+                      id="check11"
+                      name="checkParking"
+                      value=""
+                    />
                     <label htmlFor="check11">
                       <span></span>
                     </label>
@@ -624,7 +682,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check12" name="checkPool" value="" />
+                    <input
+                      type="checkbox"
+                      id="check12"
+                      name="checkPool"
+                      value=""
+                    />
                     <label htmlFor="check12">
                       <span></span>
                     </label>
@@ -640,7 +703,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check13" name="checkFurniture" value="" />
+                    <input
+                      type="checkbox"
+                      id="check13"
+                      name="checkFurniture"
+                      value=""
+                    />
                     <label htmlFor="check13">
                       <span></span>
                     </label>
@@ -658,7 +726,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check14" name="checkElevator" value="" />
+                    <input
+                      type="checkbox"
+                      id="check14"
+                      name="checkElevator"
+                      value=""
+                    />
                     <label htmlFor="check14">
                       <span></span>
                     </label>
@@ -674,7 +747,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check15" name="checkGarden" value="" />
+                    <input
+                      type="checkbox"
+                      id="check15"
+                      name="checkGarden"
+                      value=""
+                    />
                     <label htmlFor="check15">
                       <span></span>
                     </label>
@@ -692,7 +770,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check16" name="checkLaundary" value="" />
+                    <input
+                      type="checkbox"
+                      id="check16"
+                      name="checkLaundary"
+                      value=""
+                    />
                     <label htmlFor="check16">
                       <span></span>
                     </label>
@@ -708,7 +791,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check17" name="checkBbq" value="" />
+                    <input
+                      type="checkbox"
+                      id="check17"
+                      name="checkBbq"
+                      value=""
+                    />
                     <label htmlFor="check17">
                       <span></span>
                     </label>
@@ -726,7 +814,12 @@ const ConfingEstate = ({ method, estate }) => {
               <div className={styles.Row51}>
                 <div>
                   <div className={styles.checkbox_wrapper}>
-                    <input type="checkbox" id="check18" name="checkGym" value="" />
+                    <input
+                      type="checkbox"
+                      id="check18"
+                      name="checkGym"
+                      value=""
+                    />
                     <label htmlFor="check18">
                       <span></span>
                     </label>
@@ -816,10 +909,7 @@ const ConfingEstate = ({ method, estate }) => {
           </label>
         </div>
 
-        <button
-          className={styles.AddButton}
-          type="Submit"
-        >
+        <button className={styles.AddButton} type="Submit">
           <span className={styles.text}>Add</span>
           <span>+</span>
         </button>
@@ -829,101 +919,3 @@ const ConfingEstate = ({ method, estate }) => {
 };
 
 export default ConfingEstate;
-
-export async function action({ request, params }) {
-  const method = request.method;
-  const data = await request.formData();
-
-  const formData=new FormData();
-  // console.log(request);
-  
-
-
-  formData.append('title',data.get('title'))
-  formData.append('cityName',data.get('cityName'))
-  formData.append('countryName',data.get('countryName'))
-  formData.append('streetName',data.get('streetName'))
-  formData.append('plate',data.get('plate'))
-  formData.append('numberOfPlate',data.get('numberOfPlate'))
-  formData.append('numberOfFloor',data.get('numberOfFloor'))
-  formData.append('location',data.get('location'))
-
-  formData.append('type',data.get('type'))
-
-  formData.append('checkBedroom',data.get('checkBedroom'))
-  formData.append('numberBedroom',data.get('numberBedroom'))
-  formData.append('metrageBedroom',data.get('metrageBedroom'))
-
-  formData.append('checkLivingRoom',data.get('checkLivingRoom'))
-  formData.append('numberLivingRoom',data.get('numberLivingRoom'))
-  formData.append('metrageLivingRoom',data.get('metrageLivingRoom'))
-
-  formData.append('checkKitchen',data.get('checkKitchen'))
-  formData.append('numberKitchen',data.get('numberKitchen'))
-  formData.append('metrageKitchen',data.get('metrageKitchen'))
-
-  formData.append('checkDiningroom',data.get('checkDiningroom'))
-  formData.append('numberDiningroom',data.get('numberDiningroom'))
-  formData.append('metrageDiningroom',data.get('metrageDiningroom'))
-
-  formData.append('checkGuestroom',data.get('checkGuestroom'))
-  formData.append('numberGuestroom',data.get('numberGuestroom'))
-  formData.append('metrageGuestroom',data.get('metrageGuestroom'))
-
-  formData.append('checkBathroom',data.get('checkBathroom'))
-  formData.append('numberBathroom',data.get('numberBathroom'))
-  formData.append('metrageBathroom',data.get('metrageBathroom'))
-
-  formData.append('checkGarden',data.get('checkGarden'))
-  formData.append('numberGarden',data.get('numberGarden'))
-  formData.append('metrageGarden',data.get('metrageGarden'))
-
-  formData.append('checkBalcony',data.get('checkBalcony'))
-  formData.append('numberBalcony',data.get('numberBalcony'))
-  formData.append('metrageBalcony',data.get('metrageBalcony'))
-
-  formData.append('checkGarage',data.get('checkGarage'))
-  formData.append('numberGarage',data.get('numberGarage'))
-  formData.append('metrageGarage',data.get('metrageGarage'))
-
-  formData.append('checkWifi',data.get('checkWifi'))
-  formData.append('checkParking',data.get('checkParking'))
-  formData.append('checkPool',data.get('checkPool'))
-  formData.append('checkFurniture',data.get('checkFurniture'))
-  formData.append('checkElevator',data.get('checkElevator'))
-  formData.append('checkGarden',data.get('checkGarden'))
-  formData.append('checkLaundary',data.get('checkLaundary'))
-  formData.append('checkBbq',data.get('checkBbq'))
-  formData.append('checkGym',data.get('checkGym'))
-
-  formData.append('description',data.get('description'))
-
-
-
-
-  // const estateData = {
-  //   title: data.get('title')
-  // };
-
-  let url = "https://react2-7c43a-default-rtdb.asia-southeast1.firebasedatabase.app/estates.json";
-
-  if (method === "PATCH") {
-    const estateId = params.estateId;
-    url = "https://react2-7c43a-default-rtdb.asia-southeast1.firebasedatabase.app/estates.json" + estateId;
-  }
-
-  const response = await fetch(url, {
-    method: method,
-    body: formData
-  });
-
-  // if (response.status === 422) {
-  //   return response;
-  // }
-
-  // if (!response.ok) {
-  //   throw json({ message: "Could not save estate." }, { status: 500 });
-  // }
-
-  return redirect("/admin/estates");
-}

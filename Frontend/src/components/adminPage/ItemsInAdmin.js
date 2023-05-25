@@ -3,7 +3,7 @@ import styles from "../../styles/Estate.module.css";
 import arrow from "../../images/up-arrow-svgrepo-com.svg";
 // import data from "../../dummyData/data"
 
-const ItemsInAdmin = ({data}) => (
+const ItemsInAdmin = ({ data }) => (
   <>
     <div className={styles.StateDiv}>
       {data.map((item) => (
