@@ -1,3 +1,4 @@
+import AdminMenuItem from "./AdminMenuItem";
 import styles from "../../styles/Admin.module.css";
 import logo from "../../images/Maham.png";
 import { useRef } from "react";
@@ -38,38 +39,24 @@ export default function AdminNavbar() {
                   <h1 className={styles.h1Name2}>MAHAM</h1>
                 </div>
               </div>
-              <Link to="/admin">
-                <span className={styles.Dashboard}>
-                  <img src={dashboardIcon} className={styles.DashboardIcn} />
-                  Dashboard
-                </span>
-              </Link>
 
-              <Link to="estates">
-                <span className={styles.Dashboard}>
-                  <img src={estateIcon} className={styles.DashboardIcn} />
-                  Estate
-                </span>
-              </Link>
-
-              <a href="#">
-                <span className={styles.Dashboard}>
-                  <img src={walletIcon} className={styles.DashboardIcn} />
-                  Wallet
-                </span>
-              </a>
-              <a href="#">
-                <span className={styles.Dashboard}>
-                  <img src={transactionIcon} className={styles.DashboardIcn} />
-                  Transaction
-                </span>
-              </a>
-              <a href="#">
-                <span className={styles.Dashboard}>
-                  <img src={settingIcon} className={styles.DashboardIcn} />
-                  GeneralSetting
-                </span>
-              </a>
+              <AdminMenuItem
+                link="/admin"
+                imgSrc={dashboardIcon}
+                text="Dashboard"
+              />
+              <AdminMenuItem link="estates" imgSrc={estateIcon} text="Estate" />
+              <AdminMenuItem link="" imgSrc={walletIcon} text="Wallet" />
+              <AdminMenuItem
+                link=""
+                imgSrc={transactionIcon}
+                text="Transaction"
+              />
+              <AdminMenuItem
+                link=""
+                imgSrc={settingIcon}
+                text="GeneralSetting"
+              />
             </div>
             <span className={styles.OpenNav} onClick={openNav}>
               &#9776;

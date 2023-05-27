@@ -1,12 +1,12 @@
-import Accessibility from "./Accessibility";
-import Facilities from "./Facilities";
-import Gallery from "./Gallery";
-import Headline from "./Headline";
-import Metrage from "./Metrage";
-import Navbar from "../Navbar";
+import Accessibility from "../components/detailPage/Accessibility";
+import Facilities from "../components/detailPage/Facilities";
+import Gallery from "../components/detailPage/Gallery";
+import Headline from "../components/detailPage/Headline";
+import Metrage from "../components/detailPage/Metrage";
+import Navbar from "../components/Navbar";
 
-import styles from "../../styles/Details.module.css";
-import {  json } from "react-router-dom";
+import styles from "../styles/Details.module.css";
+import { json } from "react-router-dom";
 
 const DetailPage = () => {
   return (
@@ -46,11 +46,11 @@ const DetailPage = () => {
 export default DetailPage;
 
 async function loadEstate(id) {
-  const response = await fetch("http://localhost:8080/admin/posts" + id);
+  const response = await fetch("http://localhost:8080/estates/" + id);
 
   if (!response.ok) {
     throw json(
-      { message: "Could not fetch details for selected event." },
+      { message: "Could not fetch details for selected estate." },
       {
         status: 500,
       }
