@@ -1,7 +1,6 @@
 //!important
 //replaced with confingEstate
 
-
 import { useState } from "react";
 import styles from "../../styles/Estate.module.css";
 
@@ -38,15 +37,15 @@ const Add = () => {
 
   const sendDataToServer = async () => {
     let formdata = new FormData();
-    formdata.append("title", information.cityName);
-/*  formdata.append("countryName", information.countryName);
+    formdata.append("cityName", information.cityName);
+    formdata.append("countryName", information.countryName);
     formdata.append("stateView", information.stateView);
     formdata.append("price", information.price);
     formdata.append("img", information.img);
 
     for (let i = 0; i < information.img.length; i++) {
       formdata.append("img", information.img[i]);
-    } */
+    }
 
     console.log(information);
 
@@ -134,7 +133,7 @@ const Add = () => {
               className={styles.AddToPicture}
               role="button"
               type="button"
-            // onClick={() => createNew()}
+              // onClick={() => createNew()}
             >
               Add
             </button>

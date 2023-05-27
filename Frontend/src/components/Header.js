@@ -1,6 +1,6 @@
 import Filters from "./Filters";
 import Navbar from "./Navbar";
-import styles from '../styles/Maham.module.css';
+import styles from "../styles/Maham.module.css";
 
 export default function Header() {
   return (
