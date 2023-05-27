@@ -1,15 +1,14 @@
+//structure formatting
+
 import "./styles/global.css";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import HomePage from "./components/HomePage";
-import DetailPage, {
-  loader as estateDetailLoader,
-} from "./components/detailPage/DetailPage";
-import AdminPage from "./components/adminPage/AdminPage";
+import HomePage from "./pages/HomePage";
+import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
+import AdminPage , {action as manipulateEstateAction} from "./pages/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
 import Estates from "./components/adminPage/Estates";
-import {action as manipulateEstateAction} from "./components/adminPage/ConfingEstate";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
 
@@ -39,8 +38,16 @@ const router = createBrowserRouter([
         // element: <Estates />,
         children: [
           { index: true, element: <Estates /> },
-          { path: "new", element: <NewEstate />,action:manipulateEstateAction },
-          { path: ":estateId", element: <EditState />,action:manipulateEstateAction },
+          {
+            path: "new",
+            element: <NewEstate />,
+            action: manipulateEstateAction,
+          },
+          {
+            path: ":estateId",
+            element: <EditState />,
+            action: manipulateEstateAction,
+          },
         ],
       },
     ],
