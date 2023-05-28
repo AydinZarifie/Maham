@@ -22,6 +22,16 @@ const estateFacilitiesSchema = new mongoose.Schema({
     loundry_facilities: {
         type: Boolean,
     },
+    // new added 2023/05/26
+    furniture: {
+        type: Boolean,
+    },
+    parkingLot: {
+        type: Boolean,
+    },
+    barbique: {
+        type: Boolean,
+    },
 });
 
 module.exports = mongoose.model('estate-facilities', estateFacilitiesSchema);

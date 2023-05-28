@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const estateRoomsSchema = require('./estate-rooms');
+const estateFacilitiesSchema = require('./estate-facilities');
 
 const estateSchema = new mongoose.Schema({
     stateId: {
@@ -31,6 +33,9 @@ const estateSchema = new mongoose.Schema({
     postal_code: {
         type: String,
     },
+    location: {
+        type: String,
+    },
     ///
     state_description: {
         type: String,
@@ -51,17 +56,13 @@ const estateSchema = new mongoose.Schema({
     introduction_video: {
         type: String,
     },
-    estate_rooms: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'estate-rooms',
-    },
-    estate_facilities: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'estate-facilities',
-    },
+    estate_rooms: [estateRoomsSchema],
+    //type: mongoose.Schema.Types.ObjectId,
+    // ref: 'estate-rooms',
+
+    estate_facilities: [estateFacilitiesSchema],
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'estate-facilities',
 });
 
 module.exports = mongoose.model('real-estates', estateSchema);
-
-//estate rooms DONE !
-//estate facilities ---> wifi + pool ... DONE!
