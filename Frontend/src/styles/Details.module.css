@@ -1,0 +1,3226 @@
+/* ***LayOut***  */
+.container {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  top: 20px;
+  margin-bottom: 10px;
+}
+.column1 {
+  display: flex;
+  flex-direction: row;
+}
+.column3 {
+  display: flex;
+  flex-direction: row;
+}
+.EthCon {
+  display: flex;
+  flex-direction: row;
+}
+
+/***     ***/
+
+/* ***mediaquery*** */
+@media (min-width: 1650px){
+
+   /***   Gallery  ***/
+   .Gallery {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 1520px;
+    height: 540px;
+  }
+  .Pic123 {
+    width: 1150px;
+    height: 540px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: column;
+    width: 370px;
+  }
+  .Pic45 {
+    width: 370px;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic1 {
+    width: 780px;
+  }
+
+  .Pic2 {
+    height: 50%;
+  }
+  .Pic3 {
+    height: 50%;
+  }
+  .Pic4 {
+    height: 50%;
+  }
+  .Pic5 {
+    height: 50%;
+  }
+  .Picture1 {
+    cursor: pointer;
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    border-radius: 10px 0 0 10px;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%);
+  }
+  .Picture1:hover {
+    transform: scale(1.01);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%);
+  }
+  .Picture4 {
+    border-radius: 0 10px 0 0;
+  }
+  .Picture5 {
+    width: 96%;
+    height: 96%;
+    margin: 2%;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%)
+      grayscale(80%) opacity(70%);
+    cursor: pointer;
+    border-radius: 0 0 10px 0;
+  }
+  .Picture5:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%) grayscale(40%)
+      opacity(100%);
+    /* background-color:rgba(0, 0, 0, 0.5); */
+  }
+  .ShowAllDiv {
+    margin-top: -165px;
+    margin-left: 122px;
+  }
+  /***   ***/
+}
+@media (max-width: 1350px) {
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 1000px;
+    height: 680px;
+  }
+  .Pic123 {
+    width: 1000px;
+    height: 420px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+  }
+  .Pic45 {
+    width: 1013px;
+    height: 210px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 680px;
+  }
+  .Pic2 {
+    height: 50%;
+  }
+  .Pic3 {
+    height: 50%;
+  }
+  .Pic4 {
+    width: 506.5px;
+    height: 260px;
+    margin-right: -0.4%;
+  }
+  .Pic5 {
+    width: 506.5px;
+    height: 260px;
+    margin-left: -0.4%;
+  }
+  .Picture1 {
+    cursor: pointer;
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    border-radius: 10px 0 0 0;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%);
+  }
+  .Picture1:hover {
+    transform: scale(1.01);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%);
+  }
+  .Picture2 {
+    border-radius: 0 10px 0 0;
+  }
+  .Picture4 {
+    border-radius: 0 0 0 10px;
+  }
+  .Picture5 {
+    width: 96%;
+    height: 96%;
+    margin: 2%;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%)
+      grayscale(80%) opacity(70%);
+    cursor: pointer;
+    border-radius: 0 0 10px 0;
+  }
+  .Picture5:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%) grayscale(40%)
+      opacity(100%);
+    /* background-color:rgba(0, 0, 0, 0.5); */
+  }
+  .ShowAllDiv {
+    margin-top: -153px;
+    margin-left: 180px;
+  }
+  /***   ***/
+
+}
+@media (min-width: 1350px) and (max-width: 1650px) {
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 1320px;
+    height: 420px;
+  }
+  .Pic123 {
+    width: 1000px;
+    height: 480px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+  }
+  .Pic45 {
+    width: 320px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic1 {
+    width: 680px;
+  }
+
+  .Pic2 {
+    height: 50%;
+  }
+  .Pic3 {
+    height: 50%;
+  }
+  .Pic4 {
+    height: 50%;
+  }
+  .Pic5 {
+    height: 50%;
+  }
+  .Picture1 {
+    cursor: pointer;
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    border-radius: 10px 0 0 10px;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%);
+  }
+  .Picture1:hover {
+    transform: scale(1.01);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%);
+  }
+  .Picture4 {
+    border-radius: 0 10px 0 0;
+  }
+  .Picture5 {
+    width: 96%;
+    height: 96%;
+    margin: 2%;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%)
+      grayscale(80%) opacity(70%);
+    cursor: pointer;
+    border-radius: 0 0 10px 0;
+  }
+  .Picture5:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%) grayscale(40%)
+      opacity(100%);
+    /* background-color:rgba(0, 0, 0, 0.5); */
+  }
+  .ShowAllDiv {
+    margin-top: -150px;
+    margin-left: 102px;
+  }
+  /***   ***/
+}
+@media (max-width: 1350px) {
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 1000px;
+    height: 680px;
+  }
+  .Pic123 {
+    width: 1000px;
+    height: 420px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+  }
+  .Pic45 {
+    width: 1013px;
+    height: 210px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 680px;
+  }
+  .Pic2 {
+    height: 50%;
+  }
+  .Pic3 {
+    height: 50%;
+  }
+  .Pic4 {
+    width: 506.5px;
+    height: 260px;
+    margin-right: -0.4%;
+  }
+  .Pic5 {
+    width: 506.5px;
+    height: 260px;
+    margin-left: -0.4%;
+  }
+  .Picture1 {
+    cursor: pointer;
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    border-radius: 10px 0 0 0;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%);
+  }
+  .Picture1:hover {
+    transform: scale(1.01);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%);
+  }
+  .Picture2 {
+    border-radius: 0 10px 0 0;
+  }
+  .Picture4 {
+    border-radius: 0 0 0 10px;
+  }
+  .Picture5 {
+    width: 96%;
+    height: 96%;
+    margin: 2%;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%)
+      grayscale(80%) opacity(70%);
+    cursor: pointer;
+    border-radius: 0 0 10px 0;
+  }
+  .Picture5:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+    filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%) grayscale(40%)
+      opacity(100%);
+    /* background-color:rgba(0, 0, 0, 0.5); */
+  }
+  .ShowAllDiv {
+    margin-top: -153px;
+    margin-left: 180px;
+  }
+  /***   ***/
+}
+@media (min-width: 1050px) {
+  .Row1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 41%;
+  }
+
+  /***  Metrage And Price   ***/
+  .MeterageAndPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .Meterage {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-left: 40px;
+  }
+  .Meterageh3 {
+    font-size: 1.5rem;
+    position: relative;
+    top: 30px;
+  }
+
+  .HomeInformations {
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .HomeInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .MeterageIcons {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .MeterageIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .NumberMeterage {
+    margin-top: 10px;
+    width: 55px;
+    height: 30px;
+    border-radius: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberMeterage2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 12px;
+  }
+  .HoseCombination {
+    width: 60px;
+    text-align: center;
+  }
+  .NumberInformation {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberInformationh6 {
+    margin-top: 7px;
+    margin-left: 10px;
+  }
+  .Meteragehr {
+    width: 60%;
+    margin: auto;
+  }
+  .Total {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 27%;
+  }
+  .Totalh5 {
+    font-weight: bolder;
+  }
+
+  .Price {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin-top: 60px;
+    position: sticky;
+    top: 80px;
+    /* bottom: -700px; */
+    margin-left: 67%;
+    margin-top: -635px;
+  }
+  .Price2 {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin-top: 60px;
+    position: relative;
+    top: 1430px;
+    margin-left: 67%;
+    margin-top: -635px;
+  }
+  .Priceh3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+  }
+  .PriceInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+    height: 528px;
+    background-color: #fff;
+    z-index: -999;
+  }
+  .LandlessAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .LandlessAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .LandlessAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .LandlessAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .LandlessAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .DocumentAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .DocumentAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .DocumentAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .DocumentAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .DocumentAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .PriceDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .BuyButton {
+    appearance: none;
+    /* background-color: #fd292f; */
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 15%;
+    height: 45px;
+    width: 70%;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton:disabled {
+    pointer-events: none;
+  }
+  .BuyButton:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .Priceh5Div {
+    margin: auto;
+    width: 70%;
+    height: auto;
+    /* overflow:visible; */
+  }
+  .Priceh5 {
+    margin: 0;
+  }
+  .PriceH3 {
+    margin: 0;
+  }
+  .TotalPrice {
+    margin-top: -10px;
+    padding: 0px;
+  }
+  .Pricehr {
+    width: 60%;
+  }
+  /***   ***/
+
+  /****   Accessability    ***/
+  .Accessability {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid; */
+    width: 60%;
+    margin-top: 30px;
+    margin-left: 3%;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 650px;
+  }
+  .Accessabilityp::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .Accessabilityp::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .Accessabilityp::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .Accessabilityp::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to top, #fd292f, black);
+    border-radius: 15px;
+  }
+  .Accessabilityp {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .Accessabilityhr {
+    color: black;
+    /* height: 2px; */
+    width: 80%;
+  }
+  /***    ***/
+
+  /***   Facilities   ***/
+  .Facilities {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-top: 25px;
+    margin-left: 3%;
+  }
+  .FacilitiesInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .FacilitiesInformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* margin-top: 30px; */
+  }
+  .FacilitiesInformation2 {
+    margin-top: 15px;
+  }
+  .FacilitiesInformation3 {
+    margin-top: -15px;
+  }
+  .FacilitiesIcons {
+    width: 40px;
+    height: 40px;
+  }
+  .FacilitiesIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .Facilitiesh5 {
+    width: 62px;
+    text-align: center;
+  }
+
+  /***    ***/
+}
+@media (max-width: 1050px) {
+  .Row1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0px;
+  }
+
+  /***   ***/
+
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 680px;
+    height: 860px;
+  }
+  .Pic123 {
+    width: 700px;
+    height: 645px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    height: 215px;
+  }
+  .Pic45 {
+    width: 700px;
+    height: 215px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 700px;
+    height: 430px;
+  }
+  .Pic2 {
+    width: 350px;
+    height: 215px;
+  }
+  .Pic3 {
+    width: 350px;
+    height: 215px;
+  }
+  .Pic4 {
+    width: 350px;
+    height: 215px;
+    margin-right: 0;
+  }
+  .Pic5 {
+    width: 350px;
+    height: 215px;
+    margin-left: 0;
+  }
+  .Picture1 {
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    border-radius: 10px 10px 0 0;
+  }
+  .Picture1:hover {
+    transform: scale(1.01);
+    transition: 0.3s;
+  }
+  .Picture2 {
+    border-radius: 0 0 0 0;
+  }
+  .Picture4 {
+    border-radius: 0 0 0 10px;
+  }
+  .Picture5 {
+    border-radius: 0 0 10px 0;
+  }
+  .ShowAllDiv {
+    margin-top: -130px;
+    margin-left: 116px;
+  }
+  /***   ***/
+}
+@media (min-width: 700px) and (max-width: 1050px) {
+  /***  Metrage And Price   ***/
+  .MeterageAndPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .Meterage {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin-left: 40px;
+  }
+  .Meterageh3 {
+    font-size: 1.5rem;
+    position: relative;
+    top: 30px;
+  }
+
+  .HomeInformations {
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .HomeInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .MeterageIcons {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .MeterageIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .NumberMeterage {
+    margin-top: 10px;
+    width: 55px;
+    height: 30px;
+    border-radius: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberMeterage2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 12px;
+  }
+  .HoseCombination {
+    width: 60px;
+    text-align: center;
+  }
+  .NumberInformation {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberInformationh6 {
+    margin-top: 7px;
+    margin-left: 10px;
+  }
+  .Meteragehr {
+    width: 60%;
+    margin: auto;
+  }
+  .Total {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 27%;
+  }
+  .Totalh5 {
+    font-weight: bolder;
+  }
+
+  .Price {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin-top: 60px;
+    position: sticky;
+    top: 80px;
+    /* bottom: -700px; */
+    margin-left: 53%;
+    margin-top: -635px;
+  }
+  .Price2 {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin-top: 60px;
+    position: relative;
+    top: 1430px;
+    margin-left: 53%;
+    margin-top: -635px;
+  }
+  .Priceh3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+  }
+  .PriceInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+    height: 528px;
+    background-color: #fff;
+    z-index: -999;
+  }
+  .LandlessAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .LandlessAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .LandlessAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .LandlessAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .LandlessAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .DocumentAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .DocumentAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .DocumentAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .DocumentAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .DocumentAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .PriceDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .BuyButton {
+    appearance: none;
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 15%;
+    height: 45px;
+    width: 70%;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton:disabled {
+    pointer-events: none;
+  }
+  .BuyButton:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .Priceh5Div {
+    margin: auto;
+    width: 70%;
+    height: auto;
+    /* overflow:visible; */
+  }
+  .Priceh5 {
+    margin: 0;
+  }
+  .PriceH3 {
+    margin: 0;
+  }
+  .TotalPrice {
+    margin-top: -10px;
+    padding: 0px;
+  }
+  .Pricehr {
+    width: 60%;
+  }
+  /***   ***/
+
+  /****   Accessability    ***/
+  .Accessability {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid; */
+    width: 45%;
+    margin-top: 30px;
+    margin-left: 3%;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 650px;
+  }
+  .Accessabilityp::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .Accessabilityp::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .Accessabilityp::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .Accessabilityp::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to top, #fd292f, black);
+    border-radius: 15px;
+  }
+  .Accessabilityp {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .Accessabilityhr {
+    color: black;
+    /* height: 2px; */
+    width: 80%;
+  }
+  /***    ***/
+
+  /***   Facilities   ***/
+  .Facilities {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin-top: 25px;
+    margin-left: 3%;
+  }
+  .FacilitiesInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .FacilitiesInformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* margin-top: 30px; */
+  }
+  .FacilitiesInformation2 {
+    margin-top: 15px;
+  }
+  .FacilitiesInformation3 {
+    margin-top: -15px;
+  }
+  .FacilitiesIcons {
+    width: 40px;
+    height: 40px;
+  }
+  .FacilitiesIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .Facilitiesh5 {
+    width: 62px;
+    text-align: center;
+  }
+
+  /***    ***/
+}
+@media (min-width: 1000px) {
+  .Header {
+    height: 100px;
+  }
+}
+@media (max-width: 1000px) {
+  .Header {
+    height: 100px;
+  }
+  .nameDiv {
+    display: none;
+  }
+}
+@media (min-width: 980px) {
+  .column1 {
+    position: relative;
+    top: 5px;
+  }
+  .column2 {
+    width: 35%;
+  }
+}
+@media (max-width: 980px) {
+  .column1 {
+    position: relative;
+    top: 5px;
+  }
+  .column2 {
+    width: 35%;
+  }
+}
+@media (max-width: 770px) {
+  .Header {
+    height: 145px;
+  }
+  .container {
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    height: 50%;
+  }
+  .column1 {
+    order: 1;
+    position: relative;
+    top: 5px;
+    left: 10px;
+  }
+  .column2 {
+    order: 3;
+    position: relative;
+    bottom: 70px;
+    left: 85px;
+    right: 85px;
+    width: 150%;
+  }
+  .column3 {
+    order: 2;
+    position: relative;
+    bottom: 75px;
+    left: 90%;
+  }
+  .nameDiv {
+    display: flex;
+    position: fixed;
+    left: 4em;
+  }
+}
+@media (max-width: 740px) {
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 550px;
+    height: 540px;
+  }
+  .Pic123 {
+    width: 550px;
+    height: 405px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: row;
+    width: 550px;
+    height: 135px;
+  }
+  .Pic45 {
+    width: 550px;
+    height: 135px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 550px;
+    height: 270px;
+  }
+  .Pic2 {
+    width: 275px;
+    height: 135px;
+  }
+  .Pic3 {
+    width: 275px;
+    height: 135px;
+  }
+  .Pic4 {
+    width: 275px;
+    height: 135px;
+  }
+  .Pic5 {
+    width: 275px;
+    height: 135px;
+  }
+  .ShowAllDiv {
+    margin-top: -100px;
+    margin-left: 81px;
+  }
+  /***   ***/
+}
+@media (min-width: 570px) and (max-width: 700px) {
+  /***  Metrage And Price   ***/
+  .MeterageAndPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .Meterage {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-left: 40px;
+  }
+  .Meterageh3 {
+    font-size: 1.5rem;
+    position: relative;
+    top: 30px;
+  }
+
+  .HomeInformations {
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .HomeInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .MeterageIcons {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .MeterageIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .NumberMeterage {
+    margin-top: 10px;
+    width: 55px;
+    height: 30px;
+    border-radius: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberMeterage2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 12px;
+  }
+  .HoseCombination {
+    width: 60px;
+    text-align: center;
+  }
+  .NumberInformation {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberInformationh6 {
+    margin-top: 7px;
+    margin-left: 10px;
+  }
+  .Meteragehr {
+    width: 60%;
+    margin: auto;
+  }
+  .Total {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 27%;
+  }
+  .Totalh5 {
+    font-weight: bolder;
+  }
+
+  .Price {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 60px;
+    position: sticky;
+    top: 80px;
+    margin-left: 48%;
+    margin-top: -635px;
+  }
+  .Price2 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 60px;
+    position: relative;
+    top: 1430px;
+    margin-left: 48%;
+    margin-top: -635px;
+  }
+  .Priceh3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+  }
+  .PriceInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+    height: 528px;
+    background-color: #fff;
+    z-index: -999;
+  }
+  .LandlessAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .LandlessAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .LandlessAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .LandlessAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .LandlessAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .DocumentAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .DocumentAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .DocumentAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .DocumentAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .DocumentAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .PriceDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .BuyButton {
+    appearance: none;
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 15%;
+    height: 45px;
+    width: 70%;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton:disabled {
+    pointer-events: none;
+  }
+  .BuyButton:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .Priceh5Div {
+    margin: auto;
+    width: 70%;
+    height: auto;
+  }
+  .Priceh5 {
+    margin: 0;
+  }
+  .PriceH3 {
+    margin: 0;
+  }
+  .TotalPrice {
+    margin-top: -10px;
+    padding: 0px;
+  }
+  .Pricehr {
+    width: 60%;
+  }
+  /***   ***/
+
+  /****   Accessability    ***/
+  .Accessability {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid; */
+    width: 40%;
+    margin-top: 30px;
+    margin-left: 3%;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 650px;
+  }
+  .Accessabilityp::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .Accessabilityp::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .Accessabilityp::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .Accessabilityp::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to top, #fd292f, black);
+    border-radius: 15px;
+  }
+  .Accessabilityp {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .Accessabilityhr {
+    color: black;
+    /* height: 2px; */
+    width: 80%;
+  }
+  /***    ***/
+
+  /***   Facilities   ***/
+  .Facilities {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-top: 25px;
+    margin-left: 3%;
+  }
+  .FacilitiesInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .FacilitiesInformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* margin-top: 30px; */
+  }
+  .FacilitiesInformation2 {
+    margin-top: 15px;
+  }
+  .FacilitiesInformation3 {
+    margin-top: -15px;
+  }
+  .FacilitiesIcons {
+    width: 40px;
+    height: 40px;
+  }
+  .FacilitiesIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .Facilitiesh5 {
+    width: 62px;
+    text-align: center;
+  }
+
+  /***    ***/
+}
+@media (min-width: 670px) {
+  .Icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+  }
+  .Icon:hover {
+    transition: 0.2s;
+    transform: scale(1.1);
+  }
+
+  .VillaName {
+    font-size: 2.2rem;
+  }
+  .StrVilla {
+    font-size: 1rem;
+    margin-left: 5px;
+    margin-top: -15px;
+    color: #9ca1a8;
+  }
+}
+@media (max-width: 670px) {
+  .column1 {
+    order: 1;
+    position: relative;
+    top: 5px;
+    left: 10px;
+  }
+  .column2 {
+    order: 3;
+    position: relative;
+    bottom: 70px;
+    left: 100px;
+  }
+  .column3 {
+    order: 2;
+    position: relative;
+    bottom: 75px;
+    left: 60%;
+  }
+  .nameDiv {
+    display: none;
+  }
+  .Icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .Icon:hover {
+    transition: 0.2s;
+    transform: scale(1.1);
+  }
+
+  .VillaName {
+    font-size: 1.8rem;
+  }
+  .StrVilla {
+    font-size: 0.8rem;
+    margin-left: 5px;
+    margin-top: -15px;
+    color: #9ca1a8;
+  }
+}
+@media (min-width: 620px) {
+  /***   Hide Menu  ***/
+  .scroll-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    display: none; /* initially hide the div */
+    border-bottom: 1px solid black;
+    z-index: 9999;
+  }
+  .Atag {
+    display: flex;
+    justify-content: start;
+    gap: 40px;
+    margin-top: 25px;
+    margin-left: 20px;
+  }
+  .Atags {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+
+  .Atags::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: -10px;
+    left: 0;
+    background-color: #fd292f;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .Atags:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  .BuyButton2 {
+    display: block;
+    position: fixed;
+    right: 40px;
+    top: 15px;
+    appearance: none;
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 25%;
+
+    height: 40px;
+    width: 170px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton2:disabled {
+    pointer-events: none;
+  }
+  .BuyButton2:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  /***     ***/
+
+  /***   Location     ***/
+  .Location {
+    width: 100%;
+    padding-top: 65px;
+    position: relative;
+  }
+  .Locationh3Div {
+    margin-left: 5.8%;
+  }
+  .GoogleMapDiv {
+    width: 100%;
+    height: 30%;
+    border-radius: 10px;
+    /* margin-left: 5%; */
+    margin-top: 40px;
+  }
+  .GoogleMap {
+    width: 90%;
+    height: 500px;
+    margin-left: 5%;
+    border-radius: 15px;
+  }
+  .DetailsButton {
+    appearance: none;
+    background-color: #fd292f;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    height: 35px;
+    width: 125px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .DetailsButton:disabled {
+    pointer-events: none;
+  }
+  .DetailsButton:hover {
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .DetailsButtonDiv {
+    /* margin-top: 20px;
+  margin-left: 45%; */
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+  /***    ***/
+
+  /***    Transactions   ***/
+  .Transactions {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 160px;
+  }
+  .Transactionsh3Div {
+    margin-left: 1%;
+  }
+  .TransactionsInfo {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .TransactionsHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .TransactionsInformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .TimeDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 7%;
+  }
+  .Timeh4 {
+    font-size: 16px;
+  }
+  .OverFlowh4 {
+    font-size: 16px;
+  }
+  .OverFlowDiv {
+    /* width: 80px; */
+    white-space: nowrap;
+    overflow-x: scroll;
+    width: 15%;
+  }
+  .OverFlowDiv::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .OverFlowDiv::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .OverFlowDiv::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .OverFlowDiv::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .TransactionsShowAllBtn {
+    appearance: none;
+    background-color: #fd292f;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    height: 40px;
+    width: 145px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .TransactionsShowAllBtn:disabled {
+    pointer-events: none;
+  }
+  .TransactionsShowAllBtn:hover {
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .TransactionsShowAllBtnDiv {
+    padding: 40px;
+    margin: auto;
+  }
+  /***    ***/
+}
+@media (max-width: 620px) {
+  /***   Hide Menu  ***/
+  .scroll-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    display: none; /* initially hide the div */
+    border-bottom: 1px solid black;
+    z-index: 9999;
+  }
+  .Atag {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    margin-top: 25px;
+    margin-left: 20px;
+  }
+  .Atags {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  .Atags::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: -10px;
+    left: 0;
+    background-color: #fd292f;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .Atags:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  .BuyButton2 {
+    display: block;
+    position: fixed;
+    right: 40px;
+    top: 20px;
+    appearance: none;
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    /* margin-left:-100px; */
+
+    height: 35px;
+    width: 20%;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton2:disabled {
+    pointer-events: none;
+  }
+  .BuyButton2:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  /***     ***/
+
+  /***   Location     ***/
+  .Location {
+    width: 100%;
+    padding-top: 65px;
+    position: relative;
+  }
+  .Locationh3Div {
+    margin-left: 5.8%;
+  }
+  .GoogleMapDiv {
+    width: 90%;
+    border-radius: 10px;
+    margin-left: 5%;
+    margin-top: 40px;
+  }
+  .GoogleMap {
+    width: 100%;
+    height: 400px;
+    border-radius: 15px;
+  }
+  .DetailsButton {
+    appearance: none;
+    background-color: #fd292f;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    height: 35px;
+    width: 125px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .DetailsButton:disabled {
+    pointer-events: none;
+  }
+  .DetailsButton:hover {
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .DetailsButtonDiv {
+    /* margin-top: 20px;
+  margin-left: 45%; */
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+  /***    ***/
+
+  /***    Transactions   ***/
+  .Transactions {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 160px;
+  }
+  .Transactionsh3Div {
+    margin-left: 1%;
+  }
+  .TransactionsInfo {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .TransactionsHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .TransactionsInformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .TimeDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+  }
+  .Timeh4 {
+    font-size: 10px;
+  }
+  .OverFlowh4 {
+    font-size: 10px;
+  }
+  .OverFlowDiv {
+    /* width: 80px; */
+    white-space: nowrap;
+    overflow-x: scroll;
+    width: 15%;
+  }
+  .OverFlowDiv::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .OverFlowDiv::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .OverFlowDiv::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .OverFlowDiv::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .TransactionsShowAllBtn {
+    appearance: none;
+    background-color: #fd292f;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    height: 40px;
+    width: 125px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .TransactionsShowAllBtn:disabled {
+    pointer-events: none;
+  }
+  .TransactionsShowAllBtn:hover {
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .TransactionsShowAllBtnDiv {
+    padding: 40px;
+    margin: auto;
+  }
+  /***    ***/
+}
+@media (min-width: 570px) {
+}
+@media (max-width: 570px) {
+  /***  Metrage And Price   ***/
+  .MeterageAndPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .Meterage {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 10%;
+  }
+  .Meterageh3 {
+    font-size: 1.5rem;
+    position: relative;
+    top: 25px;
+  }
+
+  .HomeInformations {
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .HomeInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .MeterageIcons {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .MeterageIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .NumberMeterage {
+    margin-top: 10px;
+    width: 55px;
+    height: 30px;
+    border-radius: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberMeterage2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 12px;
+  }
+  .HoseCombination {
+    width: 60px;
+    text-align: center;
+  }
+  .NumberInformation {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .NumberInformationh6 {
+    margin-top: 7px;
+    margin-left: 10px;
+  }
+  .Meteragehr {
+    width: 60%;
+    margin: auto;
+  }
+  .Total {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 27%;
+  }
+  .Totalh5 {
+    font-weight: bolder;
+  }
+
+  .Price {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-top: 60px;
+    /* position: sticky;
+  top: 80px;*/
+    margin-left: 10%;
+    /*margin-top: -635px;*/
+  }
+  .Priceh3 {
+    font-size: 1.5rem;
+    margin-top: 0px;
+  }
+  .PriceInfo {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 25px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+    height: 528px;
+    background-color: #fff;
+  }
+  .LandlessAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .LandlessAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .LandlessAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .LandlessAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .LandlessAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .DocumentAds {
+    width: 100px;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .DocumentAds2::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .DocumentAds2::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .DocumentAds2::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .DocumentAds2::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to right, #fd292f, black);
+    border-radius: 15px;
+  }
+  .PriceDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .BuyButton {
+    appearance: none;
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 15%;
+    height: 40px;
+    width: 70%;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton:disabled {
+    pointer-events: none;
+  }
+  .BuyButton:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  .Priceh5Div {
+    margin: auto;
+    width: 70%;
+    height: auto;
+    /* overflow:visible; */
+  }
+  .Priceh5 {
+    margin: 0;
+  }
+  .PriceH3 {
+    margin: 0;
+  }
+  .Priceh5Div {
+    margin: auto;
+    width: 70%;
+    height: auto;
+  }
+  .Priceh5 {
+    margin: 0;
+  }
+  .PriceH3 {
+    margin: 0;
+  }
+  .TotalPrice {
+    margin-top: -10px;
+    padding: 0px;
+  }
+  .Pricehr {
+    width: 60%;
+  }
+  /***   ***/
+
+  /****   Accessability    ***/
+  .Accessability {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid; */
+    width: 85%;
+    margin-top: 30px;
+    margin-left: 7%;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 650px;
+  }
+  .Accessabilityp::-webkit-scrollbar {
+    height: 15px;
+    background-color: #fff;
+  }
+  .Accessabilityp::-webkit-scrollbar:hover {
+    height: 25px;
+  }
+  .Accessabilityp::-webkit-scrollbar-track {
+    height: 8px;
+    border-radius: 10px;
+  }
+  .Accessabilityp::-webkit-scrollbar-thumb {
+    height: 5px;
+    border: 4px solid #fff;
+    background: linear-gradient(to top, #fd292f, black);
+    border-radius: 15px;
+  }
+  .Accessabilityp {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .Accessabilityhr {
+    color: black;
+    /* height: 2px; */
+    width: 80%;
+  }
+  /***    ***/
+
+  /***   Facilities   ***/
+  .Facilities {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-top: 25px;
+    margin-left: 10%;
+  }
+  .FacilitiesInfo {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .FacilitiesInformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* margin-top: 30px; */
+  }
+  .FacilitiesInformation2 {
+    margin-top: 15px;
+  }
+  .FacilitiesInformation3 {
+    margin-top: -15px;
+  }
+  .FacilitiesIcons {
+    width: 40px;
+    height: 40px;
+  }
+  .FacilitiesIcons:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+  .Facilitiesh5 {
+    width: 62px;
+    text-align: center;
+  }
+
+  /***    ***/
+
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 390px;
+    height: 500px;
+  }
+  .Pic123 {
+    width: 390px;
+    height: 375px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: row;
+    width: 390px;
+    height: 125px;
+  }
+  .Pic45 {
+    width: 390px;
+    height: 125px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 390px;
+    height: 250px;
+  }
+  .Pic2 {
+    width: 195px;
+    height: 125px;
+  }
+  .Pic3 {
+    width: 195px;
+    height: 125px;
+  }
+  .Pic4 {
+    width: 195px;
+    height: 125px;
+  }
+  .Pic5 {
+    width: 195px;
+    height: 125px;
+  }
+  .ShowAllDiv {
+    margin-top: -95px;
+    margin-left: 41px;
+  }
+  /***   ***/
+}
+
+@media (max-width: 540px) {
+  .column1 {
+    order: 1;
+    position: relative;
+    top: 5px;
+    left: 10px;
+  }
+  .column2 {
+    order: 3;
+    position: relative;
+    bottom: 70px;
+    left: 60px;
+  }
+  .column3 {
+    order: 2;
+    position: relative;
+    bottom: 75px;
+    left: 30%;
+  }
+  .EthCon {
+    width: 430px;
+  }
+}
+@media (min-width: 445px) {
+  .logoimg {
+    width: 45px;
+    height: 70px;
+    position: relative;
+    top: -10px;
+    left: 0;
+  }
+  .ethPriceDiv {
+    position: relative;
+    top: 0.5rem;
+    left: 0;
+    width: 110px;
+    height: 33px;
+  }
+  .ethPrice {
+    position: relative;
+    bottom: 0.3em;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .connectValletDiv {
+    position: relative;
+    top: 8px;
+    left: 0;
+  }
+  .hambermenu {
+    margin-top: 3px;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .summary::before {
+    content: "";
+    position: relative;
+    top: -6px;
+    font-size: 2.9rem;
+  }
+  .summary::after {
+    position: relative;
+    top: -10px;
+    font-size: 2.5rem;
+    content: "III";
+    letter-spacing: -1px;
+  }
+  .Icons {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 20px;
+  }
+}
+@media (max-width: 445px) {
+  .logoimg {
+    width: 40px;
+    height: 60px;
+    position: relative;
+    top: -10px;
+    left: 20px;
+  }
+  .column2 {
+    position: relative;
+    bottom: 62px;
+    left: 50px;
+  }
+  .column3 {
+    order: 2;
+    position: relative;
+    bottom: 78px;
+    left: 30%;
+  }
+  .EthCon {
+    width: 240px;
+  }
+  .ethPriceDiv {
+    position: relative;
+    top: 1em;
+    left: 2em;
+    width: 110px;
+    height: 33px;
+  }
+  .ethPrice {
+    position: relative;
+    bottom: 0.25em;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .Eth1 {
+    margin-top: 0px;
+    font-size: 1em;
+  }
+  .connectValletDiv {
+    position: relative;
+    top: 1em;
+    left: 1em;
+  }
+  .menuDiv {
+    width: 20px;
+    margin-left: 10px;
+  }
+  .hambermenu {
+    margin-top: 6px;
+    position: relative;
+    top: 0.3em;
+    right: 30px;
+  }
+  .summary::before {
+    content: "";
+    position: relative;
+    top: -6px;
+    font-size: 2.7rem;
+  }
+  .summary::after {
+    position: relative;
+    top: -10px;
+    font-size: 2.4rem;
+    content: "III";
+    letter-spacing: -1px;
+  }
+  .Icon {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+  }
+  .Icon:hover {
+    transition: 0.2s;
+    transform: scale(1.1);
+  }
+
+  .VillaName {
+    font-size: 1.5rem;
+  }
+  .StrVilla {
+    font-size: 0.8rem;
+    margin-left: 5px;
+    margin-top: -15px;
+    color: #9ca1a8;
+  }
+  .Icons {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 20px;
+  }
+}
+@media (max-width: 390px) {
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 350px;
+    height: 460px;
+  }
+  .Pic123 {
+    width: 350px;
+    height: 345px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: row;
+    width: 350px;
+    height: 115px;
+  }
+  .Pic45 {
+    width: 390px;
+    height: 115px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 350px;
+    height: 230px;
+  }
+  .Pic2 {
+    width: 175px;
+    height: 115px;
+  }
+  .Pic3 {
+    width: 175px;
+    height: 115px;
+  }
+  .Pic4 {
+    width: 175px;
+    height: 115px;
+  }
+  .Pic5 {
+    width: 175px;
+    height: 115px;
+  }
+  .ShowAllDiv {
+    margin-top: -92px;
+    margin-left: 31px;
+  }
+  /***   ***/
+}
+
+@media (min-width: 390px) {
+  /* search input */
+  .search {
+    border: 2px solid #1a1a1a;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    min-width: 50%;
+    /* width:90%; */
+    height: 35px;
+    background-color: white;
+    border-radius: 25px;
+    margin-top: 12px;
+  }
+  .search_text {
+    width: 90%;
+    border: none;
+    margin-left: 0px;
+    font-size: 0.8rem;
+    font-family: "Roboto", sans-serif;
+    line-height: 24px;
+    font-weight: Regular;
+  }
+  .search_icon {
+    /* position: relative; */
+    margin-left: 25%;
+    margin-right: 10px;
+  }
+  .search_text:focus + .search_icon {
+    color: #fd292f;
+  }
+
+  .text_and-icon {
+    width: 410px;
+    display: flex;
+    align-items: center;
+  }
+  .search_text:focus {
+    outline: none !important;
+  }
+
+  .connectVallet {
+    appearance: none;
+    background-color: #fd292f;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    height: 35px;
+    width: 113px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .menu {
+    font-size: 1.2rem;
+    height: 0;
+    width: 160px;
+  }
+}
+@media (max-width: 390px) {
+  .logoimg {
+    width: 40px;
+    height: 60px;
+    position: relative;
+    top: -10px;
+    left: 20px;
+  }
+  .column2 {
+    position: relative;
+    bottom: 56px;
+    left: 10px;
+    width: 180%;
+  }
+  .column3 {
+    order: 2;
+    position: relative;
+    bottom: 78px;
+    left: 30%;
+  }
+  .ethPrice {
+    position: relative;
+    bottom: -0.1em;
+    text-align: center;
+    font-size: 0.6rem;
+  }
+  .connectValletDiv {
+    position: relative;
+    top: 1em;
+    left: 0.1em;
+  }
+
+  /* search input */
+  .search {
+    border: 2px solid #1a1a1a;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    min-width: 50%;
+    /* width:90%; */
+    height: 35px;
+    background-color: white;
+    border-radius: 25px;
+    margin-top: 6px;
+  }
+  .search_text {
+    width: 90%;
+    border: none;
+    margin-left: 0px;
+    font-size: 0.7rem;
+    font-family: "Roboto", sans-serif;
+    line-height: 24px;
+    font-weight: Regular;
+  }
+  .search_icon {
+    /* position: relative; */
+    margin-left: 25%;
+    margin-right: 10px;
+  }
+  .search_text:focus + .search_icon {
+    color: #fd292f;
+  }
+
+  .text_and-icon {
+    width: 410px;
+    display: flex;
+    align-items: center;
+  }
+  .search_text:focus {
+    outline: none !important;
+  }
+
+  .ethPriceDiv {
+    position: relative;
+    top: 1em;
+    left: 1.4em;
+    width: 90px;
+    height: 33px;
+  }
+  .Eth1 {
+    margin-top: 0px;
+    font-size: 0.1rem;
+  }
+  .connectVallet {
+    appearance: none;
+    background-color: #fd292f;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    height: 35px;
+    width: 113px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .hambermenu {
+    margin-top: 5px;
+    position: relative;
+    top: 0.3em;
+    right: 55px;
+  }
+  .summary::before {
+    content: "";
+    position: relative;
+    top: 26px;
+    font-size: 2.7rem;
+  }
+  .summary::after {
+    position: relative;
+    top: -10px;
+    font-size: 2.5rem;
+    content: "III";
+    letter-spacing: -1px;
+  }
+  .menu {
+    font-size: 0.9rem;
+    height: 0;
+    width: 140px;
+  }
+}
+@media (max-width: 350px) {
+  /***   Gallery  ***/
+  .Gallery {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 290px;
+    height: 480px;
+  }
+  .Pic123 {
+    width: 290px;
+    height: 285px;
+    display: flex;
+    flex-direction: column;
+  }
+  .Pic23 {
+    display: flex;
+    flex-direction: row;
+    width: 290px;
+    height: 95px;
+  }
+  .Pic45 {
+    width: 290px;
+    height: 95px;
+    display: flex;
+    flex-direction: row;
+  }
+  .Pic1 {
+    width: 290px;
+    height: 190px;
+  }
+  .Pic2 {
+    width: 145px;
+    height: 95px;
+  }
+  .Pic3 {
+    width: 145px;
+    height: 95px;
+  }
+  .Pic4 {
+    width: 145px;
+    height: 95px;
+  }
+  .Pic5 {
+    width: 145px;
+    height: 95px;
+  }
+  .ShowAllDiv {
+    margin-top: -80px;
+    margin-left: 15px;
+  }
+  /***   ***/
+
+  /***   Hide Menu  ***/
+  .scroll-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    display: none; /* initially hide the div */
+    border-bottom: 1px solid black;
+    z-index: 9999;
+  }
+  .Atag {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    margin-top: 25px;
+    margin-left: 20px;
+  }
+  .Atags {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 10px;
+  }
+
+  .Atags::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: -10px;
+    left: 0;
+    background-color: #fd292f;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .Atags:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  .BuyButton2 {
+    display: block;
+    position: fixed;
+    right: 40px;
+    top: 20px;
+    appearance: none;
+    background: linear-gradient(to right, #fd292f, #a90206);
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: normal;
+    /* margin-left:-100px; */
+
+    height: 35px;
+    width: 20%;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  .BuyButton2:disabled {
+    pointer-events: none;
+  }
+  .BuyButton2:hover {
+    background: linear-gradient(to left, #fd292f, #fa4753);
+    color: #fff;
+    box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  /***     ***/
+}
+/***    ***/
+
+/* ***Head*** */
+.Header {
+  background-color: white;
+  border-bottom: 0.1px solid black;
+}
+
+/* Logo */
+.nameDiv {
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+}
+.Strong {
+  font-size: 2.4rem;
+}
+/*   */
+
+/* Eth price */
+.ethPriceDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 2px solid #1a1a1a;
+  margin-right: 2em;
+  margin-top: 6px;
+  border-radius: 5px;
+}
+/*    */
+
+/* Connect Wallet */
+.connectValletDiv {
+  margin-right: 2em;
+  margin-top: 6px;
+}
+
+.connectVallet:disabled {
+  pointer-events: none;
+}
+.connectVallet:hover {
+  color: #fff;
+  box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+/*    */
+
+/* menu */
+.hambermenu {
+  background-color: var(--primColor);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+.details[open] .menu {
+  animation-name: menuAnim;
+}
+.details[open] summary::before {
+  content: "X";
+}
+.details[open] summary::after {
+  content: "";
+}
+
+.details::before {
+  color: var(--secoColor);
+  position: absolute;
+  margin-left: 80px;
+  padding: 10px 10px;
+  opacity: 0.4;
+}
+.details[open]::before {
+  animation: fadeMe 300ms linear forwards;
+}
+.summary {
+  writing-mode: vertical-lr;
+  text-align: center;
+  padding: 12px 10px;
+  border: 2px solid var(--secoColor);
+  border-radius: var(--cornerRad);
+  color: var(--secoColor);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: transform 200ms ease-in-out 0s;
+}
+.summary::before,
+.summary::after {
+  position: static;
+  top: 0;
+  left: 0;
+}
+.summary:hover {
+  transform: scale(1.1);
+}
+.summary::marker {
+  font-size: 0;
+}
+.summary::-webkit-details-marker {
+  display: none;
+}
+.menu {
+  z-index: 9999;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  animation: closeMenu 300ms ease-in-out forwards;
+  position: fixed;
+  right: 30px;
+  top: 69px;
+}
+.menu a {
+  padding: 12px 14px;
+  margin: 0 16px;
+  color: var(--secoColor);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  text-align: center;
+  transition: filter 200ms linear 0s;
+}
+.menu a:nth-of-type(1) {
+  padding-top: 20px;
+}
+.menu a:nth-last-of-type(1) {
+  border-bottom: none;
+}
+.menu a:hover {
+  filter: brightness(200%);
+  color: #5e6573;
+}
+@keyframes menuAnim {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 180px;
+  }
+}
+@keyframes fadeMe {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*    */
+
+/***   ***/
+
+/***   Gallery  ***/
+.Pictures {
+  width: 96%;
+  height: 96%;
+  margin: 2%;
+  filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.1)) sepia(10%);
+  cursor: pointer;
+}
+.Pictures:hover {
+  transform: scale(1.02);
+  transition: 0.3s;
+  filter: drop-shadow(1px 1px 10px rgb(0, 0, 0, 0.3)) sepia(5%);
+  /* background-color:rgba(0, 0, 0, 0.5); */
+}
+
+.ShowAll {
+  appearance: none;
+  background-color: #fd292f;
+  border: 2px solid #1a1a1a;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  height: 35px;
+  width: 113px;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+.ShowAll:disabled {
+  pointer-events: none;
+}
+.ShowAll:hover {
+  color: #fff;
+  box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+}
+/***    ***/
+
+/***  Gallery  ***/
+.ShowAllh3 {
+  filter: contrast(100%);
+  margin-left: 7%;
+  color: black;
+  z-index: 9999;
+  cursor: pointer;
+}
+.ShowAllh3:hover {
+  z-index: -1;
+}
+/***   ***/
+
+.IconAndH6 {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.IconAndH6:hover {
+  color: #1a1a1a;
+  transition: 0.2s;
+}
+.IconH6 {
+  margin-top: 2px;
+}
+
+.test {
+  height: 2000px;
+  /*position: sticky;
+  top: 10px;*/
+  z-index: 99999;
+}
