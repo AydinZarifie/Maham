@@ -38,6 +38,12 @@ const estateRoomsSchema = new mongoose.Schema({
     guestRoom_size: {
         type: Number,
     },
+    livingroom: {
+        type: Boolean,
+    },
+    livingroom_count: {
+        type: Number,
+    },
     livingroom_size: {
         type: Number,
     },
@@ -70,6 +76,9 @@ const estateRoomsSchema = new mongoose.Schema({
     },
     garage: {
         type: Boolean,
+    },
+    garage_count: {
+        type: Number,
     },
     garage_size: {
         type: Number,
