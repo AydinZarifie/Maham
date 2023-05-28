@@ -1,5 +1,3 @@
-//structure formatting
-
 import "./styles/global.css";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -41,12 +39,12 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: <NewEstate />,
-            action: manipulateEstateAction,
+            // action: manipulateEstateAction,
           },
           {
             path: ":estateId",
             element: <EditState />,
-            action: manipulateEstateAction,
+            // action: manipulateEstateAction,
           },
         ],
       },
