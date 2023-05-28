@@ -77,6 +77,17 @@ export async function action({ request, params }) {
 
   formData.append("description", data.get("description"));
 
+  // for (const value of data.values()) {
+  //   console.log(value);
+  // }
+  // console.log(data.get("imageInput").files[0]);
+  // console.log( $('input[type=file]')[0].files[0]);
+  
+
+  // for(let i=0;i<data.get("imageInput").length;i++){
+  //   console.log("hello");
+  // }
+
   let url =
     "https://react2-7c43a-default-rtdb.asia-southeast1.firebasedatabase.app/estates.json";
 
@@ -86,6 +97,8 @@ export async function action({ request, params }) {
       "https://react2-7c43a-default-rtdb.asia-southeast1.firebasedatabase.app/estates.json" +
       estateId;
   }
+
+
 
   const response = await fetch(url, {
     method: method,
