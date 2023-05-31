@@ -89,8 +89,8 @@ const ConfingEstate = ({ method, estate }) => {
   });
   const [information, setInformation] = useState({
     title: estate ? estate.title : "",
-    countryName: estate ? estate.country : "Iran",
-    cityName: estate ? estate.city : "Tabriz",
+    countryName: estate ? estate.country : "",
+    cityName: estate ? estate.city : "",
     streetName: estate ? estate.streetName : "",
     plate: estate ? estate.plate : "",
     numberOfPlate: estate ? estate.plateNumber : "",
@@ -98,7 +98,7 @@ const ConfingEstate = ({ method, estate }) => {
     numberOfUnit: estate ? estate.unit : "",
     location: estate ? estate.location : "",
 
-    type: estate ? estate.type : "residential",
+    type: estate ? estate.type : "",
 
     description: estate ? estate.description : "",
   });
@@ -288,40 +288,58 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("type", information.type);
 
     formData.append("checkBedroom", bedroom.checked);
-    formData.append("numberBedroom", bedroom.number);
-    formData.append("metrageBedroom", bedroom.metrage);
+    if (bedroom.checked) {
+      formData.append("numberBedroom", bedroom.number);
+      formData.append("metrageBedroom", bedroom.metrage);
+    }
 
     formData.append("checkLivingRoom", livingRoom.checked);
-    formData.append("numberLivingRoom", livingRoom.number);
-    formData.append("metrageLivingRoom", livingRoom.metrage);
+    if (livingRoom.checked) {
+      formData.append("numberLivingRoom", livingRoom.number);
+      formData.append("metrageLivingRoom", livingRoom.metrage);
+    }
 
     formData.append("checkKitchen", kitchen.checked);
-    formData.append("numberKitchen", kitchen.number);
-    formData.append("metrageKitchen", kitchen.metrage);
+    if (kitchen.checked) {
+      formData.append("numberKitchen", kitchen.number);
+      formData.append("metrageKitchen", kitchen.metrage);
+    }
 
     formData.append("checkDiningroom", diningroom.checked);
-    formData.append("numberDiningroom", diningroom.number);
-    formData.append("metrageDiningroom", diningroom.metrage);
+    if (diningroom.checked) {
+      formData.append("numberDiningroom", diningroom.number);
+      formData.append("metrageDiningroom", diningroom.metrage);
+    }
 
     formData.append("checkGuestroom", guestroom.checked);
-    formData.append("numberGuestroom", guestroom.number);
-    formData.append("metrageGuestroom", guestroom.metrage);
+    if (guestroom.checked) {
+      formData.append("numberGuestroom", guestroom.number);
+      formData.append("metrageGuestroom", guestroom.metrage);
+    }
 
     formData.append("checkBathroom", bathroom.checked);
-    formData.append("numberBathroom", bathroom.number);
-    formData.append("metrageBathroom", bathroom.metrage);
+    if (bathroom.checked) {
+      formData.append("numberBathroom", bathroom.number);
+      formData.append("metrageBathroom", bathroom.metrage);
+    }
 
     formData.append("checkGarden", garden.checked);
-    formData.append("numberGarden", garden.number);
-    formData.append("metrageGarden", garden.metrage);
+    if (garden.checked) {
+      formData.append("numberGarden", garden.number);
+      formData.append("metrageGarden", garden.metrage);
+    }
 
     formData.append("checkBalcony", balcony.checked);
-    formData.append("numberBalcony", balcony.number);
-    formData.append("metrageBalcony", balcony.metrage);
+    if (balcony.checked) {
+      formData.append("numberBalcony", balcony.number);
+      formData.append("metrageBalcony", balcony.metrage);
+    }
 
     formData.append("checkGarage", garage.checked);
-    formData.append("numberGarage", garage.number);
-    formData.append("metrageGarage", garage.metrage);
+    if (garage.checked) {
+      formData.append("numberGarage", garage.number);
+      formData.append("metrageGarage", garage.metrage);
+    }
 
     formData.append("checkWifi", facilities.wifi);
     formData.append("checkParking", facilities.parking);
@@ -357,7 +375,7 @@ const ConfingEstate = ({ method, estate }) => {
 
     console.log("finished submit");
 
-    navigate('/admin/estates')
+    navigate("/admin/estates");
   };
 
   return (
@@ -388,6 +406,7 @@ const ConfingEstate = ({ method, estate }) => {
                 onChange={basicEventHandler}
                 name="countryName"
               >
+                <option value="">Choose an option</option>
                 <option value="Iran">Iran</option>
                 <option value="United State">United State</option>
                 <option value="Turkey">Turkey</option>
@@ -404,6 +423,7 @@ const ConfingEstate = ({ method, estate }) => {
                 onChange={basicEventHandler}
                 name="cityName"
               >
+                <option value="">Choose an option</option>
                 <option value="Tabriz">Tabriz</option>
                 <option value="Tehran">Tehran</option>
                 <option value="Esfahan">Esfahan</option>
@@ -515,6 +535,7 @@ const ConfingEstate = ({ method, estate }) => {
           onChange={basicEventHandler}
           name="type"
         >
+          <option value="">Choose an option</option>
           <option value="residential">residential</option>
           <option value="commercial">commercial</option>
         </select>
@@ -545,30 +566,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={bedIcon} className={styles.Icons} />
                 </td>
                 <td>BedRoom</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={bedroom.number}
-                    onChange={bedroomEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={bedroom.metrage}
-                    onChange={bedroomEventHandler}
-                  />
-                </td>
+                {bedroom.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={bedroom.number}
+                        onChange={bedroomEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={bedroom.metrage}
+                        onChange={bedroomEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -589,30 +614,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={livingroomIcon} className={styles.Icons} />
                 </td>
                 <td>LivingRoom</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={livingRoom.number}
-                    onChange={livingRoomEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={livingRoom.metrage}
-                    onChange={livingRoomEventHandler}
-                  />
-                </td>
+                {livingRoom.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={livingRoom.number}
+                        onChange={livingRoomEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={livingRoom.metrage}
+                        onChange={livingRoomEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -633,30 +662,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={kitchenIcon} className={styles.Icons} />
                 </td>
                 <td>Kitchen</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={kitchen.number}
-                    onChange={kitchenEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={kitchen.metrage}
-                    onChange={kitchenEventHandler}
-                  />
-                </td>
+                {kitchen.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={kitchen.number}
+                        onChange={kitchenEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={kitchen.metrage}
+                        onChange={kitchenEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -677,30 +710,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={diningroomIcon} className={styles.Icons} />
                 </td>
                 <td>DiningRoom</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={diningroom.number}
-                    onChange={diningroomEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={diningroom.metrage}
-                    onChange={diningroomEventHandler}
-                  />
-                </td>
+                {diningroom.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={diningroom.number}
+                        onChange={diningroomEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={diningroom.metrage}
+                        onChange={diningroomEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -721,30 +758,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={guestIcon} className={styles.Icons} />
                 </td>
                 <td>GuestRoom</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={guestroom.number}
-                    onChange={guestroomEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={guestroom.metrage}
-                    onChange={guestroomEventHandler}
-                  />
-                </td>
+                {guestroom.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={guestroom.number}
+                        onChange={guestroomEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={guestroom.metrage}
+                        onChange={guestroomEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -765,30 +806,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={bathroomIcon} className={styles.Icons} />
                 </td>
                 <td>BathRoom</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={bathroom.number}
-                    onChange={bathroomEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={bathroom.metrage}
-                    onChange={bathroomEventHandler}
-                  />
-                </td>
+                {bathroom.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={bathroom.number}
+                        onChange={bathroomEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={bathroom.metrage}
+                        onChange={bathroomEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -809,30 +854,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={gardenIcon} className={styles.Icons} />
                 </td>
                 <td>Garden</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={garden.number}
-                    onChange={gardenEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={garden.metrage}
-                    onChange={gardenEventHandler}
-                  />
-                </td>
+                {garden.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={garden.number}
+                        onChange={gardenEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={garden.metrage}
+                        onChange={gardenEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -853,30 +902,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={balconyIcon} className={styles.Icons} />
                 </td>
                 <td>Balcony</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={balcony.number}
-                    onChange={balconyEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={balcony.metrage}
-                    onChange={balconyEventHandler}
-                  />
-                </td>
+                {balcony.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={balcony.number}
+                        onChange={balconyEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={balcony.metrage}
+                        onChange={balconyEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
               <tr>
                 <td>
@@ -897,30 +950,34 @@ const ConfingEstate = ({ method, estate }) => {
                   <img src={garageIcon} className={styles.Icons} />
                 </td>
                 <td>Garage</td>
-                <td>
-                  <label htmlFor="Number">Number:</label>
-                  <input
-                    type="number"
-                    name="number"
-                    min="0"
-                    id="Number"
-                    className={styles.Inputs}
-                    value={garage.number}
-                    onChange={garageEventHandler}
-                  />
-                </td>
-                <td>
-                  <label htmlFor="Metrage">Metrage:</label>
-                  <input
-                    type="number"
-                    name="metrage"
-                    min="0"
-                    id="Metrage"
-                    className={styles.Inputs}
-                    value={garage.metrage}
-                    onChange={garageEventHandler}
-                  />
-                </td>
+                {garage.checked && (
+                  <>
+                    <td>
+                      <label htmlFor="Number">Number:</label>
+                      <input
+                        type="number"
+                        name="number"
+                        min="0"
+                        id="Number"
+                        className={styles.Inputs}
+                        value={garage.number}
+                        onChange={garageEventHandler}
+                      />
+                    </td>
+                    <td>
+                      <label htmlFor="Metrage">Metrage:</label>
+                      <input
+                        type="number"
+                        name="metrage"
+                        min="0"
+                        id="Metrage"
+                        className={styles.Inputs}
+                        value={garage.metrage}
+                        onChange={garageEventHandler}
+                      />
+                    </td>
+                  </>
+                )}
               </tr>
             </tbody>
           </table>
