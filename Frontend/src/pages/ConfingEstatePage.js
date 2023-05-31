@@ -1,30 +1,35 @@
-import styles from "../../styles/Add_Estate.module.css";
+import styles from "../styles/Add_Estate.module.css";
 
-import balconyIcon from "../../images/balcony-svgrepo-com.svg";
-import bathroomIcon from "../../images/bathroom-svgrepo-com.svg";
-import bbqIcon from "../../images/bbq-svgrepo-com.svg";
-import bedIcon from "../../images/bed-bedroom-furniture-hotel-sleep-svgrepo-com.svg";
-import diningroomIcon from "../../images/dining-room-svgrepo-com.svg";
-import elevatorIcon from "../../images/elevator-1-svgrepo-com.svg";
-import furintureIcon from "../../images/furniture-svgrepo-com.svg";
-import garageIcon from "../../images/garage-svgrepo-com.svg";
-import gardenIcon from "../../images/garden-planting-flower-svgrepo-com.svg";
-import guestIcon from "../../images/guest-svgrepo-com.svg";
-import gymIcon from "../../images/gym-workout-svgrepo-com.svg";
-import kitchenIcon from "../../images/kitchen-room-svgrepo-com.svg";
-import laundryIcon from "../../images/laundry-svgrepo-com.svg";
-import livingroomIcon from "../../images/livingroom-svgrepo-com.svg";
-import parkingIcon from "../../images/parking-svgrepo-com.svg";
-import poolIcon from "../../images/pool-svgrepo-com.svg";
-import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
-import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
-import woodenFenceIcon from "../../images/wooden-fence-svgrepo-com.svg";
-import { Form, json, redirect, useSubmit } from "react-router-dom";
+import balconyIcon from "../images/balcony-svgrepo-com.svg";
+import bathroomIcon from "../images/bathroom-svgrepo-com.svg";
+import bbqIcon from "../images/bbq-svgrepo-com.svg";
+import bedIcon from "../images/bed-bedroom-furniture-hotel-sleep-svgrepo-com.svg";
+import diningroomIcon from "../images/dining-room-svgrepo-com.svg";
+import elevatorIcon from "../images/elevator-1-svgrepo-com.svg";
+import furintureIcon from "../images/furniture-svgrepo-com.svg";
+import garageIcon from "../images/garage-svgrepo-com.svg";
+import gardenIcon from "../images/garden-planting-flower-svgrepo-com.svg";
+import guestIcon from "../images/guest-svgrepo-com.svg";
+import gymIcon from "../images/gym-workout-svgrepo-com.svg";
+import kitchenIcon from "../images/kitchen-room-svgrepo-com.svg";
+import laundryIcon from "../images/laundry-svgrepo-com.svg";
+import livingroomIcon from "../images/livingroom-svgrepo-com.svg";
+import parkingIcon from "../images/parking-svgrepo-com.svg";
+import poolIcon from "../images/pool-svgrepo-com.svg";
+import uploadIcon from "../images/upload-filled-svgrepo-com.svg";
+import wifiIcon from "../images/wifi-medium-svgrepo-com.svg";
+import woodenFenceIcon from "../images/wooden-fence-svgrepo-com.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ConfingEstate = ({ method, estate }) => {
+  const navigate = useNavigate();
+
   const [selectedImages, setSelectedImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
+
+  const [selectedVideo, setSelectedVideo] = useState([]);
+  const [previewUrl, setPreviewUrl] = useState([]);
 
   const [bedroom, setBedroom] = useState({
     checked: estate ? estate.bedroom.checked : false,
@@ -84,8 +89,8 @@ const ConfingEstate = ({ method, estate }) => {
   });
   const [information, setInformation] = useState({
     title: estate ? estate.title : "",
-    countryName: estate ? estate.country : "",
-    cityName: estate ? estate.city : "",
+    countryName: estate ? estate.country : "Iran",
+    cityName: estate ? estate.city : "Tabriz",
     streetName: estate ? estate.streetName : "",
     plate: estate ? estate.plate : "",
     numberOfPlate: estate ? estate.plateNumber : "",
@@ -93,7 +98,7 @@ const ConfingEstate = ({ method, estate }) => {
     numberOfUnit: estate ? estate.unit : "",
     location: estate ? estate.location : "",
 
-    type: estate ? estate.type : "",
+    type: estate ? estate.type : "residential",
 
     description: estate ? estate.description : "",
   });
@@ -107,7 +112,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function bedroomEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setBedroom((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setBedroom((prev) => ({
       ...prev,
       [name]: value,
@@ -115,7 +127,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function livingRoomEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setLivingroom((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setLivingroom((prev) => ({
       ...prev,
       [name]: value,
@@ -123,7 +142,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function kitchenEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setKitchen((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setKitchen((prev) => ({
       ...prev,
       [name]: value,
@@ -131,7 +157,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function diningroomEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setDiningroom((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setDiningroom((prev) => ({
       ...prev,
       [name]: value,
@@ -139,7 +172,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function guestroomEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setGuestroom((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setGuestroom((prev) => ({
       ...prev,
       [name]: value,
@@ -147,7 +187,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function bathroomEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setBathroom((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setBathroom((prev) => ({
       ...prev,
       [name]: value,
@@ -155,7 +202,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function gardenEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setGarden((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setGarden((prev) => ({
       ...prev,
       [name]: value,
@@ -163,7 +217,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function balconyEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setBalcony((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setBalcony((prev) => ({
       ...prev,
       [name]: value,
@@ -171,7 +232,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function garageEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
+    if (name == "checked") {
+      setGarage((prev) => ({
+        ...prev,
+        checked: checked,
+      }));
+      return;
+    }
     setGarage((prev) => ({
       ...prev,
       [name]: value,
@@ -179,47 +247,14 @@ const ConfingEstate = ({ method, estate }) => {
   }
 
   function facilitiesEventHandler(event) {
-    const { name, value } = event.target;
+    const { name, checked } = event.target;
     setfacilities((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: checked,
     }));
   }
 
   const imgHandler = (event) => {
-    // const files = event.target.files;
-    // const previews = [];
-
-    // for (let i = 0; i < files.length; i++) {
-    //   const file = files[i];
-    //   const reader = new FileReader();
-
-    //   reader.onload = () => {
-    //     previews.push(reader.result);
-    //     if (previews.length == files.length) {
-    //       setPreviewImages(previews);
-    //     }
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
-    // setSelectedImages(files);
-    // console.log(previewImages);
-
-    //======================
-
-    // const files = event.target.files;
-    // const selectedImagesArray = [];
-    // for (let i = 0; i < files.length; i++) {
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(files[i]);
-    //   reader.onloadend = () => {
-    //     selectedImagesArray.push(reader.result);
-    //     setSelectedImages(selectedImagesArray);
-    //   };
-    // }
-    // console.log(selectedImages);
-
-    //=========================
     const selectedFiles = Array.from(event.target.files);
     setSelectedImages(selectedFiles);
 
@@ -227,8 +262,16 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewImages(previewURLs);
   };
 
+  const vidHandler = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    setSelectedVideo(selectedFiles);
+
+    const previewURLs = selectedFiles.map((file) => URL.createObjectURL(file));
+    setPreviewUrl(previewURLs);
+  };
+
   const submitHandler = async (event) => {
-    console.log("hello");
+    console.log("entered submit handler");
     // event.preventDefault();
 
     const formData = new FormData();
@@ -296,6 +339,10 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("images", file);
     });
 
+    selectedVideo.forEach((file) => {
+      formData.append("video", file);
+    });
+
     let url = "url";
 
     if (method === "PATCH") {
@@ -308,11 +355,13 @@ const ConfingEstate = ({ method, estate }) => {
       body: formData,
     });
 
-    return redirect("/admin/estates");
+    console.log("finished submit");
+
+    navigate('/admin/estates')
   };
 
   return (
-    <form method={method}>
+    <form method={method} encType="multipart/form-data">
       <div className={styles.EstateInfo}>
         <div className={styles.wrapper}>
           <div className={styles.inputData}>
@@ -484,7 +533,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check1"
                       name="checked"
-                      value={bedroom.checked}
+                      checked={bedroom.checked}
                       onChange={bedroomEventHandler}
                     />
                     <label htmlFor="check1">
@@ -528,7 +577,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check2"
                       name="checked"
-                      value={livingRoom.checked}
+                      checked={livingRoom.checked}
                       onChange={livingRoomEventHandler}
                     />
                     <label htmlFor="check2">
@@ -572,7 +621,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check3"
                       name="checked"
-                      value={kitchen.checked}
+                      checked={kitchen.checked}
                       onChange={kitchenEventHandler}
                     />
                     <label htmlFor="check3">
@@ -616,7 +665,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check4"
                       name="checked"
-                      value={diningroom.checked}
+                      checked={diningroom.checked}
                       onChange={diningroomEventHandler}
                     />
                     <label htmlFor="check4">
@@ -660,7 +709,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check5"
                       name="checked"
-                      value={guestroom.checked}
+                      checked={guestroom.checked}
                       onChange={guestroomEventHandler}
                     />
                     <label htmlFor="check5">
@@ -704,7 +753,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check6"
                       name="checked"
-                      value={bathroom.checked}
+                      checked={bathroom.checked}
                       onChange={bathroomEventHandler}
                     />
                     <label htmlFor="check6">
@@ -748,7 +797,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check7"
                       name="checked"
-                      value={garden.checked}
+                      checked={garden.checked}
                       onChange={gardenEventHandler}
                     />
                     <label htmlFor="check7">
@@ -792,7 +841,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check8"
                       name="checked"
-                      value={balcony.checked}
+                      checked={balcony.checked}
                       onChange={balconyEventHandler}
                     />
                     <label htmlFor="check8">
@@ -836,7 +885,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check9"
                       name="checked"
-                      value={garage.checked}
+                      checked={garage.checked}
                       onChange={garageEventHandler}
                     />
                     <label htmlFor="check9">
@@ -890,7 +939,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check10"
                       name="wifi"
-                      value={facilities.wifi}
+                      checked={facilities.wifi}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check10">
@@ -912,7 +961,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check11"
                       name="parking"
-                      value={facilities.parking}
+                      checked={facilities.parking}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check11">
@@ -936,7 +985,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check12"
                       name="pool"
-                      value={facilities.pool}
+                      checked={facilities.pool}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check12">
@@ -958,7 +1007,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check13"
                       name="furniture"
-                      value={facilities.furniture}
+                      checked={facilities.furniture}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check13">
@@ -982,7 +1031,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check14"
                       name="elevator"
-                      value={facilities.elevator}
+                      checked={facilities.elevator}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check14">
@@ -1004,7 +1053,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check15"
                       name="garden"
-                      value={facilities.garden}
+                      checked={facilities.garden}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check15">
@@ -1028,7 +1077,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check16"
                       name="laundary"
-                      value={facilities.laundary}
+                      checked={facilities.laundary}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check16">
@@ -1050,7 +1099,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check17"
                       name="bbq"
-                      value={facilities.bbq}
+                      checked={facilities.bbq}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check17">
@@ -1074,7 +1123,7 @@ const ConfingEstate = ({ method, estate }) => {
                       type="checkbox"
                       id="check18"
                       name="gym"
-                      value={facilities.gym}
+                      checked={facilities.gym}
                       onChange={facilitiesEventHandler}
                     />
                     <label htmlFor="check18">
@@ -1164,17 +1213,34 @@ const ConfingEstate = ({ method, estate }) => {
               id="file-input2"
               multiple
               hidden
+              onChange={vidHandler}
             />
           </div>
           <div className={styles.previewContainer2} id="preview-container2">
-            <div id="UploadIcon" className={styles.uploadIcon}>
-              <div>
-                <img src={uploadIcon} className={styles.UploadIcon2} />
+            {selectedVideo.length == 0 && (
+              <div id="UploadIcon" className={styles.uploadIcon}>
+                <div>
+                  <img src={uploadIcon} className={styles.UploadIcon2} />
+                </div>
+                <div>
+                  <h3>Uploade Image and Show photos</h3>
+                </div>
               </div>
+            )}
+
+            {selectedVideo.length > 0 && (
               <div>
-                <h3>Uploade Image and Show photos</h3>
+                {previewUrl.map((vidURL) => (
+                  <video
+                    key={vidURL}
+                    src={vidURL}
+                    alt="Preview"
+                    width="200"
+                    controls
+                  />
+                ))}
               </div>
-            </div>
+            )}
           </div>
           <label htmlFor="file-input2" className={styles.ChooseLabel}>
             Choose Video
@@ -1183,8 +1249,8 @@ const ConfingEstate = ({ method, estate }) => {
 
         <button
           className={styles.AddButton}
-          type="Submit"
-          onSubmit={submitHandler}
+          type="button"
+          onClick={() => submitHandler()}
         >
           <span className={styles.text}>Add</span>
           <span>+</span>
