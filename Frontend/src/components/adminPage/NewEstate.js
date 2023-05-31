@@ -1,4 +1,4 @@
-import ConfingEstate from "./ConfingEstate";
+import ConfingEstate from "../../pages/ConfingEstatePage";
 
 const NewEstate = () => {
   return <ConfingEstate method="POST" />;
