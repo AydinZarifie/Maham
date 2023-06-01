@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const mainPage_Controller = require('../controllers/adminPage');
+const mainPage_Controller = require('../controllers/admin/adminPage');
 
 // 2023/05/8 >> changed the logic of written code to 'mounting the routes'
 //    "      >> added main functions to control estates
 router
     .route('/posts')
     .get(mainPage_Controller.getAllEstates)
-    .post(mainPage_Controller.checkBody, mainPage_Controller.createEstate);
+    .post(mainPage_Controller.createEstate);
 
 router
     .route('/posts/:id')

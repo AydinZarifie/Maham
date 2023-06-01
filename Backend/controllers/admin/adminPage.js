@@ -1,4 +1,4 @@
-const estateDB = require('../models/estate/estate');
+const estateDB = require('../../models/estate');
 
 //2023/05/08 added
 exports.checkBody = (req, res, next) => {
@@ -22,6 +22,8 @@ exports.getAllEstates = async (req, res) => {
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = (req, res) => {
+    console.log(req.body.checked);
+
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
@@ -33,8 +35,12 @@ exports.createEstate = (req, res) => {
         location: req.body.location,
         state_description: req.body.description,
         estate_type: req.body.type,
-        // imageUrl : req.body. ,
-        // introduction_video : req.body. ,
+        imageUrl: req.files.images.map((el) => {
+            el.path;
+        }),
+        introduction_video: req.files.video.map((el) => {
+            el.path;
+        }),
         // minor_street : req.body. ,
         // unit_number : req.body. ,
         // postal_code : req.body. ,
@@ -91,10 +97,11 @@ exports.createEstate = (req, res) => {
         // childcare_Center: req.body. ,
     };
 
+    console.log(inputs.bedroom);
     const estate = new estateDB({
         ///////////////////////////////////////////////////////////// setState :
         // stateId : ,
-        estate_title: inputs.city_name,
+        estate_title: inputs.estate_title,
         city_name: inputs.title,
         country_name: inputs.country_name,
         main_street: inputs.main_street,
@@ -107,7 +114,7 @@ exports.createEstate = (req, res) => {
         // unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
-        // imageUrl : inputs.imageUrl ,
+        //imageUrl : inputs.imageUrl ,
         // introduction_video : inputs.introduction_video ,
 
         ///////////////////////////////////////////////////////////// setRooms :
