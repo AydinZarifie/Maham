@@ -9,6 +9,7 @@ import Dashboard from "./components/adminPage/Dashboard";
 import Estates from "./components/adminPage/Estates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
+import Add from "./components/adminPage/Add";
 
 const router = createBrowserRouter([
   {
@@ -39,12 +40,12 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: <NewEstate />,
-            action: manipulateEstateAction,
+            // action: manipulateEstateAction,
           },
           {
             path: ":estateId",
             element: <EditState />,
-            action: manipulateEstateAction,
+            // action: manipulateEstateAction,
           },
         ],
       },

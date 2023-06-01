@@ -47,15 +47,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(upload.any('image'));
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', ['*']);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     next();
 });
+  
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 app.use('/admin', mainPage_Router);
 
+
+mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {
+  app.listen(5000, () => {
+      console.log(`Server is runing on port `);
+  });
+});
 ////////////////////////////////////////////////
 /* ERROR HANDLING  
 
