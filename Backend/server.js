@@ -1,18 +1,34 @@
-// 2023/05/08 added this file , this field is specified to starting the server
+// const mongoose = require('mongoose');
+// const dotenv = require('dotenv');
 
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+// dotenv.config({ path: './config.env' });
 
-dotenv.config({ path: './config.env' });
+// const app = require('./app');
+// const DB = process.env.DATABASE_LOCAL;
 
-const express = require('express');
-const app = express();
-const DB = process.env.LOCAL_DATABASE;
+// mongoose.connect('DB').then(() => {
+//     console.log(`DB connection sucessful`);
+//     app.listen(5000, () => {
+//         console.log(`Server is runing on port ${port}`);
+//     });
+// });
 
-const port = 3000;
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader(
+//         'Access-Control-Allow-Methods',
+//         'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+//     );
+//     res.setHeader(
+//         'Access-Control-Allow-Headers',
+//         'Content-Type, Authorization'
+//     );
+//     next();
+// });
 
-mongoose.connect(DB).then(() => {
-    app.listen(port, () => {
-        console.log(`Server is runing on port ${port}...!`);
-    });
-});
+// // console.log(process.env.NODE_ENV);
+
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//     console.log(`>>> listenning to the port ${port} ...`);
+// });
