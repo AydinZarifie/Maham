@@ -107,7 +107,7 @@ export default function ItemInAdmin(props) {
 
       <div className={styles.EditAndDelete}>
         <div>
-          <Link to={`/${props.id}`}>
+          <Link to={`${props.id}`}>
             <button className={styles.EditBtn} role="button">
               <span className={styles.text}>Edit</span>
               <span>

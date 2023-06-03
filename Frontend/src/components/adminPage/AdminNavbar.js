@@ -10,7 +10,6 @@ import notificationIcon from "../../images/notification-svgrepo-com.svg";
 import estateIcon from "../../images/real-estate-search-house-svgrepo-com.svg";
 import chatIcon from "../../images/chat-line-square-svgrepo-com.svg";
 import profileIcon from "../../images/profile-circle-svgrepo-com.svg";
-import { Link } from "react-router-dom";
 
 export default function AdminNavbar() {
   const Nav = useRef(null);
