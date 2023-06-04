@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FilterWithAdder from "./FilterWithAdder";
-import ItemsInAdmin from "./ItemsInAdmin";
+import FilterWithAdder from "../components/adminPage/FilterWithAdder";
+import ItemsInAdmin from "../components/adminPage/ItemsInAdmin";
 
 //dummy data
 // const data = [
@@ -30,7 +30,7 @@ export default function Estates() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("url")
+    fetch("http://localhost:5000/admin/posts")
       .then((response) => response.json())
       .then((data) => setData(data));
   }, []);

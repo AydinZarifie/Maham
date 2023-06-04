@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
 import AdminPage , {action as manipulateEstateAction} from "./pages/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
-import Estates from "./components/adminPage/Estates";
+import AdminEstates from "./pages/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
 
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         path: "estates",
         // element: <Estates />,
         children: [
-          { index: true, element: <Estates /> },
+          { index: true, element: <AdminEstates /> },
           {
             path: "new",
             element: <NewEstate />,
