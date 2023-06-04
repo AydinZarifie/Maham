@@ -32,67 +32,71 @@ const ConfingEstate = ({ method, estate }) => {
   const [previewUrl, setPreviewUrl] = useState([]);
 
   const [bedroom, setBedroom] = useState({
-    checked: estate ? estate.estate_rooms.bedroom : false,
-    number: estate ? estate.estate_rooms.bedroom_count : "",
-    metrage: estate ? estate.estate_rooms.bedroom_size : "",
+    checked: estate ? estate.estate_rooms[0].bedroom : false,
+    number: estate ? estate.estate_rooms[0].bedroom_count : "",
+    metrage: estate ? estate.estate_rooms[0].bedroom_size : "",
   });
   const [livingRoom, setLivingroom] = useState({
-    checked: estate ? estate.estate_rooms.livingroom : false,
-    number: estate ? estate.estate_rooms.livingroom_count : "",
-    metrage: estate ? estate.estate_rooms.livingroom_size : "",
+    checked: estate ? estate.estate_rooms[0].livingroom : false,
+    number: estate ? estate.estate_rooms[0].livingroom_count : "",
+    metrage: estate ? estate.estate_rooms[0].livingroom_size : "",
   });
   const [kitchen, setKitchen] = useState({
-    checked: estate ? estate.estate_rooms.kitchen : false,
-    number: estate ? estate.estate_rooms.kitchen_count : "",
-    metrage: estate ? estate.estate_rooms.kitchen_size : "",
+    checked: estate ? estate.estate_rooms[0].kitchen : false,
+    number: estate ? estate.estate_rooms[0].kitchen_count : "",
+    metrage: estate ? estate.estate_rooms[0].kitchen_size : "",
   });
   const [diningroom, setDiningroom] = useState({
-    checked: estate ? estate.estate_rooms.diningRoom : false,
-    number: estate ? estate.estate_rooms.diningRoom_count : "",
-    metrage: estate ? estate.estate_rooms.diningRoom_size : "",
+    checked: estate ? estate.estate_rooms[0].diningRoom : false,
+    number: estate ? estate.estate_rooms[0].diningRoom_count : "",
+    metrage: estate ? estate.estate_rooms[0].diningRoom_size : "",
   });
   const [guestroom, setGuestroom] = useState({
-    checked: estate ? estate.estate_rooms.guestRoom : false,
-    number: estate ? estate.estate_rooms.guestRoom_count : "",
-    metrage: estate ? estate.estate_rooms.guestRoom_size : "",
+    checked: estate ? estate.estate_rooms[0].guestRoom : false,
+    number: estate ? estate.estate_rooms[0].guestRoom_count : "",
+    metrage: estate ? estate.estate_rooms[0].guestRoom_size : "",
   });
   const [bathroom, setBathroom] = useState({
-    checked: estate ? estate.estate_rooms.bathroom : false,
-    number: estate ? estate.estate_rooms.bathroom_count : "",
-    metrage: estate ? estate.estate_rooms.bathroom_size : "",
+    checked: estate ? estate.estate_rooms[0].bathroom : false,
+    number: estate ? estate.estate_rooms[0].bathroom_count : "",
+    metrage: estate ? estate.estate_rooms[0].bathroom_size : "",
   });
   const [garden, setGarden] = useState({
-    checked: estate ? estate.estate_rooms.garden : false,//
-    number: estate ? estate.estate_rooms.garden_Size : "",//
-    metrage: estate ? estate.estate_rooms.garden.metrage : "",//
+    // checked: estate ? estate.estate_rooms[0].garden : false,
+    // number: estate ? estate.estate_rooms[0].garden_Size : "",
+    // metrage: estate ? estate.estate_rooms[0].garden.metrage : "",
   });
   const [balcony, setBalcony] = useState({
-    checked: estate ? estate.estate_rooms.balcony : false,
-    number: estate ? estate.estate_rooms.balcony_count : "",
-    metrage: estate ? estate.estate_rooms.balcony_size : "",
+    checked: estate ? estate.estate_rooms[0].balcony : false,
+    number: estate ? estate.estate_rooms[0].balcony_count : "",
+    metrage: estate ? estate.estate_rooms[0].balcony_size : "",
   });
   const [garage, setGarage] = useState({
-    checked: estate ? estate.estate_rooms.garage : false,
-    number: estate ? estate.estate_rooms.garage_count : "",
-    metrage: estate ? estate.estate_rooms.garage_size : "",
+    checked: estate ? estate.estate_rooms[0].garage : false,
+    number: estate ? estate.estate_rooms[0].garage_count : "",
+    metrage: estate ? estate.estate_rooms[0].garage_size : "",
   });
   const [facilities, setfacilities] = useState({
-    wifi: estate ? estate.estate_facilities.facilities.WiFi : false,
-    parking: estate ? estate.estate_facilities.facilities.parkingLot : false,
-    pool: estate ? estate.estate_facilities.facilities.swimming_Pool : false,
-    furniture: estate ? estate.estate_facilities.facilities.furniture : false,
-    elevator: estate ? estate.estate_facilities.facilities.elevator : false,
-    garden: estate ? estate.estate_facilities.facilities.yard : false,//
-    laundary: estate ? estate.estate_facilities.facilities.loundry_facilities : false,
-    bbq: estate ? estate.estate_facilities.facilities.barbique : false,
-    gym: estate ? estate.estate_facilities.facilities.fitness_center : false,
+    wifi: estate ? estate.estate_facilities.facilities[0].WiFi : false,
+    parking: estate ? estate.estate_facilities.facilities[0].parkingLot : false,
+    pool: estate ? estate.estate_facilities.facilities[0].swimming_Pool : false,
+    furniture: estate ? estate.estate_facilities.facilities[0].furniture : false,
+    elevator: estate ? estate.estate_facilities.facilities[0].elevator : false,
+    
+    // garden: estate ? estate.estate_facilities.facilities[0].yard : false,
+
+    laundary: estate ? estate.estate_facilities.facilities[0].loundry_facilities : false,
+    bbq: estate ? estate.estate_facilities.facilities[0].barbique : false,
+    gym: estate ? estate.estate_facilities.facilities[0].fitness_center : false,
   });
   const [information, setInformation] = useState({
     title: estate ? estate.estate_title : "",
     countryName: estate ? estate.country_name : "",
     cityName: estate ? estate.city_name : "",
     streetName: estate ? estate.main_street : "",
-    plate: estate ? estate.plate : "",//
+
+    //plate: estate ? estate.plate : "",
+
     numberOfPlate: estate ? estate.building_number : "",
     numberOfFloor: estate ? estate.floor_number : "",
     numberOfUnit: estate ? estate.unit_number : "",
@@ -361,11 +365,11 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("video", file);
     });
 
-    let url = "url";
+    let url = "http://localhost:5000/admin/posts";
 
     if (method === "PUT") {
       const estateId = estate.id;
-      url = "url" + estateId;
+      url = "http://localhost:5000/admin/posts/" + estateId;
     }
 
     const response = await fetch(url, {

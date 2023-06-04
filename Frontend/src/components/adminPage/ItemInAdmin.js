@@ -38,10 +38,10 @@ export default function ItemInAdmin(props) {
             // loader={myLoader}
             width={314.68}
             height={314.68}
-            // src={`http://localhost:8080/${props.imageUrl[currentIndex].replace(
-            //   /\\/g,
-            //   "/"
-            // )}`}
+            src={`http://localhost:5000/${props.imageUrl[currentIndex].replace(
+              /\\/g,
+              "/"
+            )}`}
             className={styles.StateImg}
           />
         </div>
@@ -107,7 +107,7 @@ export default function ItemInAdmin(props) {
 
       <div className={styles.EditAndDelete}>
         <div>
-          <Link to={`${props.id}`}>
+          <Link to={`${props._id}`}>
             <button className={styles.EditBtn} role="button">
               <span className={styles.text}>Edit</span>
               <span>
