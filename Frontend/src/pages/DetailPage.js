@@ -46,23 +46,23 @@ const DetailPage = () => {
 export default DetailPage;
 
 async function loadEstate(id) {
-  const response = await fetch("http://localhost:8080/estates/" + id);
 
-  if (!response.ok) {
-    throw json(
-      { message: "Could not fetch details for selected estate." },
-      {
-        status: 500,
-      }
-    );
-  } else {
-    const resData = await response.json();
-    return resData.event;
-  }
+  fetch("http://localhost:5000/admin/posts/" + id).then((res) => {
+    console.log("2");
+    return res.json();
+  }).then((result) => {
+
+     return result;
+  }).catch(err => {
+    console.log(err);
+  })
+  console.log("3");
 }
 
 export async function loader({ request, params }) {
-  const id = params.eventId;
-
-  return loadEstate(id);
+  console.log("1");
+  const id = params.estateId;
+  console.log(id);
+  const rea=await fetch("http://localhost:5000/admin/posts/" + id);
+  return rea.json();
 }

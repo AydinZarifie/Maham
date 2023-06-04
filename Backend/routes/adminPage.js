@@ -11,9 +11,9 @@ router
     .post(mainPage_Controller.createEstate);
 
 router
-    .route('/posts/:id')
-    .get(mainPage_Controller.getState)
-    .patch(mainPage_Controller.updateState)
+    .route('/posts/:estateId')
+    .get(mainPage_Controller.getEditEstate)
     .delete(mainPage_Controller.deleteState);
+ 
 
 module.exports = router;

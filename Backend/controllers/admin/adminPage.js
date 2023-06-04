@@ -21,10 +21,7 @@ exports.getAllEstates = async (req, res) => {
 };
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
-exports.createEstate = (req, res) => {
-
-    console.log(req.body.checked);  
-
+exports.createEstate = (req, res) => {  
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
@@ -36,8 +33,12 @@ exports.createEstate = (req, res) => {
         location: req.body.location,
         state_description: req.body.description,
         estate_type: req.body.type,
-        // imageUrl : req.files[0].path ,
-        // introduction_video : req.body. ,
+        imageUrl: req.files.images.map((el)=>{
+            return el.path; 
+        }), 
+        introduction_video: req.files.video.map((el) => {
+            return el.path;
+        }),  
         // minor_street : req.body. ,
         // unit_number : req.body. ,
         // postal_code : req.body. ,
@@ -111,8 +112,8 @@ exports.createEstate = (req, res) => {
         // unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
-        //imageUrl : inputs.imageUrl ,
-        // introduction_video : inputs.introduction_video ,
+        imageUrl : inputs.imageUrl ,
+        introduction_video : inputs.introduction_video ,
 
         ///////////////////////////////////////////////////////////// setRooms :
         estate_rooms: [
@@ -177,21 +178,12 @@ exports.createEstate = (req, res) => {
 };
 
 //2023/05/08 added
-exports.getState = (req, res) => {
-    res.status(200).json({
-        status: 'succes',
-        data: {
-            states: estateDB.find({ stateId: req.params.id }),
-        },
-    });
-};
+exports.getEditEstate = async (req, res) => {
+    const estateId = req.params.estateId;
+    const estate = await estateDB.findById(estateId);
+    console.log(estate);
+    res.status(200).json(estate)
 
-//2023/05/08 added
-exports.updateState = (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        data: {},
-    });
 };
 
 //2023/05/08 added

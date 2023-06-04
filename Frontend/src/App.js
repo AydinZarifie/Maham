@@ -6,10 +6,9 @@ import HomePage from "./pages/HomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
 import AdminPage , {action as manipulateEstateAction} from "./pages/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
-import Estates from "./components/adminPage/Estates";
+import Estates from "./pages/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
-import Add from "./components/adminPage/Add";
 
 const router = createBrowserRouter([
   {
@@ -22,8 +21,8 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <DetailPage />,
-        id: "estate-detail",
-        loader: estateDetailLoader,
+        // id: "estate-detail",
+        // loader: estateDetailLoader,
       },
     ],
   },
@@ -45,6 +44,8 @@ const router = createBrowserRouter([
           {
             path: ":estateId",
             element: <EditState />,
+            id: "estate-detail",
+            loader:estateDetailLoader
             // action: manipulateEstateAction,
           },
         ],
