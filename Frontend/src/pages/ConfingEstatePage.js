@@ -82,7 +82,7 @@ const ConfingEstate = ({ method, estate }) => {
     pool: estate ? estate.estate_facilities[0].swimming_Pool : false,
     furniture: estate ? estate.estate_facilities[0].furniture : false,
     elevator: estate ? estate.estate_facilities[0].elevator : false,
-    
+
     // garden: estate ? estate.estate_facilities[0].yard : false,
 
     laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
@@ -283,7 +283,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
-    formData.append("numberOfUnit",information.numberOfUnit)
+    formData.append("numberOfUnit", information.numberOfUnit);
     formData.append("streetName", information.streetName);
     formData.append("plate", information.plate);
     formData.append("numberOfPlate", information.numberOfPlate);
@@ -369,7 +369,7 @@ const ConfingEstate = ({ method, estate }) => {
     let url = "http://localhost:5000/admin/posts";
 
     if (method === "PUT") {
-      const estateId = estate.id;
+      const estateId = estate._id;
       url = "http://localhost:5000/admin/posts/" + estateId;
     }
 
@@ -381,6 +381,28 @@ const ConfingEstate = ({ method, estate }) => {
     console.log("finished submit");
 
     navigate("/admin/estates");
+  };
+
+  const deleteHanler = () => {
+    const proceed = window.confirm("Are you Sure?");
+    if (proceed) {
+      const estateId = estate._id;
+      const url = "http://localhost:5000/admin/posts/" + estateId;
+      fetch(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Delete request succeeded");
+          } else {
+            console.error("Delete request failed");
+          }
+        })
+        .catch((error) => {
+          console.error("error occured while sending delete request:", error);
+        });
+    }
   };
 
   return (
@@ -1355,6 +1377,11 @@ const ConfingEstate = ({ method, estate }) => {
           <span className={styles.text}>Add</span>
           <span>+</span>
         </button>
+        {estate && (
+          <button type="button" onClick={() => deleteHanler()}>
+            DELETE
+          </button>
+        )}
       </div>
     </form>
   );
