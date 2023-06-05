@@ -9,6 +9,7 @@ import Dashboard from "./components/adminPage/Dashboard";
 import AdminEstates from "./pages/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
+import ManagementPage from "./pages/ManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
 
 function App() {
   return <RouterProvider router={router} />;
+  // return <ManagementPage />
 }
 
 export default App;

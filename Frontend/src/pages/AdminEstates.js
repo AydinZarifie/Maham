@@ -37,7 +37,8 @@ export default function Estates() {
   return (
     <>
       <FilterWithAdder />
-      <ItemsInAdmin data={data} />
+
+      {data.length > 0 && <ItemsInAdmin data={data} />}
     </>
   );
 }
