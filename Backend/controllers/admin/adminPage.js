@@ -1,6 +1,8 @@
+const { Error } = require('mongoose');
 const estateDB = require('../../models/estate');
+const catchAsync = require('./../../utilities/catchAsync');
 
-//2023/05/08 added
+// 2023/05/08 added
 exports.checkBody = (req, res, next) => {
     if (
         !req.body.cityName ||
@@ -15,15 +17,13 @@ exports.checkBody = (req, res, next) => {
     next();
 };
 
-exports.getAllEstates = async (req, res) => {
+exports.getAllEstates = catchAsync(async (req, res, next) => {
     const posts = await estateDB.find();
     res.status(200).json(posts);
-};
+});
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
-exports.createEstate = (req, res) => {
-    console.log(req.body.checked);
-
+exports.createEstate = catchAsync(async (req, res, next) => {
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
@@ -36,10 +36,10 @@ exports.createEstate = (req, res) => {
         state_description: req.body.description,
         estate_type: req.body.type,
         imageUrl: req.files.images.map((el) => {
-            el.path;
+            return el.path;
         }),
         introduction_video: req.files.video.map((el) => {
-            el.path;
+            return el.path;
         }),
         // minor_street : req.body. ,
         // unit_number : req.body. ,
@@ -97,7 +97,6 @@ exports.createEstate = (req, res) => {
         // childcare_Center: req.body. ,
     };
 
-    console.log(inputs.bedroom);
     const estate = new estateDB({
         ///////////////////////////////////////////////////////////// setState :
         // stateId : ,
@@ -110,12 +109,12 @@ exports.createEstate = (req, res) => {
         location: inputs.location,
         state_description: inputs.state_description,
         estate_type: inputs.estate_type,
+        imageUrl: inputs.imageUrl,
+        introduction_video: inputs.introduction_video,
         // minor_street: inputs.minor_street,
         // unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
-        //imageUrl : inputs.imageUrl ,
-        // introduction_video : inputs.introduction_video ,
 
         ///////////////////////////////////////////////////////////// setRooms :
         estate_rooms: [
@@ -176,33 +175,44 @@ exports.createEstate = (req, res) => {
         ],
     });
 
-    return estate.save();
-};
+    await estate.save();
+    // return null // for now null
+
+    res.status(201).json({
+        status: 'success',
+        message: 'estate created',
+    });
+});
+
+//added : 2023/05/08  , implemented : 2023/06/04
+exports.deleteState = catchAsync(async (req, res, next) => {
+    const est = await estateDB.findByIdAndDelete(req.params.id);
+
+    if (!est) {
+        return next(new AppError('estate with that Id not found', 404));
+    }
+
+    res.status(204).json({
+        status: 'success',
+        message: `estate with ${req.params.id} ID deleted`,
+        data: null,
+    });
+});
 
 //2023/05/08 added
-exports.getState = (req, res) => {
+exports.getState = catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: 'succes',
         data: {
             states: estateDB.find({ stateId: req.params.id }),
         },
     });
-};
+});
 
 //2023/05/08 added
-exports.updateState = (req, res) => {
+exports.updateState = catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         data: {},
     });
-};
-
-//2023/05/08 added
-exports.deleteState = (req, res) => {
-    res.status(204).json({
-        status: 'success',
-        data: {
-            states: null,
-        },
-    });
-};
+});

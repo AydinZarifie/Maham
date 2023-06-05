@@ -1,6 +1,6 @@
 // NEW MODULE , ERROR HANDLING
 
-const AppError = require('./../utils/appError');
+const AppError = require('./../utilities/appError');
 
 // if incorrent type of values accored ;
 const handleCastErrorDB = (err) => {
@@ -8,15 +8,15 @@ const handleCastErrorDB = (err) => {
     return new AppError(message, 400);
 };
 
-// if any part of datas were duplicate *ex: state id , name ...* ; NEED CHANGES
-
+// if any part of datas were duplicate *ex: state id , name ...*
 const handleDuplicateFieldsDB = (err) => {
-    const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+    const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0]; // to get duplicated field name
     console.log(value);
 
     const message = `Duplicate field value: ${value}. Please use another value!`;
     return new AppError(message, 400);
 };
+
 // if the input is invalid *ex: boolean for state name *
 const handleValidationErrorDB = (err) => {
     const errors = Object.values(err.errors).map((el) => el.message);
@@ -41,9 +41,9 @@ const sendErrorProd = (err, res) => {
             status: err.status,
             message: err.message,
         });
-
-        // Programming or other unknown error: don't leak error details
     } else {
+        // Programming or other unknown error: don't leak error details
+
         // 1) Log error
         console.error('ERROR', err);
 
@@ -57,13 +57,14 @@ const sendErrorProd = (err, res) => {
 
 module.exports = (err, req, res, next) => {
     // console.log(err.stack); >> this would log the errors details completly
-
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
     if (process.env.NODE_ENV === 'development') {
+        // in dev enviroment , we send as more as info about errors
         sendErrorDev(err, res);
     } else if (process.env.NODE_ENV === 'production') {
+        // in prod enviroment , we send as less as info about errors
         let error = { ...err };
 
         if (error.name === 'CastError') error = handleCastErrorDB(error);
