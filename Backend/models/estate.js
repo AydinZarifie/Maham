@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// TODO : validation
+// TODO : mongo middlewares
+
 const estateRoomsSchema = new mongoose.Schema({
     //estate rooms schema
     total_building_metraj: {
@@ -186,6 +189,7 @@ const estateSchema = new mongoose.Schema({
     },
     estate_title: {
         type: String,
+        required: [true, 'must have a title'],
         set: (a) => (a === '' ? undefined : a),
     },
     main_street: {
@@ -218,17 +222,26 @@ const estateSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
+        min: [0, 'price must me above 0'],
         set: (a) => (a === '' ? undefined : a),
     },
     ///
     state_description: {
         type: String,
+        trim: true, // will delete white spaces before and after end of the string
+        // required: [true, 'missing SUMMARY'],
         set: (a) => (a === '' ? undefined : a),
     },
     ///
     estate_type: {
         //Commercial , Residential & etc
         type: String,
+        enum: {
+            // this works only for strings
+            values: ['Commercial', 'Residential'],
+            message:
+                'an estate type must be either "Commercial" or "Residential" ',
+        },
         set: (a) => (a === '' ? undefined : a),
     },
     ///
@@ -240,6 +253,12 @@ const estateSchema = new mongoose.Schema({
     imageUrl: {
         type: Array,
         set: (a) => (a === '' ? undefined : a),
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+        // setting the value of select property to false , causes this field be not visible to users on output
+        select: false,
     },
     estate_rooms: [estateRoomsSchema],
     estate_facilities: [estateFacilitiesSchema],
