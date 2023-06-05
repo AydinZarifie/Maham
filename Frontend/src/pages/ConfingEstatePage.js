@@ -77,17 +77,17 @@ const ConfingEstate = ({ method, estate }) => {
     metrage: estate ? estate.estate_rooms[0].garage_size : "",
   });
   const [facilities, setfacilities] = useState({
-    wifi: estate ? estate.estate_facilities.facilities[0].WiFi : false,
-    parking: estate ? estate.estate_facilities.facilities[0].parkingLot : false,
-    pool: estate ? estate.estate_facilities.facilities[0].swimming_Pool : false,
-    furniture: estate ? estate.estate_facilities.facilities[0].furniture : false,
-    elevator: estate ? estate.estate_facilities.facilities[0].elevator : false,
+    wifi: estate ? estate.estate_facilities[0].WiFi : false,
+    parking: estate ? estate.estate_facilities[0].parkingLot : false,
+    pool: estate ? estate.estate_facilities[0].swimming_Pool : false,
+    furniture: estate ? estate.estate_facilities[0].furniture : false,
+    elevator: estate ? estate.estate_facilities[0].elevator : false,
     
-    // garden: estate ? estate.estate_facilities.facilities[0].yard : false,
+    // garden: estate ? estate.estate_facilities[0].yard : false,
 
-    laundary: estate ? estate.estate_facilities.facilities[0].loundry_facilities : false,
-    bbq: estate ? estate.estate_facilities.facilities[0].barbique : false,
-    gym: estate ? estate.estate_facilities.facilities[0].fitness_center : false,
+    laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
+    bbq: estate ? estate.estate_facilities[0].barbique : false,
+    gym: estate ? estate.estate_facilities[0].fitness_center : false,
   });
   const [information, setInformation] = useState({
     title: estate ? estate.estate_title : "",
@@ -283,6 +283,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
+    formData.append("numberOfUnit",information.numberOfUnit)
     formData.append("streetName", information.streetName);
     formData.append("plate", information.plate);
     formData.append("numberOfPlate", information.numberOfPlate);
@@ -1265,7 +1266,7 @@ const ConfingEstate = ({ method, estate }) => {
             <input
               required
               type="file"
-              id="file-input "
+              id="file-input"
               name="imageInput"
               multiple
               hidden
