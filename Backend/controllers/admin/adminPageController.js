@@ -1,6 +1,7 @@
 const { Error } = require('mongoose');
 const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/catchAsync');
+const fs = require('fs');
 
 // 2023/05/08 added
 exports.checkBody = (req, res, next) => {
@@ -201,18 +202,115 @@ exports.deleteState = catchAsync(async (req, res, next) => {
 
 //2023/05/08 added
 exports.getState = catchAsync(async (req, res, next) => {
+    const stateId = req.params.estateId;
+    const state = await estateDB.findById(stateId);
     res.status(200).json({
         status: 'succes',
         data: {
-            states: estateDB.find({ stateId: req.params.id }),
+            state,
+            // states: estateDB.find({ stateId: req.params.id }),
         },
     });
 });
 
 //2023/05/08 added
 exports.updateState = catchAsync(async (req, res, next) => {
+    const estateId = req.params.estateId;
+    const updateFields = req.body;
+
+    const filedMapping = {
+        /////////////////////// mapping state
+        cityName: 'city_name',
+        title: 'estate_title',
+        countryName: 'country_name',
+        streetName: 'main_street',
+        plate: 'building_number',
+        numberOfFloor: 'floor_number',
+        location: 'location',
+        description: 'state_description',
+        type: 'estate_type',
+        // image ? aydin
+        // video
+        /////////////////////////////////// room
+        checkBedroom: 'bedroom',
+        numberBedroom: 'bedroom_count',
+        metrageBedroom: 'bedroom_size',
+        checkLivingRoom: 'livingroom',
+        numberLivingRoom: 'livingroom_count',
+        metrageLivingRoom: 'livingroom_size',
+        checkKitchen: 'kitchen',
+        numberKitchen: 'kitchen_count',
+        metrageKitchen: 'kitchen_size',
+        checkDiningroom: 'diningRoom',
+        numberDiningroom: 'diningRoom_count',
+        metrageDiningroom: 'diningRoom_size',
+        checkGuestroom: 'guestRoom',
+        numberGuestroom: 'guestRoom_count',
+        metrageGuestroom: 'guestRoom_size',
+        checkBathroom: 'bathroom',
+        numberBathroom: 'bathroom_count',
+        metrageBathroom: 'bathroom_size',
+        checkGarden: 'backYard',
+        metrageGarden: 'backYard_size',
+        checkBalcony: 'balcony',
+        numberBalcony: 'balcony_count',
+        metrageBalcon: 'balcony_size',
+        checkGarage: 'garage',
+        numberGarage: 'garage_count',
+        metrageGarage: 'garage_size',
+        ///////////////////////////////////// facilities
+        checkWifi: 'WiFi',
+        checkFurniture: 'furniture',
+        checkElevator: 'elevator',
+        checkPool: 'swimming_Pool',
+        checkGym: 'fitness_center',
+        checkLaundary: 'loundry_facilities',
+        checkParking: 'parkingLot',
+        checkBbq: 'barbique',
+    };
+
+    const mappedFields = {};
+    for (const [key, value] of Object.entries(updateFields)) {
+        if (filedMapping[key]) {
+            mappedFields[filedMapping[key]] = value;
+        }
+    }
+
+    const updatedSstate = await estateDB.findByIdAndUpdate(
+        estateId,
+        mappedFields,
+        {
+            new: true,
+        }
+    );
+
+    // estate.city_name = req.body.cityName;
+    // estate.country_name = req.body.countryName;
+    // estate.estate_title = req.body.title;
+    // estate.main_street = req.body.streetName;
+    // estate.state_description = req.body.description;
+    // estate.building_number = req.body.numberOfPlate;
+    // estate.location = req.body.location;
+
+    // await estate.save();
+
     res.status(200).json({
         status: 'success',
-        data: {},
+        message: 'succesfuly updated!',
+        data: updatedSstate, // just for seeing the result and wont be included at the otiginal app
     });
 });
+
+const clearImage = async (filePath) => {
+    filepath = path.join(__dirname, '..', filePath);
+
+    if (await fs.existsSync(filepath)) {
+        await fs.unlinkSync(filepath, (err) => {
+            throw err;
+        });
+
+        console.log('Image deleted successfully');
+    } else {
+        console.log('Image not found');
+    }
+};

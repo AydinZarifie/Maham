@@ -2,17 +2,17 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const multer = require('multer');
-const adminPage_Router = require('./routes/adminPage');
+const adminPageRouter = require('./routes/adminPageRouter');
 const bodyParser = require('body-parser');
 const AppError = require('./utilities/appError');
-const globalErrorHandler = require('./utilities/errorController');
+const globalErrorHandler = require('./controllers/errorController');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if (file.fieldname === 'images') {
-            cb(null, './uploads/images/');
+            cb(null, `./uploads/estate-${req.body.title}/images/`);
         } else if (file.fieldname === 'video') {
-            cb(null, './uploads/videos/');
+            cb(null, `./uploads/${req.body.title}/videos/`);
         }
     },
     filename: function (req, file, cb) {
@@ -97,13 +97,10 @@ app.use(
 );
 
 app.use(upload);
-
-app.use('/admin', adminPage_Router);
+app.use('/admin', adminPageRouter);
 
 ////////////////////////////////////////////////
-
 //ERROR HANDLING
-
 app.all('*', (req, res, next) => {
     // for handling hitting the undefined routes
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
