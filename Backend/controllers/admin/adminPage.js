@@ -1,4 +1,5 @@
 const estateDB = require('../../models/estate');
+const fs = require("fs");
 
 //2023/05/08 added
 exports.checkBody = (req, res, next) => {
@@ -22,13 +23,15 @@ exports.getAllEstates = async (req, res) => {
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = (req, res) => {  
+
+
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
         city_name: req.body.cityName,
         country_name: req.body.countryName,
         main_street: req.body.streetName,
-        building_number: req.body.plate,
+        building_number: req.body.numberOfPlate,
         floor_number: req.body.numberOfFloor,
         location: req.body.location,
         state_description: req.body.description,
@@ -40,7 +43,7 @@ exports.createEstate = (req, res) => {
             return el.path;
         }),  
         // minor_street : req.body. ,
-        // unit_number : req.body. ,
+         unit_number : req.body.numberOfUnit ,
         // postal_code : req.body. ,
         // estate_view : req.body. ,
 
@@ -95,12 +98,11 @@ exports.createEstate = (req, res) => {
         // childcare_Center: req.body. ,
     };
 
-    console.log(inputs.bedroom);
     const estate = new estateDB({
         ///////////////////////////////////////////////////////////// setState :
         // stateId : ,
         estate_title: inputs.estate_title,
-        city_name: inputs.title,
+        city_name: inputs.city_name,
         country_name: inputs.country_name,
         main_street: inputs.main_street,
         building_number: inputs.building_number,
@@ -109,7 +111,7 @@ exports.createEstate = (req, res) => {
         state_description: inputs.state_description,
         estate_type: inputs.estate_type,
         // minor_street: inputs.minor_street,
-        // unit_number: inputs.unit_number ,
+        unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
         imageUrl : inputs.imageUrl ,
@@ -174,6 +176,7 @@ exports.createEstate = (req, res) => {
         ],
     });
 
+
     return estate.save();
 };
 
@@ -181,10 +184,24 @@ exports.createEstate = (req, res) => {
 exports.getEditEstate = async (req, res) => {
     const estateId = req.params.estateId;
     const estate = await estateDB.findById(estateId);
-    console.log(estate);
-    res.status(200).json(estate)
-
+    res.status(200).json(estate);
 };
+
+exports.editEstate = async (req, res) => {
+    const estateId = req.params.estateId;
+
+    const estate = await estateDB.findById(estateId);
+
+    estate.city_name = req.body.cityName;
+    estate.country_name = req.body.countryName;
+    estate.estate_title = req.body.title;
+    estate.main_street = req.body.streetName;
+    estate.state_description = req.body.description;
+    estate.building_number = req.body.numberOfPlate;
+    estate.location = req.body.location;
+    
+    await estate.save();
+}
 
 //2023/05/08 added
 exports.deleteState = (req, res) => {
@@ -194,4 +211,20 @@ exports.deleteState = (req, res) => {
             states: null,
         },
     });
+};
+
+
+
+const clearImage = async (filePath) => {
+    filepath = path.join(__dirname, "..", filePath);
+  
+    if (await fs.existsSync(filepath)) {
+      await fs.unlinkSync(filepath, (err) => {
+        throw err;
+      });
+  
+      console.log("Image deleted successfully");
+    } else {
+      console.log("Image not found");
+    }
 };

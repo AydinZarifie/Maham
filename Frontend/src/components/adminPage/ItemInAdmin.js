@@ -6,13 +6,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function ItemInAdmin(props) {
-  const myLoader = ({ src }) => {
-    return `http://localhost:5000/${props.imageUrl[currentIndex].replace(
-      /\\/g,
-      "/"
-    )}`;
-  };
-
+  // const myLoader = ({ src }) => {
+  //   return `http://localhost:8080/${props.imageUrl[currentIndex].replace(
+  //     /\\/g,
+  //     "/"
+  //   )}`;
+  // };
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const goToPrevious = () => {
@@ -32,14 +31,13 @@ export default function ItemInAdmin(props) {
   };
 
   return (
-   
     <div className={styles.State}>
       <div className={styles.slideshowContainer}>
         <div className={(styles.mySlides, styles.fade)}>
           <img
+            // loader={myLoader}
             width={314.68}
             height={314.68}
-            // src={props.imageUrl[currentIndex]}
             src={`http://localhost:5000/${props.imageUrl[currentIndex].replace(
               /\\/g,
               "/"

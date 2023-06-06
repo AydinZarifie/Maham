@@ -13,7 +13,8 @@ router
 router
     .route('/posts/:estateId')
     .get(mainPage_Controller.getEditEstate)
-    .delete(mainPage_Controller.deleteState);
+    .delete(mainPage_Controller.deleteState)
+    .put(mainPage_Controller.editEstate)
  
 
 module.exports = router;
