@@ -276,9 +276,13 @@ exports.updateState = catchAsync(async (req, res, next) => {
         }
     }
 
-    const updatedSstate = await estateDB.findByIdAndUpdate(estateId , mappedFields , {
-        new : true
-    });
+    const updatedSstate = await estateDB.findByIdAndUpdate(
+        estateId,
+        mappedFields,
+        {
+            new: true,
+        }
+    );
 
     // estate.city_name = req.body.cityName;
     // estate.country_name = req.body.countryName;
@@ -293,7 +297,7 @@ exports.updateState = catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         message: 'succesfuly updated!',
-        data : updatedSstate // just for seeing the result and wont be included at the otiginal app
+        data: updatedSstate, // just for seeing the result and wont be included at the otiginal app
     });
 });
 
