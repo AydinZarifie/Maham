@@ -82,7 +82,7 @@ const ConfingEstate = ({ method, estate }) => {
     pool: estate ? estate.estate_facilities[0].swimming_Pool : false,
     furniture: estate ? estate.estate_facilities[0].furniture : false,
     elevator: estate ? estate.estate_facilities[0].elevator : false,
-    
+
     // garden: estate ? estate.estate_facilities[0].yard : false,
 
     laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
@@ -277,19 +277,18 @@ const ConfingEstate = ({ method, estate }) => {
   const submitHandler = async (event) => {
     console.log("entered submit handler");
     // event.preventDefault();
-    console.log(information.numberOfUnit);
 
     const formData = new FormData();
 
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
+    formData.append("numberOfUnit", information.numberOfUnit);
     formData.append("streetName", information.streetName);
     formData.append("plate", information.plate);
     formData.append("numberOfPlate", information.numberOfPlate);
     formData.append("numberOfFloor", information.numberOfFloor);
     formData.append("location", information.location);
-    formData.append("numberOfUnit" , information.numberOfUnit)
 
     formData.append("type", information.type);
 
@@ -367,13 +366,11 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("video", file);
     });
 
-    let url = "http://localhost:5000/admin/posts";
+    let url = "http://localhost:5000/admin/estates";
 
     if (method === "PUT") {
       const estateId = estate._id;
-      url = "http://localhost:5000/admin/posts/" + estateId;
-    
-      console.log(url);
+      url = "http://localhost:5000/admin/estates/" + estateId;
     }
 
     const response = await fetch(url, {
@@ -386,14 +383,35 @@ const ConfingEstate = ({ method, estate }) => {
     navigate("/admin/estates");
   };
 
+  const deleteHanler = () => {
+    const proceed = window.confirm("Are you Sure?");
+    if (proceed) {
+      const estateId = estate._id;
+      const url = "http://localhost:5000/admin/estates/" + estateId;
+      fetch(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Delete request succeeded");
+          } else {
+            console.error("Delete request failed");
+          }
+        })
+        .catch((error) => {
+          console.error("error occured while sending delete request:", error);
+        });
+    }
+  };
+
   return (
     <form method={method} encType="multipart/form-data">
-      {console.log(estate)}
       <div className={styles.EstateInfo}>
         <div className={styles.wrapper}>
           <div className={styles.inputData}>
             <input
-              
+              required
               type="text"
               className={styles.textinput}
               value={information.title}
@@ -445,7 +463,7 @@ const ConfingEstate = ({ method, estate }) => {
             <div className={styles.wrapper2}>
               <div className={styles.inputData}>
                 <input
-                  
+                  required
                   type="text"
                   className={styles.textinput}
                   value={information.streetName}
@@ -461,7 +479,7 @@ const ConfingEstate = ({ method, estate }) => {
             <div className={styles.wrapper2}>
               <div className={styles.inputData}>
                 <input
-                  
+                  required
                   type="text"
                   className={styles.textinput}
                   value={information.plate}
@@ -479,7 +497,7 @@ const ConfingEstate = ({ method, estate }) => {
             <div className={styles.wrapper2}>
               <div className={styles.inputData}>
                 <input
-                  
+                  required
                   type="text"
                   className={styles.textinput}
                   value={information.numberOfPlate}
@@ -495,7 +513,7 @@ const ConfingEstate = ({ method, estate }) => {
             <div className={styles.wrapper2}>
               <div className={styles.inputData}>
                 <input
-                  
+                  required
                   type="text"
                   className={styles.textinput}
                   value={information.numberOfFloor}
@@ -509,7 +527,7 @@ const ConfingEstate = ({ method, estate }) => {
             <div className={styles.wrapper2}>
               <div className={styles.inputData}>
                 <input
-                  
+                  required
                   type="text"
                   className={styles.textinput}
                   value={information.numberOfUnit}
@@ -525,7 +543,7 @@ const ConfingEstate = ({ method, estate }) => {
         <div className={styles.wrapper}>
           <div className={styles.inputData}>
             <input
-              
+              required
               type="text"
               className={styles.textinput}
               value={information.location}
@@ -560,7 +578,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check1"
                       name="checked"
@@ -581,7 +599,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -594,7 +612,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -611,7 +629,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check2"
                       name="checked"
@@ -632,7 +650,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -645,7 +663,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -662,7 +680,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check3"
                       name="checked"
@@ -683,7 +701,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -696,7 +714,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -713,7 +731,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check4"
                       name="checked"
@@ -734,7 +752,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -747,7 +765,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -764,7 +782,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check5"
                       name="checked"
@@ -785,7 +803,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -798,7 +816,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -815,7 +833,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check6"
                       name="checked"
@@ -836,7 +854,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -849,7 +867,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -866,7 +884,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check7"
                       name="checked"
@@ -887,7 +905,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -900,7 +918,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -917,7 +935,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check8"
                       name="checked"
@@ -938,7 +956,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -951,7 +969,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -968,7 +986,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <td>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check9"
                       name="checked"
@@ -989,7 +1007,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Number">Number:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="number"
                         min="0"
@@ -1002,7 +1020,7 @@ const ConfingEstate = ({ method, estate }) => {
                     <td>
                       <label htmlFor="Metrage">Metrage:</label>
                       <input
-                        
+                        required
                         type="number"
                         name="metrage"
                         min="0"
@@ -1029,7 +1047,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check10"
                       name="wifi"
@@ -1052,7 +1070,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check11"
                       name="parking"
@@ -1077,7 +1095,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check12"
                       name="pool"
@@ -1100,7 +1118,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check13"
                       name="furniture"
@@ -1125,7 +1143,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check14"
                       name="elevator"
@@ -1148,6 +1166,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
+                      required
                       type="checkbox"
                       id="check15"
                       name="garden"
@@ -1172,7 +1191,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check16"
                       name="laundary"
@@ -1195,7 +1214,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check17"
                       name="bbq"
@@ -1220,7 +1239,7 @@ const ConfingEstate = ({ method, estate }) => {
                 <div>
                   <div className={styles.checkbox_wrapper}>
                     <input
-                      
+                      required
                       type="checkbox"
                       id="check18"
                       name="gym"
@@ -1267,7 +1286,7 @@ const ConfingEstate = ({ method, estate }) => {
           <h3>Image Uploader</h3>
           <div className={styles.UploadDiv}>
             <input
-              
+              required
               type="file"
               id="file-input"
               name="imageInput"
@@ -1310,7 +1329,7 @@ const ConfingEstate = ({ method, estate }) => {
           <h3>Video Uploader</h3>
           <div className={styles.UploadDiv}>
             <input
-              
+              required
               type="file"
               className={styles.fileInput2}
               id="file-input2"
@@ -1358,6 +1377,11 @@ const ConfingEstate = ({ method, estate }) => {
           <span className={styles.text}>Add</span>
           <span>+</span>
         </button>
+        {estate && (
+          <button type="button" onClick={() => deleteHanler()}>
+            DELETE
+          </button>
+        )}
       </div>
     </form>
   );

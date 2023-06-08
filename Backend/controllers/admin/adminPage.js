@@ -1,5 +1,6 @@
 const estateDB = require('../../models/estate');
 const fs = require("fs");
+const path = require('path')
 
 //2023/05/08 added
 exports.checkBody = (req, res, next) => {
@@ -179,7 +180,6 @@ exports.createEstate = (req, res) => {
 
     return estate.save();
 };
-
 //2023/05/08 added
 exports.getEditEstate = async (req, res) => {
     const estateId = req.params.estateId;
@@ -187,39 +187,72 @@ exports.getEditEstate = async (req, res) => {
     res.status(200).json(estate);
 };
 
-exports.editEstate = async (req, res) => {
+//2023/05/08 added
+exports.updateEstate = async (req, res, next) => {
     const estateId = req.params.estateId;
 
     const estate = await estateDB.findById(estateId);
-
-    estate.city_name = req.body.cityName;
-    estate.country_name = req.body.countryName;
-    estate.estate_title = req.body.title;
-    estate.main_street = req.body.streetName;
-    estate.state_description = req.body.description;
-    estate.building_number = req.body.numberOfPlate;
-    estate.location = req.body.location;
     
-    await estate.save();
-}
+    const title = req.body.title;
+    const country_name = req.body.countryName;
+    const city_name = req.body.cityName;
+    let imageUrl = req.body.images;
 
-//2023/05/08 added
-exports.deleteState = (req, res) => {
+    console.log(imageUrl);
+/* 
+    if(req.files){
+        imageUrl = req.files.images[0].path
+    } */
+/*     if(!imageUrl){
+        const err = new Error("Image not found");
+        err.statusCode = 442;
+        throw err;
+    } */
+
+
+    if(imageUrl != estate.imageUrl[0]){
+        clearImage(estate.imageUrl[0])
+    }
+
+
+    estate.title = title;
+    estate.country_name = country_name;
+    estate.city_name = city_name;
+
+
+
+    res.status(200).json({
+        status: 'success',
+        message: 'succesfuly updated!',
+        data: updatedSstate, // just for seeing the result and wont be included at the otiginal app
+    });
+};
+
+//added : 2023/05/08  , implemented : 2023/06/04
+exports.deleteEstate = async (req, res, next) => {
+    const est = await estateDB.findByIdAndDelete(req.params.estateId);
+
+    if (!est) {
+        return next(new AppError('estate with that Id not found', 404));
+    }
+
+    clearImage(est.imageUrl[0]);
+    clearVideo(est.introduction_video[0])
+
     res.status(204).json({
         status: 'success',
-        data: {
-            states: null,
-        },
+        message: `estate withID deleted`,
+        data: null,
     });
 };
 
 
 
 const clearImage = async (filePath) => {
-    filepath = path.join(__dirname, "..", filePath);
+    filePath = path.join(__dirname, "../..", filePath);
   
-    if (await fs.existsSync(filepath)) {
-      await fs.unlinkSync(filepath, (err) => {
+    if (await fs.existsSync(filePath)) {
+      await fs.unlinkSync(filePath, (err) => {
         throw err;
       });
   
@@ -228,3 +261,18 @@ const clearImage = async (filePath) => {
       console.log("Image not found");
     }
 };
+const clearVideo = async(filePath) =>{
+
+    filePath = path.join(__dirname,"../..",filePath);
+    
+    if(await fs.existsSync(filePath)){
+       await fs.unlinkSync(filePath , (err) => {
+        throw err;
+       });
+       console.log("delet video successfully");
+    }
+    else{
+        console.log("video not found");
+    }
+
+}
