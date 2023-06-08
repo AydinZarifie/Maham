@@ -1,8 +1,10 @@
 const estateDB = require('../../models/estate');
 const fs = require("fs");
-const path = require('path')
+const path = require('path');
+const catchAsync = require('./../../utilities/catchAsync');
+const AppError = require("./../../utilities/appError")
 
-//2023/05/08 added
+//2023/05/08 added`
 exports.checkBody = (req, res, next) => {
     if (
         !req.body.cityName ||
@@ -23,28 +25,27 @@ exports.getAllEstates = async (req, res) => {
 };
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
-exports.createEstate = (req, res) => {  
-
-
+exports.createEstate =async (req, res, next) => {
+    console.log("hwllo");
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
-        estate_title: req.body.title,
+        estate_title: req.body.tite,
         city_name: req.body.cityName,
         country_name: req.body.countryName,
         main_street: req.body.streetName,
-        building_number: req.body.numberOfPlate,
+        building_number: req.body.plate,
         floor_number: req.body.numberOfFloor,
         location: req.body.location,
         state_description: req.body.description,
         estate_type: req.body.type,
-        imageUrl: req.files.images.map((el)=>{
-            return el.path; 
-        }), 
+        imageUrl: req.files.images.map((el) => {
+            return el.path;
+        }),
         introduction_video: req.files.video.map((el) => {
             return el.path;
-        }),  
+        }),
         // minor_street : req.body. ,
-         unit_number : req.body.numberOfUnit ,
+        // unit_number : req.body. ,
         // postal_code : req.body. ,
         // estate_view : req.body. ,
 
@@ -103,7 +104,7 @@ exports.createEstate = (req, res) => {
         ///////////////////////////////////////////////////////////// setState :
         // stateId : ,
         estate_title: inputs.estate_title,
-        city_name: inputs.city_name,
+        city_name: inputs.title,
         country_name: inputs.country_name,
         main_street: inputs.main_street,
         building_number: inputs.building_number,
@@ -111,12 +112,12 @@ exports.createEstate = (req, res) => {
         location: inputs.location,
         state_description: inputs.state_description,
         estate_type: inputs.estate_type,
+        imageUrl: inputs.imageUrl,
+        introduction_video: inputs.introduction_video,
         // minor_street: inputs.minor_street,
-        unit_number: inputs.unit_number ,
+        // unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
-        imageUrl : inputs.imageUrl ,
-        introduction_video : inputs.introduction_video ,
 
         ///////////////////////////////////////////////////////////// setRooms :
         estate_rooms: [
@@ -177,8 +178,13 @@ exports.createEstate = (req, res) => {
         ],
     });
 
+    await estate.save();
+    // return null // for now null
 
-    return estate.save();
+   return res.status(201).json({
+        status: 'success',
+        message: 'estate created',
+    });
 };
 //2023/05/08 added
 exports.getEditEstate = async (req, res) => {
@@ -196,35 +202,30 @@ exports.updateEstate = async (req, res, next) => {
     const title = req.body.title;
     const country_name = req.body.countryName;
     const city_name = req.body.cityName;
-    let imageUrl = req.body.images;
-
-    console.log(imageUrl);
-/* 
-    if(req.files){
-        imageUrl = req.files.images[0].path
-    } */
-/*     if(!imageUrl){
-        const err = new Error("Image not found");
-        err.statusCode = 442;
-        throw err;
-    } */
+    const numberOfUnit = req.body.numberOfUnit;
+    const street_name = req.body.streetName;
+    const plate = req.body.plate;
+    const bedroom_check = req.body.checkBedroom;
+    
 
 
-    if(imageUrl != estate.imageUrl[0]){
-        clearImage(estate.imageUrl[0])
-    }
-
-
-    estate.title = title;
+    console.log(bedroom_check);
+    
+    console.log(estate.estate_rooms[0].bedroom);
+    estate.title = title;s
     estate.country_name = country_name;
     estate.city_name = city_name;
+    estate.estate_rooms[0].bedroom = bedroom_check;
+    estate.estate_rooms[0].bedroom_count = bedroom_check;
 
-
+    console.log(estate.estate_rooms[0].bedroom);
+   
+    await estate.save();
 
     res.status(200).json({
         status: 'success',
         message: 'succesfuly updated!',
-        data: updatedSstate, // just for seeing the result and wont be included at the otiginal app
+         // just for seeing the result and wont be included at the otiginal app
     });
 };
 
@@ -236,7 +237,7 @@ exports.deleteEstate = async (req, res, next) => {
         return next(new AppError('estate with that Id not found', 404));
     }
 
-    clearImage(est.imageUrl[0]);
+    clearImage(est.imageUrl);
     clearVideo(est.introduction_video[0])
 
     res.status(204).json({
@@ -249,17 +250,19 @@ exports.deleteEstate = async (req, res, next) => {
 
 
 const clearImage = async (filePath) => {
-    filePath = path.join(__dirname, "../..", filePath);
-  
-    if (await fs.existsSync(filePath)) {
-      await fs.unlinkSync(filePath, (err) => {
-        throw err;
-      });
-  
-      console.log("Image deleted successfully");
-    } else {
-      console.log("Image not found");
-    }
+
+    filePath.forEach(async(imagePath) => {
+        imagePath  = path.join(__dirname, "../..", imagePath);
+        if (await fs.existsSync(imagePath )) {
+          await fs.unlinkSync(imagePath , (err) => {
+            throw err;
+          });
+          console.log("Image deleted successfully");
+        } else {
+          console.log("Image not found");
+        }
+        
+    });
 };
 const clearVideo = async(filePath) =>{
 
