@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const adminPageController = require('../controllers/admin/adminPageController');
+const adminPage_Controller = require('../controllers/admin/adminPage');
 
 // 2023/05/8 >> changed the logic of written code to 'mounting the routes'
 //    "      >> added main functions to control estates
 router
     .route('/estates')
-    .get(adminPageController.getAllEstates)
-    .post(adminPageController.createEstate);
+    .get(adminPage_Controller.getAllEstates)
+    .post(adminPage_Controller.createEstate);
 
 router
     .route('/estates/:estateId')
-    .get(adminPageController.getState)
-    .put(adminPageController.updateState)
-    .delete(adminPageController.deleteState);
+    .get(adminPage_Controller.getEstate)
+    .delete(adminPage_Controller.deleteEstate)
+    .put(adminPage_Controller.updateEstate);
 
 module.exports = router;
