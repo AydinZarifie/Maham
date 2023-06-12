@@ -52,7 +52,7 @@ export default function AdminNavbar() {
                 text="Transaction"
               />
               <AdminMenuItem
-                link=""
+                link="management"
                 imgSrc={settingIcon}
                 text="GeneralSetting"
               />

@@ -62,9 +62,9 @@ const ConfingEstate = ({ method, estate }) => {
     metrage: estate ? estate.estate_rooms[0].bathroom_size : "",
   });
   const [garden, setGarden] = useState({
-    // checked: estate ? estate.estate_rooms[0].garden : false,
-    // number: estate ? estate.estate_rooms[0].garden_Size : "",
-    // metrage: estate ? estate.estate_rooms[0].garden.metrage : "",
+    checked: estate ? estate.estate_rooms[0].garden : false,
+    number: estate ? estate.estate_rooms[0].garden_count : "",
+    metrage: estate ? estate.estate_rooms[0].garden_size : "",
   });
   const [balcony, setBalcony] = useState({
     checked: estate ? estate.estate_rooms[0].balcony : false,
@@ -83,7 +83,7 @@ const ConfingEstate = ({ method, estate }) => {
     furniture: estate ? estate.estate_facilities[0].furniture : false,
     elevator: estate ? estate.estate_facilities[0].elevator : false,
 
-    // garden: estate ? estate.estate_facilities[0].yard : false,
+    garden: estate ? estate.estate_facilities[0].garden : false,
 
     laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
     bbq: estate ? estate.estate_facilities[0].barbique : false,
@@ -351,7 +351,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("checkPool", facilities.pool);
     formData.append("checkFurniture", facilities.furniture);
     formData.append("checkElevator", facilities.elevator);
-    formData.append("checkGarden", facilities.garden);
+    formData.append("checkGardenFacility", facilities.garden);
     formData.append("checkLaundary", facilities.laundary);
     formData.append("checkBbq", facilities.bbq);
     formData.append("checkGym", facilities.gym);
@@ -383,7 +383,7 @@ const ConfingEstate = ({ method, estate }) => {
     navigate("/admin/estates");
   };
 
-  const deleteHanler = () => {
+  const deleteHandler = () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const estateId = estate._id;
@@ -1378,7 +1378,7 @@ const ConfingEstate = ({ method, estate }) => {
           <span>+</span>
         </button>
         {estate && (
-          <button type="button" onClick={() => deleteHanler()}>
+          <button type="button" onClick={() => deleteHandler()}>
             DELETE
           </button>
         )}

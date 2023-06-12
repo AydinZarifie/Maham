@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
-import AdminPage , {action as manipulateEstateAction} from "./pages/AdminPage";
+import AdminPage, { action as manipulateEstateAction } from "./pages/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
 import AdminEstates from "./pages/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
@@ -45,11 +45,15 @@ const router = createBrowserRouter([
           {
             path: ":estateId",
             element: <EditState />,
-            id: 'estate-detail',
+            id: "estate-detail",
             loader: estateDetailLoader,
             // action: manipulateEstateAction,
           },
         ],
+      },
+      {
+        path: "management",
+        element: <ManagementPage />,
       },
     ],
   },
@@ -57,7 +61,6 @@ const router = createBrowserRouter([
 
 function App() {
   return <RouterProvider router={router} />;
-  // return <ManagementPage />
 }
 
 export default App;

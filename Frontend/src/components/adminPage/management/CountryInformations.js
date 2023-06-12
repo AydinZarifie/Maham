@@ -7,7 +7,7 @@ import data from "../../../dummyData/countryInformationData";
 
 import CountryInformationItem from "./CountryInformationItem";
 
-const CountryInformations = () => {
+const CountryInformations = (props) => {
   return (
     <div className={styles.Tables3AndName}>
       <span className={styles.CountryInformationSpan}>
@@ -34,7 +34,7 @@ const CountryInformations = () => {
             </tbody>
           </table>
         </div>
-        <button type="button" className={styles.AddButton}>
+        <button type="button" className={styles.AddButton} onClick={props.buttonHandler}>
           Add
         </button>
       </div>
