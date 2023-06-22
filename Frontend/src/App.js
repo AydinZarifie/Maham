@@ -4,12 +4,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
-import AdminPage, { action as manipulateEstateAction } from "./pages/AdminPage";
+import AdminPage, { action as manipulateEstateAction } from "./pages/admin/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
-import AdminEstates from "./pages/AdminEstates";
+import AdminEstates from "./pages/admin/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
-import ManagementPage from "./pages/ManagementPage";
+import ManagementPage from "./pages/admin/ManagementPage";
 
 const router = createBrowserRouter([
   {

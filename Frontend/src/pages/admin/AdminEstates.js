@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FilterWithAdder from "../components/adminPage/FilterWithAdder";
-import ItemsInAdmin from "../components/adminPage/ItemsInAdmin";
+import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
+import ItemsInAdmin from "../../components/adminPage/ItemsInAdmin";
 
 //dummy data
 // const data = [
