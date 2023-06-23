@@ -1,4 +1,4 @@
-import AdminNavbar from "../components/adminPage/AdminNavbar";
+import AdminNavbar from "../../components/adminPage/AdminNavbar";
 import { Outlet, redirect } from "react-router-dom";
 
 const AdminPage = () => {
