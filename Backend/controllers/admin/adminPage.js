@@ -27,7 +27,6 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res, next) => {
-    console.log('hwllo');
 
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
@@ -189,18 +188,6 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         message: 'estate created',
     });
 });
-//2023/05/08 added
-exports.getState = catchAsync(async (req, res, next) => {
-    const stateId = req.params.estateId;
-    const state = await estateDB.findById(stateId);
-    res.status(200).json({
-        status: 'succes',
-        data: {
-            state,
-            // states: estateDB.find({ stateId: req.params.id }),
-        },
-    });
-});
 
 //2023/05/08 added
 exports.updateEstate = catchAsync(async (req, res, next) => {
@@ -316,7 +303,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
     //         ? inputs.introduction_video
     //         : estate.introduction_video),
     // set rooms
-    (estate.estate_rooms[0].bedroom = inputs.bedroom),
+        (estate.estate_rooms[0].bedroom = inputs.bedroom),
         (estate.estate_rooms[0].bedroom_count = inputs.bedroom_count),
         (estate.estate_rooms[0].bedroom_size = inputs.bedroom_size),
         (estate.estate_rooms[0].livingroom = inputs.livingroom),
@@ -334,7 +321,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         (estate.estate_rooms[0].bathroom = inputs.bathroom),
         (estate.estate_rooms[0].bathroom_count = inputs.bathroom_count),
         (estate.estate_rooms[0].bathroom_size = inputs.bathroom_size),
-        (estate.estate_rooms[0].garden = inputs.garden),
+        //  (estate.estate_rooms[0].garden = inputs.garden),
         (estate.estate_rooms[0].garden_count = inputs.garden_count),
         (estate.estate_rooms[0].garden_size = inputs.garden_size),
         (estate.estate_rooms[0].balcony = inputs.balcony),
@@ -345,13 +332,12 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         (estate.estate_rooms[0].garage_size = inputs.garage_size),
         // set facilities garden minor
         (estate.estate_facilities[0].WiFi = inputs.WiFi),
-        (estate.estate_facilities[0].garden = inputs.gardenFac),
+        //(estate.estate_facilities[0].garden = inputs.gardenFac),
         (estate.estate_facilities[0].furniture = inputs.furniture),
         (estate.estate_facilities[0].elevator = inputs.elevator),
         (estate.estate_facilities[0].swimming_Pool = inputs.swimming_Pool),
         (estate.estate_facilities[0].fitness_center = inputs.fitness_center),
-        (estate.estate_facilities[0].loundry_facilities =
-            inputs.loundry_facilities),
+        (estate.estate_facilities[0].loundry_facilities = inputs.loundry_facilities),
         (estate.estate_facilities[0].parkingLot = inputs.parkingLot),
         (estate.estate_facilities[0].barbique = inputs.barbique),
         await estate.save();
@@ -363,6 +349,12 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.getEditEstate = async (req, res) => {
+    const estateId = req.params.estateId;
+    const estate = await estateDB.findById(estateId);
+    res.status(200).json(estate);
+};
+
 //added : 2023/05/08  , implemented : 2023/06/04
 exports.deleteEstate = catchAsync(async (req, res, next) => {
     const est = await estateDB.findByIdAndDelete(req.params.estateId);
@@ -372,7 +364,7 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
     }
 
     await clearImage(est.imageUrl);
-    await clearVideo(est.introduction_video[0]);
+    await clearVideo(est.introduction_video);
 
     return res.status(204).json({
         status: 'success',
@@ -383,26 +375,28 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 
 const clearImage = async (filePath) => {
     filePath.forEach(async (imagePath) => {
-        imagePath = path.join(__dirname, '../..', imagePath);
-        if (await fs.existsSync(imagePath)) {
-            await fs.unlinkSync(imagePath, (err) => {
-                throw err;
-            });
-            console.log('Image deleted successfully');
-        } else {
-            console.log('Image not found');
-        }
-    });
-};
-const clearVideo = async (filePath) => {
-    filePath = path.join(__dirname, '../..', filePath);
-
-    if (await fs.existsSync(filePath)) {
-        await fs.unlinkSync(filePath, (err) => {
-            throw err;
+      imagePath = path.join(__dirname, "../..", imagePath);
+      if (await fs.existsSync(imagePath)) {
+        await fs.unlinkSync(imagePath, (err) => {
+          throw err;
         });
-        console.log('delete video successfully');
-    } else {
-        console.log('video not found');
-    }
-};
+        console.log("Image deleted successfully");
+      } else {
+        console.log("Image not found");
+      }
+    });
+  };
+const clearVideo = async (filePath) => {
+    filePath.forEach(async (videoPath) => {
+      videoPath = path.join(__dirname, "../..", videoPath);
+      if (await fs.existsSync(videoPath)) {
+        await fs.unlinkSync(videoPath, (err) => {
+          throw err;
+        });
+        console.log("Image deleted successfully");
+      } else {
+        console.log("Image not found");
+      }
+    });
+  };
+  
