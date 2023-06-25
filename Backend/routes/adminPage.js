@@ -12,8 +12,10 @@ router
 
 router
     .route('/estates/:estateId')
-    .get(adminPage_Controller.getEstate)
+    .get(adminPage_Controller.getEditEstate)
     .delete(adminPage_Controller.deleteEstate)
     .put(adminPage_Controller.updateEstate);
+
+//router.route('')
 
 module.exports = router;

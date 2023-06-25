@@ -2,7 +2,10 @@ const express = require('express');
 
 const path = require('path');
 const multer = require('multer');
-const mainPage_Router = require('./routes/adminPage');
+//////////////////////////////////////////////
+const adminPage_Router = require('./routes/adminPage');
+const managment_Router = require('./routes/adminManagment');
+//////////////////////////////////////////////
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const globalErrorHandler = require('./controllers/globalErrorHandler');
@@ -22,8 +25,10 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if (file.fieldname === 'images') {
             cb(null, './uploads/images/');
-        } else if (file.fieldname == 'video') {
-            cb(null, './uploads/videoss/');
+        } else if (file.fieldname === 'video') {
+            cb(null, './uploads/videos/');
+        } else if (file.fieldname === 'logo') {
+            cb(null, './uploads/logos/');
         }
     },
     filename: function (req, file, cb) {
@@ -35,6 +40,8 @@ const storage = multer.diskStorage({
                 null,
                 file.fieldname + '-' + Date.now() + '.mp4'
             );
+        } else if (file.fieldname === 'logo') {
+            cb(null, file.fieldname + '-' + Date.now() + '.jpg');
         }
     },
 });
@@ -56,11 +63,22 @@ function checkFileType(file, cb) {
             file.mimetype === 'image/png' ||
             file.mimetype === 'image/jpg' ||
             file.mimetype === 'image/jpeg' ||
-            fiel.mimetype === 'image/gif'
+            file.mimetype === 'image/gif'
         ) {
             cb(null, true);
         } else {
             cb(new Error('image type not supported!'), false);
+        }
+    } else if (file.fieldname === 'logo') {
+        if (
+            file.mimetype === 'image/png' ||
+            file.mimetype === 'image/jpg' ||
+            file.mimetype === 'image/jpeg' ||
+            file.mimetype === 'image/gif'
+        ) {
+            cb(null, true);
+        } else {
+            cb(new Error('logo type not supported!'), false);
         }
     }
 }
@@ -77,68 +95,11 @@ const upload = multer({
     {
         name: 'video',
     },
+    {
+        name: 'logo',
+    },
 ]);
 
-/* 
-const imageStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/images/'); // change the destination folder as per your requirement
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + '.jpg');
-    },
-});
-
-const imageFileFilter = function (req, file, cb) {
-    if (
-        file.mimetype === 'image/jpeg' ||
-        file.mimetype === 'image/png' ||
-        file.mimetype === 'image/jpg' ||
-        file.mimetype === 'image/heic' ||
-        file.mimetype === 'image/emf'
-    ) {
-        cb(null, true);
-    } else {
-        cb(new Error('image type not supported!'), false);
-    }
-};
-
-const uploadImage = multer({
-    storage: imageStorage,
-    fileFilter: imageFileFilter,
-});
-
-const videoStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/videoss/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + '.mp4');
-    },
-});
-
-const videoFileFilter = function (req, file, cb) {
-    // the condition to indicate if the file should be accepted
-    if (
-        file.mimetype === 'video/mp4' ||
-        file.mimetype === 'video/jpeg' ||
-        file.mimetype === 'video/mpv'
-    ) {
-        // the function that indicates if the file should be accepted
-        cb(null, true);
-    } else {
-        // the function that indicates if the file should be rejected
-        cb(new Error('video type not supported!'), false);
-    }
-};
-
-// TODO : limits field
-
-const uploadVideo = multer({
-    storage: videoStorage,
-    fileFilter: videoFileFilter,
-});
-*/
 app.use(globalErrorHandler);
 
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
@@ -167,7 +128,8 @@ app.use((req, res, next) => {
 });
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
-app.use('/admin', mainPage_Router);
+app.use('/admin', adminPage_Router);
+app.use('/admin', managment_Router);
 
 mongoose.connect('mongodb://127.0.0.1:27017/maham').then(() => {
     console.log(`DB connection sucessful`);
