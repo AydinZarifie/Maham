@@ -63,7 +63,7 @@ export default DetailPage;
 
 export async function loader({ request, params }) {
   const id = params.estateId;
-  const response = await fetch("http://localhost:5000/admin/estates/" + id);
+  const response = await fetch("http://localhost:5000/admin/posts/" + id);
   return response.json();
 
   // return loadEstate(id);

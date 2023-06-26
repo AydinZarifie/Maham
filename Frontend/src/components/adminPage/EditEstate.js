@@ -1,5 +1,5 @@
 import { useLoaderData, useRouteLoaderData } from "react-router-dom";
-import ConfingEstate from "../../pages/ConfingEstatePage";
+import ConfingEstate from "../../pages/admin/ConfingEstatePage";
 
 const EditState = () => {
   const data = useRouteLoaderData("estate-detail");

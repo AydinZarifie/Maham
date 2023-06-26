@@ -106,11 +106,15 @@ const estateRoomsSchema = new mongoose.Schema({
         set: (a) => (a === '' ? undefined : a),
     },
 
-    frontYard: {
+    garden: {
         type: Boolean,
         set: (a) => (a === '' ? undefined : a),
     },
-    frontYard_size: {
+    garden_count: {
+        type: Number,
+        set: (a) => (a === '' ? undefined : a),
+    },
+    garden_size: {
         type: Number,
         set: (a) => (a === '' ? undefined : a),
     },
@@ -140,6 +144,9 @@ const estateRoomsSchema = new mongoose.Schema({
 
 const estateFacilitiesSchema = new mongoose.Schema({
     WiFi: {
+        type: Boolean,
+    },
+    garden: {
         type: Boolean,
     },
     elevator: {
@@ -186,6 +193,7 @@ const estateSchema = new mongoose.Schema({
     },
     estate_title: {
         type: String,
+        required: [true, 'must have a title'],
         set: (a) => (a === '' ? undefined : a),
     },
     main_street: {
@@ -241,7 +249,7 @@ const estateSchema = new mongoose.Schema({
         type: Array,
         //set: (a) => (a === '' ? undefined : a),
     },
-    introduction_video:{
+    introduction_video: {
         type: Array,
     },
     estate_rooms: [estateRoomsSchema],

@@ -14,7 +14,6 @@ router
     .route('/estates/:estateId')
     .get(adminPage_Controller.getEditEstate)
     .delete(adminPage_Controller.deleteEstate)
-    .put(adminPage_Controller.updateEstate)
- 
+    .put(adminPage_Controller.updateEstate);
 
 module.exports = router;

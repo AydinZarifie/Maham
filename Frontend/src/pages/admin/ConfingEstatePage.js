@@ -1,24 +1,24 @@
-import styles from "../styles/Add_Estate.module.css";
+import styles from "../../styles/Add_Estate.module.css";
 
-import balconyIcon from "../images/balcony-svgrepo-com.svg";
-import bathroomIcon from "../images/bathroom-svgrepo-com.svg";
-import bbqIcon from "../images/bbq-svgrepo-com.svg";
-import bedIcon from "../images/bed-bedroom-furniture-hotel-sleep-svgrepo-com.svg";
-import diningroomIcon from "../images/dining-room-svgrepo-com.svg";
-import elevatorIcon from "../images/elevator-1-svgrepo-com.svg";
-import furintureIcon from "../images/furniture-svgrepo-com.svg";
-import garageIcon from "../images/garage-svgrepo-com.svg";
-import gardenIcon from "../images/garden-planting-flower-svgrepo-com.svg";
-import guestIcon from "../images/guest-svgrepo-com.svg";
-import gymIcon from "../images/gym-workout-svgrepo-com.svg";
-import kitchenIcon from "../images/kitchen-room-svgrepo-com.svg";
-import laundryIcon from "../images/laundry-svgrepo-com.svg";
-import livingroomIcon from "../images/livingroom-svgrepo-com.svg";
-import parkingIcon from "../images/parking-svgrepo-com.svg";
-import poolIcon from "../images/pool-svgrepo-com.svg";
-import uploadIcon from "../images/upload-filled-svgrepo-com.svg";
-import wifiIcon from "../images/wifi-medium-svgrepo-com.svg";
-import woodenFenceIcon from "../images/wooden-fence-svgrepo-com.svg";
+import balconyIcon from "../../images/balcony-svgrepo-com.svg";
+import bathroomIcon from "../../images/bathroom-svgrepo-com.svg";
+import bbqIcon from "../../images/bbq-svgrepo-com.svg";
+import bedIcon from "../../images/bed-bedroom-furniture-hotel-sleep-svgrepo-com.svg";
+import diningroomIcon from "../../images/dining-room-svgrepo-com.svg";
+import elevatorIcon from "../../images/elevator-1-svgrepo-com.svg";
+import furintureIcon from "../../images/furniture-svgrepo-com.svg";
+import garageIcon from "../../images/garage-svgrepo-com.svg";
+import gardenIcon from "../../images/garden-planting-flower-svgrepo-com.svg";
+import guestIcon from "../../images/guest-svgrepo-com.svg";
+import gymIcon from "../../images/gym-workout-svgrepo-com.svg";
+import kitchenIcon from "../../images/kitchen-room-svgrepo-com.svg";
+import laundryIcon from "../../images/laundry-svgrepo-com.svg";
+import livingroomIcon from "../../images/livingroom-svgrepo-com.svg";
+import parkingIcon from "../../images/parking-svgrepo-com.svg";
+import poolIcon from "../../images/pool-svgrepo-com.svg";
+import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
+import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
+import woodenFenceIcon from "../../images/wooden-fence-svgrepo-com.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -62,9 +62,9 @@ const ConfingEstate = ({ method, estate }) => {
     metrage: estate ? estate.estate_rooms[0].bathroom_size : "",
   });
   const [garden, setGarden] = useState({
-    // checked: estate ? estate.estate_rooms[0].garden : false,
-    // number: estate ? estate.estate_rooms[0].garden_Size : "",
-    // metrage: estate ? estate.estate_rooms[0].garden.metrage : "",
+    checked: estate ? estate.estate_rooms[0].garden : false,
+    number: estate ? estate.estate_rooms[0].garden_count : "",
+    metrage: estate ? estate.estate_rooms[0].garden_size : "",
   });
   const [balcony, setBalcony] = useState({
     checked: estate ? estate.estate_rooms[0].balcony : false,
@@ -83,7 +83,7 @@ const ConfingEstate = ({ method, estate }) => {
     furniture: estate ? estate.estate_facilities[0].furniture : false,
     elevator: estate ? estate.estate_facilities[0].elevator : false,
 
-    // garden: estate ? estate.estate_facilities[0].yard : false,
+    garden: estate ? estate.estate_facilities[0].garden : false,
 
     laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
     bbq: estate ? estate.estate_facilities[0].barbique : false,
@@ -351,7 +351,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("checkPool", facilities.pool);
     formData.append("checkFurniture", facilities.furniture);
     formData.append("checkElevator", facilities.elevator);
-    formData.append("checkGarden", facilities.garden);
+    formData.append("checkGardenFacility", facilities.garden);
     formData.append("checkLaundary", facilities.laundary);
     formData.append("checkBbq", facilities.bbq);
     formData.append("checkGym", facilities.gym);
@@ -366,11 +366,11 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("video", file);
     });
 
-    let url = "http://localhost:5000/admin/estates";
+    let url = "http://localhost:5000/admin/posts";
 
     if (method === "PUT") {
       const estateId = estate._id;
-      url = "http://localhost:5000/admin/estates/" + estateId;
+      url = "http://localhost:5000/admin/posts/" + estateId;
     }
 
     const response = await fetch(url, {
@@ -383,11 +383,11 @@ const ConfingEstate = ({ method, estate }) => {
     navigate("/admin/estates");
   };
 
-  const deleteHanler = () => {
+  const deleteHandler = () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const estateId = estate._id;
-      const url = "http://localhost:5000/admin/estates/" + estateId;
+      const url = "http://localhost:5000/admin/posts/" + estateId;
       fetch(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -1378,7 +1378,7 @@ const ConfingEstate = ({ method, estate }) => {
           <span>+</span>
         </button>
         {estate && (
-          <button type="button" onClick={() => deleteHanler()}>
+          <button type="button" onClick={() => deleteHandler()}>
             DELETE
           </button>
         )}
