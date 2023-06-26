@@ -3,10 +3,8 @@ const express = require('express');
 const router = express.Router();
 const managementController = require('../controllers/admin/adminManagment');
 
-router.route('/management').get(managementController.getAllCountries);
+router.route('/managment').get(managementController.getAllCountries);
 
-router
-    .route('/management/addCountry')
-    .post(managementController.postAddCountry);
+router.route('/managment/addCountry').post(managementController.postAddCountry);
 
 module.exports = router;
