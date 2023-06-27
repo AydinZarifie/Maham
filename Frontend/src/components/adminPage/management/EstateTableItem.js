@@ -14,11 +14,15 @@ const EstateTableItem = (props) => {
         <td>{props.contractAddress}</td>
         <td>{props.landlordAddress}</td>
         <td>
-          {props.sellPosition && <img src={trueIcon} />}
-          {!props.sellPosition && <img src={falseIcon} />}
+          {props.sellPosition && <span>true</span>}
+          {!props.sellPosition && <span>false</span>}
         </td>
         <td>
-          <img src={lockIcon} />
+          {props.lock && <span>true</span>}
+          {!props.lock && <span>false</span>}
+        </td>
+        <td>
+          <button></button>
         </td>
       </tr>
     </>
