@@ -32,18 +32,22 @@ const ManagementPage = () => {
     cityName: "",
   });
 
+  const [searchedEstates,setSearchedEstates]=useState([]);
+
   const cityFetchClickHandler = async (name) => {
     setData((prev) => ({ ...prev, cityName: name }));
     toggleCityMenu();
-    const response = await fetch("url" + data.cityName);
+    const response = await fetch("http://localhost:5000/admin/management/" + data.cityName);
     const json = await response.json();
+    console.log(json);
+    setSearchedEstates(json);
   };
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 
   const cityFetch = async () => {
-    const response = await fetch("url" + data.countryName);
+    const response = await fetch("http://localhost:5000/admin/management/" + data.countryName);
     const json = await response.json();
     setCities(json);
   };
@@ -61,13 +65,13 @@ const ManagementPage = () => {
 
     let url;
     if (img) {
-      url = "url";
+      url = "http://localhost:5000/admin/management/addCountry";
       formData.append("image", img);
     } else {
-      url = "url";
+      url = "http://localhost:5000/admin/management/addCity";
     }
 
-    const response = await fetch("url", {
+    const response = await fetch(url, {
       method: "POST",
       body: formData,
     });
@@ -77,7 +81,7 @@ const ManagementPage = () => {
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      const data = await fetch("url");
+      const data = await fetch("http://localhost:5000/admin/management");
       const json = await data.json();
       setCountries(json);
     };

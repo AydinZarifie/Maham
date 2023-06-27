@@ -18,6 +18,7 @@ const EstateTable = () => {
               <th>Contract-Address</th>
               <th>Landlor-Address</th>
               <th>Sell-Position</th>
+              <th>Lock-Position</th>
               <th>Lock</th>
             </tr>
           </thead>

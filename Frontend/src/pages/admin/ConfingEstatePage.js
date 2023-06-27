@@ -83,9 +83,7 @@ const ConfingEstate = ({ method, estate }) => {
     pool: estate ? estate.estate_facilities[0].swimming_Pool : false,
     furniture: estate ? estate.estate_facilities[0].furniture : false,
     elevator: estate ? estate.estate_facilities[0].elevator : false,
-
     garden: estate ? estate.estate_facilities[0].garden : false,
-
     laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
     bbq: estate ? estate.estate_facilities[0].barbique : false,
     gym: estate ? estate.estate_facilities[0].fitness_center : false,
@@ -101,12 +99,11 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
+    price: estate ? estate.price : "",
 
-     plate: estate ? estate.plate : "",
-     id:estate ? estate.id :"",
-     walletAddress:estate ? estate.walletAddress :"",
-     price:estate ? estate.price :"",
-     
+    //  plate: estate ? estate.plate : "",
+    //  id:estate ? estate.id :"",
+    //  walletAddress:estate ? estate.walletAddress :"",
   });
 
   function basicEventHandler(event) {
@@ -286,13 +283,13 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredLocationIsValid = information.location.trim() !== "";
   const enteredTypeIsValid = information.type.trim() !== "";
   const enteredDescriptionIsValid = information.description.trim() !== "";
-
-  const enteredImageIsValid = selectedImages.length > 0;
-  const enteredVideoIsValid = selectedVideo.length > 0;
-  const enteredPlateIsValid = information.plate.trim() !== "";
-  const enteredIdIsValid = information.id.trim() !== "";
-  const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
   const enteredPriceIsValid = information.price.trim() !== "";
+
+  // const enteredImageIsValid = selectedImages.length > 0;
+  // const enteredVideoIsValid = selectedVideo.length > 0;
+  // const enteredPlateIsValid = information.plate.trim() !== "";
+  // const enteredIdIsValid = information.id.trim() !== "";
+  // const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
 
   const [touched, setTouched] = useState({
     title: false,
@@ -305,13 +302,13 @@ const ConfingEstate = ({ method, estate }) => {
     location: false,
     type: false,
     description: false,
-
-    image: false,
-    video: false,
-    plate: false,
-    id: false,
-    walletAddress: false,
     price: false,
+
+    // image: false,
+    // video: false,
+    // plate: false,
+    // id: false,
+    // walletAddress: false,
   });
 
   const titleIsInvalid = !enteredTitleIsValid && touched.title;
@@ -329,14 +326,14 @@ const ConfingEstate = ({ method, estate }) => {
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const descriptionIsInvalid =
     !enteredDescriptionIsValid && touched.description;
-
-  const imageIsInvalid = !enteredImageIsValid && touched.image;
-  const videoIsInvalid = !enteredVideoIsValid && touched.video;
-  const plateIsInvalid = !enteredPlateIsValid && touched.plate;
-  const idIsInvalid = !enteredIdIsValid && touched.id;
-  const walletAddressIsInvalid =
-    !enteredWalletAddressIsValid && touched.walletAddress;
   const priceIsInvalid = !enteredPriceIsValid && touched.price;
+
+  // const imageIsInvalid = !enteredImageIsValid && touched.image;
+  // const videoIsInvalid = !enteredVideoIsValid && touched.video;
+  // const plateIsInvalid = !enteredPlateIsValid && touched.plate;
+  // const idIsInvalid = !enteredIdIsValid && touched.id;
+  // const walletAddressIsInvalid =
+  // !enteredWalletAddressIsValid && touched.walletAddress;
 
   let formIsValid = false;
 
@@ -351,12 +348,13 @@ const ConfingEstate = ({ method, estate }) => {
     enteredLocationIsValid &&
     enteredTypeIsValid &&
     enteredDescriptionIsValid &&
-    enteredImageIsValid &&
-    enteredVideoIsValid &&
-    enteredPlateIsValid &&
-    enteredIdIsValid &&
-    enteredWalletAddressIsValid &&
     enteredPriceIsValid
+
+    // enteredImageIsValid &&
+    // enteredVideoIsValid &&
+    // enteredPlateIsValid &&
+    // enteredIdIsValid &&
+    // enteredWalletAddressIsValid
   ) {
     formIsValid = true;
   }
@@ -396,25 +394,30 @@ const ConfingEstate = ({ method, estate }) => {
   const descriptionClass = descriptionIsInvalid
     ? `${styles.invalid} ${styles.DescriptionTextArea} `
     : `${styles.DescriptionTextArea} `;
-
-  const imageClass = imageIsInvalid
-    ? `${styles.invalid} ${styles.previewContainer} `
-    : `${styles.previewContainer} `;
-  const videoClass = videoIsInvalid
-    ? `${styles.invalid} ${styles.previewContainer2} `
-    : `${styles.previewContainer2} `;
-  const plateClass = plateIsInvalid
-    ? `${styles.invalid} ${styles.textinput} `
-    : `${styles.textinput} `;
-  const idClass = idIsInvalid
-    ? `${styles.invalid} ${styles.textinput} `
-    : `${styles.textinput} `;
-  const walletAddressClass = walletAddressIsInvalid
-    ? `${styles.invalid} ${styles.textinput} `
-    : `${styles.textinput} `;
   const priceClass = priceIsInvalid
     ? `${styles.invalid} ${styles.textinput} `
     : `${styles.textinput} `;
+
+  const imageClass = styles.previewContainer;
+  // imageIsInvalid
+  //   ? `${styles.invalid} ${styles.previewContainer} `
+  //   : `${styles.previewContainer} `;
+  const videoClass = styles.previewContainer2;
+  //  videoIsInvalid
+  //   ? `${styles.invalid} ${styles.previewContainer2} `
+  //   : `${styles.previewContainer2} `;
+  const plateClass = styles.textinput;
+  // plateIsInvalid
+  //   ? `${styles.invalid} ${styles.textinput} `
+  //   : `${styles.textinput} `;
+  const idClass = styles.textinput;
+  // idIsInvalid
+  //   ? `${styles.invalid} ${styles.textinput} `
+  //   : `${styles.textinput} `;
+  const walletAddressClass = styles.textinput;
+  // walletAddressIsInvalid
+  //   ? `${styles.invalid} ${styles.textinput} `
+  //   : `${styles.textinput} `;
 
   const submitHandler = async (event) => {
     setTouched({
@@ -429,13 +432,13 @@ const ConfingEstate = ({ method, estate }) => {
       type: true,
       description: true,
       image: true,
-
-      image: true,
-      video: true,
-      plate: true,
-      id: true,
-      walletAddress: true,
       price: true,
+
+      // image: true,
+      // video: true,
+      // plate: true,
+      // id: true,
+      // walletAddress: true,
     });
 
     if (!formIsValid) {
@@ -568,11 +571,11 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("video", file);
     });
 
-    let url = "http://localhost:5000/admin/posts";
+    let url = "http://localhost:5000/admin/estates";
 
     if (method === "PUT") {
       const estateId = estate._id;
-      url = "http://localhost:5000/admin/posts/" + estateId;
+      url = "http://localhost:5000/admin/estates/" + estateId;
     }
 
     const response = await fetch(url, {
@@ -589,7 +592,7 @@ const ConfingEstate = ({ method, estate }) => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const estateId = estate._id;
-      const url = "http://localhost:5000/admin/posts/" + estateId;
+      const url = "http://localhost:5000/admin/estates/" + estateId;
       fetch(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -820,8 +823,8 @@ const ConfingEstate = ({ method, estate }) => {
                 required
                 type="number"
                 className={priceClass}
-                // value={information.location}
-                // onChange={basicEventHandler}
+                value={information.price}
+                onChange={basicEventHandler}
                 name="price"
                 onBlur={blurHandler}
               />
