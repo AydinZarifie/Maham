@@ -22,29 +22,32 @@ export default function FilterWithAdder() {
 
   return (
     <div className={styles.CountryFilterAndAdder}>
-      <div className={styles.form1}>
+      {/* <div className={styles.form1}> */}
+      <button className={styles.slideLeft} type="button" onClick={goToLeft}>
+            ❮
+          </button>
         <form
           className={styles.CountryFilter}
           method="post"
           encType="multipart/form-data"
+          ref={slideRef}
         >
-          <div className={styles.Container} ref={slideRef}>
-            <div className={styles.content}>
+          {/* <div className={styles.Container} ref={slideRef}> */}
+            {/* <div className={styles.content}> */}
               <div className={styles.scrollbar}>{datas}</div>
-            </div>
-          </div>
-          <button className={styles.slideLeft} type="button" onClick={goToLeft}>
-            ❮
-          </button>
-          <button
+            {/* </div> */}
+          {/* </div> */}
+          
+          
+        </form>
+        <button
             className={styles.slideRight}
             type="button"
             onClick={goToRight}
           >
             ❯
           </button>
-        </form>
-      </div>
+      {/* </div> */}
 
       <Link to="new">
         <button className={styles.iconBtn}>

@@ -7,14 +7,14 @@ import data from "../../../dummyData/countryInformationData";
 
 import CountryInformationItem from "./CountryInformationItem";
 
-const CountryInformations = (props) => {
+const CountryInformations = () => {
   return (
     <div className={styles.Tables3AndName}>
       <span className={styles.CountryInformationSpan}>
         <img src={globeIcon} className={styles.Icons} />
         <h3>Country Informations</h3>
       </span>
-      <div className={styles.Tables3}>
+      
         <div className={styles.CountryInformation}>
           <table className={styles.styledTable}>
             <thead>
@@ -34,11 +34,8 @@ const CountryInformations = (props) => {
             </tbody>
           </table>
         </div>
-        <button type="button" className={styles.AddButton} onClick={props.buttonHandler}>
-          Add
-        </button>
-      </div>
-      <div></div>
+       
+  
     </div>
   );
 };

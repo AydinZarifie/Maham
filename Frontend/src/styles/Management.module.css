@@ -29,6 +29,99 @@
 
 /***    ***/
 
+
+.CountryMenu{
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+   height: 250px;
+
+}
+.Items{
+  display: flex;
+  flex-direction: column;
+  height: 120px;
+ /* overflow-x: scroll; */
+ overflow-y: scroll;
+ scrollbar-width: thin;
+ scrollbar-color: transparent;
+}
+.Items::-webkit-scrollbar {
+  height: 15px;
+  background-color: #fff;
+  border-radius: 15px;
+  z-index: 999;
+}
+.Items::-webkit-scrollbar:hover {
+  height: 25px;
+  z-index: 999;
+}
+.Items::-webkit-scrollbar-track {
+  height: 8px;
+  border-radius: 10px;
+  z-index: 999;
+}
+.Items::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: #c7c7c7;
+  border-radius: 15px;
+  z-index: 999;
+}
+.MenuItem{
+  position:sticky;
+  width:100%;
+  height: 40px;
+  z-index: 999;
+  margin-top: 20px;
+  font-size: .8rem;
+  
+}
+.countryImages{
+  width: 26px;
+  height: 26px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.logoSpan{
+  display:flex;
+  flex-direction: row;
+  /* align-items: center; */
+  background-color: #f1f1f1;
+  z-index: 99;
+  justify-content:space-between;
+  border-bottom: 1px solid #909090;
+  gap: 3%;
+  cursor: pointer;
+  
+}
+.logoSpan:hover{
+background-color: #dadada;
+}
+.logoSpan:last-child{
+  border-radius: 0 0 5px 5px ;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  cursor: pointer;
+}
+.overlay2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  z-index: 6;
+  cursor: pointer;
+}
 /***   MediaQuery   ***/
 @media (min-width: 1100px) {
   /***   LayOut   ***/
@@ -64,6 +157,10 @@
     border-radius: 10px;
     overflow-y: scroll;
     overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent;
+    display: flex;
+    flex-direction: column;
   }
 }
 @media (max-width: 1100px) {
@@ -104,6 +201,11 @@
     overflow-y: scroll;
     overflow-x: scroll;
     margin: auto;
+    scrollbar-width: thin;
+    scrollbar-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
   }
 }
 @media (min-width: 750px) {
@@ -120,16 +222,17 @@
   }
   .AddCountry {
     position: fixed;
-    top: -10px;
-    left: -340px;
+    top: -90px;
+    left: 0px;
     bottom: 0;
     right: 0; /* */
+    /* */
     margin: auto;
     z-index: 9999;
     width: 330px;
     max-width: 100%;
-    height: 490px;
-    padding: 10px 0;
+    height: 530px;
+    padding: 20px 0;
     text-align: center;
     background-color: white;
     border-radius: 10px;
@@ -166,7 +269,7 @@
     height: 520px;
   }
   .AddCountry {
-    position: absolute;
+    position: fixed;
     top: -90px;
     left: 0px;
     bottom: 0;
@@ -175,8 +278,8 @@
     z-index: 9999;
     width: 330px;
     max-width: 100%;
-    height: 490px;
-    padding: 10px 0;
+    height: 530px;
+    padding: 20px 0;
     text-align: center;
     background-color: white;
     border-radius: 10px;
@@ -254,6 +357,8 @@
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent;
 }
 
 .styledTable {
@@ -274,6 +379,9 @@
   width: 100%;
   white-space: nowrap;
   text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 0;
 }
 
 .styledTable th,
@@ -330,6 +438,8 @@
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent;
 }
 .Gainers::-webkit-scrollbar {
   height: 15px;
@@ -389,18 +499,17 @@
   height: 20px;
 }
 .AddButton {
+  margin-top: -5px;
   appearance: none;
-  background: linear-gradient(to right, #fd292f, #a90206);
-  border: 2px solid #1a1a1a;
-  border-radius: 5px;
+  background: #c1bbbc;
+  border: 1px solid #909090;
+  border-radius: 60px;
   box-sizing: border-box;
-  color: #fff;
+  color: #3d3a3a;
   cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 400;
   line-height: normal;
-  height: 40px;
-  width: 110px;
   outline: none;
   text-align: center;
   text-decoration: none;
@@ -409,15 +518,18 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   will-change: transform;
-  margin: auto;
+  /* margin: auto; */
+  width: 50px;
+  height: 50px;
+  padding: 6px 15px 6px 11px;
 }
 .AddButton:disabled {
   pointer-events: none;
 }
 .AddButton:hover {
-  background: linear-gradient(to left, #fd292f, #fa4753);
-  color: #fff;
-  box-shadow: rgba(237, 30, 30, 0.25) 0 8px 15px;
+  background: #b0a9a9;
+  color: #1c1a1a;
+  box-shadow: rgba(104, 75, 75, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
 .Tables3 {
@@ -441,11 +553,21 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
-
+.wrapper2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
 .wrapper {
   width: 70%;
   background: #fff;
-  padding: 30px;
+  padding: 20px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  font-size: 13px;
+
   /* box-shadow: 0px 0px 10px rgba(0,0,0,0.1); */
 }
 .wrapper .inputData {
@@ -457,14 +579,14 @@
   height: 100%;
   width: 99%;
   border: none;
-  font-size: 17px;
+  font-size: 13px;
   border-bottom: 2px solid silver;
   outline: none;
 }
 .inputData .textinput:focus ~ .label,
 .inputData .textinput:valid ~ .label {
   transform: translateY(-20px);
-  font-size: 15px;
+  font-size: 13px;
   color: #fd292f;
 }
 .wrapper .inputData .label {
@@ -485,7 +607,7 @@
   position: absolute;
   content: "";
   height: 100%;
-  width: 149%;
+  width: 125%;
   background: #fd292f;
   transform: scaleX(0);
   transform-origin: center;
@@ -498,9 +620,38 @@
 }
 
 /***   Image Aploader  ***/
+
+.closeBtn {
+  font-size: 31px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+.closeBtn:hover {
+  color: #3d3a3a;
+}
+/*  Country and city select    */
+.CountrySelect2 {
+  border: 2px solid rgb(209, 213, 219);
+  width: 270px;
+  background-color: #fefefe;
+  border-radius: 7px;
+  padding: 10px;
+}
+.CountrySelect2:hover {
+  background-color: #e9eaed;
+}
+.CountrySelect2 option {
+  background-color: #fff;
+}
+
+.ImageH3 {
+  margin: 20px 0 3px 0;
+}
 .ImgAploader {
   width: 85%;
-  margin: 20px auto;
+  margin: 10px auto;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -586,188 +737,40 @@
 }
 
 /***     ***/
-/***    ***/
 
-/*** Filter ***/
-.CountryFilter {
-  padding: 10px 10px;
-  background-color: #fff;
-  /* box-shadow: 0 3px 5px 0 rgba(0,0,0,0.16); */
-  height: 80px;
-  z-index: 9999;
-}
-.scrollbar {
-  white-space: nowrap;
-  max-width: 100%;
+.SelectAndAdd {
   display: flex;
-  justify-content: start;
-  gap: 3em;
+  justify-content: center;
+  gap: 2%;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 40px;
 }
-.CountryTag {
-  text-align: center;
-  cursor: pointer;
+/*  Country and city select    */
+.CountrySelect {
+  border: 2px solid rgb(209, 213, 219);
+  width: 100%;
+  background-color: #fefefe;
+  border-radius: 7px;
+  padding: 10px;
 }
-.CountryName {
-  margin-top: 0;
-  margin-bottom: 0;
+.CountrySelect:hover {
+  background-color: #e9eaed;
 }
-.CountryName:hover {
-  color: #adb1b8;
-  transform: scale(1.06);
-}
-.CountryImg:hover {
-  transform: scale(1.06);
-}
-#Container {
-  width: 80%;
-  margin: 0 auto 0 10%;
-  height: 80px;
-  margin-top: 10px;
-  overflow-x: scroll;
-  scroll-behavior: smooth;
-}
-
-#Container2 {
-  width: 80%;
-  margin: 0 auto 0 10%;
-  height: 80px;
-  margin-top: 10px;
-  overflow-x: scroll;
-  scroll-behavior: smooth;
-}
-#content {
-  margin-top: 10px;
-}
-#slideLeft {
-  background-color: transparent;
-  border: none;
-  padding: 0 0;
-  max-width: 4%;
-  min-width: 40px;
-  max-height: 4%;
-  min-height: 40px;
-  border-radius: 100%;
-  position: relative;
-  top: -75px;
-  /* right: -6%;*/
-  margin-left: 3%;
-  font-size: 1.8rem;
-}
-#slideLeft:hover {
-  cursor: pointer;
-  color: #717171;
-}
-#slideRight {
-  background-color: transparent;
-  border: none;
-  margin-left: -35px;
-  padding: 0 0;
-  max-width: 4%;
-  min-width: 40px;
-  max-height: 4%;
-  min-height: 40px;
-  border-radius: 100%;
-  position: relative;
-  left: 89%;
-  top: -75px;
-  font-size: 1.8rem;
-}
-#slideRight:hover {
-  cursor: pointer;
-  color: #717171;
-}
-
-#slideLeft2 {
-  background-color: transparent;
-  border: none;
-  padding: 0 0;
-  max-width: 4%;
-  min-width: 40px;
-  max-height: 4%;
-  min-height: 40px;
-  border-radius: 100%;
-  position: relative;
-  top: -75px;
-  /* right: -6%;*/
-  margin-left: 3%;
-  font-size: 1.8rem;
-}
-#slideLeft2:hover {
-  cursor: pointer;
-  color: #717171;
-}
-#slideRight2 {
-  background-color: transparent;
-  border: none;
-  margin-left: -35px;
-  padding: 0 0;
-  max-width: 4%;
-  min-width: 40px;
-  max-height: 4%;
-  min-height: 40px;
-  border-radius: 100%;
-  position: relative;
-  left: 89%;
-  top: -75px;
-  font-size: 1.8rem;
-}
-#slideRight2:hover {
-  cursor: pointer;
-  color: #717171;
-}
-
-#Container::-webkit-scrollbar {
-  height: 15px;
+.CountrySelect option {
   background-color: #fff;
 }
-#Container::-webkit-scrollbar:hover {
-  height: 25px;
-}
-#Container::-webkit-scrollbar-track {
-  height: 8px;
-  border-radius: 10px;
-}
-#Container::-webkit-scrollbar-thumb {
-  display: none;
-  height: 5px;
-  border: 1px solid #fff;
-  background: linear-gradient(to right, #fd292f, black);
-  border-radius: 15px;
-}
-#Container2::-webkit-scrollbar {
-  height: 15px;
-  background-color: #fff;
-}
-#Container2::-webkit-scrollbar:hover {
-  height: 25px;
-}
-#Container2::-webkit-scrollbar-track {
-  height: 8px;
-  border-radius: 10px;
-}
-#Container2::-webkit-scrollbar-thumb {
-  display: none;
-  height: 5px;
-  border: 1px solid #fff;
-  background: linear-gradient(to right, #fd292f, black);
-  border-radius: 15px;
-}
-.hr {
-  background-color: #1a1a1a;
-  height: 0.04em;
-  width: 99%;
-  color: #1a1a1a;
-}
-/* *** */
 
 /***   EstateInfo   ***/
 .EstateInfo {
   width: 90%;
-  margin: 45px auto;
+  margin: -125px auto 30px auto;
   border-radius: 10px;
   overflow-x: scroll;
   height: 360px;
   overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent;
 }
 .EstateInfo::-webkit-scrollbar {
   height: 15px;
@@ -787,7 +790,5 @@
   background: #c7c7c7;
   border-radius: 15px;
 }
-
-
 
 /***     ***/

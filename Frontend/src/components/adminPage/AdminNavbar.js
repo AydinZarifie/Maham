@@ -1,6 +1,6 @@
 import AdminMenuItem from "./AdminMenuItem";
 import styles from "../../styles/Admin.module.css";
-import logo from "../../images/Maham.png";
+import logo from "../../images/Maham2.png";
 import { useRef } from "react";
 import dashboardIcon from "../../images/dashboard-1-svgrepo-com.svg";
 import walletIcon from "../../images/wallet-svgrepo-com.svg";
@@ -9,7 +9,7 @@ import settingIcon from "../../images/setting-svgrepo-com.svg";
 import notificationIcon from "../../images/notification-svgrepo-com.svg";
 import estateIcon from "../../images/real-estate-search-house-svgrepo-com.svg";
 import chatIcon from "../../images/chat-line-square-svgrepo-com.svg";
-import profileIcon from "../../images/profile-circle-svgrepo-com.svg";
+import profileIcon from "../../images/user-svgrepo-com.svg";
 
 export default function AdminNavbar() {
   const Nav = useRef(null);
@@ -23,9 +23,10 @@ export default function AdminNavbar() {
   }
   return (
     <header className={styles.header}>
-      <div className={styles.Container}>
+      {/* <div className={styles.Container}> */}
         <div className={styles.column1}>
           <div className={styles.SideMenu}>
+
             <div ref={Nav} id="mySidenav" className={styles.sidenav}>
               <a className={styles.closebtn} onClick={closeNav}>
                 &times;
@@ -43,18 +44,21 @@ export default function AdminNavbar() {
                 link="/admin"
                 imgSrc={dashboardIcon}
                 text="Dashboard"
+                onClick={closeNav}
               />
-              <AdminMenuItem link="estates" imgSrc={estateIcon} text="Estate" />
-              <AdminMenuItem link="" imgSrc={walletIcon} text="Wallet" />
+              <AdminMenuItem link="estates" imgSrc={estateIcon} text="Estate"  onClick={closeNav} />  
+              <AdminMenuItem link="" imgSrc={walletIcon} text="Wallet"  onClick={closeNav} />
               <AdminMenuItem
                 link=""
                 imgSrc={transactionIcon}
                 text="Transaction"
+                onClick={closeNav}
               />
               <AdminMenuItem
                 link="management"
                 imgSrc={settingIcon}
                 text="GeneralSetting"
+                onClick={closeNav}  
               />
             </div>
             <span className={styles.OpenNav} onClick={openNav}>
@@ -104,7 +108,7 @@ export default function AdminNavbar() {
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </header>
   );
 }
