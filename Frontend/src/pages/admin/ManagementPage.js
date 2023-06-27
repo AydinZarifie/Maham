@@ -36,16 +36,20 @@ const ManagementPage = () => {
     showAddHandler();
   };
 
-/*   useEffect(() => {
+  useEffect(() => {
     const fetchCountryData = async () => {
-      const data = await fetch("http://localhost:5000/admin/managment/addCountry");
-      setCountries(data);
+      const data = await fetch("http://localhost:5000/admin/managment");
+      const json = await data.json();
+
+      setCountries(json)
     };
+
     fetchCountryData();
-  },[]); */
+  },[]);
 
   return (
     <>
+      {console.log(countries)}
       <div className={styles.Tables}>
         <div className={styles.Tables12}>
           <HighestVolumes />
@@ -57,12 +61,14 @@ const ManagementPage = () => {
         />
       </div>
       <select onChange={cityFetch}>
-        {countries.length >0 && countries.map((country)=>(<option value={country}>{country}</option>))}
+        { countries.length >0 && countries.map((country)=>(
+        <option value={country.country_name}>{country.country_name}</option>
+        ))}
       </select>
-      <select>
+      <select >
         {cities.length >0 && cities.map((city)=>(<option value={city}>{city}</option>))}
       </select>
-      {addShown && <Add submitHandler={submitHandler} />}
+      {addShown && <Add submitHandler={submitHandler} countries={countries} />}
       <EstateTable />
     </>
   );

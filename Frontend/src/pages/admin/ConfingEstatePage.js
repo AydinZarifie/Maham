@@ -366,11 +366,11 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("video", file);
     });
 
-    let url = "http://localhost:5000/admin/posts";
+    let url = "http://localhost:5000/admin/estates";
 
     if (method === "PUT") {
       const estateId = estate._id;
-      url = "http://localhost:5000/admin/posts/" + estateId;
+      url = "http://localhost:5000/admin/estates/" + estateId;
     }
 
     const response = await fetch(url, {
@@ -387,7 +387,7 @@ const ConfingEstate = ({ method, estate }) => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const estateId = estate._id;
-      const url = "http://localhost:5000/admin/posts/" + estateId;
+      const url = "http://localhost:5000/admin/estates/" + estateId;
       fetch(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },

@@ -37,7 +37,12 @@ const Add = (props) => {
               name="dropBox"
             >
               <option value="">Choose an option</option>
-              {/* {props.countries.map((country)=>(<option value={country}>{country}</option>))} */}
+              {props.countries.length > 0 &&
+                props.countries.map((country) => (
+                  <option value={country.country_name}>
+                    {country.country_name}
+                  </option>
+                ))}
               <option value="Add country">Add country</option>
             </select>
 

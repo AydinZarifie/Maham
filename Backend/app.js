@@ -4,8 +4,9 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 //////////////////////////////////////////////
-const adminPage_Router = require("./routes/adminPage");
-const managmentPage_Router = require("./routes/adminManagment");
+const adminPage_Router = require("./routes/admin/adminPage");
+const managmentPage_Router = require("./routes/admin/adminManagment");
+const adminAuth_Router = require("./routes/admin/adminAuth")
 //////////////////////////////////////////////
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -129,6 +130,7 @@ app.use((req, res, next) => {
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 app.use("/admin", adminPage_Router);
 app.use("/admin", managmentPage_Router);
+app.use("/admin" , adminAuth_Router);
 
 mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {
   console.log(`DB connection sucessful`);

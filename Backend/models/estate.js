@@ -254,6 +254,7 @@ const estateSchema = new mongoose.Schema({
     },
     estate_rooms: [estateRoomsSchema],
     estate_facilities: [estateFacilitiesSchema],
-});
+    
+},{timestamps : true});
 
 module.exports = mongoose.model('real-estates', estateSchema);
