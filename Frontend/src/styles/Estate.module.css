@@ -16,12 +16,6 @@
   margin-top: -75px;
   margin-left: 15px;
 }
-/* .Container {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-between;
-} */
 .column2 {
   display: flex;
   flex-direction: row;
@@ -35,9 +29,12 @@
 }
 .CountryFilterAndAdder {
   display: flex;
-  align-content: center;
+  justify-content: space-around;
+  align-items: center;
   background-color: #fff;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
+  gap: 30px;
+  padding:0 20px;
 }
 .EditAndDelete {
   display: flex;
@@ -63,10 +60,6 @@
     max-height: 4%;
     min-height: 40px;
     border-radius: 100%;
-    position: relative;
-    top: -75px;
-    /* right: -6%;*/
-    margin-left: 2%;
     font-size: 1.8rem;
   }
 }
@@ -89,9 +82,6 @@
     max-height: 4%;
     min-height: 40px;
     border-radius: 100%;
-    position: relative;
-    top: -75px;
-    margin-left: -2%;
     font-size: 1.8rem;
   }
 }
@@ -144,7 +134,6 @@
 
   /***   Add button   ***/
   .iconBtn {
-    margin-left: -30px;
     cursor: pointer;
     width: 50px;
     height: 50px;
@@ -153,14 +142,15 @@
     border-radius: 25px;
     overflow: hidden;
     position: relative;
-    transition: width 0.2s ease-in-out;
+    /* transition: width 0.2s ease-in-out; */
   }
   .iconBtn:hover {
     background-color: #cdcdcd;
   }
   .addIcon {
     color: green;
-    font-size: 2.3rem;
+    font-size: 30px;
+    margin-top: -2px;
   }
   /***    ***/
 }
@@ -187,7 +177,8 @@
   }
   .addIcon {
     color: green;
-    font-size: 2.3rem;
+    font-size:30px;
+    margin-top: 2px;
   }
   /***    ***/
 }
@@ -398,45 +389,40 @@
   padding: 10px 10px;
   height: 80px;
   z-index: 9999;
-  width: 100%;
-}
-.scrollbar {
-  width: 70%;
-  white-space: nowrap;
-  max-width: 100%;
-  display: flex;
-  justify-content: start;
-  gap: 3em;
-}
-.content {
-  margin-top: 10px;
-}
-.Container {
-  width: 80%;
-  margin: 0 auto 0 10%;
-  height: 80px;
-  margin-top: 10px;
-  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width:none;
+  scrollbar-color: transparent;
   scroll-behavior: smooth;
+  z-index: 0;
 }
-.Container::-webkit-scrollbar {
+.CountryFilter::-webkit-scrollbar {
   height: 15px;
   background-color: #fff;
 }
-.Container::-webkit-scrollbar:hover {
+.CountryFilter::-webkit-scrollbar:hover {
   height: 25px;
 }
-.Container::-webkit-scrollbar-track {
+.CountryFilter::-webkit-scrollbar-track {
   height: 8px;
   border-radius: 10px;
 }
-.Container::-webkit-scrollbar-thumb {
+.CountryFilter::-webkit-scrollbar-thumb {
   display: none;
   height: 5px;
   border: 1px solid #fff;
-  background: linear-gradient(to right, #fd292f, black);
+  background:transparent;
   border-radius: 15px;
 }
+.scrollbar {
+  width: 100%;
+  white-space: nowrap;
+  display: flex;
+  justify-content:space-around;
+  gap: 3em;
+  margin-top: 13px;
+}
+
+
 .CountryTag {
   text-align: center;
   cursor: pointer;
@@ -460,17 +446,13 @@
 .slideRight {
   background-color: transparent;
   border: none;
-  margin-left: -45px;
   padding: 0 0;
   max-width: 4%;
   min-width: 40px;
   max-height: 4%;
   min-height: 40px;
   border-radius: 100%;
-  position: relative;
-  left: 89%;
-  top: -75px;
-  font-size: 1.8rem;
+  font-size: 1.8rem; 
 }
 .slideRight:hover {
   cursor: pointer;
@@ -790,7 +772,6 @@
 }
 
 .myDIV {
-  /* display: none; */
   position: absolute;
   top: 80px;
   left: 0;
@@ -1012,7 +993,6 @@ input:focus ~ .bar:after {
   min-height: 30px;
   min-width: 0;
   outline: none;
-  /* padding: 16px 24px; */
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);

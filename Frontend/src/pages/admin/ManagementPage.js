@@ -6,15 +6,47 @@ import Gainers from "../../components/adminPage/management/Gainers";
 import HighestVolumes from "../../components/adminPage/management/HighestVolumes";
 
 import styles from "../../styles/Management.module.css";
+import CountryAndCityMenuItem from "../../components/adminPage/management/CountryAndCityMenuItem";
 
 const ManagementPage = () => {
+  const [countryMenuShown, setCountryMenuShown] = useState(false);
+
+  const toggleCountryMenu = () => {
+    setCountryMenuShown((prev) => !prev);
+  };
+
+  const [cityMenuShown, setCityMenuShown] = useState(false);
+
+  const toggleCityMenu = () => {
+    setCityMenuShown((prev) => !prev);
+  };
+
+  const toggleCountryMenuAndCityFetch = (name) => {
+    setData((prev) => ({ ...prev, countryName: name }));
+    cityFetch();
+    setCountryMenuShown((prev) => !prev);
+  };
+
+  const [data, setData] = useState({
+    countryName: "",
+    cityName: "",
+  });
+
+  const cityFetchClickHandler = async (name) => {
+    setData((prev) => ({ ...prev, cityName: name }));
+    toggleCityMenu();
+    const response = await fetch("url" + data.cityName);
+    const json = await response.json();
+  };
+
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 
-  const cityFetch=async()=>{
-    const data=await fetch("url");
-    setCities(data);
-  }
+  const cityFetch = async () => {
+    const response = await fetch("url" + data.countryName);
+    const json = await response.json();
+    setCities(json);
+  };
 
   const [addShown, setAddShown] = useState(false);
   const showAddHandler = () => {
@@ -26,7 +58,14 @@ const ManagementPage = () => {
 
     formData.append("countryName", countryName);
     formData.append("cityName", cityName);
-    formData.append("image", img);
+
+    let url;
+    if (img) {
+      url = "url";
+      formData.append("image", img);
+    } else {
+      url = "url";
+    }
 
     const response = await fetch("url", {
       method: "POST",
@@ -39,11 +78,16 @@ const ManagementPage = () => {
   useEffect(() => {
     const fetchCountryData = async () => {
       const data = await fetch("url");
-      setCountries(data);
+      const json = await data.json();
+      setCountries(json);
     };
 
     fetchCountryData();
-  });
+  }, []);
+
+  // const eventHandler = (event) => {
+  //   const { name, value } = event.target;
+  // };
 
   return (
     <>
@@ -53,17 +97,72 @@ const ManagementPage = () => {
           <Gainers />
         </div>
         <CountryInformations
-          buttonHandler={showAddHandler}
-          // countries={countries}
+        // countries={countries}
         />
       </div>
-      <select onChange={cityFetch}>
-        {countries.length >0 && countries.map((country)=>(<option value={country}>{country}</option>))}
-      </select>
-      <select>
-        {cities.length >0 && cities.map((city)=>(<option value={city}>{city}</option>))}
-      </select>
-      {addShown && <Add submitHandler={submitHandler} />}
+      <div className={styles.SelectAndAdd}>
+        <div className={styles.CountryMenu}>
+          <button
+            className={styles.CountrySelect}
+            onClick={toggleCountryMenu}
+            // onChange={cityFetch}
+          >
+            choose country
+          </button>
+          {countryMenuShown && (
+            <>
+              <div
+                className={styles.overlay2}
+                onClick={toggleCountryMenu}
+              ></div>
+              <div className={styles.Items}>
+                {countries.length > 0 &&
+                  countries.map((country) => (
+                    <CountryAndCityMenuItem
+                      name={country.country_name}
+                      // img={country.country_name}
+                      clickHandler={toggleCountryMenuAndCityFetch}
+                    />
+                  ))}
+              </div>
+            </>
+          )}
+        </div>
+        <div className={styles.CountryMenu}>
+          <button className={styles.CountrySelect} onClick={toggleCityMenu}>
+            choose city
+          </button>
+          {cityMenuShown && (
+            <>
+              <div className={styles.overlay2} onClick={toggleCityMenu}></div>
+              <div className={styles.Items}>
+                {cities.length > 0 &&
+                  cities.map((city) => (
+                    <CountryAndCityMenuItem
+                      name={city[0]}
+                      clickHandler={cityFetchClickHandler}
+                    />
+                  ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className={styles.AddButton}
+          onClick={showAddHandler}
+        >
+          Add
+        </button>
+      </div>
+      {addShown && (
+        <Add
+          submitHandler={submitHandler}
+          closeHandler={showAddHandler}
+          countries={countries}
+        />
+      )}
       <EstateTable />
     </>
   );
