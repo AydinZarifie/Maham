@@ -11,10 +11,7 @@ const Gainers = () => {
   return (
     <div className={styles.Tables2AndName}>
       <span className={styles.GainersSpan}>
-        <img
-          src={gainerIcon}
-          className={styles.GainersIcon}
-        />
+        <img src={gainerIcon} className={styles.GainersIcon} />
         <h3>Gainers</h3>
       </span>
       <div className={styles.Gainers}>

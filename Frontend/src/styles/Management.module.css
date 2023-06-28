@@ -29,78 +29,78 @@
 
 /***    ***/
 
-
-.CountryMenu{
-
+.CountryMenu {
   display: flex;
   flex-direction: column;
   width: 100%;
-   height: 250px;
-
+  height: 280px;
 }
-.Items{
+.Items {
   display: flex;
   flex-direction: column;
-  height: 120px;
- /* overflow-x: scroll; */
- overflow-y: scroll;
- scrollbar-width: thin;
- scrollbar-color: transparent;
+  height: 150px;
+  /* overflow-x: scroll; */
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scrollbar-color: transparent;
+  border-radius: 0 0 5px 5px;
 }
 .Items::-webkit-scrollbar {
   height: 15px;
   background-color: #fff;
+  display: none;
+
   border-radius: 15px;
   z-index: 999;
 }
 .Items::-webkit-scrollbar:hover {
   height: 25px;
   z-index: 999;
+  background-color: #fff;
 }
 .Items::-webkit-scrollbar-track {
   height: 8px;
   border-radius: 10px;
   z-index: 999;
+  background-color: #fff;
 }
 .Items::-webkit-scrollbar-thumb {
   height: 5px;
   border: 4px solid #fff;
-  background: #c7c7c7;
+  background: #e70202;
   border-radius: 15px;
   z-index: 999;
 }
-.MenuItem{
-  position:sticky;
-  width:100%;
+.MenuItem {
+  position: sticky;
+  width: 100%;
   height: 40px;
   z-index: 999;
   margin-top: 20px;
-  font-size: .8rem;
-  
+  font-size: 0.8rem;
 }
-.countryImages{
+.countryImages {
   width: 26px;
   height: 26px;
   margin-top: 15px;
   margin-left: 10px;
 }
-.logoSpan{
-  display:flex;
+.logoSpan {
+  display: flex;
   flex-direction: row;
   /* align-items: center; */
   background-color: #f1f1f1;
   z-index: 99;
-  justify-content:space-between;
+  justify-content: space-between;
   border-bottom: 1px solid #909090;
   gap: 3%;
   cursor: pointer;
-  
 }
-.logoSpan:hover{
-background-color: #dadada;
+.logoSpan:hover {
+  background-color: #dadada;
 }
-.logoSpan:last-child{
-  border-radius: 0 0 5px 5px ;
+.logoSpan:last-child {
+  border-radius: 0 0 5px 5px;
 }
 .overlay {
   position: fixed;
@@ -118,7 +118,7 @@ background-color: #dadada;
   left: 0;
   width: 100%;
   height: 100%;
-  
+
   z-index: 6;
   cursor: pointer;
 }
@@ -374,7 +374,7 @@ background-color: #dadada;
 
 .styledTable thead tr {
   background-color: #c7c7c7;
-  color: black;
+  color: rgb(47, 47, 47);
   text-align: left;
   width: 100%;
   white-space: nowrap;
@@ -392,6 +392,7 @@ background-color: #dadada;
 }
 .styledTable tbody tr {
   border-bottom: 1px solid #c7c7c7;
+  color: #585858;
 }
 
 .styledTable tbody tr:nth-of-type(even) {
@@ -744,7 +745,7 @@ background-color: #dadada;
   gap: 2%;
   width: 70%;
   margin-left: 15%;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 /*  Country and city select    */
 .CountrySelect {
@@ -764,7 +765,7 @@ background-color: #dadada;
 /***   EstateInfo   ***/
 .EstateInfo {
   width: 90%;
-  margin: -125px auto 30px auto;
+  margin: -210px auto 30px auto;
   border-radius: 10px;
   overflow-x: scroll;
   height: 360px;

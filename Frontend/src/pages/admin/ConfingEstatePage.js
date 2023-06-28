@@ -458,6 +458,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("numberOfPlate", information.numberOfPlate);
     formData.append("numberOfFloor", information.numberOfFloor);
     formData.append("location", information.location);
+    formData.append("price", information.price);
 
     formData.append("type", information.type);
 
