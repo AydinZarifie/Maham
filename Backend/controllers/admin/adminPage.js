@@ -27,7 +27,7 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res, next) => {
-
+    console.log(req.files);
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
@@ -40,6 +40,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         state_description: req.body.description,
         estate_type: req.body.type,
 
+        
         imageUrl: req.files.images.map((el) => {
             return el.path;
         }),
