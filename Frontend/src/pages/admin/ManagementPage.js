@@ -32,12 +32,14 @@ const ManagementPage = () => {
     cityName: "",
   });
 
-  const [searchedEstates,setSearchedEstates]=useState([]);
+  const [searchedEstates, setSearchedEstates] = useState([]);
 
   const cityFetchClickHandler = async (name) => {
     setData((prev) => ({ ...prev, cityName: name }));
     toggleCityMenu();
-    const response = await fetch("http://localhost:5000/admin/management/" + data.cityName);
+    const response = await fetch(
+      "http://localhost:5000/admin/management/" + data.cityName
+    );
     const json = await response.json();
     console.log(json);
     setSearchedEstates(json);
@@ -47,7 +49,9 @@ const ManagementPage = () => {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async () => {
-    const response = await fetch("http://localhost:5000/admin/management/" + data.countryName);
+    const response = await fetch(
+      "http://localhost:5000/admin/management/" + data.countryName
+    );
     const json = await response.json();
     setCities(json);
   };
@@ -123,9 +127,10 @@ const ManagementPage = () => {
                 {countries.length > 0 &&
                   countries.map((country) => (
                     <CountryAndCityMenuItem
+                      // key
                       name={country.country_name}
                       // img={country.country_name}
-                      clickHandler={toggleCountryMenuAndCityFetch}
+                      clickHandler={() => toggleCountryMenuAndCityFetch}
                     />
                   ))}
               </div>
@@ -144,7 +149,7 @@ const ManagementPage = () => {
                   cities.map((city) => (
                     <CountryAndCityMenuItem
                       name={city[0]}
-                      clickHandler={cityFetchClickHandler}
+                      clickHandler={() => cityFetchClickHandler}
                     />
                   ))}
               </div>
