@@ -57,26 +57,34 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
+	// check if country selected
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({
 			country_name: req.body.countryName,
 		});
+
+		// check if selected country actually exists in DB
 		if (!country) {
 			return next(new AppError('country not found', 404));
+
+			// check if cityName is inserted
+		} else if (!req.body.cityName) {
+			return next(new AppError('plesae insert city', 400));
+
+			// if all is ok , adds the city to cities collection of chosen country
 		} else {
 			await country.country_cities.push(req.body.cityName);
 		}
-		res.status(200).json({
+		// send response
+		return res.status(200).json({
 			status: 'success',
 			message: 'city was added succesfully',
 		});
+
+		// if country was not selected >> return with error
 	} else {
-		res.status(404).json({
-			status: 'fail',
-			message: 'please insert the country',
-		});
+		return next(new AppError('plesae insert country', 400));
 	}
-	return next();
 });
 
 // exports.getEstatesOfCountry =
@@ -113,7 +121,7 @@ exports.getHighestVolume = catchAsync(async (req, res, next) => {
 });
 exports.getEstatesOfSelectedCountryCity = catchAsync(async (req, res, next) => {
 	// req.query.limit = '5';
-	req.query.filter = `country_name=${req.params.countryName},city_name=${req.params.cityName}`;
+	req.query.filter = `country_name:${req.body.countryName},city_name:${req.body.cityName}`;
 	req.query.sort = 'createdAt';
 	req.query.fields = 'estate_title,price,volume,landlordAddr,change'; // and more fields that not exist yet
 	next();
