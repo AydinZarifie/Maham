@@ -13,6 +13,7 @@ const Add = (props) => {
 
   const inputHandler = (event) => {
     const { name, value } = event.target;
+    // if(information.dropBox)
     setInformation((prev) => ({ ...prev, [name]: value }));
   };
 
