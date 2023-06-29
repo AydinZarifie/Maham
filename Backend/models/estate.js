@@ -228,6 +228,11 @@ const estateSchema = new mongoose.Schema({
 		type: Number,
 		set: (a) => (a === '' ? undefined : a),
 	},
+	volume: {
+		type: Number,
+		default: 0,
+		set: (a) => (a === '' ? undefined : a),
+	},
 	///
 	state_description: {
 		type: String,
@@ -257,9 +262,11 @@ const estateSchema = new mongoose.Schema({
 		default: Date.now(),
 		// setting the value of select property to false , causes this field be not visible to users on output
 		select: false,
+		set: (a) => (a === '' ? undefined : a),
 	},
 	landlordAddr: {
 		type: String,
+		set: (a) => (a === '' ? undefined : a),
 	},
 	//
 	estate_rooms: [estateRoomsSchema],

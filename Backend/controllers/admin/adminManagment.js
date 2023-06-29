@@ -106,7 +106,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 		},
 	});
 });
-/////////////////////
+
 exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'change';
@@ -177,7 +177,32 @@ exports.getEstatesOfSelectedCountryCityEasy = catchAsync(
 	}
 );
 
-// not completly implemented yet
-exports.getCountryInfo = catchAsync(async (req, res, next) => {
-	next();
+exports.getCountriesInfo = catchAsync(async (req, res, next) => {
+	const numOfEstates = 0;
+	let sumVolume = 0;
+	const countriesInfo = countryDB
+		.find()
+		.select(['country_logo', 'country_name'])
+		.populate({
+			path: 'country_estates',
+			select: ['volume'],
+		});
+	if (!countriesInfo) {
+		return next('no such a country found', 404);
+	}
+
+	// gonna implement error handling if country has 0 cities
+	numOfEstates = countriesInfo.country_cities.length;
+	countriesInfo.country_cities.forEach((el) => {
+		return (sumVolume += el.volume);
+	});
+
+	return res.status(200).json({
+		status: 'sucess',
+		data: {
+			countriesInfo: countriesInfo,
+			sumVol: sumVolume,
+			totalEstates: numOfEstates,
+		},
+	});
 });

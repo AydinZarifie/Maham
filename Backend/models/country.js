@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const estateDB = require('./estate.js');
 
 const country = new mongoose.Schema({
 	country_name: {
@@ -10,7 +11,10 @@ const country = new mongoose.Schema({
 	country_logo: {
 		type: String,
 	},
-	// country_estates
+	country_estates: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: estateDB,
+	},
 });
 
 module.exports = mongoose.model('Country', country);

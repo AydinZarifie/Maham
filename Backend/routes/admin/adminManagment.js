@@ -18,10 +18,10 @@ router
 router
 	.route('/managment/getHighestVolume')
 	.get(managementController.getHighestVolumeEasy);
-	// .get(
-	// 	managementController.getHighestVolume,
-	// 	managementController.getAllEstates
-	// );
+// .get(
+// 	managementController.getHighestVolume,
+// 	managementController.getAllEstates
+// );
 
 router
 	.route('/managment/getEstatesOfSelectedCountryCity')
@@ -30,5 +30,9 @@ router
 // 	managementController.getEstatesOfSelectedCountryCity,
 // 	managementController.getAllEstates
 // );
+
+router
+	.route('/managment/getCountriesInfo')
+	.get(managementController.getCountriesInfo);
 
 module.exports = router;
