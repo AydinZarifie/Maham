@@ -4,6 +4,14 @@ const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
 
+const getVolumes = function (data) {
+	let sumVolume = 0;
+	data.forEach((el) => {
+		sumVolume += el.volume;
+	});
+	return sumVolume;
+};
+
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	//////////////  execute the query
 	const features = new APIFeatures(countryDB.find(), req.query)
@@ -106,7 +114,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 		},
 	});
 });
-/////////////////////
+
 exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'change';
@@ -177,7 +185,35 @@ exports.getEstatesOfSelectedCountryCityEasy = catchAsync(
 	}
 );
 
-// not completly implemented yet
-exports.getCountryInfo = catchAsync(async (req, res, next) => {
-	next();
+exports.getCountriesInfo = catchAsync(async (req, res, next) => {
+	// let sumVolume = 0;
+	const countriesInfo = countryDB
+		.find()
+		.select(['country_logo', 'country_name'])
+		.populate({
+			path: 'country_estates',
+			select: ['volume'],
+		});
+	if (!countriesInfo) {
+		return next('no such a country found', 404);
+	}
+
+	// gonna implement error handling if country has 0 cities
+	const numOfEstates = countriesInfo.country_cities.length;
+
+	getVolumes(countriesInfo.country_estates);
+	/*
+	countriesInfo.country_cities.forEach((el) => {
+		return (sumVolume += el.volume);
+	});
+	*/
+
+	return res.status(200).json({
+		status: 'sucess',
+		data: {
+			countriesInfo: countriesInfo,
+			sumVol: sumVolume,
+			totalEstates: numOfEstates,
+		},
+	});
 });
