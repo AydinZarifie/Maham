@@ -4,6 +4,14 @@ const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
 
+const getVolumes = function (data) {
+	let sumVolume = 0;
+	data.forEach((el) => {
+		sumVolume += el.volume;
+	});
+	return sumVolume;
+};
+
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	//////////////  execute the query
 	const features = new APIFeatures(countryDB.find(), req.query)
@@ -178,8 +186,7 @@ exports.getEstatesOfSelectedCountryCityEasy = catchAsync(
 );
 
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
-	const numOfEstates = 0;
-	let sumVolume = 0;
+	// let sumVolume = 0;
 	const countriesInfo = countryDB
 		.find()
 		.select(['country_logo', 'country_name'])
@@ -192,10 +199,14 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	}
 
 	// gonna implement error handling if country has 0 cities
-	numOfEstates = countriesInfo.country_cities.length;
+	const numOfEstates = countriesInfo.country_cities.length;
+
+	getVolumes(countriesInfo.country_estates);
+	/*
 	countriesInfo.country_cities.forEach((el) => {
 		return (sumVolume += el.volume);
 	});
+	*/
 
 	return res.status(200).json({
 		status: 'sucess',
