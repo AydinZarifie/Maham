@@ -57,26 +57,34 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
+	// check if country selected
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({
 			country_name: req.body.countryName,
 		});
+
+		// check if selected country actually exists in DB
 		if (!country) {
 			return next(new AppError('country not found', 404));
+
+			// check if cityName is inserted
+		} else if (!req.body.cityName) {
+			return next(new AppError('plesae insert city', 400));
+
+			// if all is ok , adds the city to cities collection of chosen country
 		} else {
 			await country.country_cities.push(req.body.cityName);
 		}
-		res.status(200).json({
+		// send response
+		return res.status(200).json({
 			status: 'success',
 			message: 'city was added succesfully',
 		});
+
+		// if country was not selected >> return with error
 	} else {
-		res.status(404).json({
-			status: 'fail',
-			message: 'please insert the country',
-		});
+		return next(new AppError('plesae insert country', 400));
 	}
-	return next();
 });
 
 // exports.getEstatesOfCountry =
@@ -105,19 +113,69 @@ exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.fields = 'estate_title,price,change'; // change : price changing in spesific time periods
 	next();
 });
+/////////////////////
+exports.getTopGainersEasy = catchAsync(async (req, res, next) => {
+	const data1 = estateDB
+		.find()
+		.select(['estate_title', 'price'])
+		.sort('price')
+		.limit(10);
+	if (!data1) {
+		return next(new AppError('nothing matches', 404));
+	}
+	return res.status(200).json({
+		status: 'success',
+		data: {
+			wanted: data1,
+		},
+	});
+});
+
 exports.getHighestVolume = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'volume';
 	req.query.fields = 'estate_title,volume,price';
 	next();
 });
+///////////////////////
+exports.getHighestVolumeEasy = catchAsync(async (req, res, next) => {
+	const highestVolume = estateDB
+		.find()
+		.select(['estate_title', 'volume', 'price'])
+		.sort('volume')
+		.limit(10);
+	return res.status(200).json({
+		highestVolume,
+	});
+});
+
 exports.getEstatesOfSelectedCountryCity = catchAsync(async (req, res, next) => {
 	// req.query.limit = '5';
-	req.query.filter = `country_name=${req.params.countryName},city_name=${req.params.cityName}`;
+	req.query.filter = `country_name:${req.body.countryName},city_name:${req.body.cityName}`;
 	req.query.sort = 'createdAt';
 	req.query.fields = 'estate_title,price,volume,landlordAddr,change'; // and more fields that not exist yet
 	next();
 });
+///////////////////
+exports.getEstatesOfSelectedCountryCityEasy = catchAsync(
+	async (req, res, next) => {
+		const data2 = estateDB
+			.find()
+			.where(country_name)
+			.equals(req.body.countryName)
+			.where(city_name)
+			.equals(req.body.cityName)
+			.select(['estate_title', 'volume', 'landlordAddr', 'price', 'change'])
+			.sort('createdAt')
+			.limit(10);
+		return res.status(200).json({
+			status: 'success',
+			data: {
+				wanted: data2,
+			},
+		});
+	}
+);
 
 // not completly implemented yet
 exports.getCountryInfo = catchAsync(async (req, res, next) => {
