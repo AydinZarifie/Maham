@@ -13,20 +13,22 @@ router
 
 router
 	.route('/managment/getTopGainers')
-	.get(managementController.getTopGainers, managementController.getAllCities);
-
+	.get(managementController.getTopGainersEasy);
+// .get(managementController.getTopGainers, managementController.getAllEstates);
 router
 	.route('/managment/getHighestVolume')
-	.get(
-		managementController.getHighestVolume,
-		managementController.getAllCities
-	);
+	.get(managementController.getHighestVolumeEasy);
+	// .get(
+	// 	managementController.getHighestVolume,
+	// 	managementController.getAllEstates
+	// );
 
 router
 	.route('/managment/getEstatesOfSelectedCountryCity')
-	.get(
-		managementController.getEstatesOfSelectedCountryCity,
-		managementController.getAllCities
-	);
+	.get(managementController.getEstatesOfSelectedCountryCityEasy);
+// .get(
+// 	managementController.getEstatesOfSelectedCountryCity,
+// 	managementController.getAllEstates
+// );
 
 module.exports = router;

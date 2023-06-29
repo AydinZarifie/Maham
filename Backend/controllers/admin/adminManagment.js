@@ -113,12 +113,42 @@ exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.fields = 'estate_title,price,change'; // change : price changing in spesific time periods
 	next();
 });
+/////////////////////
+exports.getTopGainersEasy = catchAsync(async (req, res, next) => {
+	const data1 = estateDB
+		.find()
+		.select(['estate_title', 'price'])
+		.sort('price')
+		.limit(10);
+	if (!data1) {
+		return next(new AppError('nothing matches', 404));
+	}
+	return res.status(200).json({
+		status: 'success',
+		data: {
+			wanted: data1,
+		},
+	});
+});
+
 exports.getHighestVolume = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'volume';
 	req.query.fields = 'estate_title,volume,price';
 	next();
 });
+///////////////////////
+exports.getHighestVolumeEasy = catchAsync(async (req, res, next) => {
+	const highestVolume = estateDB
+		.find()
+		.select(['estate_title', 'volume', 'price'])
+		.sort('volume')
+		.limit(10);
+	return res.status(200).json({
+		highestVolume,
+	});
+});
+
 exports.getEstatesOfSelectedCountryCity = catchAsync(async (req, res, next) => {
 	// req.query.limit = '5';
 	req.query.filter = `country_name:${req.body.countryName},city_name:${req.body.cityName}`;
@@ -126,6 +156,26 @@ exports.getEstatesOfSelectedCountryCity = catchAsync(async (req, res, next) => {
 	req.query.fields = 'estate_title,price,volume,landlordAddr,change'; // and more fields that not exist yet
 	next();
 });
+///////////////////
+exports.getEstatesOfSelectedCountryCityEasy = catchAsync(
+	async (req, res, next) => {
+		const data2 = estateDB
+			.find()
+			.where(country_name)
+			.equals(req.body.countryName)
+			.where(city_name)
+			.equals(req.body.cityName)
+			.select(['estate_title', 'volume', 'landlordAddr', 'price', 'change'])
+			.sort('createdAt')
+			.limit(10);
+		return res.status(200).json({
+			status: 'success',
+			data: {
+				wanted: data2,
+			},
+		});
+	}
+);
 
 // not completly implemented yet
 exports.getCountryInfo = catchAsync(async (req, res, next) => {
