@@ -271,6 +271,13 @@ const estateSchema = new mongoose.Schema({
 	//
 	estate_rooms: [estateRoomsSchema],
 	estate_facilities: [estateFacilitiesSchema],
+	estate_country: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'country',
+			required: [true, 'estate must have belong to a country'],
+		},
+	],
 });
 
 module.exports = mongoose.model('real-estates', estateSchema);

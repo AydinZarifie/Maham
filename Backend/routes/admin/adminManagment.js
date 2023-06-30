@@ -13,23 +13,24 @@ router
 
 router
 	.route('/managment/getTopGainers')
-	.get(managementController.getTopGainersEasy);
-// .get(managementController.getTopGainers, managementController.getAllEstates);
-router
-	.route('/managment/getHighestVolume')
-	.get(managementController.getHighestVolumeEasy);
-// .get(
-// 	managementController.getHighestVolume,
-// 	managementController.getAllEstates
-// );
+	// .get(managementController.getTopGainersEasy);
+	.get(managementController.getTopGainers, managementController.getAllEstates);
 
 router
-	.route('/managment/getEstatesOfSelectedCountryCity')
-	.get(managementController.getEstatesOfSelectedCountryCityEasy);
-// .get(
-// 	managementController.getEstatesOfSelectedCountryCity,
-// 	managementController.getAllEstates
-// );
+	.route('/managment/getHighestVolume')
+	// .get(managementController.getHighestVolumeEasy);
+	.get(
+		managementController.getHighestVolume,
+		managementController.getAllEstates
+	);
+
+router
+	.route('/managment/getEstatesOfSelectedCountryCity/:countryName/:cityName')
+	// .get(managementController.getEstatesOfSelectedCountryCityEasy);
+	.get(
+		managementController.getEstatesOfSelectedCountryCity,
+		managementController.getAllEstates
+	);
 
 router
 	.route('/managment/getCountriesInfo')

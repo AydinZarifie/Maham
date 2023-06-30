@@ -121,10 +121,10 @@ app.use('/admin', adminPage_Router);
 app.use('/admin', managmentPage_Router);
 app.use('/admin', adminAuth_Router);
 
-mongoose.connect('mongodb://127.0.0.1:27017/Maham').then(() => {
+mongoose.connect('mongodb://127.0.0.1:27017/maham').then(() => {
 	console.log(`DB connection sucessful`);
 	app.listen(5000, () => {
-		console.log(`Server is runing on port`);
+		console.log(`Server is runing on port 5000`);
 	});
 });
 

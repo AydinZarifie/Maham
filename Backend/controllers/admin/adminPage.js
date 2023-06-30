@@ -35,7 +35,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		location: req.body.location,
 		state_description: req.body.description,
 		estate_type: req.body.type,
-
+		estate_price: req.body.price,
 		imageUrl: req.files.images.map((el) => {
 			return el.path;
 		}),
@@ -112,6 +112,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_type: inputs.estate_type,
 		imageUrl: inputs.imageUrl,
 		introduction_video: inputs.introduction_video,
+		price: inputs.estate_price,
 		// minor_street: inputs.minor_street,
 		// unit_number: inputs.unit_number ,
 		// postal_code: inputs.postal_code ,
