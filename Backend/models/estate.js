@@ -225,7 +225,7 @@ const estateSchema = new mongoose.Schema({
         set: (a) => (a === '' ? undefined : a),
     },
     price: {
-        type: Number,
+        type: String,
         set: (a) => (a === '' ? undefined : a),
     },
     ///

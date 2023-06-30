@@ -41,9 +41,6 @@ const storage = multer.diskStorage({
       else {
         cb(null, "./uploads/images/country/");
       }
-
-    
-  
   } 
     
     else if (file.fieldname == "video") {

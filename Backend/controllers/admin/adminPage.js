@@ -39,8 +39,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         location: req.body.location,
         state_description: req.body.description,
         estate_type: req.body.type,
-
-        
+        price : req.body.price,
+        unit_number  : req.body.numberOfUnit,
         imageUrl: req.files.images.map((el) => {
             return el.path;
         }),
@@ -107,7 +107,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         ///////////////////////////////////////////////////////////// setState :
         // stateId : ,
         estate_title: inputs.estate_title,
-        city_name: inputs.title,
+        city_name: inputs.city_name,
         country_name: inputs.country_name,
         main_street: inputs.main_street,
         building_number: inputs.building_number,
@@ -117,8 +117,9 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         estate_type: inputs.estate_type,
         imageUrl: inputs.imageUrl,
         introduction_video: inputs.introduction_video,
+        price : inputs.price,
         // minor_street: inputs.minor_street,
-        // unit_number: inputs.unit_number ,
+        unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
 
@@ -274,7 +275,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 
     ///////////////////////////////////////////////////////////// setState :
     // stateId : ,
-    (estate.estate_title = inputs.estate_title),
+        (estate.estate_title = inputs.estate_title),
         (estate.unit_number = inputs.unitNumber),
         (estate.city_name = inputs.city_name),
         (estate.country_name = inputs.country_name),
@@ -386,7 +387,7 @@ const clearImage = async (filePath) => {
         console.log("Image not found");
       }
     });
-  };
+};
 const clearVideo = async (filePath) => {
     filePath.forEach(async (videoPath) => {
       videoPath = path.join(__dirname, "../..", videoPath);
@@ -399,5 +400,5 @@ const clearVideo = async (filePath) => {
         console.log("Image not found");
       }
     });
-  };
+};
   

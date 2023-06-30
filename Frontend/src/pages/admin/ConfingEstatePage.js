@@ -18,6 +18,7 @@ import parkingIcon from "../../images/parking-svgrepo-com.svg";
 import poolIcon from "../../images/pool-svgrepo-com.svg";
 import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
 import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
+import deleteIcon from "../../images/delete-svgrepo-com.svg";
 import woodenFenceIcon from "../../images/wooden-fence-svgrepo-com.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -82,9 +83,7 @@ const ConfingEstate = ({ method, estate }) => {
     pool: estate ? estate.estate_facilities[0].swimming_Pool : false,
     furniture: estate ? estate.estate_facilities[0].furniture : false,
     elevator: estate ? estate.estate_facilities[0].elevator : false,
-
     garden: estate ? estate.estate_facilities[0].garden : false,
-
     laundary: estate ? estate.estate_facilities[0].loundry_facilities : false,
     bbq: estate ? estate.estate_facilities[0].barbique : false,
     gym: estate ? estate.estate_facilities[0].fitness_center : false,
@@ -94,17 +93,17 @@ const ConfingEstate = ({ method, estate }) => {
     countryName: estate ? estate.country_name : "",
     cityName: estate ? estate.city_name : "",
     streetName: estate ? estate.main_street : "",
-
-    //plate: estate ? estate.plate : "",
-
     numberOfPlate: estate ? estate.building_number : "",
     numberOfFloor: estate ? estate.floor_number : "",
     numberOfUnit: estate ? estate.unit_number : "",
     location: estate ? estate.location : "",
-
     type: estate ? estate.estate_type : "",
-
     description: estate ? estate.state_description : "",
+    price: estate ? estate.price : "",
+
+    //  plate: estate ? estate.plate : "",
+    //  id:estate ? estate.id :"",
+    //  walletAddress:estate ? estate.walletAddress :"",
   });
 
   function basicEventHandler(event) {
@@ -274,7 +273,177 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewUrl(previewURLs);
   };
 
+  const enteredTitleIsValid = information.title.trim() !== "";
+  const enteredCountryNameIsValid = information.countryName.trim() !== "";
+  const enteredCityNameIsValid = information.cityName.trim() !== "";
+  const enteredStreetNameIsValid = information.streetName.trim() !== "";
+  const enteredNumberOfPlateIsValid = information.numberOfPlate.trim() !== "";
+  const enteredNumberOfFloorIsValid = information.numberOfFloor.trim() !== "";
+  const enteredNumberOfUnitIsValid = information.numberOfUnit.trim() !== "";
+  const enteredLocationIsValid = information.location.trim() !== "";
+  const enteredTypeIsValid = information.type.trim() !== "";
+  const enteredDescriptionIsValid = information.description.trim() !== "";
+  const enteredPriceIsValid = information.price.trim() !== "";
+
+  // const enteredImageIsValid = selectedImages.length > 0;
+  // const enteredVideoIsValid = selectedVideo.length > 0;
+  // const enteredPlateIsValid = information.plate.trim() !== "";
+  // const enteredIdIsValid = information.id.trim() !== "";
+  // const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
+
+  const [touched, setTouched] = useState({
+    title: false,
+    countryName: false,
+    cityName: false,
+    streetName: false,
+    numberOfPlate: false,
+    numberOfFloor: false,
+    numberOfUnit: false,
+    location: false,
+    type: false,
+    description: false,
+    price: false,
+
+    // image: false,
+    // video: false,
+    // plate: false,
+    // id: false,
+    // walletAddress: false,
+  });
+
+  const titleIsInvalid = !enteredTitleIsValid && touched.title;
+  const countryNameIsInvalid =
+    !enteredCountryNameIsValid && touched.countryName;
+  const cityNameIsInvalid = !enteredCityNameIsValid && touched.cityName;
+  const streetNameIsInvalid = !enteredStreetNameIsValid && touched.streetName;
+  const numberOfPlateIsInvalid =
+    !enteredNumberOfPlateIsValid && touched.numberOfPlate;
+  const numberOfFloorIsInvalid =
+    !enteredNumberOfFloorIsValid && touched.numberOfFloor;
+  const numberOfUnitIsInvalid =
+    !enteredNumberOfUnitIsValid && touched.numberOfUnit;
+  const locationIsInvalid = !enteredLocationIsValid && touched.location;
+  const typeIsInvalid = !enteredTypeIsValid && touched.type;
+  const descriptionIsInvalid =
+    !enteredDescriptionIsValid && touched.description;
+  const priceIsInvalid = !enteredPriceIsValid && touched.price;
+
+  // const imageIsInvalid = !enteredImageIsValid && touched.image;
+  // const videoIsInvalid = !enteredVideoIsValid && touched.video;
+  // const plateIsInvalid = !enteredPlateIsValid && touched.plate;
+  // const idIsInvalid = !enteredIdIsValid && touched.id;
+  // const walletAddressIsInvalid =
+  // !enteredWalletAddressIsValid && touched.walletAddress;
+
+  let formIsValid = false;
+
+  if (
+    enteredTitleIsValid &&
+    enteredCountryNameIsValid &&
+    enteredCityNameIsValid &&
+    enteredStreetNameIsValid &&
+    enteredNumberOfPlateIsValid &&
+    enteredNumberOfFloorIsValid &&
+    enteredNumberOfUnitIsValid &&
+    enteredLocationIsValid &&
+    enteredTypeIsValid &&
+    enteredDescriptionIsValid &&
+    enteredPriceIsValid
+
+    // enteredImageIsValid &&
+    // enteredVideoIsValid &&
+    // enteredPlateIsValid &&
+    // enteredIdIsValid &&
+    // enteredWalletAddressIsValid
+  ) {
+    formIsValid = true;
+  }
+
+  const blurHandler = (event) => {
+    const { name } = event.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
+
+  const titleClass = titleIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const countryNameClass = countryNameIsInvalid
+    ? `${styles.invalid} ${styles.select} `
+    : `${styles.select} `;
+  const cityNameClass = cityNameIsInvalid
+    ? `${styles.invalid} ${styles.select} `
+    : `${styles.select} `;
+  const streetNameClass = streetNameIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const numberOfPlateClass = numberOfPlateIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const numberOfFloorClass = numberOfFloorIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const numberOfUnitClass = numberOfUnitIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const locationClass = locationIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const typeClass = typeIsInvalid
+    ? `${styles.invalid} ${styles.select} `
+    : `${styles.select} `;
+  const descriptionClass = descriptionIsInvalid
+    ? `${styles.invalid} ${styles.DescriptionTextArea} `
+    : `${styles.DescriptionTextArea} `;
+  const priceClass = priceIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
+  const imageClass = styles.previewContainer;
+  // imageIsInvalid
+  //   ? `${styles.invalid} ${styles.previewContainer} `
+  //   : `${styles.previewContainer} `;
+  const videoClass = styles.previewContainer2;
+  //  videoIsInvalid
+  //   ? `${styles.invalid} ${styles.previewContainer2} `
+  //   : `${styles.previewContainer2} `;
+  const plateClass = styles.textinput;
+  // plateIsInvalid
+  //   ? `${styles.invalid} ${styles.textinput} `
+  //   : `${styles.textinput} `;
+  const idClass = styles.textinput;
+  // idIsInvalid
+  //   ? `${styles.invalid} ${styles.textinput} `
+  //   : `${styles.textinput} `;
+  const walletAddressClass = styles.textinput;
+  // walletAddressIsInvalid
+  //   ? `${styles.invalid} ${styles.textinput} `
+  //   : `${styles.textinput} `;
+
   const submitHandler = async (event) => {
+    setTouched({
+      title: true,
+      countryName: true,
+      cityName: true,
+      streetName: true,
+      numberOfPlate: true,
+      numberOfFloor: true,
+      numberOfUnit: true,
+      location: true,
+      type: true,
+      description: true,
+      image: true,
+      price: true,
+
+      // image: true,
+      // video: true,
+      // plate: true,
+      // id: true,
+      // walletAddress: true,
+    });
+
+    if (!formIsValid) {
+      return;
+    }
     console.log("entered submit handler");
     // event.preventDefault();
 
@@ -289,61 +458,98 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("numberOfPlate", information.numberOfPlate);
     formData.append("numberOfFloor", information.numberOfFloor);
     formData.append("location", information.location);
+    formData.append("price", information.price);
 
     formData.append("type", information.type);
 
     formData.append("checkBedroom", bedroom.checked);
     if (bedroom.checked) {
-      formData.append("numberBedroom", bedroom.number);
-      formData.append("metrageBedroom", bedroom.metrage);
+      if (bedroom.number > 0) {
+        if (bedroom.metrage > 0) {
+          formData.append("numberBedroom", bedroom.number);
+          formData.append("metrageBedroom", bedroom.metrage);
+        }
+      }
     }
 
     formData.append("checkLivingRoom", livingRoom.checked);
     if (livingRoom.checked) {
-      formData.append("numberLivingRoom", livingRoom.number);
-      formData.append("metrageLivingRoom", livingRoom.metrage);
+      if (livingRoom.number > 0) {
+        if (livingRoom.metrage > 0) {
+          formData.append("numberLivingRoom", livingRoom.number);
+          formData.append("metrageLivingRoom", livingRoom.metrage);
+        }
+      }
     }
 
     formData.append("checkKitchen", kitchen.checked);
     if (kitchen.checked) {
-      formData.append("numberKitchen", kitchen.number);
-      formData.append("metrageKitchen", kitchen.metrage);
+      if (kitchen.number > 0) {
+        if (kitchen.metrage > 0) {
+          formData.append("numberKitchen", kitchen.number);
+          formData.append("metrageKitchen", kitchen.metrage);
+        }
+      }
     }
 
     formData.append("checkDiningroom", diningroom.checked);
     if (diningroom.checked) {
-      formData.append("numberDiningroom", diningroom.number);
-      formData.append("metrageDiningroom", diningroom.metrage);
+      if (diningroom.number > 0) {
+        if (diningroom.metrage > 0) {
+          formData.append("numberDiningroom", diningroom.number);
+          formData.append("metrageDiningroom", diningroom.metrage);
+        }
+      }
     }
 
     formData.append("checkGuestroom", guestroom.checked);
     if (guestroom.checked) {
-      formData.append("numberGuestroom", guestroom.number);
-      formData.append("metrageGuestroom", guestroom.metrage);
+      if (guestroom.number > 0) {
+        if (guestroom.metrage > 0) {
+          formData.append("numberGuestroom", guestroom.number);
+          formData.append("metrageGuestroom", guestroom.metrage);
+        }
+      }
     }
 
     formData.append("checkBathroom", bathroom.checked);
     if (bathroom.checked) {
-      formData.append("numberBathroom", bathroom.number);
-      formData.append("metrageBathroom", bathroom.metrage);
+      if (bathroom.number > 0) {
+        if (bathroom.metrage > 0) {
+          formData.append("numberBathroom", bathroom.number);
+          formData.append("metrageBathroom", bathroom.metrage);
+        }
+      }
     }
 
     formData.append("checkGarden", garden.checked);
     if (garden.checked) {
-      formData.append("numberGarden", garden.number);
-      formData.append("metrageGarden", garden.metrage);
+      if (garden.number > 0) {
+        if (garden.metrage > 0) {
+          formData.append("numberGarden", garden.number);
+          formData.append("metrageGarden", garden.metrage);
+        }
+      }
     }
 
     formData.append("checkBalcony", balcony.checked);
     if (balcony.checked) {
-      formData.append("numberBalcony", balcony.number);
-      formData.append("metrageBalcony", balcony.metrage);
+      if (balcony.number > 0) {
+        if (balcony.metrage > 0) {
+          formData.append("numberBalcony", balcony.number);
+          formData.append("metrageBalcony", balcony.metrage);
+        }
+      }
     }
 
     formData.append("checkGarage", garage.checked);
     if (garage.checked) {
-      formData.append("numberGarage", garage.number);
-      formData.append("metrageGarage", garage.metrage);
+      if (garage.number > 0) {
+        if (garage.metrage > 0) {
+          formData.append("numberGarage", garage.number);
+          formData.append("metrageGarage", garage.metrage);
+        }
+      }
     }
 
     formData.append("checkWifi", facilities.wifi);
@@ -413,10 +619,11 @@ const ConfingEstate = ({ method, estate }) => {
             <input
               required
               type="text"
-              className={styles.textinput}
+              className={titleClass}
               value={information.title}
               name="title"
               onChange={basicEventHandler}
+              onBlur={blurHandler}
             />
             <div className={styles.underline}></div>
             <label className={styles.label}>Title</label>
@@ -427,11 +634,13 @@ const ConfingEstate = ({ method, estate }) => {
             <div>
               <label>Country</label>
             </div>
-            <div className={styles.select}>
+            <div className={styles.countryNameClass2}>
               <select
                 value={information.countryName}
                 onChange={basicEventHandler}
                 name="countryName"
+                className={countryNameClass}
+                onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
                 <option value="Iran">Iran</option>
@@ -444,11 +653,13 @@ const ConfingEstate = ({ method, estate }) => {
             <div>
               <label>City</label>
             </div>
-            <div className={styles.select}>
+            <div className={styles.countryNameClass2}>
               <select
                 value={information.cityName}
                 onChange={basicEventHandler}
                 name="cityName"
+                className={cityNameClass}
+                onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
                 <option value="Tabriz">Tabriz</option>
@@ -465,10 +676,11 @@ const ConfingEstate = ({ method, estate }) => {
                 <input
                   required
                   type="text"
-                  className={styles.textinput}
+                  className={streetNameClass}
                   value={information.streetName}
                   onChange={basicEventHandler}
                   name="streetName"
+                  onBlur={blurHandler}
                 />
                 <div className={styles.underline}></div>
                 <label className={styles.label}>Street Name</label>
@@ -481,10 +693,11 @@ const ConfingEstate = ({ method, estate }) => {
                 <input
                   required
                   type="text"
-                  className={styles.textinput}
+                  className={plateClass}
                   value={information.plate}
                   onChange={basicEventHandler}
                   name="plate"
+                  onBlur={blurHandler}
                 />
                 <div className={styles.underline}></div>
                 <label className={styles.label}>Plates</label>
@@ -499,10 +712,11 @@ const ConfingEstate = ({ method, estate }) => {
                 <input
                   required
                   type="text"
-                  className={styles.textinput}
+                  className={numberOfPlateClass}
                   value={information.numberOfPlate}
                   name="numberOfPlate"
                   onChange={basicEventHandler}
+                  onBlur={blurHandler}
                 />
                 <div className={styles.underline}></div>
                 <label className={styles.label}>Number Of Plates</label>
@@ -515,10 +729,11 @@ const ConfingEstate = ({ method, estate }) => {
                 <input
                   required
                   type="text"
-                  className={styles.textinput}
+                  className={numberOfFloorClass}
                   value={information.numberOfFloor}
                   onChange={basicEventHandler}
                   name="numberOfFloor"
+                  onBlur={blurHandler}
                 />
                 <div className={styles.underline}></div>
                 <label className={styles.label}>Number Of Floors</label>
@@ -529,10 +744,11 @@ const ConfingEstate = ({ method, estate }) => {
                 <input
                   required
                   type="text"
-                  className={styles.textinput}
+                  className={numberOfUnitClass}
                   value={information.numberOfUnit}
                   onChange={basicEventHandler}
                   name="numberOfUnit"
+                  onBlur={blurHandler}
                 />
                 <div className={styles.underline}></div>
                 <label className={styles.label}>Number Of Unit</label>
@@ -540,18 +756,82 @@ const ConfingEstate = ({ method, estate }) => {
             </div>
           </div>
         </div>
-        <div className={styles.wrapper}>
-          <div className={styles.inputData}>
-            <input
-              required
-              type="text"
-              className={styles.textinput}
-              value={information.location}
-              onChange={basicEventHandler}
-              name="location"
-            />
-            <div className={styles.underline}></div>
-            <label className={styles.label}>Location Of State</label>
+
+        <div className={styles.IdAndWallet}>
+          <div className={styles.IdAndMint}>
+            <div className={styles.wrapper4}>
+              <div className={styles.inputData}>
+                <input
+                  required
+                  type="number"
+                  className={idClass}
+                  // value={information.location}
+                  // onChange={basicEventHandler}
+                  name="id"
+                  disabled
+                  placeholder="Id"
+                  onBlur={blurHandler}
+                />
+                <div className={styles.underline}></div>
+                {/* <label className={styles.label}>Id</label> */}
+              </div>
+            </div>
+            <button className={styles.MintBtn}>
+              {estate ? "Burn" : "Mint"}
+            </button>
+          </div>
+          <div className={styles.IdAndMint}>
+            <div className={styles.wrapper4}>
+              <div className={styles.inputData}>
+                <input
+                  required
+                  type="number"
+                  className={walletAddressClass}
+                  // value={information.location}
+                  // onChange={basicEventHandler}
+                  name="walletAddress"
+                  disabled
+                  placeholder="Wallet Address"
+                  onBlur={blurHandler}
+                />
+                <div className={styles.underline}></div>
+                {/* <label className={styles.label}>Id</label> */}
+              </div>
+            </div>
+            <button className={styles.ConnectWalletBtn}>Connect Wallet</button>
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.wrapper}>
+            <div className={styles.inputData}>
+              <input
+                required
+                type="text"
+                className={locationClass}
+                value={information.location}
+                onChange={basicEventHandler}
+                name="location"
+                onBlur={blurHandler}
+              />
+              <div className={styles.underline}></div>
+              <label className={styles.label}>Location Of State</label>
+            </div>
+          </div>
+          <div className={styles.wrapper3}>
+            <div className={styles.inputData}>
+              <input
+                required
+                type="number"
+                className={priceClass}
+                value={information.price}
+                onChange={basicEventHandler}
+                name="price"
+                onBlur={blurHandler}
+              />
+              <div className={styles.underline}></div>
+              <label className={styles.label}>price</label>
+            </div>
           </div>
         </div>
       </div>
@@ -561,6 +841,8 @@ const ConfingEstate = ({ method, estate }) => {
           value={information.type}
           onChange={basicEventHandler}
           name="type"
+          className={typeClass}
+          onBlur={blurHandler}
         >
           <option value="">Choose an option</option>
           <option value="residential">residential</option>
@@ -1275,7 +1557,8 @@ const ConfingEstate = ({ method, estate }) => {
               name="description"
               value={information.description}
               onChange={basicEventHandler}
-              className={styles.DescriptionTextArea}
+              className={descriptionClass}
+              onBlur={blurHandler}
             ></textarea>
           </div>
         </div>
@@ -1296,7 +1579,7 @@ const ConfingEstate = ({ method, estate }) => {
               onChange={imgHandler}
             />
           </div>
-          <div className={styles.previewContainer} id="preview-container">
+          <div className={imageClass} id="preview-container">
             {previewImages.length > 0 && (
               <div>
                 {previewImages.map((imageURL) => (
@@ -1338,7 +1621,7 @@ const ConfingEstate = ({ method, estate }) => {
               onChange={vidHandler}
             />
           </div>
-          <div className={styles.previewContainer2} id="preview-container2">
+          <div className={videoClass} id="preview-container2">
             {selectedVideo.length == 0 && (
               <div id="UploadIcon" className={styles.uploadIcon}>
                 <div>
@@ -1368,20 +1651,29 @@ const ConfingEstate = ({ method, estate }) => {
             Choose Video
           </label>
         </div>
-
-        <button
-          className={styles.AddButton}
-          type="button"
-          onClick={() => submitHandler()}
-        >
-          <span className={styles.text}>Add</span>
-          <span>+</span>
-        </button>
-        {estate && (
-          <button type="button" onClick={() => deleteHandler()}>
-            DELETE
+        <div className={styles.AddAndDelete}>
+          <button
+            className={styles.AddButton}
+            // disabled={!formIsValid}
+            type="button"
+            onClick={() => submitHandler()}
+          >
+            <span className={styles.text}>Add</span>
+            <span>+</span>
           </button>
-        )}
+          {estate && (
+            <button
+              className={styles.DeleteBtn}
+              type="button"
+              onClick={() => deleteHandler()}
+            >
+              <span className={styles.text}>Delete</span>
+              <span>
+                <img src={deleteIcon} className={styles.DeleteIcon}></img>
+              </span>
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

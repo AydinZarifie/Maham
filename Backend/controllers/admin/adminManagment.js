@@ -1,5 +1,6 @@
 const countryDB = require('../../models/country');
 const catchAsync = require('./../../utilities/catchAsync');
+const estateDB = require("../../models/estate");
 
 // exports.postAddCountry = (req, res) => {
 //     const country_name = req.body.countryName;
@@ -10,16 +11,20 @@ const catchAsync = require('./../../utilities/catchAsync');
 //////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
-    console.log("get");
-    const countries = await countryDB.find().select({country_name : 1})
-    console.log(countries);
-    res.status(200).json(countries);
-    next();
+    const countries = await countryDB.find().select({country_name : 1 , country_logo : 1})
+    res.status(200).json({
+			data:countries,
+			message : "Successfully"
+		});		
 });
 
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
 exports.postAddCountry = catchAsync(async (req, res, next) => {
     const inputs = {
+		
+		countryName: req.body.countryName,
+        countryCities: req.body.cityName,
+        countryLogo: req.files.images[0].path,
         countryName: req.body.countryName,
         countryCities: req.body.cityName,
         countryLogo: req.files.images[0].path,
@@ -44,32 +49,51 @@ exports.addCity = catchAsync(async (req, res, next) => {
 		if (!country) {
 			return next(new AppError('country not found', 404));
 		} else {
-			await country.country_cities.push(req.body.cityName);
+			await country.cities.push(req.body.cityName);
+			country.save();
 		}
-		res.status(200).json({
-			status: 'success',
+	return res.status(200).json({
+	 		status: 'success',
 			message: 'city was added succesfully',
 		});
 	} else {
-		res.status(404).json({
+		return res.status(404).json({
 			status: 'fail',
 			message: 'please insert the country',
 		});
 	}
-	return next();
 });
 
 /// get all cities of given country
 exports.getAllCities = catchAsync(async (req, res, next) => {
+
 	const country = await countryDB.findOne({
 		country_name: req.params.countryName,
 	});
 	if (!country) {
 		return next(new AppError('country not found', 404));
 	} else {
-		res.status(200).json({
-			status: 'sucess',
-			data: country.country_cities,
+		console.log(country.cities);
+		return res.status(200).json({
+			data:country.cities,		
+			message : "Successfully"
 		});
 	}
 });
+
+exports.getEstates = async(req,res) => {
+	const countryName = req.params.countryName;
+	const cityName = req.params.cityName;
+
+	console.log(countryName);
+	console.log(cityName);
+	
+	const estates = await estateDB.find({country_name : countryName , city_name : cityName});
+	
+	return res.status(202).json({
+		data : estates,
+		message : "Successfully"
+	})
+
+
+}

@@ -25,29 +25,33 @@ const Add = (props) => {
 
   return (
     <div>
-      <div className={styles.blocker}></div>
-      <div className={styles.AddCityCountry}>
-        <div className={styles.AddCountry}>
-          <div className={styles.wrapper}>
-            {/*  */}
+      <div className={styles.overlay} onClick={props.closeHandler}></div>
 
-            <select
-              value={information.dropBox}
-              onChange={inputHandler}
-              name="dropBox"
-            >
-              <option value="">Choose an option</option>
-              {props.countries.length > 0 &&
-                props.countries.map((country) => (
-                  <option value={country.country_name}>
-                    {country.country_name}
-                  </option>
-                ))}
-              <option value="Add country">Add country</option>
-            </select>
+      <div className={styles.AddCountry}>
+        <div className={styles.closeBtn} onClick={props.closeHandler}>
+          &times;
+        </div>
+        <div className={styles.wrapper2}>
+          <select
+            className={styles.CountrySelect2}
+            value={information.dropBox}
+            onChange={inputHandler}
+            name="dropBox"
+          >
+            <option value="">Choose an option</option>
 
-            {information.dropBox == "Add country" && (
-              <>
+            {props.countries.length > 0 &&
+              props.countries.map((country) => (
+                <option value={country.country_name}>
+                  {country.country_name}
+                </option>
+              ))}
+            <option value="Add country">Add country</option>
+          </select>
+
+          {information.dropBox == "Add country" && (
+            <>
+              <div className={styles.wrapper}>
                 <div className={styles.inputData}>
                   <input
                     type="text"
@@ -60,43 +64,56 @@ const Add = (props) => {
                   <div className={styles.underline}></div>
                   <label className={styles.label}>CountryName</label>
                 </div>
-                <div className={styles.ImgAploader}>
-                  <h3>Image Aploader</h3>
-                  <form className={styles.AploadDiv}>
-                    <input type="file" id="file-input" onChange={imgHandler} />
-                  </form>
-                  <div
-                    id="preview-container"
-                    className={styles.previewContainer}
-                  >
-                    {preview && (
-                      <img className={styles.imageInput} src={preview} />
-                    )}
-                  </div>
+              </div>
+
+              <div className={styles.ImgAploader}>
+                <h3 className={styles.ImageH3}>Image Aploader</h3>
+                <form className={styles.AploadDiv}>
+                  <input type="file" id="file-input" onChange={imgHandler} />
+                </form>
+                <div id="preview-container" className={styles.previewContainer}>
+                  {preview && (
+                    <img className={styles.imageInput} src={preview} />
+                  )}
                 </div>
-              </>
-            )}
-
-            {/*  */}
-          </div>
-
-          <button
-            type="button"
-            className={styles.AploadButton}
-            onClick={() =>
-              props.submitHandler(
-                information.cityName,
-                information.dropBox == "Add country"
-                  ? information.countryName
-                  : information.dropBox,
-                img
-              )
-            }
-          >
-            Apload
-          </button>
+              </div>
+            </>
+          )}
+          {information.dropBox != "Add country" && (
+            <div className={styles.wrapper}>
+              <div className={styles.inputData}>
+                <input
+                  type="text"
+                  className={styles.textinput}
+                  required
+                  onChange={inputHandler}
+                  name="cityName"
+                  value={information.cityName}
+                />
+                <div className={styles.underline}></div>
+                <label className={styles.label}>CityName</label>
+              </div>
+            </div>
+          )}
         </div>
-        <div className={styles.AddCity}>
+
+        <button
+          type="button"
+          className={styles.AploadButton}
+          onClick={() =>
+            props.submitHandler(
+              information.cityName,
+              information.dropBox == "Add country"
+                ? information.countryName
+                : information.dropBox,
+              img
+            )
+          }
+        >
+          Apload
+        </button>
+      </div>
+      {/* <div className={styles.AddCity}>
           <div className={styles.wrapper}>
             <div className={styles.inputData}>
               <input
@@ -111,8 +128,8 @@ const Add = (props) => {
               <label className={styles.label}>CityName</label>
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </div>
   );
 };
