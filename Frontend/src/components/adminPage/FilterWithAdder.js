@@ -1,7 +1,7 @@
 import styles from "../../styles/Estate.module.css";
 import filterData from "../../dummyData/filterData";
 import Filter from "../Filter";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 export default function FilterWithAdder() {
@@ -22,32 +22,20 @@ export default function FilterWithAdder() {
 
   return (
     <div className={styles.CountryFilterAndAdder}>
-      {/* <div className={styles.form1}> */}
       <button className={styles.slideLeft} type="button" onClick={goToLeft}>
-            ❮
-          </button>
-        <form
-          className={styles.CountryFilter}
-          method="post"
-          encType="multipart/form-data"
-          ref={slideRef}
-        >
-          {/* <div className={styles.Container} ref={slideRef}> */}
-            {/* <div className={styles.content}> */}
-              <div className={styles.scrollbar}>{datas}</div>
-            {/* </div> */}
-          {/* </div> */}
-          
-          
-        </form>
-        <button
-            className={styles.slideRight}
-            type="button"
-            onClick={goToRight}
-          >
-            ❯
-          </button>
-      {/* </div> */}
+        ❮
+      </button>
+      <form
+        className={styles.CountryFilter}
+        method="post"
+        encType="multipart/form-data"
+        ref={slideRef}
+      >
+        <div className={styles.scrollbar}>{datas}</div>
+      </form>
+      <button className={styles.slideRight} type="button" onClick={goToRight}>
+        ❯
+      </button>
 
       <Link to="new">
         <button className={styles.iconBtn}>

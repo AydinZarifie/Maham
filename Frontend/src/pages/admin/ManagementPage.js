@@ -6,38 +6,42 @@ import Gainers from "../../components/adminPage/management/Gainers";
 import HighestVolumes from "../../components/adminPage/management/HighestVolumes";
 
 import styles from "../../styles/Management.module.css";
-import CountryAndCityMenuItem from "../../components/adminPage/management/CountryAndCityMenuItem";
 
 const ManagementPage = () => {
   const [countryMenuShown, setCountryMenuShown] = useState(false);
+  const [cityMenuShown, setCityMenuShown] = useState(false);
+  const [addShown, setAddShown] = useState(false);
+
+  const [selectedCountryOption, setSelectedCountryOption] = useState(null);
+  const [selectedCityOption, setSelectedCityOption] = useState(null);
+  const [searchedEstates, setSearchedEstates] = useState([]);
+
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const toggleCountryMenu = () => {
     setCountryMenuShown((prev) => !prev);
   };
 
-  const [cityMenuShown, setCityMenuShown] = useState(false);
-
   const toggleCityMenu = () => {
     setCityMenuShown((prev) => !prev);
   };
 
-  const toggleCountryMenuAndCityFetch = (name) => {
-    setData((prev) => ({ ...prev, countryName: name }));
-    setCities([]);
-    cityFetch(name);
-    setCountryMenuShown((prev) => !prev);
+  const showAddHandler = () => {
+    setAddShown((prev) => !prev);
   };
 
-  const [data, setData] = useState({
-    countryName: "",
-    cityName: "",
-  });
+  const handleCountryOptionSelect = (option) => {
+    setSelectedCountryOption(option);
+    cityFetch(option);
+    setCountryMenuShown(false);
+  };
 
-  const [searchedEstates, setSearchedEstates] = useState([]);
+  const handleCityOptionSelect = async (option) => {
+    setSelectedCityOption(option);
+    setCityMenuShown(false);
 
-  const cityFetchClickHandler = async (name) => {
-    setData((prev) => ({ ...prev, cityName: name }));
-    toggleCityMenu();
+    //old
     // const response = await fetch(
     //   "http://localhost:5000/admin/management/" + name
     // );
@@ -45,39 +49,22 @@ const ManagementPage = () => {
     // console.log(json);
     // setSearchedEstates(json);
 
-    //new
-    const response =await fetch("url", {
-      method: "POST",
-      body: JSON.stringify({
-        counrtyName: data.countryName,
-        title: name,
-        
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-
-    const res=await fetch("url")
-    const json=await res.json();
-    console.log(json);
-    setSearchedEstates(json)
+    const res = await fetch(
+      "http://localhost:5000/admin/managment/getEstates/" +
+        option +
+        "/" +
+        selectedCountryOption.country_name
+    );
+    const json = await res.json();
+    setSearchedEstates(json.data);
   };
-
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
     const response = await fetch(
-      "http://localhost:5000/admin/management/" + name
+      "http://localhost:5000/admin/managment/getCities/" + name
     );
     const json = await response.json();
-    setCities(json);
-  };
-
-  const [addShown, setAddShown] = useState(false);
-  const showAddHandler = () => {
-    setAddShown((prev) => !prev);
+    setCities(json.data);
   };
 
   const submitHandler = async (cityName, countryName, img) => {
@@ -88,10 +75,10 @@ const ManagementPage = () => {
 
     let url;
     if (img) {
-      url = "http://localhost:5000/admin/management/addCountry";
+      url = "http://localhost:5000/admin/managment/addCountry";
       formData.append("images", img);
     } else {
-      url = "http://localhost:5000/admin/management/addCity";
+      url = "http://localhost:5000/admin/managment/addCity";
     }
 
     const response = await fetch(url, {
@@ -104,9 +91,9 @@ const ManagementPage = () => {
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      const data = await fetch("http://localhost:5000/admin/management");
+      const data = await fetch("http://localhost:5000/admin/managment");
       const json = await data.json();
-      setCountries(json);
+      setCountries(json.data);
     };
     fetchCountryData();
   }, []);
@@ -128,12 +115,56 @@ const ManagementPage = () => {
       </div>
       <div className={styles.SelectAndAdd}>
         <div className={styles.CountryMenu}>
-          <button
+          <div className={styles.dropdown}>
+            <div className={styles.selectedOption} onClick={toggleCountryMenu}>
+              {selectedCountryOption ? (
+                <div>
+                  <img
+                    src={selectedCountryOption.country_logo}
+                    alt={selectedCountryOption.country_name}
+                    style={{ width: "30px", marginRight: "10px" }}
+                  />
+                  {selectedCountryOption.country_name}
+                </div>
+              ) : (
+                <span>Select a country</span>
+              )}
+              <span
+                className={`${styles.arrow} ${
+                  countryMenuShown ? `${styles.open}` : ""
+                }`}
+              >
+                &#9660;
+              </span>
+            </div>
+            {countryMenuShown && (
+              <>
+                <div
+                  className={styles.overlay2}
+                  onClick={toggleCountryMenu}
+                ></div>
+                <ul className={styles.options}>
+                  {countries.map((option) => (
+                    <li
+                      key={option.country_name}
+                      onClick={() =>
+                        handleCountryOptionSelect(option.country_name)
+                      }
+                    >
+                      <img src={option.country_logo} alt={option.country_name} />
+                      {option.country_name}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+
+          {/* <button
             className={styles.CountrySelect}
             onClick={toggleCountryMenu}
             // onChange={cityFetch}
           >
-            {/* choose country */}
             {cities.length > 0 ? data.countryName : "choose country"}
           </button>
           {countryMenuShown && (
@@ -154,10 +185,43 @@ const ManagementPage = () => {
                   ))}
               </div>
             </>
-          )}
+          )} */}
         </div>
         <div className={styles.CountryMenu}>
-          <button className={styles.CountrySelect} onClick={toggleCityMenu}>
+          <div className={styles.dropdown}>
+            <div className={styles.selectedOption} onClick={toggleCityMenu}>
+              {selectedCityOption ? (
+                <div>{selectedCityOption}</div>
+              ) : (
+                <span>Select a city</span>
+              )}
+              <span
+                className={`${styles.arrow} ${
+                  cityMenuShown ? `${styles.open}` : ""
+                }`}
+              >
+                &#9660;
+              </span>
+            </div>
+            {cityMenuShown && (
+              <>
+                <div className={styles.overlay2} onClick={toggleCityMenu}></div>
+
+                <ul className={styles.options}>
+                  {cities.map((option) => (
+                    <li
+                      key={option}
+                      onClick={() => handleCityOptionSelect(option)}
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+
+          {/* <button className={styles.CountrySelect} onClick={toggleCityMenu}>
             {searchedEstates.length > 0 ? data.cityName : "choose city"}
           </button>
           {cityMenuShown && (
@@ -173,7 +237,7 @@ const ManagementPage = () => {
                   ))}
               </div>
             </>
-          )}
+          )} */}
         </div>
 
         <button
