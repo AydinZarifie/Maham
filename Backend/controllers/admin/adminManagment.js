@@ -22,12 +22,8 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 		.paging();
 	const countries = await features.query;
 
-	//////////////  send response
 	res.status(200).json({
-		status: 'success',
-		data: {
-			countries,
-		},
+		data: countries,
 	});
 });
 
@@ -45,9 +41,9 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 		});
 	}
 });
-
+// params
 exports.getAllEstates = catchAsync(async (req, res, next) => {
-	console.log(req.query);
+	// console.log(req.query);
 	const features = new APIFeatures(estateDB.find(), req.query)
 		.filter()
 		.sort()
@@ -86,7 +82,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	// check if country selected
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({
-			country_name: req.params.countryName,
+			country_name: req.body.countryName,
 		});
 
 		// check if selected country actually exists in DB
@@ -99,7 +95,8 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 			// if all is ok , adds the city to cities collection of chosen country
 		} else {
-			await country.country_cities.push(req.body.cityName);
+			country.country_cities.push(req.body.cityName);
+			await country.save();
 		}
 		// send response
 		return res.status(200).json({
@@ -162,8 +159,8 @@ exports.getHighestVolumeEasy = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEstatesOfSelectedCountryCity = catchAsync(async (req, res, next) => {
-	console.log(req.params);
+exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
+	// console.log(req.params);
 	// req.query.limit = '5';
 	req.query.filter = {
 		country_name: `${req.params.countryName}`,
@@ -174,33 +171,31 @@ exports.getEstatesOfSelectedCountryCity = catchAsync(async (req, res, next) => {
 	next();
 });
 ///////////////////
-exports.getEstatesOfSelectedCountryCityEasy = catchAsync(
-	async (req, res, next) => {
-		const data2 = await estateDB
-			.find({
-				country_name: `${req.params.countryName}`,
-				city_name: `${req.params.cityName}`,
-			})
-			// .where('country_name')
-			// .equals(`${req.params.countryName}`)
-			// .where('city_name')
-			// .equals(`${req.params.cityName}`)
-			.select([
-				'estate_title',
-				'volume',
-				'price' /*'landlordAddr',*/ /*'change'*/,
-			])
-			.sort('createdAt')
-			.limit(10);
-		console.log(estateDB.query);
-		res.status(200).json({
-			status: 'success',
-			data: {
-				data2,
-			},
-		});
-	}
-);
+exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
+	const data2 = await estateDB
+		.find({
+			country_name: `${req.params.countryName}`,
+			city_name: `${req.params.cityName}`,
+		})
+		// .where('country_name')
+		// .equals(`${req.params.countryName}`)
+		// .where('city_name')
+		// .equals(`${req.params.cityName}`)
+		.select([
+			'estate_title',
+			'volume',
+			'price' /*'landlordAddr',*/ /*'change'*/,
+		])
+		.sort('createdAt')
+		.limit(10);
+	// console.log(estateDB.query);
+	res.status(200).json({
+		status: 'success',
+		data: {
+			data2,
+		},
+	});
+});
 
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	// let sumVolume = 0;
@@ -216,7 +211,7 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	}
 
 	// gonna implement error handling if country has 0 cities
-	console.log(countriesInfo.country_cities);
+	// console.log(countriesInfo.country_cities);
 	const numOfEstates = countriesInfo.country_cities.length();
 
 	sumVol = getVolumes(countriesInfo.country_estates);
@@ -227,7 +222,7 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	*/
 
 	return res.status(200).json({
-		status: 'sucess',
+		status: 'success',
 		data: {
 			countriesInfo: countriesInfo,
 			sumVol: sumVolume,

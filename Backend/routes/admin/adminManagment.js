@@ -8,8 +8,20 @@ router.route('/managment').get(managementController.getAllCountries);
 router.route('/managment/addCountry').post(managementController.postAddCountry);
 
 router
-	.route('/managment/addCity/:countryName')
-	.post(managementController.addCity);
+	.route('/managment/getCities/:countryName')
+	.get(managementController.getAllCities);
+
+router.route('/managment/addCity').post(managementController.addCity);
+
+router
+	.route('/managment/getEstates')
+	// .get(managementController.getEstatesOfSelectedCountryCityEasy);
+	.get(managementController.getAllEstates);
+
+router
+	.route('/managment/getEstates/:countryName/:cityName')
+	.get(managementController.getEstatesOfCCEasy);
+// .get(managementController.getEstatesOfCC, managementController.getAllEstates);
 
 router
 	.route('/managment/getTopGainers')
@@ -21,14 +33,6 @@ router
 	// .get(managementController.getHighestVolumeEasy);
 	.get(
 		managementController.getHighestVolume,
-		managementController.getAllEstates
-	);
-
-router
-	.route('/managment/getEstatesOfSelectedCountryCity/:countryName/:cityName')
-	// .get(managementController.getEstatesOfSelectedCountryCityEasy);
-	.get(
-		managementController.getEstatesOfSelectedCountryCity,
 		managementController.getAllEstates
 	);
 
