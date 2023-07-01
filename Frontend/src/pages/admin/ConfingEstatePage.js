@@ -19,11 +19,32 @@ import poolIcon from "../../images/pool-svgrepo-com.svg";
 import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
 import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
 import deleteIcon from "../../images/delete-svgrepo-com.svg";
-import woodenFenceIcon from "../../images/wooden-fence-svgrepo-com.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ConfingEstate = ({ method, estate }) => {
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    const fetchCountryData = async () => {
+      const data = await fetch("url");
+      const json = await data.json();
+      setCountries(json.data);
+    };
+    fetchCountryData();
+  }, []);
+
+  const handlerCountrySelect = (option) => {
+    cityFetch(option);
+  };
+
+  const cityFetch = async (name) => {
+    const response = await fetch("url" + name);
+    const json = await response.json();
+    setCities(json.data);
+  };
+
   const navigate = useNavigate();
 
   const [selectedImages, setSelectedImages] = useState([]);
@@ -643,9 +664,14 @@ const ConfingEstate = ({ method, estate }) => {
                 onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
-                <option value="Iran">Iran</option>
-                <option value="United State">United State</option>
-                <option value="Turkey">Turkey</option>
+                {countries.map((option) => (
+                  <option
+                    value={option.country_name}
+                    onClick={() => handlerCountrySelect(option.county_name)}
+                  >
+                    {option.country_name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -662,9 +688,9 @@ const ConfingEstate = ({ method, estate }) => {
                 onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
-                <option value="Tabriz">Tabriz</option>
-                <option value="Tehran">Tehran</option>
-                <option value="Esfahan">Esfahan</option>
+                {cities.map((option) => (
+                  <option value={option}>{option}</option>
+                ))}
               </select>
             </div>
           </div>

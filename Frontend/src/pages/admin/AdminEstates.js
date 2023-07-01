@@ -30,7 +30,7 @@ export default function Estates() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/posts")
+    fetch("http://localhost:5000/admin/estates")
       .then((response) => response.json())
       .then((data) => setData(data));
   }, []);
