@@ -203,23 +203,57 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 });
 
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
-	// let sumVolume = 0;
-	const countriesInfo = countryDB
+	let sumVolume = 0;
+	let totalEstates = 0;
+	const countriesInfo = await countryDB
 		.find()
 		.select(['country_logo', 'country_name', 'country_estates'])
 		.populate({
 			path: 'country_estates',
 			select: ['volume'],
 		});
-	if (!countriesInfo) {
-		return next('no such a country found', 404);
+
+	if (countriesInfo.length === 0) {
+		return next('no such countries found', 404);
 	}
 
-	// gonna implement error handling if country has 0 cities
-	// console.log(countriesInfo.country_cities);
-	const numOfEstates = countriesInfo.country_estates.length();
+	// // calculates sumVol and totalEstates of all  the data that exists in DB
+	// countriesInfo.forEach((country) => {
+	// 	sumVolume += country.country_estates.reduce((total, estate) => {
+	// 		totalEstates++;
+	// 		return total + estate.volume;
+	// 	}, 0);
+	// });
 
-	sumVol = getVolumes(countriesInfo.country_estates);
+	const countriesData = countriesInfo.map((country) => {
+		const sumVolume = country.country_estates.reduce((total, estate) => {
+			return total + estate.volume;
+		}, 0);
+
+		const totalEstates = country.country_estates.length;
+
+		return {
+			country_logo: country.country_logo,
+			country_name: country.country_name,
+			sumVolume,
+			totalEstates,
+		};
+	});
+
+	// console.log('Total Volume:', sumVolume);
+	// console.log('Total Estates:', totalEstates);
+
+	// let ap = [];
+	// // gonna implement error handling if country has 0 cities
+	// countriesInfo.forEach((el) => {
+	// 	ap.push(el.country_name);
+	// });
+
+	// console.log(ap);
+
+	// const numOfEstates = countriesInfo.country_estates.length();
+
+	// sumVol = getVolumes(countriesInfo.country_estates);
 	/*
 	countriesInfo.country_cities.forEach((el) => {
 		return (sumVolume += el.volume);
@@ -228,10 +262,7 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 
 	return res.status(200).json({
 		status: 'success',
-		data: {
-			countriesInfo: countriesInfo,
-			sumVol: sumVolume,
-			totalEstates: numOfEstates,
-		},
+		data: countriesData,
+		// data: { countriesInfo, sumVolume, totalEstates },
 	});
 });
