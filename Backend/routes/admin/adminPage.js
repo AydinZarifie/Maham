@@ -16,4 +16,10 @@ router
 	.delete(adminPage_Controller.deleteEstate)
 	.put(adminPage_Controller.updateEstate);
 
+router.route('/estate/:getCountries').get(adminPage_Controller.getAllCountries);
+
+router
+	.route('/estate/getCities/:countryName')
+	.get(adminPage_Controller.getCities);
+
 module.exports = router;
