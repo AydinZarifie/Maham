@@ -22,6 +22,49 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 	res.status(200).json(posts);
 });
 
+exports.getAllCountries = catchAsync(async (req, res, next) => {
+	const countries = await countryDB.find();
+
+	if (!countries) {
+		return next(
+			new AppError('there is no countries , please create country first', 404)
+		);
+	}
+	res.status(200).json({
+		message: ' succccess',
+		data: countries,
+	});
+});
+
+exports.getCities = catchAsync(async (req, res, next) => {
+	const country = await countryDB
+		.findOne({ country_name: `${req.params.countryName}` })
+		.select(['country_cities', '-_id']);
+
+	if (!country) {
+		return next(
+			new AppError(
+				'there is no such a country defined , how did u even select this ? , add the country first',
+				404
+			)
+		);
+	}
+
+	if (country.country_cities.length === 0) {
+		return next(
+			new AppError(
+				'the country has no defined cities yet ,  please add a city first ',
+				404
+			)
+		);
+	}
+
+	res.status(200).json({
+		message: 'success',
+		data: country.country_cities,
+	});
+});
+
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res, next) => {
 	// refrencing the estate to its country instance in countryDB

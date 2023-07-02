@@ -63,14 +63,19 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 exports.postAddCountry = catchAsync(async (req, res, next) => {
 	const inputs = {
 		countryName: req.body.countryName,
-		countryCities: req.body.cityName,
 		countryLogo: req.files.images[0].path,
 	};
+	if (!req.body.countryName) {
+		return next(new AppError('no country name provided', 400));
+	}
+	if (!req.files.images) {
+		return next(new AppError('no country logo provided', 400));
+	}
 	const newCountry = new countryDB({
 		country_name: inputs.countryName,
-		country_cities: inputs.countryCities,
 		country_logo: inputs.countryLogo,
 	});
+
 	await newCountry.save();
 
 	return res.status(201).json({
@@ -212,7 +217,7 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 
 	// gonna implement error handling if country has 0 cities
 	// console.log(countriesInfo.country_cities);
-	const numOfEstates = countriesInfo.country_cities.length();
+	const numOfEstates = countriesInfo.country_estates.length();
 
 	sumVol = getVolumes(countriesInfo.country_estates);
 	/*
