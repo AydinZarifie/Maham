@@ -11,10 +11,12 @@ const country = new mongoose.Schema({
 	country_logo: {
 		type: String,
 	},
-	country_estates: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: estateDB,
-	},
+	country_estates: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'real-estates',
+		},
+	],
 });
 
 module.exports = mongoose.model('Country', country);

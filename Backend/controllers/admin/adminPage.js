@@ -1,4 +1,5 @@
 const estateDB = require('../../models/estate');
+const countryDB = require('../../models/country');
 const fs = require('fs');
 const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
@@ -23,7 +24,15 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res, next) => {
-	console.log(req.files);
+	// refrencing the estate to its country instance in countryDB
+	const country = await countryDB.findOne({
+		country_name: `${req.body.countryName}`,
+	});
+	if (!country) {
+		return new AppError('please create country first', 404);
+	}
+	const Id = country.id;
+
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
 		estate_title: req.body.title,
@@ -35,7 +44,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		location: req.body.location,
 		state_description: req.body.description,
 		estate_type: req.body.type,
-
+		estate_price: req.body.price,
+		unit_number: req.body.numberOfUnit,
 		imageUrl: req.files.images.map((el) => {
 			return el.path;
 		}),
@@ -43,7 +53,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 			return el.path;
 		}),
 		// minor_street : req.body. ,
-		// unit_number : req.body. ,
+
 		// postal_code : req.body. ,
 		// estate_view : req.body. ,
 
@@ -101,6 +111,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	const estate = new estateDB({
 		///////////////////////////////////////////////////////////// setState :
 		// stateId : ,
+		estate_country: Id,
 		estate_title: inputs.estate_title,
 		city_name: inputs.city_name,
 		country_name: inputs.country_name,
@@ -112,8 +123,9 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_type: inputs.estate_type,
 		imageUrl: inputs.imageUrl,
 		introduction_video: inputs.introduction_video,
+		price: inputs.estate_price,
+		unit_number: inputs.unit_number,
 		// minor_street: inputs.minor_street,
-		// unit_number: inputs.unit_number ,
 		// postal_code: inputs.postal_code ,
 		// estate_view: inputs.estate_view ,
 
@@ -177,7 +189,6 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	});
 
 	await estate.save();
-	// return null // for now null
 
 	return res.status(201).json({
 		status: 'success',
