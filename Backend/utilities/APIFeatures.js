@@ -13,9 +13,9 @@ class APIFeatures {
 		let queryStr = JSON.stringify(queryObj);
 		// if dosen't match any if parameters then it wont replace anything
 		queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-		// console.log(queryStr);
+
 		this.query = this.query.find(JSON.parse(queryStr));
-		// console.log(JSON.parse(queryStr));
+
 		return this;
 		// returns the entire object
 	}

@@ -53,9 +53,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 
 	res.status(200).json({
 		status: 'success',
-		data: {
-			estates,
-		},
+		data: estates,
 	});
 });
 
@@ -100,7 +98,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 			// if all is ok , adds the city to cities collection of chosen country
 		} else {
-			country.country_cities.push(req.body.cityName);
+			await country.country_cities.push(req.body.cityName);
 			await country.save();
 		}
 		// send response
@@ -134,9 +132,7 @@ exports.getTopGainersEasy = catchAsync(async (req, res, next) => {
 	}
 	return res.status(200).json({
 		status: 'success',
-		data: {
-			wanted: data1,
-		},
+		data: data1,
 	});
 });
 
@@ -182,10 +178,6 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
 		})
-		// .where('country_name')
-		// .equals(`${req.params.countryName}`)
-		// .where('city_name')
-		// .equals(`${req.params.cityName}`)
 		.select([
 			'estate_title',
 			'volume',
@@ -196,9 +188,7 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 	// console.log(estateDB.query);
 	res.status(200).json({
 		status: 'success',
-		data: {
-			data2,
-		},
+		data: data2,
 	});
 });
 
@@ -239,26 +229,6 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 			totalEstates,
 		};
 	});
-
-	// console.log('Total Volume:', sumVolume);
-	// console.log('Total Estates:', totalEstates);
-
-	// let ap = [];
-	// // gonna implement error handling if country has 0 cities
-	// countriesInfo.forEach((el) => {
-	// 	ap.push(el.country_name);
-	// });
-
-	// console.log(ap);
-
-	// const numOfEstates = countriesInfo.country_estates.length();
-
-	// sumVol = getVolumes(countriesInfo.country_estates);
-	/*
-	countriesInfo.country_cities.forEach((el) => {
-		return (sumVolume += el.volume);
-	});
-	*/
 
 	return res.status(200).json({
 		status: 'success',

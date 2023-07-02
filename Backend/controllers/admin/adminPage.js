@@ -1,10 +1,9 @@
 const estateDB = require('../../models/estate');
-const countryDB = require('../../models/country');
 const fs = require('fs');
 const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
-const { Error } = require('mongoose');
+const countryDB = require('../../models/country');
 
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
@@ -49,7 +48,6 @@ exports.getCities = catchAsync(async (req, res, next) => {
 			)
 		);
 	}
-
 	if (country.country_cities.length === 0) {
 		return next(
 			new AppError(
@@ -58,7 +56,6 @@ exports.getCities = catchAsync(async (req, res, next) => {
 			)
 		);
 	}
-
 	res.status(200).json({
 		message: 'success',
 		data: country.country_cities,
@@ -171,6 +168,9 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		// minor_street: inputs.minor_street,
 		// postal_code: inputs.postal_code ,
 		// estate_view: inputs.estate_view ,
+		sell_position: true,
+		lock_position: false,
+		getDocument: false,
 
 		///////////////////////////////////////////////////////////// setRooms :
 		estate_rooms: [
@@ -401,6 +401,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.getEditEstate = async (req, res) => {
+	console.log(uid(16));
 	const estateId = req.params.estateId;
 	const estate = await estateDB.findById(estateId);
 	res.status(200).json(estate);

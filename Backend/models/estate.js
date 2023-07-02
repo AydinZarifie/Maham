@@ -1,8 +1,4 @@
 const mongoose = require('mongoose');
-const countryDB = require('./country');
-const catchAsync = require('../utilities/catchAsync');
-const AppError = require('../utilities/appError');
-const { ObjectId } = require('mongoose');
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema
@@ -229,7 +225,7 @@ const estateSchema = new mongoose.Schema({
 		set: (a) => (a === '' ? undefined : a),
 	},
 	price: {
-		type: Number,
+		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},
 	volume: {
@@ -268,11 +264,31 @@ const estateSchema = new mongoose.Schema({
 		select: false,
 		set: (a) => (a === '' ? undefined : a),
 	},
+	//store blockchain data///
 	landlordAddr: {
 		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},
-	//
+	contract_address: {
+		type: String,
+	},
+	mint_id: {
+		type: String,
+	},
+	sell_position: {
+		type: Boolean,
+	},
+	lock_position: {
+		type: Boolean,
+	},
+	getDocument: {
+		type: Boolean,
+	},
+	//////////////////////////
+
+	//import createdBy///////
+	/////////////////////////
+
 	estate_rooms: [estateRoomsSchema],
 	estate_facilities: [estateFacilitiesSchema],
 	estate_country: [
