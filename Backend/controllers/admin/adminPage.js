@@ -1,10 +1,9 @@
 const estateDB = require('../../models/estate');
-const countryDB = require('../../models/country');
 const fs = require('fs');
 const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
-const { Error } = require('mongoose');
+const countryDB = require('../../models/country');
 
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
@@ -20,6 +19,47 @@ exports.checkBody = (req, res, next) => {
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
 	res.status(200).json(posts);
+});
+
+exports.getAllCountries = catchAsync(async (req, res, next) => {
+	const countries = await countryDB.find();
+
+	if (!countries) {
+		return next(
+			new AppError('there is no countries , please create country first', 404)
+		);
+	}
+	res.status(200).json({
+		message: ' succccess',
+		data: countries,
+	});
+});
+
+exports.getCities = catchAsync(async (req, res, next) => {
+	const country = await countryDB
+		.findOne({ country_name: `${req.params.countryName}` })
+		.select(['country_cities', '-_id']);
+
+	if (!country) {
+		return next(
+			new AppError(
+				'there is no such a country defined , how did u even select this ? , add the country first',
+				404
+			)
+		);
+	}
+	if (country.country_cities.length === 0) {
+		return next(
+			new AppError(
+				'the country has no defined cities yet ,  please add a city first ',
+				404
+			)
+		);
+	}
+	res.status(200).json({
+		message: 'success',
+		data: country.country_cities,
+	});
 });
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
@@ -128,6 +168,9 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		// minor_street: inputs.minor_street,
 		// postal_code: inputs.postal_code ,
 		// estate_view: inputs.estate_view ,
+		sell_position: true,
+		lock_position: false,
+		getDocument: false,
 
 		///////////////////////////////////////////////////////////// setRooms :
 		estate_rooms: [
@@ -358,6 +401,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.getEditEstate = async (req, res) => {
+	console.log(uid(16));
 	const estateId = req.params.estateId;
 	const estate = await estateDB.findById(estateId);
 	res.status(200).json(estate);

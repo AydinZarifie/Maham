@@ -53,9 +53,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 
 	res.status(200).json({
 		status: 'success',
-		data: {
-			estates,
-		},
+		data: estates,
 	});
 });
 
@@ -63,14 +61,19 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 exports.postAddCountry = catchAsync(async (req, res, next) => {
 	const inputs = {
 		countryName: req.body.countryName,
-		countryCities: req.body.cityName,
 		countryLogo: req.files.images[0].path,
 	};
+	if (!req.body.countryName) {
+		return next(new AppError('no country name provided', 400));
+	}
+	if (!req.files.images) {
+		return next(new AppError('no country logo provided', 400));
+	}
 	const newCountry = new countryDB({
 		country_name: inputs.countryName,
-		country_cities: inputs.countryCities,
 		country_logo: inputs.countryLogo,
 	});
+
 	await newCountry.save();
 
 	return res.status(201).json({
@@ -95,7 +98,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 			// if all is ok , adds the city to cities collection of chosen country
 		} else {
-			country.country_cities.push(req.body.cityName);
+			await country.country_cities.push(req.body.cityName);
 			await country.save();
 		}
 		// send response
@@ -129,9 +132,7 @@ exports.getTopGainersEasy = catchAsync(async (req, res, next) => {
 	}
 	return res.status(200).json({
 		status: 'success',
-		data: {
-			wanted: data1,
-		},
+		data: data1,
 	});
 });
 
@@ -177,10 +178,6 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
 		})
-		// .where('country_name')
-		// .equals(`${req.params.countryName}`)
-		// .where('city_name')
-		// .equals(`${req.params.cityName}`)
 		.select([
 			'estate_title',
 			'volume',
@@ -191,42 +188,51 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 	// console.log(estateDB.query);
 	res.status(200).json({
 		status: 'success',
-		data: {
-			data2,
-		},
+		data: data2,
 	});
 });
 
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
-	// let sumVolume = 0;
-	const countriesInfo = countryDB
+	let sumVolume = 0;
+	let totalEstates = 0;
+	const countriesInfo = await countryDB
 		.find()
 		.select(['country_logo', 'country_name', 'country_estates'])
 		.populate({
 			path: 'country_estates',
 			select: ['volume'],
 		});
-	if (!countriesInfo) {
-		return next('no such a country found', 404);
+
+	if (countriesInfo.length === 0) {
+		return next('no such countries found', 404);
 	}
 
-	// gonna implement error handling if country has 0 cities
-	// console.log(countriesInfo.country_cities);
-	const numOfEstates = countriesInfo.country_cities.length();
+	// // calculates sumVol and totalEstates of all  the data that exists in DB
+	// countriesInfo.forEach((country) => {
+	// 	sumVolume += country.country_estates.reduce((total, estate) => {
+	// 		totalEstates++;
+	// 		return total + estate.volume;
+	// 	}, 0);
+	// });
 
-	sumVol = getVolumes(countriesInfo.country_estates);
-	/*
-	countriesInfo.country_cities.forEach((el) => {
-		return (sumVolume += el.volume);
+	const countriesData = countriesInfo.map((country) => {
+		const sumVolume = country.country_estates.reduce((total, estate) => {
+			return total + estate.volume;
+		}, 0);
+
+		const totalEstates = country.country_estates.length;
+
+		return {
+			country_logo: country.country_logo,
+			country_name: country.country_name,
+			sumVolume,
+			totalEstates,
+		};
 	});
-	*/
 
 	return res.status(200).json({
 		status: 'success',
-		data: {
-			countriesInfo: countriesInfo,
-			sumVol: sumVolume,
-			totalEstates: numOfEstates,
-		},
+		data: countriesData,
+		// data: { countriesInfo, sumVolume, totalEstates },
 	});
 });

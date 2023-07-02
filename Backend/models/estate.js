@@ -1,8 +1,4 @@
 const mongoose = require('mongoose');
-const countryDB = require('./country');
-const catchAsync = require('../utilities/catchAsync');
-const AppError = require('../utilities/appError');
-const { ObjectId } = require('mongoose');
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema
@@ -229,7 +225,7 @@ const estateSchema = new mongoose.Schema({
 		set: (a) => (a === '' ? undefined : a),
 	},
 	price: {
-		type: Number,
+		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},
 	volume: {
@@ -268,60 +264,66 @@ const estateSchema = new mongoose.Schema({
 		select: false,
 		set: (a) => (a === '' ? undefined : a),
 	},
+	//store blockchain data///
 	landlordAddr: {
 		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},
-	//
+	contract_address: {
+		type: String,
+	},
+	mint_id: {
+		type: String,
+	},
+	sell_position: {
+		type: Boolean,
+	},
+	lock_position: {
+		type: Boolean,
+	},
+	getDocument: {
+		type: Boolean,
+	},
+	//////////////////////////
+
+	//import createdBy///////
+	/////////////////////////
+
 	estate_rooms: [estateRoomsSchema],
 	estate_facilities: [estateFacilitiesSchema],
 	estate_country: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Country',
-			// required: [true, 'estate must have belong to a country'],
+			required: [true, 'estate must have belong to a country'],
 		},
 	],
 });
 
-// estateSchema.pre(
-// 	'save',
-// 	catchAsync(async function (next) {
-// 		console.log('1');
-// 		const country = await countryDB.findOne({
-// 			country_name: `${this.country_name}`,
-// 		});
+estateSchema.pre('save', async function (next) {
+	const country = await countryDB.findOne({
+		country_name: this.country_name,
+	});
 
-// 		if (!country) {
-// 			return next(
-// 				new AppError(
-// 					'country is not defined , please create country first',
-// 					404
-// 				)
-// 			);
-// 		}
+	if (!country) {
+		return next(
+			new AppError('country is not defined , please create country first', 400)
+		);
+	}
 
-// 		this.estate_country = country._id;
-// 		next();
-// 	})
-// );
+	this.estate_country = country._id;
+	next();
+});
 
-// estateSchema.post('save', function (next) {
-// 	console.log('2');
-// 	console.log(this.country_name);
-// 	console.log(this.estate_country);
-
-// 	console.log(this.estate_country[0]);
-// 	const refCountry = countryDB.findById(this.estate_country[0]);
-// 	if (!refCountry) {
-// 		next(
-// 			new AppError('country does not exist , please create country first ', 404)
-// 		);
-// 	}
-// 	console.log(refCountry);
-// 	console.log('\n\n\n', this);
-// 	refCountry.country_estates[0].push(this.id);
-// 	refCountry.save();
-// });
+estateSchema.post('save', async function (doc, next) {
+	const refCountry = await countryDB.findById(doc.estate_country);
+	if (!refCountry) {
+		next(
+			new AppError('country does not exist , please create country first ', 404)
+		);
+	}
+	refCountry.country_estates.push(doc.id);
+	refCountry.save();
+});
 
 module.exports = mongoose.model('real-estates', estateSchema);
