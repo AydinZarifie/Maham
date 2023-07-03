@@ -3,7 +3,7 @@ import data from "../../../dummyData/estateTableData";
 import styles from "../../../styles/Management.module.css";
 import EstateTableItem from "./EstateTableItem";
 
-const EstateTable = () => {
+const EstateTable = (props) => {
   return (
     <>
       <div className={styles.EstateInfo}>
@@ -23,7 +23,7 @@ const EstateTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {props.estates.map((item) => (
               <EstateTableItem {...item} />
             ))}
           </tbody>

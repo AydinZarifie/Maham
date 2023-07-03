@@ -56,12 +56,13 @@ const ManagementPage = () => {
         selectedCountryOption.country_name
     );
     const json = await res.json();
+    console.log(json.data);
     setSearchedEstates(json.data);
   };
 
   const cityFetch = async (name) => {
     const response = await fetch(
-      "http://localhost:5000/admin/managment/getCities/" + name
+      "http://localhost:5000/admin/managment/getCities/" + name.country_name
     );
     const json = await response.json();
     setCities(json.data);
@@ -118,11 +119,14 @@ const ManagementPage = () => {
           <div className={styles.dropdown}>
             <div className={styles.selectedOption} onClick={toggleCountryMenu}>
               {selectedCountryOption ? (
-                <div>
+                <div className={styles.menuResult}>
                   <img
-                    src={selectedCountryOption.country_logo}
+                    src={`http://localhost:5000/${selectedCountryOption.country_logo.replace(
+                      /\\/g,
+                      "/"
+                    )}`}
                     alt={selectedCountryOption.country_name}
-                    style={{ width: "30px", marginRight: "10px" }}
+                    className={styles.Logo}
                   />
                   {selectedCountryOption.country_name}
                 </div>
@@ -148,10 +152,16 @@ const ManagementPage = () => {
                     <li
                       key={option.country_name}
                       onClick={() =>
-                        handleCountryOptionSelect(option.country_name)
+                        handleCountryOptionSelect(option)
                       }
                     >
-                      <img src={option.country_logo} alt={option.country_name} />
+                      <img
+                        src={`http://localhost:5000/${option.country_logo.replace(
+                          /\\/g,
+                          "/"
+                        )}`}
+                        alt={option.country_name}
+                      />
                       {option.country_name}
                     </li>
                   ))}
@@ -255,7 +265,7 @@ const ManagementPage = () => {
           countries={countries}
         />
       )}
-      <EstateTable />
+      <EstateTable estates={searchedEstates} />
     </>
   );
 };

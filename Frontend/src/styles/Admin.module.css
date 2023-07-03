@@ -501,7 +501,7 @@
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   top: 0;
   left: 0;
   background-color: #242323;
@@ -549,19 +549,34 @@
 .Dashboard {
   display: flex;
   justify-content: left;
-  align-items: flex-end;
+  align-items:center;
+  font-size: 1.15rem;
+color: #353535;
+font-weight: 400;
+}
+
+.Dashboard2 {
+  display: flex;
+  justify-content: left;
+  align-items:center;
   font-size: 1rem;
+color: #f1f1f1;
+transition: .3s;
+font-weight: 600;
+}
+.Dashboard2:hover{
+color: rgb(205, 205, 205);
 }
 .DashboardIcn {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   padding-right: 15px;
 }
 /***   ***/
 
 /***  Logo  ***/
 .LogoImage {
-  width: 27px;
+  width: 20px;
   height: 30px;
   margin-left: 23px;
   margin-top: 5px;
@@ -571,6 +586,7 @@
 }
 .h1Name {
   font-size: 2.5rem;
+  font-weight: 200;
   margin-left: 10px;
 }
 .LogoImage2 {
@@ -587,6 +603,7 @@
   margin-left: 10px;
   margin-top: 30px;
   color: #e7e7e7;
+  font-weight: 700;
 }
 /***   ***/
 
@@ -698,6 +715,7 @@
 /***  Dashboard  ***/
 .h2Dashboard {
   font-size: 2rem;
+  font-weight: 500;
 }
 .p3TechInf {
   color: #9ca1a8;
@@ -710,8 +728,9 @@
   margin-top: 25px;
 }
 .EthIcon {
-  width: 55px;
-  height: 55px;
+  width: 35px;
+  height: 35px;
+  margin-top: 15px;
 }
 .h6EthPrice2 {
   margin-top: -10px;
@@ -725,10 +744,11 @@
   margin-top: 25px;
 }
 .PurchaseIcon {
-  width: 30px;
-  height: 30px;
-  margin-top: 10px;
+  width: 22px;
+  height: 22px;
+  margin-top: 15px;
   margin-left: 5px;
+  opacity: .7;
 }
 .h4TransactionPrice {
   margin-top: -10px;

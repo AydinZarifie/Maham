@@ -32,9 +32,6 @@ export default function AdminNavbar() {
                 &times;
               </a>
               <div className={styles.Logo2}>
-                <div className={styles.LogoImg2}>
-                  <img src={logo} className={styles.LogoImage2} />
-                </div>
                 <div className={styles.LogoName2}>
                   <h1 className={styles.h1Name2}>MAHAM</h1>
                 </div>

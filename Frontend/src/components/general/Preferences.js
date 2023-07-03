@@ -11,7 +11,7 @@ const Preferences = (props) => {
   return (
     <>
       <div className={styles.row3}>
-        <Filters />
+        <Filters admin={false} />
         <div className={styles.FilterandSearch}>
           <div>
             <button
