@@ -3,7 +3,7 @@ import styles from "../../styles/homePage.module.css";
 import data from "../../dummyData/newFilterData";
 import FilterItem from "./FilterItem";
 
-const Filters = () => {
+const Filters = (props) => {
   const filter = useRef(null);
   const leftButton = useRef(null);
   const rightButton = useRef(null);
@@ -33,7 +33,7 @@ const Filters = () => {
   };
 
   return (
-    <form className={styles.Filter} method="post">
+    <form className={props.admin ? `${styles.FilterAdmin}`:`${styles.Filter}`} method="post">
       <div>
         <button
           ref={leftButton}

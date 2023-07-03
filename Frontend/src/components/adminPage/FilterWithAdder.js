@@ -3,6 +3,7 @@ import filterData from "../../dummyData/filterData";
 import Filter from "../Filter";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import Filters from "../filter/Filters";
 
 export default function FilterWithAdder() {
   const datas = filterData.map((item) => {
@@ -22,7 +23,7 @@ export default function FilterWithAdder() {
 
   return (
     <div className={styles.CountryFilterAndAdder}>
-      <button className={styles.slideLeft} type="button" onClick={goToLeft}>
+      {/* <button className={styles.slideLeft} type="button" onClick={goToLeft}>
         ❮
       </button>
       <form
@@ -31,11 +32,15 @@ export default function FilterWithAdder() {
         encType="multipart/form-data"
         ref={slideRef}
       >
-        <div className={styles.scrollbar}>{datas}</div>
+        <div className={styles.scrollbar}>
+          {datas}
+          </div>
       </form>
       <button className={styles.slideRight} type="button" onClick={goToRight}>
         ❯
-      </button>
+      </button> */}
+
+      <Filters admin={true} />
 
       <Link to="new">
         <button className={styles.iconBtn}>

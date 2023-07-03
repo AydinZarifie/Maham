@@ -28,19 +28,22 @@ const ConfingEstate = ({ method, estate }) => {
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      const data = await fetch("url");
+      const data = await fetch(
+        "http://localhost:5000/admin/estate/getCountries"
+      );
       const json = await data.json();
       setCountries(json.data);
     };
     fetchCountryData();
+    if (estate) {
+      cityFetch(estate.country_name);
+    }
   }, []);
 
-  const handlerCountrySelect = (option) => {
-    cityFetch(option);
-  };
-
   const cityFetch = async (name) => {
-    const response = await fetch("url" + name);
+    const response = await fetch(
+      "http://localhost:5000/admin/estate/getCities/" + name
+    );
     const json = await response.json();
     setCities(json.data);
   };
@@ -133,6 +136,9 @@ const ConfingEstate = ({ method, estate }) => {
       ...prev,
       [name]: value,
     }));
+    if (name == "countryName") {
+      cityFetch(value);
+    }
   }
 
   function bedroomEventHandler(event) {
@@ -665,10 +671,7 @@ const ConfingEstate = ({ method, estate }) => {
               >
                 <option value="">Choose an option</option>
                 {countries.map((option) => (
-                  <option
-                    value={option.country_name}
-                    onClick={() => handlerCountrySelect(option.county_name)}
-                  >
+                  <option value={option.country_name}>
                     {option.country_name}
                   </option>
                 ))}
