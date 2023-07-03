@@ -57,7 +57,7 @@ export default function AdminNavbar() {
               <AdminMenuItem
                 link="management"
                 imgSrc={settingIcon}
-                text="GeneralSetting"
+                text="Management"
                 onClick={closeNav}  
               />
             </div>

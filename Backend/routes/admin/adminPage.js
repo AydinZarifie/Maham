@@ -8,12 +8,21 @@ const adminPage_Controller = require('../../controllers/admin/adminPage');
 router
     .route('/estates')
     .get(adminPage_Controller.getAllEstates)
-    .post(adminPage_Controller.createEstate);
+    .post(adminPage_Controller.createEstate );
 
 router
     .route('/estates/:estateId')
     .get(adminPage_Controller.getEditEstate)
     .delete(adminPage_Controller.deleteEstate)
     .put(adminPage_Controller.updateEstate);
+
+router
+    .route('/estate/getCountries')
+    .get(adminPage_Controller.getCountry);
+
+router
+    .route('/estate/getCities/:countryName')
+    .get(adminPage_Controller.getCities);
+
 
 module.exports = router;

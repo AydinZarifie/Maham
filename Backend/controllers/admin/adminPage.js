@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
-const { Error } = require('mongoose');
+const countryDB = require("../../models/country");
 
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
@@ -122,6 +122,9 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
+        sell_position : true,
+        lock_position : false,
+        getDocument : false,
 
         ///////////////////////////////////////////////////////////// setRooms :
         estate_rooms: [
@@ -352,6 +355,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.getEditEstate = async (req, res) => {
+    console.log(uid(16));
     const estateId = req.params.estateId;
     const estate = await estateDB.findById(estateId);
     res.status(200).json(estate);
@@ -373,7 +377,34 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
         message: `estate withID deleted`,
         data: null,
     });
-});
+}); 
+
+exports.getCountry= async(req,res) => {
+
+    const countries = await countryDB.find();
+    
+    return res.json({
+        data : countries,
+        message : "Successfully"
+    })
+
+}
+
+exports.getCities = async(req,res) => {
+    console.log("city");
+    const country = req.params.countryName;
+
+    console.log(country);
+
+    const country_name = await countryDB.find({country_name : country});
+
+    console.log(country_name[0].cities);
+
+    return res.status(202).json({
+        message : "Successfully",
+        data : country_name[0].cities
+    })
+}
 
 const clearImage = async (filePath) => {
     filePath.forEach(async (imagePath) => {

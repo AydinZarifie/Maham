@@ -1,8 +1,6 @@
-import "./styles/global.css";
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import HomePage from "./pages/HomePage";
+import OldHomePage from "./pages/OldHomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
 import AdminPage, { action as manipulateEstateAction } from "./pages/admin/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
@@ -10,6 +8,7 @@ import AdminEstates from "./pages/admin/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
 import ManagementPage from "./pages/admin/ManagementPage";
+import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {

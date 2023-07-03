@@ -28,6 +28,104 @@
 } */
 
 /***    ***/
+.dropdown {
+  position: relative;
+  /* width: 400px; */
+ 
+  
+}
+
+.selectedOption {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #e5e5e5;
+  /* border: 1px solid #909090; */
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.selectedOption:hover {
+  background-color: #e1e1e1;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  height: 150px;
+  overflow: scroll;
+  scrollbar-width: none;
+  font-weight: 600;
+  color: #585858;
+}
+
+.options::-webkit-scrollbar {
+  height: 15px;
+  background-color: #fff;
+  display: none;
+
+  border-radius: 15px;
+  z-index: 999;
+}
+.options::-webkit-scrollbar:hover {
+  height: 25px;
+  z-index: 999;
+  background-color: #fff;
+}
+.options::-webkit-scrollbar-track {
+  height: 8px;
+  border-radius: 10px;
+  z-index: 999;
+  background-color: #fff;
+}
+.options::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: #e70202;
+  border-radius: 15px;
+  z-index: 999;
+}
+
+
+.options li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.options li:hover {
+  background-color: #f1f1f1;
+}
+
+.options li img {
+  width: 30px;
+  margin-right: 10px;
+}
+
 
 .CountryMenu {
   display: flex;

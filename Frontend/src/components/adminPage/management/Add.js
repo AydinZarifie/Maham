@@ -3,9 +3,9 @@ import styles from "../../../styles/Management.module.css";
 
 const Add = (props) => {
   const [information, setInformation] = useState({
-    countryName: "",
-    cityName: "",
-    dropBox: "",
+    countryName: null,
+    cityName: null,
+    dropBox: null,
   });
 
   const [img, setImg] = useState(null);
@@ -67,7 +67,7 @@ const Add = (props) => {
               </div>
 
               <div className={styles.ImgAploader}>
-                <h3 className={styles.ImageH3}>Image Aploader</h3>
+                <h3 className={styles.ImageH3}>Image Uploader</h3>
                 <form className={styles.AploadDiv}>
                   <input type="file" id="file-input" onChange={imgHandler} />
                 </form>
@@ -110,26 +110,9 @@ const Add = (props) => {
             )
           }
         >
-          Apload
+          Upload
         </button>
       </div>
-      {/* <div className={styles.AddCity}>
-          <div className={styles.wrapper}>
-            <div className={styles.inputData}>
-              <input
-                type="text"
-                className={styles.textinput}
-                required
-                onChange={inputHandler}
-                name="cityName"
-                value={information.cityName}
-              />
-              <div className={styles.underline}></div>
-              <label className={styles.label}>CityName</label>
-            </div>
-          </div>
-        </div> */}
-      {/* </div> */}
     </div>
   );
 };

@@ -11,12 +11,14 @@ const estateDB = require("../../models/estate");
 //////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
-    const countries = await countryDB.find().select({country_name : 1 , country_logo : 1})
+    const countries = await countryDB.find()
+	console.log(countries);		
     res.status(200).json({
 			data:countries,
 			message : "Successfully"
-		});		
-});
+	});
+	
+})
 
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
 exports.postAddCountry = catchAsync(async (req, res, next) => {

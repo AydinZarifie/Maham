@@ -248,10 +248,34 @@ const estateSchema = new mongoose.Schema({
     imageUrl: {
         type: Array,
         //set: (a) => (a === '' ? undefined : a),
-    },
+    },    
     introduction_video: {
         type: Array,
     },
+    //store blockchain data///
+    landlor_address: {
+        type : String,
+    },
+    contract_address: {
+        type : String
+    },
+    mint_id : {
+        type : String
+    },
+    sell_position : {
+        type : Boolean
+    },
+    lock_position : {
+        type : Boolean
+    },
+    getDocument:{
+        type : Boolean
+    },
+    //////////////////////////
+
+    //import createdBy///////
+    /////////////////////////
+    
     estate_rooms: [estateRoomsSchema],
     estate_facilities: [estateFacilitiesSchema],
     
