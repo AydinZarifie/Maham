@@ -265,7 +265,7 @@ const estateSchema = new mongoose.Schema({
 		set: (a) => (a === '' ? undefined : a),
 	},
 	//store blockchain data///
-	landlordAddr: {
+	landlord_address: {
 		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},

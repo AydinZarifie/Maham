@@ -20,7 +20,7 @@ const adminSchema = mongoose.Schema({
         required : true,
         uniqe : true
     },
-    password:{
+    password: {
         type : String,
         required:true
     },
@@ -29,6 +29,6 @@ const adminSchema = mongoose.Schema({
         required:true,
     },
     //store acitivity of admins
-},{ timestamps: true })
+},{ timestamps: true ,strict: true})
 
 module.exports = mongoose.model("Admin" , adminSchema); 
