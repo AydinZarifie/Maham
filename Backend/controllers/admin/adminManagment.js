@@ -168,7 +168,7 @@ exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
 		city_name: `${req.params.cityName}`,
 	};
 	req.query.sort = 'createdAt';
-	req.query.fields = 'estate_title,price,volume'; /*landlordAddr,change*/ // and more fields that not exist yet
+	req.query.fields = 'estate_title,price,volume'; /*landlord_address,change*/ // and more fields that not exist yet
 	next();
 });
 ///////////////////
@@ -181,7 +181,7 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 		.select([
 			'estate_title',
 			'volume',
-			'price' /*'landlordAddr',*/ /*'change'*/,
+			'price' /*'landlord_address',*/ /*'change'*/,
 		])
 		.sort('createdAt')
 		.limit(10);
