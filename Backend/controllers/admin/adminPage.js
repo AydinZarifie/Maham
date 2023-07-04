@@ -4,6 +4,8 @@ const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require('../../models/country');
+const crypto = require('crypto');
+const refrences = require('./../../utilities/cityCountryRef');
 
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
@@ -22,15 +24,17 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 });
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
+	console.log(1);
 	const countries = await countryDB.find();
 
 	if (!countries) {
+		console.log(2);
 		return next(
 			new AppError('there is no countries , please create country first', 404)
 		);
 	}
 	res.status(200).json({
-		message: ' succccess',
+		message: ' success',
 		data: countries,
 	});
 });
@@ -76,12 +80,12 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
 		estate_title: req.body.title,
-		city_name: req.body.cityName,
-		country_name: req.body.countryName,
+		city_name: req.body.cityName.toLowerCase(),
+		country_name: req.body.countryName.toLowerCase(),
 		main_street: req.body.streetName,
 		building_number: req.body.plate,
 		floor_number: req.body.numberOfFloor,
-		location: req.body.location,
+		location: req.body.location.toLowerCase(),
 		state_description: req.body.description,
 		estate_type: req.body.type,
 		estate_price: req.body.price,
@@ -401,13 +405,72 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.getEditEstate = async (req, res) => {
-	console.log(uid(16));
 	const estateId = req.params.estateId;
 	const estate = await estateDB.findById(estateId);
 	res.status(200).json(estate);
 };
 
-//added : 2023/05/08  , implemented : 2023/06/04
+function generateUniqueNumber(data1, data2, data3) {
+	let datas = [];
+	const length = 6;
+	// Additional data (e.g., current timestamp)
+	const additionalData = new Date().getTime().toString();
+
+	datas.push(data1, data2, data3, additionalData);
+	const combinedData = datas.join('');
+
+	console.log(combinedData);
+	// Apply SHA-256 hash function
+	const hash = crypto.createHash('sha256').update(combinedData).digest('hex');
+
+	const number = parseInt(hash.slice(0, length), 16);
+	return number;
+}
+
+exports.generateMint = catchAsync(async (req, res, next) => {
+	const fields = ['cityName', 'countryName', 'title', 'type'];
+
+	const modifiedValues = {};
+
+	for (const variable of fields) {
+		let value = req.body[variable];
+		value = value.split(' ').join('_');
+		modifiedValues[variable] = value;
+	}
+	const countryCode = refrences.countryRef[modifiedValues.countryName];
+	const cityCode = refrences.cityRef[modifiedValues.cityName];
+	const typeCode = refrences.typeRef[modifiedValues.type];
+
+	if (!countryCode || !cityCode || !typeCode) {
+		return next(
+			new AppError('invalid country or city name or estate Type', 400)
+		);
+	}
+
+	randomHash = await generateUniqueNumber(
+		countryCode,
+		cityCode,
+		modifiedValues.title
+	);
+	const mint = countryCode + cityCode + typeCode + randomHash;
+
+	return res.status(200).json({
+		status: 'seccess',
+		message: 'mint created succesfully ',
+		data: mint,
+	});
+});
+
+// every field in requset object that its value is String >> changes to lowercase
+exports.toLowerCase = (req, res, next) => {
+	for (let key in req.body) {
+		if (typeof req.body[key] === 'string') {
+			req.body[key] = req.body[key].toLowerCase();
+		}
+	}
+	next();
+};
+
 exports.deleteEstate = catchAsync(async (req, res, next) => {
 	const est = await estateDB.findByIdAndDelete(req.params.estateId);
 
@@ -420,7 +483,7 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 
 	return res.status(204).json({
 		status: 'success',
-		message: `estate withID deleted`,
+		message: `estate with ID deleted`,
 		data: null,
 	});
 });
