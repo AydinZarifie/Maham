@@ -23,12 +23,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
 exports.postAddCountry = catchAsync(async (req, res, next) => {
     const inputs = {
-		
 		countryName: req.body.countryName,
-        countryCities: req.body.cityName,
-        countryLogo: req.files.images[0].path,
-        countryName: req.body.countryName,
-        countryCities: req.body.cityName,
         countryLogo: req.files.images[0].path,
     };
     const newCountry = new countryDB({
@@ -44,6 +39,8 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
+	console.log("heelooooooo`");
+	console.log(req.body.cityName);
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({
 			country_name: req.body.countryName,

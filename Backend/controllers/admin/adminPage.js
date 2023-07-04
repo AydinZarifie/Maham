@@ -355,7 +355,6 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.getEditEstate = async (req, res) => {
-    console.log(uid(16));
     const estateId = req.params.estateId;
     const estate = await estateDB.findById(estateId);
     res.status(200).json(estate);
@@ -391,7 +390,6 @@ exports.getCountry= async(req,res) => {
 }
 
 exports.getCities = async(req,res) => {
-    console.log("city");
     const country = req.params.countryName;
 
     console.log(country);
