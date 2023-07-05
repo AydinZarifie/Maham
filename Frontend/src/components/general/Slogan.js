@@ -1,7 +1,6 @@
 import styles from "../../styles/homePage.module.css";
 
 import sloganPicture from "../../images/IMG_6584.JPG";
-import arrowLogo from "../../images/down-arrow-svgrepo-com.svg";
 import { useEffect, useRef, useState } from "react";
 
 const Slogan = () => {
@@ -47,11 +46,6 @@ const Slogan = () => {
               </div>
             </div>
           </div>
-          <a className={styles.DownA} href="#container2">
-            <div className={styles.DownDiv}>
-              <img src={arrowLogo} className={styles.DownIcn} />
-            </div>
-          </a>
         </div>
       )}
     </>

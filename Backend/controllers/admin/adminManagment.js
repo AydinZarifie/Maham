@@ -2,6 +2,7 @@ const countryDB = require('../../models/country');
 const catchAsync = require('./../../utilities/catchAsync');
 const estateDB = require("../../models/estate");
 
+
 // exports.postAddCountry = (req, res) => {
 //     const country_name = req.body.countryName;
 //     console.log(country_name);
@@ -39,7 +40,6 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
-	console.log("heelooooooo`");
 	console.log(req.body.cityName);
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({

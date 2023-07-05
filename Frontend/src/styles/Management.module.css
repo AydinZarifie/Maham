@@ -34,7 +34,16 @@
  
   
 }
-
+.menuResult{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  gap: 10px;
+}
+.Logo{
+  width: 30px;
+  height: 30px;
+}
 .selectedOption {
   display: flex;
   flex-direction: row;
@@ -46,8 +55,9 @@
   /* border: 1px solid #909090; */
   cursor: pointer;
   border-radius: 5px;
-  font-weight: 600;
+  font-weight: 400;
   white-space: nowrap;
+  height: 50px;
 }
 
 .selectedOption:hover {
@@ -686,7 +696,7 @@
 .inputData .textinput:valid ~ .label {
   transform: translateY(-20px);
   font-size: 13px;
-  color: #fd292f;
+  color: #4d4d4d;
 }
 .wrapper .inputData .label {
   position: absolute;
@@ -700,14 +710,14 @@
   position: absolute;
   height: 2px;
   width: 80%;
-  bottom: -4px;
+  bottom: 0px;
 }
 .inputData .underline:before {
   position: absolute;
   content: "";
   height: 100%;
   width: 125%;
-  background: #fd292f;
+  background: #535353;
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 0.3s ease;

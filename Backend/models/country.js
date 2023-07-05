@@ -4,6 +4,7 @@ const estateDB = require('./estate.js');
 const country = new mongoose.Schema({
 	country_name: {
 		type: String,
+		unique : true,
 	},
 	cities: {
 		type: Array,

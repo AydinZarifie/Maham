@@ -208,7 +208,7 @@ button:disabled:active {
   position: absolute;
   height: 2px;
   width: 100%;
-  bottom: -4px;
+  bottom: 0px;
 }
 .inputData .underline:before {
   position: absolute;
@@ -621,7 +621,7 @@ select {
 }
 
 .styledTable tbody tr:last-of-type {
-  border-bottom: 2px solid #fd292f;
+  border-bottom: 2px solid #383838;
 }
 .styledTable tbody tr.active-row {
   font-weight: bold;
@@ -645,13 +645,12 @@ select {
   display: inline-block;
   position: relative;
   background-color: transparent;
-  width: 25px;
-  height: 25px;
+  width: 27px;
+  height: 27px;
   transform-origin: center;
   border: 2px solid #333;
   border-radius: 50%;
   vertical-align: middle;
-  margin-right: 10px;
   transition: background-color 150ms 200ms,
     transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
 }
@@ -742,8 +741,8 @@ select {
   border-radius: 10px;
 }
 .DescriptionTextArea:focus {
-  box-shadow: 0 0 16px rgba(255, 0, 0, 0.15);
-  outline: 2px solid rgb(238, 71, 74);
+  box-shadow: 0 0 16px rgba(45, 42, 42, 0.15);
+  outline: 1px solid rgb(154, 154, 154);
 }
 /***     ***/
 

@@ -56,6 +56,7 @@ const ManagementPage = () => {
         selectedCountryOption.country_name
     );
     const json = await res.json();
+    console.log(json.data);
     setSearchedEstates(json.data);
   };
 
@@ -93,7 +94,6 @@ const ManagementPage = () => {
     const fetchCountryData = async () => {
       const data = await fetch("http://localhost:5000/admin/managment");
       const json = await data.json();
-      console.log(json.data);
       setCountries(json.data);
     };
     fetchCountryData();
@@ -114,21 +114,19 @@ const ManagementPage = () => {
         // countries={countries}
         />
       </div>
-      {console.log(selectedCountryOption)}
       <div className={styles.SelectAndAdd}>
         <div className={styles.CountryMenu}>
           <div className={styles.dropdown}>
             <div className={styles.selectedOption} onClick={toggleCountryMenu}>
               {selectedCountryOption ? (
-                <div>
-                  {console.log(selectedCountryOption)}
+                <div className={styles.menuResult}>
                   <img
                     src={`http://localhost:5000/${selectedCountryOption.country_logo.replace(
                       /\\/g,
                       "/"
                     )}`}
                     alt={selectedCountryOption.country_name}
-                    style={{ width: "30px", marginRight: "10px" }}
+                    className={styles.Logo}
                   />
                   {selectedCountryOption.country_name}
                 </div>
@@ -215,7 +213,6 @@ const ManagementPage = () => {
                 &#9660;
               </span>
             </div>
-              {console.log(cities)}
             {cityMenuShown && (
               <>
                 <div className={styles.overlay2} onClick={toggleCityMenu}></div>
@@ -268,7 +265,7 @@ const ManagementPage = () => {
           countries={countries}
         />
       )}
-      <EstateTable />
+      <EstateTable estates={searchedEstates} />
     </>
   );
 };

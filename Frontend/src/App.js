@@ -2,13 +2,16 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import OldHomePage from "./pages/OldHomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
-import AdminPage, { action as manipulateEstateAction } from "./pages/admin/AdminPage";
+import AdminPage, {
+  action as manipulateEstateAction,
+} from "./pages/admin/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
 import AdminEstates from "./pages/admin/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
 import ManagementPage from "./pages/admin/ManagementPage";
 import HomePage from "./pages/HomePage";
+import Signin from "./components/adminPage/authentication/Signin";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +62,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return(
+  <RouterProvider router={router} />
+  
+  // <Signin />
+  )
+  
+  
 }
 
 export default App;

@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const adminDB = require("../../models/admin");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const { validationResult } = require("express-validator");
 
@@ -27,6 +28,7 @@ try {
 
     if(password !== confirm_password){
         const err = new Error("Password and confirm password was diffrent");
+        err.statusCode = 401; 
         throw err;
     }
 
@@ -58,8 +60,41 @@ exports.logIn = async (req, res) => {
   
   const email = req.body.email;
   const password = req.body.password;
+  const verifyCode = req.body.verifyCode;
+
+  const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+  const transporter = nodemailer.createTransport({
+    service : "gmail",
+    auth : {
+      user : 'aydinzarifieaszo@gmail.com',
+      pass : "rwtrwybhtbugnqxc"
+    }
+  })
+
+  const mailOptions = {
+    from: 'aydinzarifieaszo@gmail.com',
+    to: email,
+    subject: 'Verify',
+    text: verificationCode.toString(),
+  };
+  
+  transporter.sendMail(mailOptions , (err,info) => {
+    if(err){
+        console.log(err);
+    }
+    else {
+        console.log(info);
+    }
+  })
 
   const admin = await adminDB.find({email:email});
+
+  if(verificationCode == verifyCode){
+    const err = new Error("Verify code is not valid");
+    err.statusCode = 401;
+    throw err;
+  }
 
   if(!admin){
     const err = new Error("admin not found");
@@ -82,6 +117,4 @@ exports.logIn = async (req, res) => {
     token : token,
     adminId : admin._id
   })
-
-
 };

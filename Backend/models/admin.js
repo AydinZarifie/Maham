@@ -13,12 +13,12 @@ const adminSchema = mongoose.Schema({
     phone_number:{
         type:String,
         required:true,
-        uniqe : true,
+        unique : true,
     },
     email : {
         type:String,
         required : true,
-        uniqe : true
+        unique : true
     },
     password: {
         type : String,

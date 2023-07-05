@@ -46,19 +46,24 @@ const EstateItem = (props) => {
         <img src={image1} alt="" className={styles.slide} />
         <img src={image2} alt="" className={styles.slide} />
         <img src={image3} alt="" className={styles.slide} />
+        <div className={styles.buttons}>
+          <button
+            className={`${styles.RLBtn} ${styles.Right}`}
+            onClick={goToLeft}
+            ref={leftButton}
+          >
+            ❮
+          </button>
+          <button
+            className={styles.RLBtn}
+            onClick={goToRight}
+            ref={rightButton}
+          >
+            ❯
+          </button>
+        </div>
       </div>
-      <div className={styles.buttons}>
-        <button
-          className={`${styles.RLBtn} ${styles.Right}`}
-          onClick={goToLeft}
-          ref={leftButton}
-        >
-          ❮
-        </button>
-        <button className={styles.RLBtn} onClick={goToRight} ref={rightButton}>
-          ❯
-        </button>
-      </div>
+
       <div className={styles.Info}>
         <div className={styles.PMDiv}>
           <span className={styles.TitleSpan}>
@@ -74,7 +79,7 @@ const EstateItem = (props) => {
           <h4 className={styles.InfoH4}>|</h4>
           <h4 className={styles.InfoH4}>Tabriz</h4>
         </span>
-        <div className={styles.InfoDiv}>
+        <div className={styles.InfoDiv2}>
           <span>
             <h4 className={styles.InfoH4}>Built April 2021</h4>
           </span>

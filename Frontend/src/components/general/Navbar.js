@@ -15,7 +15,7 @@ const Navbar = (props) => {
     <div className={styles.Menu}>
       {/* <!--name and logo--> */}
       <div>
-        <a href="Maham.html" className={styles.Maham}>
+        <a className={styles.Maham}>
           <span className={styles.LogoAndTitle}>
             <img className={styles.Logo} src={logo} />
             <h1 className={styles.Title}>MAHAM</h1>
