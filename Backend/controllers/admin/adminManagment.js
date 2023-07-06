@@ -4,15 +4,50 @@ const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
 
-const getVolumes = function (collection) {
-	let sumVolume = 0;
-	collection.forEach((el) => {
-		sumVolume += el.volume;
-	});
-	return sumVolume;
-};
+///////////////////////////////////////////////////
 
-// worked properly
+function assignCountryCode(countryname) {
+	const formattedCountryName = countryname.toLowerCase().replace(/\s/g, '_');
+
+	let countryCode;
+
+	// Check if the country already exists
+	if (countryRef[formattedCountryName]) {
+		return; // Country already exists, do nothing
+	}
+
+	totalCountries++;
+
+	if (totalCountries % 10 == totalCountries) {
+		countryCode = String(totalCountries).padStart(2, '0');
+	} else {
+		countryCode = toString(totalCountries);
+	}
+
+	countryRef[formattedCountryName] = countryCode;
+}
+
+function assignCityCode(countryname, cityname) {
+	const formattedCityName = cityname.toLowerCase().replace(/\s/g, '_');
+
+	let cityCode;
+
+	// Check if the city already exists
+	if (cityRef[countryname[formattedCityName]]) {
+		return next(); // city already exists, do nothing
+	}
+
+	totalCities++;
+
+	if (totalCities % 10 == totalCities) {
+		cityCode = String(totalCities).padStart(2, '0');
+	} else {
+		cityCode = toString(totalCities);
+	}
+
+	cityRef[formattedCityName] = cityCode;
+}
+
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	//////////////  execute the query
 	const features = new APIFeatures(countryDB.find(), req.query)
@@ -113,7 +148,6 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
-// worked properly
 exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'change';

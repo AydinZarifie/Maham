@@ -3,14 +3,21 @@ exports.countryRef = {
 	// 2) all white spaces within names must be seperated by underscore , '_'
 	// (e.g. united StaTes >> united_states)
 
-	iran: '001',
-	turkey: '002',
-	united_states: '003',
-	england: '004',
+	iran: '01',
+	turkey: '02',
+	united_states: '03',
+	england: '04',
 };
 
 exports.cityRef = {
-	tabriz: '01',
+	iran: {
+		tabriz: '01',
+		tehran: '02',
+	},
+	turkey: {
+		istanbul: '01',
+		antalya: '02',
+	},
 };
 
 exports.typeRef = {

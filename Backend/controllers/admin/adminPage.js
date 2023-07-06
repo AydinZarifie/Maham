@@ -7,17 +7,6 @@ const countryDB = require('../../models/country');
 const crypto = require('crypto');
 const refrences = require('./../../utilities/cityCountryRef');
 
-//2023/05/08 added`
-exports.checkBody = (req, res, next) => {
-	if (!req.body.cityName || req.body.countryName == '' || !req.body.stateView) {
-		return res.status(400).json({
-			status: 'fail',
-			message: 'invalid inputs!',
-		});
-	}
-	next();
-};
-
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
 	res.status(200).json(posts);

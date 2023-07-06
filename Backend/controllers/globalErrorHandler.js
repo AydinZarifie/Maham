@@ -71,14 +71,14 @@ module.exports = (err, req, res, next) => {
 		// in prod enviroment , we send as less as info about errors
 		let error = { ...err };
 
+		console.log(err);
 		if (error.name === 'CastError') error = handleCastErrorDB(error);
 		if (error.code === E11000) error = handleDuplicateFieldsDB(error);
 		if (error.name === 'ValidationError')
 			error = handleValidationErrorDB(error);
 		if (error.name === 'JsonWebTokenError') error = handleJWTError();
 		if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
-		sendErrProd(error, req, res);
 
-		sendErrorProd(error, req, res);
+		sendErrorProd(error, res);
 	}
 };
