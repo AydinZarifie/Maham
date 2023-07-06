@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const catchAsync = require('../../utilities/catchAsync');
 const AppError = require('../../utilities/appError');
+const { promisify } = require('util');
 
 const signToken = (email, adminId) => {
 	return jwt.sign({ email, adminId }, process.env.JWT_SECRET, {
