@@ -33,7 +33,7 @@ const EstateItem = (props) => {
     } else {
       leftButton.current.style.opacity = ".2";
     }
-    if (scrollx + scrollx2 >= scrollx3) {
+    if (scrollx + scrollx2 >= scrollx3-1) {
       rightButton.current.style.opacity = ".2";
     } else {
       rightButton.current.style.opacity = "1";

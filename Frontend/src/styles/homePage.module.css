@@ -100,11 +100,48 @@
     font-size: 1.1rem;
     color: #5f5f5f;
   }
+
+
+   /*  slogan  */
+   .Sloganh1 {
+    font-size: 2.3rem;
+    font-weight: 400;
+  }
+
+  .Sloganh4 {
+    font-size: 0.9rem;
+    color: #888;
+    font-weight: 600;
+  }
+  .Sloganh4Div {
+    width: 100%;
+    height: 95px;
+    overflow-y: hidden;
+    text-overflow: hidden;
+  }
 }
 @media (max-width: 820px) {
   /* eth price  */
   .EthPrice {
     display: none;
+  }
+
+
+   /*  slogan  */
+   .Sloganh1 {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .Sloganh4 {
+    font-size: 0.6rem;
+    color: #888;
+  }
+  .Sloganh4Div {
+    width: 100%;
+    height: 60px;
+    overflow-y: hidden;
+    text-overflow: hidden;
   }
 }
 
@@ -218,22 +255,8 @@
     box-shadow: none;
   }
 
-  /*  slogan  */
-  .Sloganh1 {
-    font-size: 2.3rem;
-    font-weight: 400;
-  }
-  .Sloganh4 {
-    font-size: 0.9rem;
-    color: #888;
-    font-weight: 600;
-  }
-  .Sloganh4Div {
-    width: 100%;
-    height: 95px;
-    overflow-y: hidden;
-    text-overflow: hidden;
-  }
+ 
+
 
   /*  tap to bottom btn  */
 
@@ -510,20 +533,8 @@
     box-shadow: none;
   }
 
-  /*  slogan  */
-  .Sloganh1 {
-    font-size: 1rem;
-  }
-  .Sloganh4 {
-    font-size: 0.6rem;
-    color: #888;
-  }
-  .Sloganh4Div {
-    width: 100%;
-    height: 60px;
-    overflow-y: hidden;
-    text-overflow: hidden;
-  }
+ 
+ 
 
   /*  tap to bottom btn  */
 
@@ -1123,6 +1134,7 @@ nav a:focus {
   display: flex;
   flex-direction: row;
   height: 56.7px;
+  max-height: 56.7;
 }
 .nav2 a:hover,
 .nav2 a:focus {
@@ -1135,7 +1147,7 @@ nav a:focus {
 }
 .nav2 a::after {
   position: absolute;
-  top: 100%;
+  top:100%;
   left: 0;
   width: 100%;
   height: 1px;
@@ -1152,6 +1164,7 @@ nav a:focus {
 .FilterIcn {
   width: 27px;
   height: 27px;
+  padding: 0;
   z-index: 10;
   background-color: white;
 }
@@ -1242,7 +1255,8 @@ nav a:focus {
   background-color: #fefefe;
   margin: auto;
   border: 1px solid #888;
-  width: 360px;
+  min-width: 340px;
+  width: 25%;
   z-index: 99999;
   border: 1px solid #717171;
   border-radius: 8px;
@@ -1255,9 +1269,10 @@ nav a:focus {
   font-weight: normal;
   cursor: pointer;
   order: 1;
-  width: 10%;
+  width: 12%;
   transition: .2s;
   height: 10%;
+  margin-top: 10px;
 }
 .close:hover,
 .close:focus {
@@ -1486,7 +1501,7 @@ nav a:focus {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #2b2b2b;
+  color: #414141;
 }
 .InfoH4 {
   color: #7d7d7d;

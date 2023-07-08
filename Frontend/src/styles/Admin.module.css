@@ -6,6 +6,12 @@
   height: 90px;
 } */
 
+
+.sidenav a.active {
+  background-color: #444444;
+  pointer-events: none;
+}
+
 /*** LayOut  ***/
 .column1 {
   display: flex;
@@ -17,6 +23,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 4px;
 }
 .Logo2 {
   display: flex;
@@ -187,7 +194,7 @@
     font-size: 35px;
     cursor: pointer;
     margin-left: 30px;
-    margin-top: 0;
+    margin-top: 0px;
   }
 }
 @media (max-width: 710px) {
@@ -385,7 +392,7 @@
 }
 @media (min-width: 430px) {
   .header {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
     justify-content:space-between;
     align-items: center;
@@ -424,7 +431,7 @@
     overflow: hidden;
   }
   .header {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
     justify-content:start;
     align-items: center;
@@ -576,10 +583,10 @@ color: rgb(205, 205, 205);
 
 /***  Logo  ***/
 .LogoImage {
-  width: 20px;
+  width: 21px;
   height: 30px;
-  margin-left: 23px;
-  margin-top: 5px;
+  margin-left: 26px;
+  margin-top: 4px;
   background-color: #ffffff;
   border-radius: 3px;
 
