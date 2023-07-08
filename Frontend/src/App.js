@@ -12,6 +12,9 @@ import EditState from "./components/adminPage/EditEstate";
 import ManagementPage from "./pages/admin/ManagementPage";
 import HomePage from "./pages/HomePage";
 import Signin from "./components/adminPage/authentication/Signin";
+import AdminPanel from "./pages/admin/AdminPanel";
+import AdminList from "./components/adminPanel/AdminList";
+import AddAdmin from "./components/adminPanel/AddAdmin";
 
 const router = createBrowserRouter([
   {
@@ -57,18 +60,27 @@ const router = createBrowserRouter([
         path: "management",
         element: <ManagementPage />,
       },
+      {
+        path: "admins",
+        element: <AdminPanel />,
+        children: [
+          { index: true, element: <AdminList /> },
+          {
+            path: "addAdmin",
+            element: <AddAdmin />,
+          },
+        ],
+      },
     ],
   },
 ]);
 
 function App() {
-  return(
-  <RouterProvider router={router} />
-  
-  // <Signin />
-  )
-  
-  
+  return (
+    <RouterProvider router={router} />
+
+    // <Signin />
+  );
 }
 
 export default App;

@@ -199,10 +199,10 @@ button:disabled:active {
   position: absolute;
   bottom: 10px;
   left: 0;
-  color: black;
+  color: rgb(53, 53, 53);
   pointer-events: none;
   transition: all 0.3s ease;
-  font-size: 13px;
+  font-size: 14px;
 }
 .inputData .underline {
   position: absolute;
@@ -250,8 +250,9 @@ button:disabled:active {
   position: absolute;
   bottom: 10px;
   left: 0;
-  color: black;
+  color: rgb(53, 53, 53);
   pointer-events: none;
+  font-size: 14px;
   transition: all 0.3s ease;
 }
 
@@ -271,18 +272,21 @@ button:disabled:active {
   height: 100%;
   width: 99%;
   border: none;
-  font-size: 17px;
+  font-size: 14px;
   border-bottom: 2px solid silver;
   outline: none;
+  font-weight: 400;
 }
 
 .wrapper3 .inputData .label {
   position: absolute;
   bottom: 10px;
   left: 0;
-  color: black;
+  color: rgb(53, 53, 53);
+  font-weight: 400;
   pointer-events: none;
   transition: all 0.3s ease;
+  font-size: 14px;
 }
 .wrapper4 {
   width: 78%;
@@ -310,10 +314,11 @@ button:disabled:active {
   position: absolute;
   bottom: 10px;
   left: 0;
-  color: black;
+  color: rgb(53, 53, 53);
   pointer-events: none;
   transition: all 0.3s ease;
   padding-left: 10px;
+  font-size: 14px;
 }
 
 

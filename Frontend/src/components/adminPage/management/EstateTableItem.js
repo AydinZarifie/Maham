@@ -30,7 +30,7 @@ const EstateTableItem = (props) => {
   return (
     <>
       <tr>
-        <td>{props.name}</td>
+        <td>{props.estate_title}</td>
         <td>{props.price}</td>
         <td style={className24}>{props.change24}</td>
         <td style={className7}>{props.change7}</td>
@@ -38,12 +38,10 @@ const EstateTableItem = (props) => {
         <td>{props.contractAddress}</td>
         <td>{props.landlordAddress}</td>
         <td>
-          {props.sellPosition && <span>true</span>}
-          {!props.sellPosition && <span>false</span>}
+          {props.sell_position.toString()}
         </td>
         <td>
-          {props.lock && <span>true</span>}
-          {!props.lock && <span>false</span>}
+          {props.lock_position.toString()}
         </td>
         <td>
           <button>

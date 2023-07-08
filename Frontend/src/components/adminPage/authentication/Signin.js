@@ -164,7 +164,7 @@ const Signin = () => {
           <div className={styles.floatingLabel}>
             <input
               className={usernameClass}
-              placeholder="User name"
+              placeholder="Email"
               type="text"
               name="username"
               value={input.username}
@@ -174,7 +174,7 @@ const Signin = () => {
               required
             />
             <label className={styles.InputLabel} htmlFor="UserName">
-              Username
+              Email
             </label>
             <div className={styles.icon}>
               <svg viewBox="0 0 32 32">
