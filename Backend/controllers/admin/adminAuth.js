@@ -97,6 +97,33 @@ exports.logIn = catchAsync(async (req, res) => {
 	});
 });
 
+exports.resetPassword = catchAsync(async (req, res, next) => {
+	// 1) Get admin based on the token
+	const hashedToken = crypto
+		.createHash('sha256')
+		.update(req.params.token)
+		.digest('hex');
+
+	const admin = await adminDB.findOne({
+		passwordResetToken: hashedToken,
+		passwordResetExpires: { $gt: Date.now() },
+	});
+
+	// 2) If token has not expired, and there is admin, set the new password
+	if (!admin) {
+		return next(new AppError('Token is invalid or has expired', 400));
+	}
+	admin.password = req.body.password;
+	admin.passwordConfirm = req.body.passwordConfirm;
+	admin.passwordResetToken = undefined;
+	admin.passwordResetExpires = undefined;
+	await admin.save();
+
+	// 3) Update changedPasswordAt property for the admin
+	// 4) Log the admin in, send JWT
+	createSendToken(admin, 200, res);
+});
+
 /// will be completed
 exports.protect = catchAsync(async (req, res, next) => {
 	// 1) getting token and see if it is there

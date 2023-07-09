@@ -9,7 +9,7 @@ process.on('uncaughtException', (err) => {
 	process.exit(1);
 });
 
-const app2 = require('./app');
+const app = require('./app');
 // app.use((req, res, next) => {
 // 	res.setHeader('Access-Control-Allow-Origin', '*');
 // 	res.setHeader(
@@ -30,7 +30,7 @@ mongoose
 	});
 
 const port = process.env.PORT || 3000;
-app2.listen(port, () => {
+app.listen(port, () => {
 	console.log(`>>> listenning to the port ${port} ...`);
 });
 

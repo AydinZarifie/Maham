@@ -5,7 +5,11 @@ const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require('../../models/country');
 const crypto = require('crypto');
-const refrences = require('./../../utilities/cityCountryRef');
+const { beautify } = require('./adminManagment');
+const {
+	countryCityRef,
+} = require('./../../utilities/refrences/cityCountryRef');
+const { typeRef } = require('./../../utilities/refrences/typeRef.js');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
@@ -13,16 +17,14 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 });
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
-	console.log(1);
 	const countries = await countryDB.find();
-
 	if (!countries) {
 		console.log(2);
 		return next(
 			new AppError('there is no countries , please create country first', 404)
 		);
 	}
-	res.status(200).json({
+	return res.status(200).json({
 		message: ' success',
 		data: countries,
 	});
@@ -49,13 +51,12 @@ exports.getCities = catchAsync(async (req, res, next) => {
 			)
 		);
 	}
-	res.status(200).json({
+	return res.status(200).json({
 		message: 'success',
 		data: country.country_cities,
 	});
 });
 
-//2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res, next) => {
 	// refrencing the estate to its country instance in countryDB
 	const country = await countryDB.findOne({
@@ -68,10 +69,10 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
-		estate_title: req.body.title,
-		city_name: req.body.cityName.toLowerCase(),
-		country_name: req.body.countryName.toLowerCase(),
-		main_street: req.body.streetName,
+		estate_title: beautify(req.body.title),
+		city_name: req.body.cityName,
+		country_name: req.body.countryName,
+		main_street: beautify(req.body.streetName),
 		building_number: req.body.plate,
 		floor_number: req.body.numberOfFloor,
 		location: req.body.location.toLowerCase(),
@@ -232,7 +233,6 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	});
 });
 
-//2023/05/08 added
 exports.updateEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
 
@@ -401,14 +401,13 @@ exports.getEditEstate = async (req, res) => {
 
 function generateUniqueNumber(data1, data2, data3) {
 	let datas = [];
-	const length = 6;
+	const length = 9;
 	// Additional data (e.g., current timestamp)
 	const additionalData = new Date().getTime().toString();
 
 	datas.push(data1, data2, data3, additionalData);
 	const combinedData = datas.join('');
 
-	console.log(combinedData);
 	// Apply SHA-256 hash function
 	const hash = crypto.createHash('sha256').update(combinedData).digest('hex');
 
@@ -417,6 +416,9 @@ function generateUniqueNumber(data1, data2, data3) {
 }
 
 exports.generateMint = catchAsync(async (req, res, next) => {
+	// specify the length of the mint
+	const length = 10;
+
 	const fields = ['cityName', 'countryName', 'title', 'type'];
 
 	const modifiedValues = {};
@@ -426,9 +428,10 @@ exports.generateMint = catchAsync(async (req, res, next) => {
 		value = value.split(' ').join('_');
 		modifiedValues[variable] = value;
 	}
-	const countryCode = refrences.countryRef[modifiedValues.countryName];
-	const cityCode = refrences.cityRef[modifiedValues.cityName];
-	const typeCode = refrences.typeRef[modifiedValues.type];
+	const countryCode = countryCityRef[modifiedValues.countryName].countryRefCode;
+	const cityCode =
+		countryCityRef[modifiedValues.countryName][modifiedValues.cityName];
+	const typeCode = typeRef[modifiedValues.type];
 
 	if (!countryCode || !cityCode || !typeCode) {
 		return next(
@@ -436,13 +439,17 @@ exports.generateMint = catchAsync(async (req, res, next) => {
 		);
 	}
 
-	randomHash = await generateUniqueNumber(
+	const randomHash = await generateUniqueNumber(
 		countryCode,
 		cityCode,
 		modifiedValues.title
 	);
-	const mint = countryCode + cityCode + typeCode + randomHash;
 
+	const mint = (countryCode + cityCode + typeCode + randomHash).slice(
+		0,
+		length - 1
+	);
+	console.log(mint);
 	return res.status(200).json({
 		status: 'seccess',
 		message: 'mint created succesfully ',

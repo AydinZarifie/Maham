@@ -3,50 +3,96 @@ const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
-
+const {
+	countryCityRef,
+} = require('./../../utilities/refrences/cityCountryRef.js');
+const fs = require('fs');
 ///////////////////////////////////////////////////
 
-function assignCountryCode(countryname) {
-	const formattedCountryName = countryname.toLowerCase().replace(/\s/g, '_');
+exports.beautify = (str) => {
+	formattedstr = str.trim().toLowerCase().replace(/\s+/g, '_');
+	return formattedstr;
+};
 
+assignCountryCode = (countryname) => {
+	const formattedCountryName = exports.beautify(countryname);
+	console.log(formattedCountryName);
 	let countryCode;
 
 	// Check if the country already exists
-	if (countryRef[formattedCountryName]) {
+	if (countryCityRef[formattedCountryName]) {
 		return; // Country already exists, do nothing
 	}
 
-	totalCountries++;
+	const countryCount = countryCityRef.totalCountries + 1;
 
-	if (totalCountries % 10 == totalCountries) {
-		countryCode = String(totalCountries).padStart(2, '0');
+	if (countryCount % 10 === countryCount) {
+		countryCode = String(countryCount).padStart(2, '0');
 	} else {
-		countryCode = toString(totalCountries);
+		countryCode = countryCount.toString();
 	}
 
-	countryRef[formattedCountryName] = countryCode;
-}
+	const updatedCountryCityRef = {
+		...countryCityRef,
+		[formattedCountryName]: {
+			countryRefCode: countryCode,
+			totalCities: 0,
+		},
+		totalCountries: countryCount,
+	};
 
-function assignCityCode(countryname, cityname) {
-	const formattedCityName = cityname.toLowerCase().replace(/\s/g, '_');
+	// Update the countryCityRef object in the file
+	fs.writeFileSync(
+		`D:/maham/Maham/backend/utilities/refrences/cityCountryRef.js`,
+		`exports.countryCityRef = ${JSON.stringify(
+			updatedCountryCityRef,
+			null,
+			2
+		)};\n`,
+		{ flag: 'w' },
+		() => {
+			console.log('country refCode added successfully');
+		}
+	);
+};
+
+assignCityCode = (countryName, cityName) => {
+	const formattedCityName = exports.beautify(cityName);
+	const formattedCountryName = exports.beautify(countryName);
 
 	let cityCode;
 
 	// Check if the city already exists
-	if (cityRef[countryname[formattedCityName]]) {
-		return next(); // city already exists, do nothing
+	if (countryCityRef[formattedCountryName][formattedCityName]) {
+		return; // City already exists, do nothing
 	}
 
-	totalCities++;
+	const cityCount = countryCityRef[formattedCountryName].totalCities + 1;
 
-	if (totalCities % 10 == totalCities) {
-		cityCode = String(totalCities).padStart(2, '0');
+	if (cityCount % 10 === cityCount) {
+		cityCode = String(cityCount).padStart(2, '0');
 	} else {
-		cityCode = toString(totalCities);
+		cityCode = cityCount.toString();
 	}
 
-	cityRef[formattedCityName] = cityCode;
-}
+	countryCityRef[formattedCountryName][formattedCityName] = cityCode;
+
+	countryCityRef[formattedCountryName].totalCities = cityCount;
+
+	// Update the countryCityRef object in the file
+	const updatedContent = `exports.countryCityRef = ${JSON.stringify(
+		countryCityRef,
+		null,
+		2
+	)};\n`;
+
+	fs.writeFileSync(
+		`D:/maham/Maham/backend/utilities/refrences/cityCountryRef.js`,
+		updatedContent
+	);
+
+	console.log('Successfully updated countryCityRef');
+};
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	//////////////  execute the query
@@ -57,7 +103,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 		.paging();
 	const countries = await features.query;
 
-	res.status(200).json({
+	return res.status(200).json({
 		data: countries,
 	});
 });
@@ -70,13 +116,13 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	if (!country) {
 		return next(new AppError('country not found', 404));
 	} else {
-		res.status(200).json({
+		return res.status(200).json({
 			status: 'success',
 			data: country.country_cities,
 		});
 	}
 });
-// params
+
 exports.getAllEstates = catchAsync(async (req, res, next) => {
 	// console.log(req.query);
 	const features = new APIFeatures(estateDB.find(), req.query)
@@ -86,7 +132,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 		.paging();
 	const estates = await features.query;
 
-	res.status(200).json({
+	return res.status(200).json({
 		status: 'success',
 		data: estates,
 	});
@@ -94,21 +140,23 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	const inputs = {
-		countryName: req.body.countryName,
-		countryLogo: req.files.images[0].path,
-	};
+	countryName = exports.beautify(req.body.countryName);
+	countryLogo = req.files.images[0].path;
+
 	if (!req.body.countryName) {
 		return next(new AppError('no country name provided', 400));
 	}
 	if (!req.files.images) {
 		return next(new AppError('no country logo provided', 400));
 	}
+
 	const newCountry = new countryDB({
-		country_name: inputs.countryName,
-		country_logo: inputs.countryLogo,
+		country_name: countryName,
+		country_logo: countryLogo,
+		country_cities: [],
 	});
 
+	await assignCountryCode(countryName);
 	await newCountry.save();
 
 	return res.status(201).json({
@@ -133,9 +181,11 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 			// if all is ok , adds the city to cities collection of chosen country
 		} else {
-			await country.country_cities.push(req.body.cityName);
+			country.country_cities.push(exports.beutifyFunc(req.body.cityName));
+			await assignCityCode(req.body.countryName, req.body.cityName);
 			await country.save();
 		}
+
 		// send response
 		return res.status(200).json({
 			status: 'success',
@@ -144,7 +194,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 		// if country was not selected >> return with error
 	} else {
-		return next(new AppError('plesae insert country', 400));
+		return next(new AppError('no country selected', 400));
 	}
 });
 
@@ -170,7 +220,6 @@ exports.getTopGainersEasy = catchAsync(async (req, res, next) => {
 	});
 });
 
-// worked properly
 exports.getHighestVolume = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'volume';
@@ -220,7 +269,7 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 		.sort('createdAt')
 		.limit(10);
 	// console.log(estateDB.query);
-	res.status(200).json({
+	return res.status(200).json({
 		status: 'success',
 		data: data2,
 	});
