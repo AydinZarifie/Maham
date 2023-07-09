@@ -1,34 +1,14 @@
-import styles from "../../styles/AdminPanel.module.css"
+import { useOutletContext } from "react-router-dom";
+import styles from "../../styles/AdminPanel.module.css";
 import AdminItem from "./AdminItem";
 
 const AdminList = () => {
+  const {admins} = useOutletContext();
   return (
     <div className={styles.AdminInformation}>
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      <AdminItem />
-      
+      {admins.length>0 && admins.map((admin) => (
+        <AdminItem {...admin} />
+      ))}
     </div>
   );
 };

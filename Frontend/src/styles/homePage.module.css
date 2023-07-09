@@ -1,4 +1,14 @@
 /*  Site Loading   */
+.modalContentInAdmin {
+  display: flex;
+  justify-content: center;
+  background-color: #fafafa;
+  margin: auto;
+  border: 1px solid rgb(230, 230, 230);
+  min-width: 300px;
+  width: 100%;
+  border-radius: 8px;
+}
 
 .Load {
   position: fixed;
@@ -101,9 +111,8 @@
     color: #5f5f5f;
   }
 
-
-   /*  slogan  */
-   .Sloganh1 {
+  /*  slogan  */
+  .Sloganh1 {
     font-size: 2.3rem;
     font-weight: 400;
   }
@@ -126,9 +135,8 @@
     display: none;
   }
 
-
-   /*  slogan  */
-   .Sloganh1 {
+  /*  slogan  */
+  .Sloganh1 {
     font-size: 1rem;
     font-weight: 400;
   }
@@ -255,9 +263,6 @@
     box-shadow: none;
   }
 
- 
-
-
   /*  tap to bottom btn  */
 
   /****   filter   ***/
@@ -268,11 +273,14 @@
     gap: 5%;
     align-items: center;
     position: sticky;
-    top: 64.4px;
+    top: 65px;
     background-color: #ffffff;
     z-index: 99;
     border-bottom: 1px solid rgb(209, 213, 219);
-    height: 80px;
+    /* height: 80px; */
+    min-height: 80px;
+    max-height: 80px;
+    overflow: hidden;
   }
 
   .Filter {
@@ -533,9 +541,6 @@
     box-shadow: none;
   }
 
- 
- 
-
   /*  tap to bottom btn  */
 
   /*   Filter   */
@@ -742,10 +747,13 @@
     justify-content: start;
     align-items: center;
     position: sticky;
-    top: 64.4px;
+    top: 65px;
     background-color: #ffffff;
     z-index: 99;
     border-bottom: 1px solid rgb(209, 213, 219);
+    min-height: 80px;
+    max-height: 80px;
+    overflow: hidden;
   }
 }
 @media (min-width: 431px) {
@@ -767,6 +775,15 @@
     display: block;
   }
 
+
+
+  .FilterAdmin {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 68%;
+  }
 }
 @media (max-width: 430px) {
   .slideLeft {
@@ -795,85 +812,81 @@
     margin-top: 0%;
     align-items: center;
     position: sticky;
-    top: 64.4px;
+    top: 65px;
     background-color: #ffffff;
     z-index: 99;
     border-bottom: 1px solid rgb(209, 213, 219);
-    height: 82px;
+    /* height: 82px; */
+    min-height: 80px;
+    max-height: 80px;
+    overflow: hidden;
   }
 
-
-}
-
-
-
-
-@media(min-width:1401px){
-  .container2 {
-    display: grid;
+  .FilterAdmin {
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
-    align-content:space-between;
-    grid-template-columns: repeat(auto-fill,19%);
-    margin-top: 10px;
-    column-gap: 10px;
-    row-gap: 10px;
-  } 
+    align-items: center;
+    width: 55%;
   }
-
-@media(max-width:2401px){
-.container2 {
-  display: grid;
-  justify-content: space-around;
-  align-content:space-between;
-  grid-template-columns: repeat(auto-fill,23.5%);
-  margin-top: 10px;
-  column-gap: 10px;
-  row-gap: 10px;
-} 
 }
-@media(max-width:1400px){
-  
+
+@media (min-width: 2401px) {
   .container2 {
     display: grid;
     justify-content: space-around;
-    align-content:space-between;
-    grid-template-columns: repeat(auto-fill,31.5%);
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 19%);
     margin-top: 10px;
     column-gap: 10px;
     row-gap: 10px;
-  } 
-
-
+  }
 }
-@media(max-width:1000px){
-  
+
+@media (max-width: 2401px) {
   .container2 {
     display: grid;
     justify-content: space-around;
-    align-content:space-between;
-    grid-template-columns: repeat(auto-fill,47.5%);
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 23.5%);
     margin-top: 10px;
     column-gap: 10px;
     row-gap: 10px;
-  } 
-
-
+  }
 }
-@media(max-width:700px){
-  
+@media (max-width: 1400px) {
   .container2 {
     display: grid;
     justify-content: space-around;
-    align-content:space-between;
-    grid-template-columns: repeat(auto-fill,96.5%);
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 31.5%);
     margin-top: 10px;
     column-gap: 10px;
     row-gap: 10px;
-  } 
-
-
+  }
 }
-
+@media (max-width: 1000px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 47.5%);
+    margin-top: 10px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+@media (max-width: 700px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 96.5%);
+    margin-top: 10px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
 
 .sliderContainer {
   width: 100%;
@@ -898,14 +911,14 @@
 }
 
 .buttons {
-       display: flex;
-       justify-content:space-between;
-       position: absolute;
-       z-index: 999;
-       z-index: 10;
-       padding: 0 2px;
-       width: 100%;
-     } 
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 999;
+  z-index: 10;
+  padding: 0 2px;
+  width: 100%;
+}
 /*  name and logo div  */
 .LogoAndTitle {
   display: flex;
@@ -1015,7 +1028,7 @@ nav a {
   font-weight: 300;
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   font-size: 1em;
-  transition: .2s;
+  transition: 0.2s;
 }
 nav a:hover,
 nav a:focus {
@@ -1064,6 +1077,7 @@ nav a:focus {
 .ImgDiv {
   width: 100%;
   overflow: hidden;
+  margin-top: 10px;
 }
 .Image {
   background-repeat: no-repeat;
@@ -1122,14 +1136,6 @@ nav a:focus {
   scrollbar-width: none; /* Firefox */
 }
 
-.FilterAdmin {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 75%;
-  padding: 0 12px;
-}
 .navSpan2 {
   display: flex;
   flex-direction: row;
@@ -1147,7 +1153,7 @@ nav a:focus {
 }
 .nav2 a::after {
   position: absolute;
-  top:100%;
+  top: 100%;
   left: 0;
   width: 100%;
   height: 1px;
@@ -1270,7 +1276,7 @@ nav a:focus {
   cursor: pointer;
   order: 1;
   width: 12%;
-  transition: .2s;
+  transition: 0.2s;
   height: 10%;
   margin-top: 10px;
 }
@@ -1315,7 +1321,7 @@ nav a:focus {
   cursor: pointer;
   padding: 12px;
   order: 1;
-  transition: .2s;
+  transition: 0.2s;
   height: 2%;
 }
 .close2:hover,
@@ -1418,7 +1424,7 @@ nav a:focus {
 .slide {
   flex-shrink: 0;
   width: 100%;
-  height:100%;
+  height: 100%;
   scroll-snap-align: center;
   z-index: 10;
 }
@@ -1446,13 +1452,13 @@ nav a:focus {
   transform: scale(1.01);
 }
 
-.Info{
+.Info {
   display: flex;
   flex-direction: column;
   margin-bottom: 35px;
   margin-top: 10px;
   gap: 10px;
-  padding:5px 10px;
+  padding: 5px 10px;
 }
 
 .InfoDiv {
@@ -1462,7 +1468,7 @@ nav a:focus {
   justify-content: start;
   gap: 10px;
 }
-.InfoDiv2{
+.InfoDiv2 {
   display: flex;
   flex-direction: row;
   align-items: center;

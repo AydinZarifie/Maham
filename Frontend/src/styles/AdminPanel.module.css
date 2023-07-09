@@ -10,6 +10,82 @@
   background-color: rgba(187, 47, 50, 0.377);
 }
 
+.estateDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 35px;
+}
+.editButton{
+
+  width: 30%;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #b4b4b4;
+  background-color: #fefefe;
+  transition: .3s;
+  cursor: pointer;
+  box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+      color: #444444;
+
+}
+.editButton:hover{
+  background-color: #f4f4f4;
+  transform: translateY(1px);
+  box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
+  rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
+}
+
+@media (min-width: 2401px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 19%);
+    margin-top: 35px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 2401px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill,31.5%);
+    margin-top: 40px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+@media (max-width: 1460px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 47.5%);
+    margin-top: 40px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+@media (max-width: 1100px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 96.5%);
+    margin-top: 40px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+
+
+
+
 .Main {
   display: flex;
   flex-direction: row;
@@ -48,6 +124,18 @@
     z-index: 99;
     position: sticky;
     top: 30px;
+  }
+  .filterEstate {
+    min-width: 300px;
+    width: 100%;
+    display: flex;
+    /* margin: 20px; */
+    box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border-radius: 10px;
+    position: sticky;
+    top: 10px;
+    z-index: 99;
   }
   .FilterDiv {
     display: flex;
@@ -91,7 +179,7 @@
   }
   .FilterBtn2 {
     position: sticky;
-    top: 80px;
+    top: 30px;
     margin-top: -560px;
     -webkit-appearance: none;
     width: 80%;
@@ -183,6 +271,7 @@
     backdrop-filter: blur(3px);
     display: none;
     visibility: hidden;
+    z-index: 90;
   }
   .InfoBtn {
     width: 110px;
@@ -238,6 +327,7 @@
     background-color: #fafafa;
     padding: 10px;
     overflow-x: scroll;
+    margin: 20px;
   }
   .AdminInfo::-webkit-scrollbar {
     display: none;
@@ -262,6 +352,22 @@
     background-color: #fafafa;
     z-index: 999;
     z-index: 2;
+  }
+  .filterEstate {
+    width: 90%;
+    /* padding-bottom: 20px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border-radius: 10px;
+    margin: 0 4%;
+    visibility: hidden;
+    position: fixed;
+    background-color: #fafafa;
+    z-index: 999;
   }
   .searchContainer {
     width: 90%;
@@ -387,6 +493,7 @@
     backdrop-filter: blur(3px);
     display: block;
     visibility: hidden;
+    z-index: 90;
   }
   .InfoBtn {
     width: 80px;
@@ -641,15 +748,15 @@
 .floatingLabel2 input:valid:not(:placeholder-shown) + label + .icon svg path {
   fill: #4097ef;
 }
-.floatingLabel input:not(:valid):not(:focus) + label + .icon,
+/* .floatingLabel input:not(:valid):not(:focus) + label + .icon,
 .floatingLabel2 input:not(:valid):not(:focus) + label + .icon {
   -webkit-animation-name: shake-shake;
   animation-name: shake-shake;
   -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
-}
+} */
 
-@-webkit-keyframes shake-shake {
+/* @-webkit-keyframes shake-shake {
   0% {
     transform: translateX(-3px);
   }
@@ -668,9 +775,9 @@
   100% {
     transform: translateX(0px);
   }
-}
+} */
 
-@keyframes shake-shake {
+/* @keyframes shake-shake {
   0% {
     transform: translateX(-3px);
   }
@@ -689,7 +796,7 @@
   100% {
     transform: translateX(0px);
   }
-}
+} */
 
 .FilterBtn2:hover {
   transform: translateY(-1px);

@@ -9,36 +9,30 @@ import emailLogo from "../../images/email-8-svgrepo-com.svg";
 import cityLogo from "../../images/city-transit-svgrepo-com.svg";
 import countryLogo from "../../images/earth-svgrepo-com.svg";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
 import AdminFilter from "../../components/adminPanel/AdminFilter";
-import AddAdmin from "../../components/adminPanel/AddAdmin";
-import AdminItem from "../../components/adminPanel/AdminItem";
-import AdminList from "../../components/adminPanel/AdminList";
 
 const AdminPanel = () => {
+  const [admins, setAdmins] = useState([]);
   const filter = useRef();
   const overlay = useRef();
 
   const closeFilter = () => {
-    console.log("close");
-    console.log(filter);
     filter.current.style.visibility = "hidden";
     overlay.current.style.visibility = "hidden";
   };
 
   const openFilter = () => {
-    console.log("open");
-    console.log(filter);
     filter.current.style.visibility = "visible";
     overlay.current.style.visibility = "visible";
   };
 
   const submitFilterHandler = (name, type, country, city) => {};
 
-  const submitAddAdminHandler = (
+  const submitAddAdminHandler = async (
     type,
     firstName,
     lastName,
@@ -46,11 +40,32 @@ const AdminPanel = () => {
     phoneNumber,
     country,
     city,
-    password,
-    confirmPassword
+    password
   ) => {
-    // const response=await fetch ("url")
+    const formData = new FormData();
+    formData.append("type", type);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("email", email);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("country", country);
+    formData.append("city", city);
+    formData.append("password", password);
+
+    const response = await fetch("url", {
+      method: "POST",
+      body: formData,
+    });
   };
+
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      const data = await fetch("url");
+      const json = await data.json();
+      setAdmins(json.data);
+    };
+    fetchAdmins();
+  }, []);
 
   return (
     <div className={styles.Main}>
@@ -75,9 +90,7 @@ const AdminPanel = () => {
             to=""
             end
           >
-            <button  className={styles.InfoBtn}>
-              Admin
-            </button>
+            <button className={styles.InfoBtn}>Admin</button>
           </NavLink>
           <NavLink
             className={({ isActive }) => (isActive ? styles.active : undefined)}
@@ -91,7 +104,7 @@ const AdminPanel = () => {
           </a>
         </div>
 
-        <Outlet context={submitAddAdminHandler} />
+        <Outlet context={{submitAddAdminHandler,admins}} />
       </div>
 
       <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div>

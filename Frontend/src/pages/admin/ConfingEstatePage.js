@@ -638,6 +638,13 @@ const ConfingEstate = ({ method, estate }) => {
     }
   };
 
+  const idManipulataionHandler=async()=>{
+    const response = await fetch("url", {
+      method: "get",
+      // body: formData,
+    });
+  }
+
   return (
     <form method={method} encType="multipart/form-data">
       <div className={styles.EstateInfo}>
@@ -805,7 +812,7 @@ const ConfingEstate = ({ method, estate }) => {
                 {/* <label className={styles.label}>Id</label> */}
               </div>
             </div>
-            <button className={styles.MintBtn}>
+            <button onClick={idManipulataionHandler} className={styles.MintBtn}>
               {estate ? "Burn" : "Mint"}
             </button>
           </div>
