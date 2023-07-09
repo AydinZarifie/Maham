@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const AddAdmin = () => {
-  const submitHandler = useOutletContext();
+  const {submitAddAdminHandler} = useOutletContext();
   const [data, setData] = useState({
     type: "",
     firstName: "",
@@ -104,7 +104,7 @@ const AddAdmin = () => {
     if (data.password !== data.confirmPassword) {
       return;
     }
-    submitHandler(
+    submitAddAdminHandler(
       data.type,
       data.firstName,
       data.lastName,
@@ -112,14 +112,13 @@ const AddAdmin = () => {
       data.phoneNumber,
       data.country,
       data.city,
-      data.password,
-      data.confirmPassword
+      data.password
     );
   };
 
   const typeClass = typeIsInvalid
-  ? `${styles.invalid} ${styles.SelectType} `
-  : `${styles.SelectType} `;
+    ? `${styles.invalid} ${styles.SelectType} `
+    : `${styles.SelectType} `;
   const firstNameClass = firstNameIsInvalid
     ? `${styles.invalid} ${styles.InputAdmin} `
     : `${styles.InputAdmin} `;

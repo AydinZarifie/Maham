@@ -11,7 +11,7 @@ import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
 import ManagementPage from "./pages/admin/ManagementPage";
 import HomePage from "./pages/HomePage";
-import Signin from "./components/adminPage/authentication/Signin";
+import SigninPage from "./pages/admin/SigninPage";
 import AdminPanel from "./pages/admin/AdminPanel";
 import AdminList from "./components/adminPanel/AdminList";
 import AddAdmin from "./components/adminPanel/AddAdmin";
@@ -73,13 +73,15 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "loginAdmin",
+    element: <SigninPage />
+  }
 ]);
 
 function App() {
   return (
     <RouterProvider router={router} />
-
-    // <Signin />
   );
 }
 

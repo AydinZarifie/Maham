@@ -1,6 +1,6 @@
-import styles from "../../../styles/signin.module.css";
+import styles from "../../styles/signin.module.css";
 
-import image from "../../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
+import image from "../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
 import { useRef, useState } from "react";
 
 const Signin = () => {
@@ -128,6 +128,8 @@ const Signin = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Signup successful!", data);
+        const token=data.token;
+        localStorage.setItem('token',token)
       } else {
         const errorData = await response.json();
         console.error("Signup failed!", errorData);
