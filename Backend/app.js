@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
+const session = require("express-session");
 //////////////////////////////////////////////
 const adminPage_Router = require("./routes/admin/adminPage");
 const managmentPage_Router = require("./routes/admin/adminManagment");
@@ -104,9 +105,14 @@ app.use(globalErrorHandler);
 
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(express.json());
-
+app.use(session({
+  secret : "Maham",
+  resave : false,
+  saveUninitialized : false
+}))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
+app.use(express.static('public')) 
 app.use(
   "uploads/static/",
   express.static(path.join(__dirname, "/uploads/static"))

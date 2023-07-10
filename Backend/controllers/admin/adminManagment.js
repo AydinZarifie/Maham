@@ -3,15 +3,10 @@ const catchAsync = require('./../../utilities/catchAsync');
 const estateDB = require("../../models/estate");
 
 
-// exports.postAddCountry = (req, res) => {
-//     const country_name = req.body.countryName;
-//     console.log(country_name);
-//     return res.json({ message: 'Success' });
-// };
-
-//////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
+
+	console.log("req.session.verificationCode");
     const countries = await countryDB.find()
 	console.log(countries);		
     res.status(200).json({
@@ -23,20 +18,26 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-    const inputs = {
+	const inputs = {
 		countryName: req.body.countryName,
-        countryLogo: req.files.images[0].path,
-    };
-    const newCountry = new countryDB({
-        country_name: inputs.countryName,
-        country_cities: inputs.countryCities,
-        country_logo: inputs.countryLogo,
-    });
-    await newCountry.save();
+		countryLogo: req.files.images[0].path,
+	};
+	if (!req.body.countryName) {
+		return next(new AppError('no country name provided', 400));
+	}
+	if (!req.files.images) {
+		return next(new AppError('no country logo provided', 400));
+	}
+	const newCountry = new countryDB({
+		country_name: inputs.countryName,
+		country_logo: inputs.countryLogo,
+	});
 
-    return res.status(201).json({
-        status: 'success',
-    });
+	await newCountry.save();
+
+	return res.status(201).json({
+		status: 'success',
+	});
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
@@ -81,13 +82,14 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 });
 
 exports.getEstates = async(req,res) => {
+	
 	const countryName = req.params.countryName;
 	const cityName = req.params.cityName;
 
-	console.log(countryName);
-	console.log(cityName);
 	
-	const estates = await estateDB.find({country_name : countryName , city_name : cityName});
+	const estates = await estateDB.find({country_name : countryName , city_name : cityName}).select({
+		
+	});
 	
 	return res.status(202).json({
 		data : estates,
