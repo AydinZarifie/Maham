@@ -51,15 +51,17 @@ const Filters = (props) => {
         ref={filter}
         className={styles.FilterMenu}
       >
-        <section className={styles.navSection2}>
-          <nav className={styles.nav2}>
-            <span className={styles.navSpan2}>
+        {/* <section className={styles.navSection2}> */}
+          {/* <nav className={styles.nav2}> */}
+            {/* <span className={styles.navSpan2}> */}
+            <div className={styles.menuBig}>
               {data.map((item) => {
                 return <FilterItem name={item.name} img={item.img} />;
               })}
-            </span>
-          </nav>
-        </section>
+              </div>
+            {/* </span> */}
+          {/* </nav> */}
+        {/* </section> */}
       </div>
 
       <div>
