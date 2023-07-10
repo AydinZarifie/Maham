@@ -123,7 +123,11 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
-    price: estate ? estate.price : "",
+
+    filter: estate ? estate.filter : "",
+
+    mahamPrice: estate ? estate.mahamPrice : "",
+    customerPrice: estate ? estate.customerPrice : "",
 
     //  plate: estate ? estate.plate : "",
     //  id:estate ? estate.id :"",
@@ -300,6 +304,7 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewUrl(previewURLs);
   };
 
+  const enteredFilterIsValid = information.filter.trim() !== "";
   const enteredTitleIsValid = information.title.trim() !== "";
   const enteredCountryNameIsValid = information.countryName.trim() !== "";
   const enteredCityNameIsValid = information.cityName.trim() !== "";
@@ -310,7 +315,8 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredLocationIsValid = information.location.trim() !== "";
   const enteredTypeIsValid = information.type.trim() !== "";
   const enteredDescriptionIsValid = information.description.trim() !== "";
-  const enteredPriceIsValid = information.price.trim() !== "";
+  const enteredMahamPriceIsValid = information.mahamPrice.trim() !== "";
+  const enteredCustomemPriceIsValid = information.customerPrice.trim() !== "";
 
   // const enteredImageIsValid = selectedImages.length > 0;
   // const enteredVideoIsValid = selectedVideo.length > 0;
@@ -329,7 +335,9 @@ const ConfingEstate = ({ method, estate }) => {
     location: false,
     type: false,
     description: false,
-    price: false,
+    mahamPrice: false,
+    customerPrice: false,
+    filter: false,
 
     // image: false,
     // video: false,
@@ -353,7 +361,10 @@ const ConfingEstate = ({ method, estate }) => {
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const descriptionIsInvalid =
     !enteredDescriptionIsValid && touched.description;
-  const priceIsInvalid = !enteredPriceIsValid && touched.price;
+  const priceMahamIsInvalid = !enteredMahamPriceIsValid && touched.mahamPrice;
+  const priceCustomerIsInvalid =
+    !enteredCustomemPriceIsValid && touched.customerPrice;
+  const filterIsInvalid = !enteredFilterIsValid && touched.filter;
 
   // const imageIsInvalid = !enteredImageIsValid && touched.image;
   // const videoIsInvalid = !enteredVideoIsValid && touched.video;
@@ -365,6 +376,7 @@ const ConfingEstate = ({ method, estate }) => {
   let formIsValid = false;
 
   if (
+    enteredFilterIsValid &&
     enteredTitleIsValid &&
     enteredCountryNameIsValid &&
     enteredCityNameIsValid &&
@@ -375,7 +387,8 @@ const ConfingEstate = ({ method, estate }) => {
     enteredLocationIsValid &&
     enteredTypeIsValid &&
     enteredDescriptionIsValid &&
-    enteredPriceIsValid
+    enteredMahamPriceIsValid &&
+    enteredCustomemPriceIsValid
 
     // enteredImageIsValid &&
     // enteredVideoIsValid &&
@@ -391,6 +404,9 @@ const ConfingEstate = ({ method, estate }) => {
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
+  const filterClass = filterIsInvalid
+    ? `${styles.invalid} ${styles.select} `
+    : `${styles.select} `;
   const titleClass = titleIsInvalid
     ? `${styles.invalid} ${styles.textinput} `
     : `${styles.textinput} `;
@@ -421,7 +437,10 @@ const ConfingEstate = ({ method, estate }) => {
   const descriptionClass = descriptionIsInvalid
     ? `${styles.invalid} ${styles.DescriptionTextArea} `
     : `${styles.DescriptionTextArea} `;
-  const priceClass = priceIsInvalid
+  const mahamPriceClass = priceMahamIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+  const customerPriceClass = priceCustomerIsInvalid
     ? `${styles.invalid} ${styles.textinput} `
     : `${styles.textinput} `;
 
@@ -459,7 +478,9 @@ const ConfingEstate = ({ method, estate }) => {
       type: true,
       description: true,
       image: true,
-      price: true,
+      mahamPrice: true,
+      customerPrice: true,
+      filter: true,
 
       // image: true,
       // video: true,
@@ -476,6 +497,7 @@ const ConfingEstate = ({ method, estate }) => {
 
     const formData = new FormData();
 
+    formData.append('filter',information.filter)
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
@@ -485,7 +507,9 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("numberOfPlate", information.numberOfPlate);
     formData.append("numberOfFloor", information.numberOfFloor);
     formData.append("location", information.location);
-    formData.append("price", information.price);
+
+    formData.append("mahamPrice", information.mahamPrice);
+    formData.append("customerPrice", information.customerPrice);
 
     formData.append("type", information.type);
 
@@ -638,16 +662,33 @@ const ConfingEstate = ({ method, estate }) => {
     }
   };
 
-  const idManipulataionHandler=async()=>{
+  const idManipulataionHandler = async () => {
     const response = await fetch("url", {
       method: "get",
       // body: formData,
     });
-  }
+  };
 
   return (
     <form method={method} encType="multipart/form-data">
       <div className={styles.EstateInfo}>
+        {/*  */}
+        <div
+          className={styles.select2}
+          style={{ margin: "45px auto 20px auto" }}
+        >
+          <select
+            value={information.filter}
+            onChange={basicEventHandler}
+            name="filter"
+            className={filterClass}
+            onBlur={blurHandler}
+          >
+            <option value="">Choose an option</option>
+            <option value="pool">pool</option>
+          </select>
+        </div>
+        {/*  */}
         <div className={styles.wrapper}>
           <div className={styles.inputData}>
             <input
@@ -839,34 +880,54 @@ const ConfingEstate = ({ method, estate }) => {
         </div>
 
         <div className={styles.row}>
-          <div className={styles.wrapper}>
-            <div className={styles.inputData}>
-              <input
-                required
-                type="text"
-                className={locationClass}
-                value={information.location}
-                onChange={basicEventHandler}
-                name="location"
-                onBlur={blurHandler}
-              />
-              <div className={styles.underline}></div>
-              <label className={styles.label}>Location Of State</label>
+          <div className={styles.column}>
+            <div className={styles.wrapper2}>
+              <div className={styles.inputData}>
+                <input
+                  required
+                  type="text"
+                  className={locationClass}
+                  value={information.location}
+                  onChange={basicEventHandler}
+                  name="location"
+                  onBlur={blurHandler}
+                />
+                <div className={styles.underline}></div>
+                <label className={styles.label}>Location Of State</label>
+              </div>
             </div>
           </div>
-          <div className={styles.wrapper3}>
-            <div className={styles.inputData}>
-              <input
-                required
-                type="number"
-                className={priceClass}
-                value={information.price}
-                onChange={basicEventHandler}
-                name="price"
-                onBlur={blurHandler}
-              />
-              <div className={styles.underline}></div>
-              <label className={styles.label}>price</label>
+
+          <div className={styles.column}>
+            <div className={styles.wrapper2}>
+              <div className={styles.inputData}>
+                <input
+                  required
+                  type="number"
+                  className={mahamPriceClass}
+                  value={information.mahamPrice}
+                  onChange={basicEventHandler}
+                  name="mahamPrice"
+                  onBlur={blurHandler}
+                />
+                <div className={styles.underline}></div>
+                <label className={styles.label}>Maham price</label>
+              </div>
+            </div>
+            <div className={styles.wrapper2}>
+              <div className={styles.inputData}>
+                <input
+                  required
+                  type="number"
+                  className={customerPriceClass}
+                  value={information.customerPrice}
+                  onChange={basicEventHandler}
+                  name="customerPrice"
+                  onBlur={blurHandler}
+                />
+                <div className={styles.underline}></div>
+                <label className={styles.label}>Customer Price</label>
+              </div>
             </div>
           </div>
         </div>

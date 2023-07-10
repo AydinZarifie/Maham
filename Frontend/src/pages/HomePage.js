@@ -36,16 +36,6 @@ const HomePage = () => {
       />
       <div id="container2" className={styles.container2}>
         <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
-        <EstateItem />
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
 import ItemsInAdmin from "../../components/adminPage/ItemsInAdmin";
 import FilterModal from "../../components/general/FilterModal";
@@ -149,11 +149,11 @@ export default function Estates() {
               </button>
             </a>
             <NavLink
-            className={({ isActive }) =>
-              isActive ? styles.active : undefined
-            }
-            to=""
-            end
+              className={({ isActive }) =>
+                isActive ? styles.active : undefined
+              }
+              to=""
+              end
             >
               <button className={styles.InfoBtn}>Estates</button>
             </NavLink>
@@ -176,38 +176,15 @@ export default function Estates() {
 
           {/* <Outlet context={submitAddAdminHandler} /> */}
           <div className={styles.container2}>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
-            <div className={styles.estateDiv}>
-              <EstateItem />
-              <button className={styles.editButton}>Edit</button>
-            </div>
+            {data.length > 0 &&
+              data.map((estate) => (
+                <div className={styles.estateDiv}>
+                  <EstateItem props={estate} />
+                  <Link to={`${estate._id}`}>
+                    <button className={styles.editButton}>Edit</button>
+                  </Link>
+                </div>
+              ))}
           </div>
         </div>
       </div>

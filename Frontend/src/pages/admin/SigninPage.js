@@ -10,6 +10,8 @@ const Signin = () => {
     code: false,
   });
 
+  const [error, setError] = useState(null);
+
   const [input, setInput] = useState({
     username: "",
     password: "",
@@ -21,7 +23,7 @@ const Signin = () => {
 
   const enteredUsernameIsValid = input.username.trim() !== "";
   const enteredPasswordIsValid = input.password.trim() !== "";
-  const enteredCodeIsValid = input.code.trim().length == 4;
+  const enteredCodeIsValid = input.code.trim().length == 6;
 
   const usernameIsInvalid = !enteredUsernameIsValid && touched.username;
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
@@ -36,8 +38,8 @@ const Signin = () => {
     const { name, value } = event.target;
 
     if (name == "code") {
-      if (value.length >= 4) {
-        const newValue = value.slice(0, 4);
+      if (value.length >= 6) {
+        const newValue = value.slice(0, 6);
         setInput((prev) => ({ ...prev, [name]: newValue }));
         // submitButton.current.style.background =
         //   "linear-gradient(0.25turn, #00B4DB, #0083B0)";
@@ -66,7 +68,7 @@ const Signin = () => {
     }
 
     try {
-      await fetch("url", {
+      const response=await fetch("sdjfjas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,8 +90,13 @@ const Signin = () => {
         clearInterval(countdownInterval);
         setIsSendingSms(false);
       }, 60000);
+      
+      if(!response.ok){
+        setError(true)
+      }
     } catch (error) {
       console.error("Failed to send SMS!", error);
+      setError(error.message)
     }
   };
 
@@ -128,14 +135,16 @@ const Signin = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Signup successful!", data);
-        const token=data.token;
-        localStorage.setItem('token',token)
+        const token = data.token;
+        localStorage.setItem("token", token);
       } else {
+        setError(true)
         const errorData = await response.json();
         console.error("Signup failed!", errorData);
       }
     } catch (error) {
       console.error("Signup failed!", error);
+      setError(error.message)
     }
   };
 
@@ -162,8 +171,15 @@ const Signin = () => {
           <h4 className={styles.AdminH4}>
             Admin <span>Panel</span>
           </h4>
-          <p>Welcome back! Sign in to your account to complete your tasks:</p>
+          <p className={styles.WelcomeP}>
+            Welcome back! Sign in to your account to complete your tasks:
+          </p>
+
           <div className={styles.floatingLabel}>
+            {error && (
+              <p className={styles.PWrong}>Email or password is not correct</p>
+            )}
+
             <input
               className={usernameClass}
               placeholder="Email"
@@ -171,7 +187,7 @@ const Signin = () => {
               name="username"
               value={input.username}
               onChange={eventHandler}
-              onBlur={blurHandler}
+              //onBlur={blurHandler}
               id="UserName"
               required
             />
@@ -194,7 +210,7 @@ const Signin = () => {
               name="password"
               value={input.password}
               onChange={eventHandler}
-              onBlur={blurHandler}
+              //onBlur={blurHandler}
               id="password"
               required
             />
@@ -223,11 +239,11 @@ const Signin = () => {
               className={codeClass}
               type="number"
               min="0"
-              max="9999"
+              max="999999"
               name="code"
               value={input.code}
               onChange={eventHandler}
-              onBlur={blurHandler}
+              //onBlur={blurHandler}
             />
             <button
               className={styles.VCodeBtn}
@@ -242,12 +258,15 @@ const Signin = () => {
             <span className={styles.timer}>{smsCountdown}</span>
             <h3 className={styles.SH3}>s</h3>
           </div>
-          <button className={buttonClass} type="submit" onClick={handleSignup}
-           disabled={!formIsValid}
-           >
+          <button
+            className={buttonClass}
+            type="submit"
+            onClick={handleSignup}
+            disabled={!formIsValid}
+          >
             Sign In
           </button>
-          <a href="#" className={styles.discrete} target="_blank">
+          <a href="#" className={styles.discrete}>
             Forget password
           </a>
         </form>

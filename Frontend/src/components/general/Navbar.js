@@ -47,7 +47,7 @@ const Navbar = (props) => {
 
       {/* <!--litle menu--> */}
       <div className={styles.Lmenu}>
-        <div className={styles.container}>
+        {/* <div className={styles.container}>
           <section className={styles.navSection}>
             <nav className={styles.nav}>
               <span className={styles.navSpan}>
@@ -57,6 +57,17 @@ const Navbar = (props) => {
               </span>
             </nav>
           </section>
+        </div> */}
+        <div className={styles.menuLittle}>
+          <div className={styles.underline}>
+            <a>Home</a>
+          </div>
+          <div className={styles.underline}>
+            <a>Bank</a>
+          </div>
+          <div className={styles.underline}>
+            <a>About us</a>
+          </div>
         </div>
       </div>
       {/* <!--connect wallet btn and eth price and side menu div--> */}
