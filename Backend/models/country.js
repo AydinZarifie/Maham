@@ -7,6 +7,7 @@ const country = new mongoose.Schema({
 	},
 	country_cities: {
 		type: Array,
+		default: [],
 	},
 	country_logo: {
 		type: String,

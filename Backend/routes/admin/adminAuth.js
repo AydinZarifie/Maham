@@ -11,5 +11,6 @@ router.post(
 );
 
 router.post('/auth/login', adminAuthController.logIn);
+router.post('/auth/verification', adminAuthController.verificationCode);
 
 module.exports = router;

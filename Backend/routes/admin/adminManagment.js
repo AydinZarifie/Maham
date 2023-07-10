@@ -5,9 +5,7 @@ const managementController = require('../../controllers/admin/adminManagment');
 const adminAuthController = require('../../controllers/admin/adminAuth');
 // const adminVerifyToken = require('../../middleware/verify-token');
 
-router
-	.route('/managment')
-	.get(adminAuthController.protect, managementController.getAllCountries);
+router.route('/managment').get(managementController.getAllCountries);
 
 router.route('/managment/addCountry').post(managementController.postAddCountry);
 
