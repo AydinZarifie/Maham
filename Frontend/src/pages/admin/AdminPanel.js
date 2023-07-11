@@ -1,19 +1,9 @@
 import styles from "../../styles/AdminPanel.module.css";
 
-import lockLogo from "../../images/password-svgrepo-com.svg";
-import editLogo from "../../images/edit-pencil-line-01-svgrepo-com.svg";
-import deleteLogo from "../../images/delete-1-svgrepo-com.svg";
-import profileLogo from "../../images/profile-circle-svgrepo-com.svg";
-import phoneLogo from "../../images/phone-svgrepo-com.svg";
-import emailLogo from "../../images/email-8-svgrepo-com.svg";
-import cityLogo from "../../images/city-transit-svgrepo-com.svg";
-import countryLogo from "../../images/earth-svgrepo-com.svg";
-
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
-import AdminFilter from "../../components/adminPanel/AdminFilter";
+import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
 
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
@@ -104,7 +94,7 @@ const AdminPanel = () => {
           </a>
         </div>
 
-        <Outlet context={{submitAddAdminHandler,admins}} />
+        <Outlet context={{ submitAddAdminHandler, admins }} />
       </div>
 
       <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div>

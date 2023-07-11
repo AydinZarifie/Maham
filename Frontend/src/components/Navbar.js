@@ -1,5 +1,7 @@
-import icon from "../images/Maham.png";
+//old
 import styles from "../styles/Maham.module.css";
+
+import icon from "../images/Maham.png";
 
 export default function Navbar() {
   return (

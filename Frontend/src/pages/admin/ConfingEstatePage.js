@@ -1,5 +1,8 @@
 import styles from "../../styles/Add_Estate.module.css";
 
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import balconyIcon from "../../images/balcony-svgrepo-com.svg";
 import bathroomIcon from "../../images/bathroom-svgrepo-com.svg";
 import bbqIcon from "../../images/bbq-svgrepo-com.svg";
@@ -19,8 +22,6 @@ import poolIcon from "../../images/pool-svgrepo-com.svg";
 import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
 import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
 import deleteIcon from "../../images/delete-svgrepo-com.svg";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
@@ -497,7 +498,7 @@ const ConfingEstate = ({ method, estate }) => {
 
     const formData = new FormData();
 
-    formData.append('filter',information.filter)
+    formData.append("filter", information.filter);
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);

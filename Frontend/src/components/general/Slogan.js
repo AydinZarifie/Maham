@@ -1,7 +1,8 @@
 import styles from "../../styles/homePage.module.css";
 
-import sloganPicture from "../../images/IMG_6584.JPG";
 import { useEffect, useRef, useState } from "react";
+
+import sloganPicture from "../../images/IMG_6584.JPG";
 
 const Slogan = () => {
   const [scrolledDown, setScrolledDown] = useState(false);
@@ -27,7 +28,7 @@ const Slogan = () => {
   return (
     <>
       {scrolledDown ? null : (
-        <div on id="ForHidden" className={styles.ForHidden}>
+        <div id="ForHidden" className={styles.ForHidden}>
           <div className={styles.ImgDiv} id="ImgDiv">
             <img src={sloganPicture} className={styles.Image} />
             <div

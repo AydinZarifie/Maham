@@ -1,12 +1,11 @@
+import styles from "../styles/Details.module.css";
+
 import Accessibility from "../components/detailPage/Accessibility";
 import Facilities from "../components/detailPage/Facilities";
 import Gallery from "../components/detailPage/Gallery";
 import Headline from "../components/detailPage/Headline";
 import Metrage from "../components/detailPage/Metrage";
 import Navbar from "../components/Navbar";
-
-import styles from "../styles/Details.module.css";
-import { json } from "react-router-dom";
 
 const DetailPage = () => {
   return (

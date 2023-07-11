@@ -1,6 +1,8 @@
-import { useState } from "react";
 import styles from "../../styles/homePage.module.css";
-import overlayStyle from "../../styles/overlay.module.css"
+
+import { useState } from "react";
+
+import overlayStyle from "../../styles/overlay.module.css";
 import MultiRangeSlider from "../multiRangeSlider/MultiRangeSlider";
 
 const FilterModal = (props) => {
@@ -12,9 +14,6 @@ const FilterModal = (props) => {
   });
   const eventHandler = (event) => {
     const { name, value } = event.target;
-    //
-    console.log(value);
-    //
     setData((prev) => ({
       ...prev,
       [name]: value,
@@ -69,7 +68,6 @@ const FilterModal = (props) => {
                 firstValue: min,
                 secondValue: max,
               }))
-              
             }
           />
 

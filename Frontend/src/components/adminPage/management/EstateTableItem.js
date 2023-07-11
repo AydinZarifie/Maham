@@ -1,8 +1,4 @@
-import trueIcon from "../../../images/Tik.svg";
-import falseIcon from "../../../images/Zarb.svg";
 import lockIcon from "../../../images/SVGRepo_iconCarrier (3).svg";
-
-import styles from "../../../styles/Management.module.css";
 
 const EstateTableItem = (props) => {
   const redStyle = {
@@ -37,12 +33,8 @@ const EstateTableItem = (props) => {
         <td>{props.volume}</td>
         <td>{props.contractAddress}</td>
         <td>{props.landlordAddress}</td>
-        <td>
-          {props.sell_position.toString()}
-        </td>
-        <td>
-          {props.lock_position.toString()}
-        </td>
+        <td>{props.sell_position.toString()}</td>
+        <td>{props.lock_position.toString()}</td>
         <td>
           <button>
             <img src={lockIcon} />

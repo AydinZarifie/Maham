@@ -1,8 +1,8 @@
 import styles from "../../styles/homePage.module.css";
 
-import ethLogo from "../../images/ethereum-svgrepo-com.svg";
 import { useRef } from "react";
 
+import ethLogo from "../../images/ethereum-svgrepo-com.svg";
 import image1 from "../../images/2841.jpg";
 import image2 from "../../images/4918.jpg";
 import image3 from "../../images/5904.jpg";
@@ -33,7 +33,7 @@ const EstateItem = (props) => {
     } else {
       leftButton.current.style.opacity = ".2";
     }
-    if (scrollx + scrollx2 >= scrollx3-1) {
+    if (scrollx + scrollx2 >= scrollx3 - 1) {
       rightButton.current.style.opacity = ".2";
     } else {
       rightButton.current.style.opacity = "1";
@@ -43,6 +43,16 @@ const EstateItem = (props) => {
   return (
     <div className={styles.sliderContainer}>
       <div onScroll={scrollHandler} ref={slider} className={styles.slider}>
+        {/* {props.imageUrl.map((img) => (
+          <img
+            src={`http://localhost:5000/${img.replace(
+              /\\/g,
+              "/"
+            )}`}
+            alt=""
+            className={styles.slide}
+          />
+        ))} */}
         <img src={image1} alt="" className={styles.slide} />
         <img src={image2} alt="" className={styles.slide} />
         <img src={image3} alt="" className={styles.slide} />
@@ -81,7 +91,9 @@ const EstateItem = (props) => {
         </span>
         <div className={styles.InfoDiv2}>
           <span>
-            <h4 className={styles.InfoH4}>Built {props.monthOfBuild} {props.yearOfBuild}</h4>
+            <h4 className={styles.InfoH4}>
+              Built {props.monthOfBuild} {props.yearOfBuild}
+            </h4>
           </span>
           <h4 className={styles.InfoH4}>|</h4>
           <span className={styles.InfoDiv}>

@@ -1,18 +1,18 @@
-import AdminMenuItem from "./AdminMenuItem";
 import styles from "../../styles/Admin.module.css";
-import logo from "../../images/Maham2.png";
+import overlayStyle from "../../styles/overlay.module.css";
+
 import { useRef, useState } from "react";
 
+import logo from "../../images/Maham2.png";
 import dashboardIcon from "../../images/dashboard-1-svgrepo-com.svg";
-import walletIcon from "../../images/wallet-svgrepo-com.svg";
-import transactionIcon from "../../images/transaction-svgrepo-com (1).svg";
 import settingIcon from "../../images/setting-svgrepo-com.svg";
 import notificationIcon from "../../images/notification-svgrepo-com.svg";
 import estateIcon from "../../images/real-estate-search-house-svgrepo-com.svg";
 import chatIcon from "../../images/chat-line-square-svgrepo-com.svg";
 import profileIcon from "../../images/user-svgrepo-com.svg";
 import adminPanelIcon from "../../images/opencontacts-svgrepo-com.svg";
-import overlayStyle from "../../styles/overlay.module.css"
+
+import AdminMenuItem from "./AdminMenuItem";
 
 export default function AdminNavbar() {
   const [overlay, setOverlay] = useState(false);
@@ -55,6 +55,7 @@ export default function AdminNavbar() {
               imgSrc={dashboardIcon}
               text="Dashboard"
               onClick={closeNav}
+              end={true}
             />
             <AdminMenuItem
               link="estates"

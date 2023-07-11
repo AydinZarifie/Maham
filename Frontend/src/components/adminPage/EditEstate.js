@@ -1,4 +1,4 @@
-import { useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
 import ConfingEstate from "../../pages/admin/ConfingEstatePage";
 
 const EditState = () => {

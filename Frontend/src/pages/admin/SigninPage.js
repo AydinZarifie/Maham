@@ -1,9 +1,14 @@
 import styles from "../../styles/signin.module.css";
 
+import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import image from "../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
-import { useRef, useState } from "react";
 
 const Signin = () => {
+  const navigate = useNavigate();
+
   const [touched, setTouched] = useState({
     username: false,
     password: false,
@@ -68,7 +73,7 @@ const Signin = () => {
     }
 
     try {
-      const response=await fetch("sdjfjas", {
+      const response = await fetch("url", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,13 +95,13 @@ const Signin = () => {
         clearInterval(countdownInterval);
         setIsSendingSms(false);
       }, 60000);
-      
-      if(!response.ok){
-        setError(true)
+
+      if (!response.ok) {
+        setError(true);
       }
     } catch (error) {
       console.error("Failed to send SMS!", error);
-      setError(error.message)
+      setError(error.message);
     }
   };
 
@@ -134,17 +139,18 @@ const Signin = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Signup successful!", data);
+        // console.log("Signup successful!", data);
         const token = data.token;
         localStorage.setItem("token", token);
+        navigate('/admin')
       } else {
-        setError(true)
-        const errorData = await response.json();
-        console.error("Signup failed!", errorData);
+        setError(true);
+        // const errorData = await response.json();
+        // console.error("Signup failed!", errorData);
       }
     } catch (error) {
-      console.error("Signup failed!", error);
-      setError(error.message)
+      // console.error("Signup failed!", error);
+      setError(error.message);
     }
   };
 

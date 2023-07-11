@@ -1,9 +1,12 @@
+//old
+
 import styles from "../../styles/Estate.module.css";
+
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import deleteIcon from "../../images/delete-svgrepo-com.svg";
 import editIcon from "../../images/edit-svgrepo-com.svg";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function ItemInAdmin(props) {
   // const myLoader = ({ src }) => {
