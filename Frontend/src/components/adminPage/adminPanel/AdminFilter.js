@@ -1,7 +1,8 @@
-import { useState,React,forwardRef  } from "react";
-import styles from "../../styles/AdminPanel.module.css";
+import styles from "../../../styles/AdminPanel.module.css";
 
-const AdminFilter = forwardRef((props,ref) => {
+import { useState, React, forwardRef } from "react";
+
+const AdminFilter = forwardRef((props, ref) => {
   const [filterData, setFilterData] = useState({
     name: "",
     type: "",

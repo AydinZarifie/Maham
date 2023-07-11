@@ -1,9 +1,11 @@
-import { useState } from "react";
 import styles from "../../styles/homePage.module.css";
+import overlayStyle from "../../styles/overlay.module.css";
+
+import { useState } from "react";
+
 import homeLogo from "../../images/home-home-svgrepo-com (1).svg";
 import creditLogo from "../../images/credit-card-2-svgrepo-com.svg";
 import aboutLogo from "../../images/about-svgrepo-com (1).svg";
-import overlayStyle from "../../styles/overlay.module.css"
 
 const PhoneMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +20,7 @@ const PhoneMenu = () => {
         &#9776;
       </span>
       {isOpen && <div className={overlayStyle.overlay} onClick={toggleMenu} />}
-      <div
-        className={`${styles.bottomMenu} ${isOpen ? styles.open : ""}`}
-      >
+      <div className={`${styles.bottomMenu} ${isOpen ? styles.open : ""}`}>
         <a className={styles.closebtn} onClick={toggleMenu}>
           &times;
         </a>

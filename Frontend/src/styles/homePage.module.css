@@ -1,10 +1,10 @@
-.menuLittle{
+.menuLittle {
   display: flex;
- flex-direction: row;
- justify-content: end;
- margin-top: 3px;
- gap:25px;
- width: 100%;
+  flex-direction: row;
+  justify-content: end;
+  margin-top: 3px;
+  gap: 25px;
+  width: 100%;
 }
 
 .underline a {
@@ -31,9 +31,6 @@
   padding: 0 0 20px 0;
   border-color: rgb(0, 0, 0);
 }
-
-
-
 
 .modalContentInAdmin {
   display: flex;
@@ -204,7 +201,7 @@
     top: 0;
     background-color: #fff;
     z-index: 999;
-    gap:15px;
+    gap: 15px;
   }
 
   /*  little menu */
@@ -357,12 +354,12 @@
     transform: translateY(0px);
   }
 
-  .menuBig{
+  .menuBig {
     display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   white-space: nowrap;
-   gap: 22px;
+    flex-direction: row;
+    justify-content: space-between;
+    white-space: nowrap;
+    gap: 22px;
   }
   .underline2 a {
     cursor: pointer;
@@ -373,12 +370,12 @@
     letter-spacing: 1px;
     font-weight: 300;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
-    font-size: .8em;
+    font-size: 0.8em;
   }
   .underline2:hover a {
     color: #7b7b7b;
   }
-  
+
   .underline2 > a {
     padding: 0 0 4px 0;
     border-bottom: 1.5px solid transparent;
@@ -388,7 +385,7 @@
     padding: 0 0 13px 0;
     border-color: rgb(0, 0, 0);
   }
-  .AfilterTag{
+  .AfilterTag {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -497,7 +494,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 701px) {
   /* navigation bar  */
   .Menu {
     display: flex;
@@ -513,7 +510,6 @@
     background-color: #fff;
     z-index: 999;
     margin-top: 0;
-    
   }
   /*  little menu  */
   .Lmenu {
@@ -632,12 +628,12 @@
     gap: 4%;
   }
 
-  .menuBig{
+  .menuBig {
     display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   white-space: nowrap;
-   gap: 22px;
+    flex-direction: row;
+    justify-content: space-between;
+    white-space: nowrap;
+    gap: 22px;
   }
   .underline2 a {
     cursor: pointer;
@@ -648,12 +644,12 @@
     letter-spacing: 1px;
     font-weight: 300;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
-    font-size: .6em;
+    font-size: 0.6em;
   }
   .underline2:hover a {
     color: #7b7b7b;
   }
-  
+
   .underline2 > a {
     padding: 0 0 4px 0;
     border-bottom: 1.5px solid transparent;
@@ -663,7 +659,7 @@
     padding: 0 0 14px 0;
     border-color: rgb(0, 0, 0);
   }
-  .AfilterTag{
+  .AfilterTag {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -685,7 +681,6 @@
     border-radius: 10px 10px 0 0;
     display: flex;
     flex-direction: column;
-
   }
   .bottomMenu a:hover {
     color: #888;
@@ -859,8 +854,6 @@
     display: block;
   }
 
-
-
   .FilterAdmin {
     display: flex;
     flex-direction: row;
@@ -1013,7 +1006,6 @@
   padding-left: 10px;
 }
 
-
 /* connect wallet and eth price and side menu div    */
 .BtnAndPriceAndSideM {
   display: flex;
@@ -1022,7 +1014,6 @@
   align-items: center;
   gap: 20px;
   height: 50px;
-
 }
 
 /*  pictuer  */
@@ -1145,7 +1136,7 @@
   border: 1px solid #d0cfce;
   border-radius: 50%;
   cursor: pointer;
-  
+
   /* height: 40%; */
 }
 .inputContainer button:hover {
@@ -1216,13 +1207,14 @@
   background-color: #fefefe;
   margin: auto;
   border: 1px solid #888;
-  min-width: 340px;
+  min-width: 320px;
   width: 25%;
   z-index: 99999;
   border: 1px solid #717171;
   border-radius: 8px;
   order: 2;
 }
+
 .close {
   color: #aaa;
   float: right;

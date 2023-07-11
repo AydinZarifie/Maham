@@ -1,12 +1,12 @@
 import styles from "../../styles/Estate.module.css";
 import addStyles from "../../styles/Management.module.css";
-import filterData from "../../dummyData/filterData";
-import Filter from "../Filter";
-import { useRef, useState } from "react";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import Filters from "../filter/Filters";
 
-export default function FilterWithAdder() {
+export default function FilterWithAdder(props) {
   const [addFilterShown, setAddFilterShown] = useState(false);
 
   const toggleFilterShown = () => {
@@ -82,15 +82,12 @@ export default function FilterWithAdder() {
             <button
               type="button"
               className={addStyles.AploadButton}
-              // onClick={() =>
-              //   props.submitHandler(
-              //     information.cityName,
-              //     information.dropBox == "Add country"
-              //       ? information.countryName
-              //       : information.dropBox,
-              //     img
-              //   )
-              // }
+              onClick={() =>
+                props.submitHandler(
+                  filterName,
+                  img
+                )
+              }
             >
               Upload
             </button>

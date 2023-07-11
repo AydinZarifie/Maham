@@ -28,7 +28,7 @@ const Gainers = () => {
           </thead>
           <tbody>
             {data.map((item) => (
-              <GainerItem {...item} />
+              <GainerItem key={item.id} {...item} />
             ))}
           </tbody>
         </table>

@@ -1,11 +1,12 @@
+import styles from "../../styles/Management.module.css";
+
 import { useEffect, useState } from "react";
+
 import Add from "../../components/adminPage/management/Add";
 import CountryInformations from "../../components/adminPage/management/CountryInformations";
 import EstateTable from "../../components/adminPage/management/EstateTable";
 import Gainers from "../../components/adminPage/management/Gainers";
 import HighestVolumes from "../../components/adminPage/management/HighestVolumes";
-
-import styles from "../../styles/Management.module.css";
 
 const ManagementPage = () => {
   const [countryMenuShown, setCountryMenuShown] = useState(false);
@@ -40,14 +41,6 @@ const ManagementPage = () => {
   const handleCityOptionSelect = async (option) => {
     setSelectedCityOption(option);
     setCityMenuShown(false);
-
-    //old
-    // const response = await fetch(
-    //   "http://localhost:5000/admin/management/" + name
-    // );
-    // const json = await response.json();
-    // console.log(json);
-    // setSearchedEstates(json);
 
     const res = await fetch(
       "http://localhost:5000/admin/managment/getEstates/" +
@@ -151,9 +144,7 @@ const ManagementPage = () => {
                   {countries.map((option) => (
                     <li
                       key={option.country_name}
-                      onClick={() =>
-                        handleCountryOptionSelect(option)
-                      }
+                      onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
                         src={`http://localhost:5000/${option.country_logo.replace(

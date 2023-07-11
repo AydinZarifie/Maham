@@ -1,6 +1,5 @@
-import data from "../../../dummyData/estateTableData";
-
 import styles from "../../../styles/Management.module.css";
+
 import EstateTableItem from "./EstateTableItem";
 
 const EstateTable = (props) => {

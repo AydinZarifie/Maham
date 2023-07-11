@@ -1,10 +1,6 @@
 import styles from "../../styles/Admin.module.css";
 
-import chartIcon from "../../images/chart-3-svgrepo-com.svg";
-import ethIcon from "../../images/ethereum-svgrepo-com.svg";
-
 import Calendar from "react-calendar";
-import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import {
   LineChart,
@@ -18,6 +14,11 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+
+import { useState } from "react";
+
+import chartIcon from "../../images/chart-3-svgrepo-com.svg";
+import ethIcon from "../../images/ethereum-svgrepo-com.svg";
 
 export default function Dashboard() {
   const [value, onChange] = useState(new Date());

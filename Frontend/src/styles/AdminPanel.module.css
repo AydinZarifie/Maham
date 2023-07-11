@@ -1,3 +1,17 @@
+.HoverFilter:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px -1px rgba(97, 27, 27, 0.65);
+}
+
+.buttonsDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #c1baba;
+}
+
+
 .Buttons a.active {
   position: relative;
   height: 45px;
@@ -10,31 +24,30 @@
   background-color: rgba(187, 47, 50, 0.377);
 }
 
-.estateDiv{
+.estateDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 35px;
 }
-.editButton{
-
-  width: 30%;
+.editButton {
+  width: 100px;
   height: 40px;
   border-radius: 8px;
   border: 1px solid #b4b4b4;
   background-color: #fefefe;
-  transition: .3s;
+  transition: 0.3s;
   cursor: pointer;
   box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-      color: #444444;
-
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  color: #444444;
 }
-.editButton:hover{
+
+.editButton:hover {
   background-color: #f4f4f4;
   transform: translateY(1px);
   box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
-  rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
+    rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
 }
 
 @media (min-width: 2401px) {
@@ -54,7 +67,7 @@
     display: grid;
     justify-content: space-around;
     align-content: space-between;
-    grid-template-columns: repeat(auto-fill,31.5%);
+    grid-template-columns: repeat(auto-fill, 23.8%);
     margin-top: 40px;
     column-gap: 10px;
     row-gap: 10px;
@@ -65,13 +78,24 @@
     display: grid;
     justify-content: space-around;
     align-content: space-between;
-    grid-template-columns: repeat(auto-fill, 47.5%);
+    grid-template-columns: repeat(auto-fill, 31.5%);
     margin-top: 40px;
     column-gap: 10px;
     row-gap: 10px;
   }
 }
 @media (max-width: 1100px) {
+  .container2 {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-between;
+    grid-template-columns: repeat(auto-fill, 46.5%);
+    margin-top: 40px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+@media (max-width: 750px) {
   .container2 {
     display: grid;
     justify-content: space-around;
@@ -83,15 +107,13 @@
   }
 }
 
-
-
-
 .Main {
   display: flex;
   flex-direction: row;
 }
 
-@media (min-width: 749px) {
+@media (min-width: 749px)
+  {
   .AdminInfo {
     width: 75%;
     box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
@@ -318,7 +340,7 @@
     height: 36px;
   }
 }
-@media (max-width: 750px) {
+@media (max-width: 750px){
   .AdminInfo {
     width: 100%;
     box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
@@ -541,6 +563,24 @@
     height: 30px;
   }
 }
+
+@media (max-width: 430px){
+  .InfoBtn2 {
+    width: 70px;
+    font-size: 9px;
+    white-space: nowrap;
+    height: 33px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #2a2a2a;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+  }
+}
+
 .searchBox.searchBar {
   font-family: Arial, FontAwesome;
   margin: 0 auto;
@@ -815,7 +855,7 @@
   display: flex;
   flex-direction: row;
   justify-content: left;
-  gap: 2%;
+  /* gap: 2%; */
   margin-top: 15px;
   /* padding-bottom: 9px; */
   border-bottom: 1px solid #959595;

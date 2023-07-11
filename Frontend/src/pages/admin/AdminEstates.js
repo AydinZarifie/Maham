@@ -1,53 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
-import ItemsInAdmin from "../../components/adminPage/ItemsInAdmin";
-import FilterModal from "../../components/general/FilterModal";
-import MultiRangeSlider from "../../components/multiRangeSlider/MultiRangeSlider";
-
 import styles from "../../styles/AdminPanel.module.css";
 import homePageStyles from "../../styles/homePage.module.css";
 
-import EstateItem from "../../components/general/EstateItem";
+import { useEffect, useState } from "react";
+import {  NavLink, Outlet,useNavigate } from "react-router-dom";
 
-//dummy data
-// const data = [
-//   {
-//     id: 1,
-//     img: [
-//       //../images/square social logo 400 x 400_0.webp  ../images/redelogo.webp
-//     ],
-//     cityName: "tehran",
-//     countryName: "Iran",
-//     stateView: "downtown",
-//     price: "3.4",
-//   },
-//   {
-//     id: 2,
-//     img: [
-//       //../images/square social logo 400 x 400_0.webp  ../images/redelogo.webp
-//     ],
-//     cityName: "tehran",
-//     countryName: "Iran",
-//     stateView: "downtown",
-//     price: "3.4",
-//   },
-// ];
+import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
+import FilterModal from "../../components/general/FilterModal";
 
 export default function Estates() {
   const [data, setData] = useState([]);
 
-  const filter = useRef();
-  const overlay = useRef();
+  const [filterShown, setFilterShown] = useState(false);
 
-  const closeFilter = () => {
-    filter.current.style.visibility = "hidden";
-    overlay.current.style.visibility = "hidden";
-  };
+  const navigate=useNavigate();
 
-  const openFilter = () => {
-    filter.current.style.visibility = "visible";
-    overlay.current.style.visibility = "visible";
+  const toggleFilterShown = () => {
+    setFilterShown((prev) => !prev);
   };
 
   useEffect(() => {
@@ -56,20 +24,30 @@ export default function Estates() {
       .then((data) => setData(data));
   }, []);
 
-  const eventHandler = (event) => {
-    const { name, value } = event.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const submitFilterHandler = async (filterName, filterImg) => {
+    const formData = new FormData();
+    formData.append("filterName", filterName);
+    formData.append("filterImage", filterImg);
+
+    const response = await fetch("url", {
+      method: "POST",
+      body: formData,
+    });
+    if(response.ok){
+      navigate('/admin/estates')
+    }
   };
 
   return (
     <>
-      <FilterWithAdder />
-      <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div>
+      <div className={homePageStyles.Menu} style={{ height: 0 }}>
+        {filterShown && <FilterModal toggleFilter={toggleFilterShown} />}
+      </div>
+
+      <FilterWithAdder submitHandler={submitFilterHandler} />
+      {/* <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div> */}
       <div className={styles.Main}>
-        <div className={styles.FilterDiv}>
+        {/* <div className={styles.FilterDiv}>
           <div className={styles.filterEstate} ref={filter}>
             <div className={homePageStyles.modalContentInAdmin}>
               <button className={styles.closeBtn} onClick={closeFilter}>
@@ -137,59 +115,68 @@ export default function Estates() {
           >
             filter
           </button>
-        </div>
-        <div className={styles.AdminInfo}>
-          <div className={styles.Buttons}>
+        </div> */}
+        <div className={styles.AdminInfo} style={{ width: "100%" }}>
+          <div className={styles.buttonsDiv}>
+            <div className={styles.Buttons} style={{ border: "none" }}>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+                to=""
+                end
+              >
+                <button className={`${styles.InfoBtn} ${styles.InfoBtn2}`}>
+                  Estates
+                </button>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+                to="LockPosition"
+              >
+                <button className={`${styles.InfoBtn} ${styles.InfoBtn2}`}>
+                  Lock position
+                </button>
+              </NavLink>
+
+              <NavLink
+                to="SellPosition"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
+                <button className={`${styles.InfoBtn} ${styles.InfoBtn2}`}>
+                  Sell position
+                </button>
+              </NavLink>
+              <NavLink
+                to="GetDocuments"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
+                <button className={`${styles.InfoBtn} ${styles.InfoBtn2}`}>
+                  Get documents
+                </button>
+              </NavLink>
+            </div>
+
             <a>
               <button
-                className={`${styles.InfoBtn} ${styles.Filter3}`}
-                onClick={openFilter}
+                className={`${styles.InfoBtn} ${styles.Filter3} ${styles.InfoBtn2} ${styles.HoverFilter}`}
+                onClick={toggleFilterShown}
+                style={{ display: "block", background: "#e8e8e8" }}
               >
                 Filter
               </button>
             </a>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? styles.active : undefined
-              }
-              to=""
-              end
-            >
-              <button className={styles.InfoBtn}>Estates</button>
-            </NavLink>
-            <NavLink
-            // className={({ isActive }) =>
-            //   isActive ? styles.active : undefined
-            // }
-            // to="addAdmin"
-            >
-              <button className={styles.InfoBtn}>Lock position</button>
-            </NavLink>
-
-            <NavLink>
-              <button className={styles.InfoBtn}>Sell position</button>
-            </NavLink>
-            <NavLink>
-              <button className={styles.InfoBtn}>Get documents</button>
-            </NavLink>
           </div>
 
-          {/* <Outlet context={submitAddAdminHandler} /> */}
-          <div className={styles.container2}>
-            {data.length > 0 &&
-              data.map((estate) => (
-                <div className={styles.estateDiv}>
-                  <EstateItem props={estate} />
-                  <Link to={`${estate._id}`}>
-                    <button className={styles.editButton}>Edit</button>
-                  </Link>
-                </div>
-              ))}
-          </div>
+          <Outlet context={{ data }} />
         </div>
       </div>
-
-      {/* {data.length > 0 && <ItemsInAdmin data={data} />} */}
     </>
   );
 }

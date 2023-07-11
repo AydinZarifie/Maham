@@ -1,7 +1,16 @@
 import AdminNavbar from "../../components/adminPage/AdminNavbar";
-import { Outlet, redirect } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
+import { useEffect } from "react";
 
 const AdminPage = () => {
+  const token = useLoaderData();
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+  }, [token]);
+
   return (
     <>
       <AdminNavbar />

@@ -1,5 +1,6 @@
-import { useState } from "react";
 import styles from "../../../styles/Management.module.css";
+
+import { useState } from "react";
 
 const Add = (props) => {
   const [information, setInformation] = useState({
@@ -69,7 +70,12 @@ const Add = (props) => {
               <div className={styles.ImgAploader}>
                 <h3 className={styles.ImageH3}>Image Uploader</h3>
                 <form className={styles.AploadDiv}>
-                  <input type="file" id="file-input" onChange={imgHandler} />
+                  <input
+                    style={{ overflow: "hidden" }}
+                    type="file"
+                    id="file-input"
+                    onChange={imgHandler}
+                  />
                 </form>
                 <div id="preview-container" className={styles.previewContainer}>
                   {preview && (

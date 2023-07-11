@@ -1,8 +1,7 @@
-import styles from "../../styles/AdminPanel.module.css";
+import styles from "../../../styles/AdminPanel.module.css";
 
-import editLogo from "../../images/edit-pencil-line-01-svgrepo-com.svg";
-import deleteLogo from "../../images/delete-1-svgrepo-com.svg";
-import profileLogo from "../../images/profile-circle-svgrepo-com.svg";
+import editLogo from "../../../images/edit-pencil-line-01-svgrepo-com.svg";
+import deleteLogo from "../../../images/delete-1-svgrepo-com.svg";
 
 const AdminItem = (props) => {
   return (

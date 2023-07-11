@@ -1,13 +1,11 @@
+import styles from "../../styles/homePage.module.css";
+
 import logo from "../../images/Maham2.png";
 import filterIcon from "../../images/filter-alt-2-svgrepo-com (3).svg";
 import ethLogo from "../../images/ethereum-svgrepo-com.svg";
 
-import styles from "../../styles/homePage.module.css";
-
 import PhoneMenu from "./PhoneMenu";
 import FilterModal from "./FilterModal";
-
-import { useState } from "react";
 import SearchModal from "./SearchModal";
 
 const Navbar = (props) => {
@@ -47,17 +45,6 @@ const Navbar = (props) => {
 
       {/* <!--litle menu--> */}
       <div className={styles.Lmenu}>
-        {/* <div className={styles.container}>
-          <section className={styles.navSection}>
-            <nav className={styles.nav}>
-              <span className={styles.navSpan}>
-                <a href="#">Home</a>
-                <a href="#">Bank</a>
-                <a href="#">About us</a>
-              </span>
-            </nav>
-          </section>
-        </div> */}
         <div className={styles.menuLittle}>
           <div className={styles.underline}>
             <a>Home</a>

@@ -1,7 +1,9 @@
-import ItemInAdmin from "./ItemInAdmin";
+//old
 import styles from "../../styles/Estate.module.css";
+
 import arrow from "../../images/up-arrow-svgrepo-com.svg";
-// import data from "../../dummyData/data"
+
+import ItemInAdmin from "./ItemInAdmin";
 
 const ItemsInAdmin = ({ data }) => (
   <>

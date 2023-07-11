@@ -1,6 +1,9 @@
-import Item from "./Item";
-import data from "../dummyData/data";
+//old
 import styles from "../styles/Maham.module.css";
+
+import data from "../dummyData/data";
+
+import Item from "./Item";
 
 export default function Items() {
   const datas = data.map((item) => {
