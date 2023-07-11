@@ -4,20 +4,15 @@ const estateDB = require('./estate.js');
 const country = new mongoose.Schema({
 	country_name: {
 		type: String,
+		unique : true,
 	},
-	country_cities: {
+	cities: {
 		type: Array,
-		default: [],
 	},
 	country_logo: {
 		type: String,
 	},
-	country_estates: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'real-estates',
-		},
-	],
+	country_estates: [],
 });
 
 module.exports = mongoose.model('Country', country);
