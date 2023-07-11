@@ -62,20 +62,11 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	const { password, inputVerificationCode } = req.body;
 	const email = req.body.username;
 
-	const verificationCode = req.session.verificationCode;
-	console.log(verificationCode);
-
 	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
 
 	const admin = await adminDB.find({ email: email });
-
-	if (req.cookies.verifyToken !== inputVerificationCode) {
-		return next(
-			new AppError('token is not correct', 401) //not authorized
-		);
-	}
 
 	if (!admin) {
 		const err = new Error('admin not found');
@@ -87,6 +78,12 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	if (!isEqual) {
 		return next(
 			new AppError('username or password is incorrect ', 401) //not authorized
+		);
+	}
+
+	if (req.cookies.verifyToken.toString() !== inputVerificationCode) {
+		return next(
+			new AppError('token is not correct', 401) //not authorized
 		);
 	}
 
@@ -112,16 +109,16 @@ exports.verificationCode = async (req, res) => {
 
 	console.log(email);
 
-	const admin = await adminDB.find({ email });
+	const admin = await adminDB.findOne({ email }).select('+password');
 
-	if (!admin[0]) {
+	if (!admin) {
 		console.log('l');
 		return res.status(401).json({
 			message: 'email wrong',
 		});
 	}
 
-	const isEqual = await bcrypt.compare(password, admin[0].password);
+	const isEqual = await bcrypt.compare(password, admin.password);
 
 	if (!isEqual) {
 		return res.status(401).json({
@@ -441,5 +438,6 @@ exports.verificationCode = async (req, res) => {
 
 	return res.status(201).json({
 		message: 'Success',
+		token: verificationCode,
 	});
 };
