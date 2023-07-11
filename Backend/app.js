@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser'); /////////////////////////////////////
 const dotenv = require('dotenv');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -96,13 +97,10 @@ const upload = multer({
 ]);
 
 app.use(express.json());
-// app.use(
-// 	session({
-// 		secret: 'Maham',
-// 		resave: false,
-// 		saveUninitialized: false,
-// 	})
-// );
+
+///////////////////////////////
+app.use(cookieParser());
+///////////////////////////////
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -127,10 +125,10 @@ app.use('/admin', adminPage_Router);
 app.use('/admin', managmentPage_Router);
 app.use('/admin', adminAuth_Router);
 
-const DB = process.env.LOCAL_DATABASE;
+const DBlocal = process.env.LOCAL_DATABASE;
 const port = process.env.PORT;
-mongoose.connect(DB).then(() => {
-	console.log(`DB connection sucessful`);
+mongoose.connect(DBlocal).then(() => {
+	console.log(`local DB connection sucessful`);
 	app.listen(port, () => {
 		console.log(`Server is runing on port ${port}`);
 	});
