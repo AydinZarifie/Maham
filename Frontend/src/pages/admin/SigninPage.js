@@ -46,14 +46,8 @@ const Signin = () => {
       if (value.length >= 6) {
         const newValue = value.slice(0, 6);
         setInput((prev) => ({ ...prev, [name]: newValue }));
-        // submitButton.current.style.background =
-        //   "linear-gradient(0.25turn, #00B4DB, #0083B0)";
-        // submitButton.current.style.color = "white";
       } else {
         setInput((prev) => ({ ...prev, [name]: value }));
-        // submitButton.current.style.background = "#eaeaea";
-        // submitButton.current.style.color = "#6c6c6c";
-        // submitButton.current.style.border = "1px solid rgb(207, 205, 205)";
       }
     } else {
       setInput((prev) => ({ ...prev, [name]: value }));
@@ -73,29 +67,34 @@ const Signin = () => {
     }
 
     try {
-      const response = await fetch("url", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: input.username,
-          password: input.password,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/admin/auth/verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: input.username,
+            password: input.password,
+          }),
+        }
+        // ,{withCredentials : true}
+      );
 
-      setIsSendingSms(true);
-      setSmsCountdown(60);
+      if (response.ok) {
+        setIsSendingSms(true);
+        setSmsCountdown(60);
 
-      const countdownInterval = setInterval(() => {
-        setSmsCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
+        const countdownInterval = setInterval(() => {
+          setSmsCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
 
-      setTimeout(() => {
-        clearInterval(countdownInterval);
-        setIsSendingSms(false);
-      }, 60000);
-
+        setTimeout(() => {
+          clearInterval(countdownInterval);
+          setIsSendingSms(false);
+        }, 60000);
+      }
       if (!response.ok) {
         setError(true);
       }
@@ -125,24 +124,32 @@ const Signin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("url", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "http://localhost:5000/admin/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: input.username,
+            password: input.password,
+            code: input.code,
+          }),
         },
-        body: JSON.stringify({
-          username: input.username,
-          password: input.password,
-          code: input.code,
-        }),
-      });
+        { withCredentials: true }
+      );
 
       if (response.ok) {
         const data = await response.json();
         // console.log("Signup successful!", data);
         const token = data.token;
+        const name=data.name;
+        const type=data.type;
         localStorage.setItem("token", token);
-        navigate('/admin')
+        // localStorage.setItem('name',name)
+        // localStorage.setItem('type',type)
+        navigate("/admin");
       } else {
         setError(true);
         // const errorData = await response.json();

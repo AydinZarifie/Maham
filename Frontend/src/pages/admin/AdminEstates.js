@@ -27,9 +27,9 @@ export default function Estates() {
   const submitFilterHandler = async (filterName, filterImg) => {
     const formData = new FormData();
     formData.append("filterName", filterName);
-    formData.append("filterImage", filterImg);
+    formData.append("images", filterImg);
 
-    const response = await fetch("url", {
+    const response = await fetch("http://localhost:5000/admin/estates/addFilter", {
       method: "POST",
       body: formData,
     });
@@ -38,10 +38,22 @@ export default function Estates() {
     }
   };
 
+  const submitFilterSearch = async (country, city, lowPrice, highPrice) => {
+    const formData = new FormData();
+    formData.append("country", country);
+    formData.append("city", city);
+    formData.append("lowPrice", lowPrice);
+    formData.append("highPrice", highPrice);
+    const response = await fetch("url", {
+      method: "POST",
+      body: formData,
+    });
+  };
+
   return (
     <>
       <div className={homePageStyles.Menu} style={{ height: 0 }}>
-        {filterShown && <FilterModal toggleFilter={toggleFilterShown} />}
+        {filterShown && <FilterModal onSubmit={submitFilterSearch}  toggleFilter={toggleFilterShown} />}
       </div>
 
       <FilterWithAdder submitHandler={submitFilterHandler} />

@@ -9,7 +9,7 @@ const Estates = () => {
   const { data } = useOutletContext();
   return (
     <div className={styles.container2}>
-      {data.length > 0 &&
+      {/* {data.length > 0 &&
         data.map((estate) => (
           <div className={styles.estateDiv}>
             <EstateItem props={estate} />
@@ -17,7 +17,53 @@ const Estates = () => {
               <button className={styles.editButton}>Edit</button>
             </Link>
           </div>
-        ))}
+        ))} */}
+      <div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div><div className={styles.estateDiv}>
+        <EstateItem />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
     </div>
   );
 };

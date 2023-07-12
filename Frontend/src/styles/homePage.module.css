@@ -982,7 +982,7 @@
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  aspect-ratio: 3/2;
+  aspect-ratio: 2.3/2;
   border-radius: 8px;
   animation: myColorChange 2s linear infinite;
 }
