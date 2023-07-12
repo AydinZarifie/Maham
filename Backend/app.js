@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
+const cors = require('cors');
 //////////////////////////////////////////////
 const adminPage_Router = require('./routes/admin/adminPage');
 const managmentPage_Router = require('./routes/admin/adminManagment');
@@ -120,6 +121,8 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 	next();
 });
+
+app.use(cors({ credentials: true, origin: true }));
 
 app.use('/admin', adminPage_Router);
 app.use('/admin', managmentPage_Router);

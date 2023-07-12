@@ -294,13 +294,13 @@ const sendEmail = async (options) => {
 		    </p>
 		  </div>
 		</div>`,
-		attachments: [
-			{
-				filename: 'bunnybunny.jpg',
-				path: './public/images/bunnybunny.jpg',
-				cid: 'myImage', // Content ID of the image
-			},
-		],
+		// attachments: [
+		// 	{
+		// 		filename: 'bunnybunny.jpg',
+		// 		path: './public/images/bunnybunny.jpg',
+		// 		cid: 'myImage', // Content ID of the image
+		// 	},
+		// ],
 	};
 
 	// 3) send email

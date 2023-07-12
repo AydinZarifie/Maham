@@ -131,12 +131,12 @@ exports.verificationCode = async (req, res) => {
 		});
 	}
 
-	const verificationCode = Math.floor(1000 + Math.random() * 9000);
+	const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
 	////////////////////////////////////////////////////
 	res.cookie('verifyToken', verificationCode, {
 		expires: new Date(Date.now() + 180000),
-		httpOnly: true,
+		httpOnly: false,
 	});
 	////////////////////////////////////////////////////
 	console.log(verificationCode);
