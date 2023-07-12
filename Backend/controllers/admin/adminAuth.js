@@ -15,6 +15,7 @@ const signToken = (email, adminId) => {
 		expiresIn: process.env.JWT_EXPIRES_IN,
 	});
 };
+//
 
 exports.signUp = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
@@ -91,7 +92,9 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	}
 
 	///////////////////////////////////////////////////////////////
-	if (req.cookies.verifyToken !== inputVerificationCode) {
+	console.log(req.cookies);
+	console.log(req.cookies.verifyToken);
+	if (req.cookies.verifyToken.toString() !== inputVerificationCode) {
 		return next(
 			new AppError('token is not correct', 401) //not authorized
 		);
@@ -136,6 +139,7 @@ exports.verificationCode = async (req, res) => {
 		httpOnly: true,
 	});
 	////////////////////////////////////////////////////
+	console.log(verificationCode);
 
 	const mailOptions = {
 		email: email,
