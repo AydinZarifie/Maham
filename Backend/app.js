@@ -1,5 +1,5 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
+
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
@@ -36,6 +36,9 @@ const storage = multer.diskStorage({
 					fs.mkdirSync(path);
 					cb(null, path);
 				}
+			}
+			if (req.body.filterName) {
+				cb(null, './uploads/images/filters/');
 			} else {
 				cb(null, './uploads/images/country/');
 			}
@@ -100,12 +103,11 @@ app.use(globalErrorHandler);
 
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(express.json());
-app.use(cookieParser());
 app.use(
 	session({
-		secret: 'Maham',
-		resave: false,
+		secret: process.env.SESSION_SECRET_KEY,
 		saveUninitialized: false,
+		resave: true,
 	})
 );
 app.use(bodyParser.urlencoded({ extended: true }));

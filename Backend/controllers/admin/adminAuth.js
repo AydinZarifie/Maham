@@ -1,11 +1,20 @@
 const bcrypt = require('bcryptjs');
-const adminDB = require('../../models/admin');
+const Memcached = require('memcached');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const { validationResult } = require('express-validator');
+/////////////////////////////////////////////////////
+const adminDB = require('../../models/admin');
+/////////////////////////
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
+/////////////////////////////////////////////////////
 
-const { validationResult } = require('express-validator');
+const signToken = (email, adminId) => {
+	return jwt.sign({ email, adminId }, process.env.JWT_SECRET, {
+		expiresIn: process.env.JWT_EXPIRES_IN,
+	});
+};
 
 exports.signUp = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
@@ -62,57 +71,57 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	const { password, inputVerificationCode } = req.body;
 	const email = req.body.username;
 
+  console.log(req.session.name);
+
+	// const verificationCode = req.session.verificationCode;
+	// console.log(verificationCode);
+
+	// 1) check if email or password provided
 	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
 
-	const admin = await adminDB.find({ email: email });
+  
+	// 2) check if user exists && password is correct
+	const admin = await adminDB.findOne({ email })
+
+ /*  if(inputVerificationCode !== req.session.name.toString()){
+    return res.status(202).json({
+      message : "verification code is not valid"
+    })
+  } */
 
 	if (!admin) {
-		const err = new Error('admin not found');
-		err.statusCode = 402;
-		throw err;
+		return next(new AppError('admin not found', 400));
 	}
-	const isEqual = await bcrypt.compare(password, admin[0].password);
 
+
+	const isEqual = await bcrypt.compare(password, admin.password);
 	if (!isEqual) {
 		return next(
 			new AppError('username or password is incorrect ', 401) //not authorized
 		);
 	}
 
-	if (req.cookies.verifyToken.toString() !== inputVerificationCode) {
-		return next(
-			new AppError('token is not correct', 401) //not authorized
-		);
-	}
 
-	const token = jwt.sign(
-		{ email: email, adminId: admin[0]._id.toString() },
-		'MatbietRixineum',
-		{
-			expiresIn: '1h',
-		}
-	);
+
+	// 3) if everything okay , create & send token to client
+	const token = await signToken(email, admin._id);
 
 	return res.status(202).json({
+		status: 'success',
 		token: token,
 		adminId: admin._id,
 	});
 });
 
 exports.verificationCode = async (req, res) => {
-	console.log('hello');
-
-	const email = req.body.username;
+	const email = req.body.username
 	const password = req.body.password;
 
-	console.log(email);
-
-	const admin = await adminDB.findOne({ email }).select('+password');
+	const admin = await adminDB.findOne({ email });
 
 	if (!admin) {
-		console.log('l');
 		return res.status(401).json({
 			message: 'email wrong',
 		});
@@ -126,11 +135,12 @@ exports.verificationCode = async (req, res) => {
 		});
 	}
 
-	const verificationCode = Math.floor(1000 + Math.random() * 9000);
-	res.cookie('verifyToken', verificationCode, {
-		expires: new Date(Date.now() + 180000),
-		httpOnly: true,
-	});
+	const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+  req.session.name = verificationCode;
+  console.log(req.session.name);
+  
+  admin.verificationCode = verificationCode
 
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
@@ -438,6 +448,6 @@ exports.verificationCode = async (req, res) => {
 
 	return res.status(201).json({
 		message: 'Success',
-		token: verificationCode,
 	});
 };
+
