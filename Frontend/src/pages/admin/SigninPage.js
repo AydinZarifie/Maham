@@ -34,11 +34,6 @@ const Signin = () => {
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
   const codeIsInvalid = !enteredCodeIsValid && touched.code;
 
-  const blurHandler = (event) => {
-    const { name } = event.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
   const eventHandler = (event) => {
     const { name, value } = event.target;
 
@@ -78,8 +73,8 @@ const Signin = () => {
             username: input.username,
             password: input.password,
           }),
-        }
-        // ,{withCredentials : true}
+        },
+        { withCredentials: true }
       );
 
       if (response.ok) {
@@ -95,12 +90,12 @@ const Signin = () => {
           setIsSendingSms(false);
         }, 60000);
       }
-      if (!response.ok) {
-        setError(true);
+      if (response.status == 405) {
+        setError("Email or password is not correct");
       }
     } catch (error) {
       console.error("Failed to send SMS!", error);
-      setError(error.message);
+      // setError(error);
     }
   };
 
@@ -144,20 +139,22 @@ const Signin = () => {
         const data = await response.json();
         // console.log("Signup successful!", data);
         const token = data.token;
-        const name=data.name;
-        const type=data.type;
+        const name = data.name;
+        const type = data.type;
         localStorage.setItem("token", token);
         // localStorage.setItem('name',name)
         // localStorage.setItem('type',type)
         navigate("/admin");
-      } else {
-        setError(true);
-        // const errorData = await response.json();
-        // console.error("Signup failed!", errorData);
+      }
+      if (response.status == 405) {
+        setError("Email or password is not correct");
+      }
+      if (response.status == 401) {
+        setError("Entered code is invalid");
       }
     } catch (error) {
       // console.error("Signup failed!", error);
-      setError(error.message);
+      // setError("Entered code is invalid");
     }
   };
 
@@ -189,9 +186,7 @@ const Signin = () => {
           </p>
 
           <div className={styles.floatingLabel}>
-            {error && (
-              <p className={styles.PWrong}>Email or password is not correct</p>
-            )}
+            {error && <p className={styles.PWrong}>{error}</p>}
 
             <input
               className={usernameClass}
