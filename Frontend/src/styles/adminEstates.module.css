@@ -14,7 +14,7 @@ table {
     font-weight: 500;
     font-size: 14px;
     color: #140707;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     background-color: #e8e8e8;
     text-align: center;
     overflow: hidden;

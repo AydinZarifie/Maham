@@ -132,7 +132,7 @@ const ConfingEstate = ({ method, estate }) => {
     customerPrice: estate ? estate.customerPrice : "",
 
     //  plate: estate ? estate.plate : "",
-    //  id:estate ? estate.id :"",
+    id: estate ? estate.id : "",
     //  walletAddress:estate ? estate.walletAddress :"",
   });
 
@@ -618,9 +618,11 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("description", information.description);
 
     selectedImages.forEach((file) => {
+      console.log(file);
       formData.append("images", file);
     });
 
+    console.log(selectedImages);
     selectedVideo.forEach((file) => {
       formData.append("video", file);
     });
@@ -631,11 +633,12 @@ const ConfingEstate = ({ method, estate }) => {
       const estateId = estate._id;
       url = "http://localhost:5000/admin/estates/" + estateId;
     }
-
+    console.log("HEELLOOO");
     const response = await fetch(url, {
       method: method,
       body: formData,
     });
+    console.log(response);
 
     console.log("finished submit");
 
@@ -665,10 +668,48 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const idManipulataionHandler = async () => {
-    const response = await fetch("url", {
-      method: "get",
-      // body: formData,
+    setTouched({
+      title: true,
+      countryName: false,
+      cityName: true,
+      streetName: true,
+      numberOfPlate: false,
+      numberOfFloor: false,
+      numberOfUnit: false,
+      location: false,
+      type: false,
+      description: false,
+      image: false,
+      mahamPrice: false,
+      customerPrice: false,
+      filter: false,
+
+      // image: true,
+      // video: true,
+      // plate: true,
+      // id: true,
+      // walletAddress: true,
     });
+    if (
+      !(
+        enteredTitleIsValid &&
+        enteredCityNameIsValid &&
+        enteredStreetNameIsValid
+      )
+    ) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("title", information.title);
+    formData.append("cityName", information.cityName);
+    formData.append("StreetName", information.streetName);
+    const response = await fetch("url", {
+      method: "POST",
+      body: formData,
+    });
+    const data = response.json();
+    console.log(data.data);
+    setInformation((prev) => ({ ...prev, id: data.data }));
   };
 
   return (
@@ -750,6 +791,9 @@ const ConfingEstate = ({ method, estate }) => {
                     {option}
                   </option>
                 ))}
+                <option  value="fdsmkfds">
+                   dsaf
+                  </option>
               </select>
             </div>
           </div>
@@ -850,7 +894,7 @@ const ConfingEstate = ({ method, estate }) => {
                   required
                   type="number"
                   className={idClass}
-                  // value={information.location}
+                  value={information.id}
                   // onChange={basicEventHandler}
                   name="id"
                   disabled
@@ -861,7 +905,7 @@ const ConfingEstate = ({ method, estate }) => {
                 {/* <label className={styles.label}>Id</label> */}
               </div>
             </div>
-            <button onClick={idManipulataionHandler} className={styles.MintBtn}>
+            <button type="button" onClick={idManipulataionHandler} className={styles.MintBtn}>
               {estate ? "Burn" : "Mint"}
             </button>
           </div>

@@ -66,6 +66,8 @@ const Signin = () => {
         "http://localhost:5000/admin/auth/verification",
         {
           method: "POST",
+          mode: "cors",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -123,13 +125,15 @@ const Signin = () => {
         "http://localhost:5000/admin/auth/login",
         {
           method: "POST",
+          mode: "cors",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
             username: input.username,
             password: input.password,
-            code: input.code,
+            verificationCode: input.code,
           }),
         },
         { withCredentials: true }
