@@ -1,18 +1,39 @@
 import styles from "../../../styles/adminEstates.module.css";
 
+import img from "../../../images/4918.jpg"
+
 const SellPosition = () => {
   return (
     <div class={styles.Sell}>
-      <div class={styles.LockPositin}>
-        <span class={styles.LockSpan}>
-          <h4 class={styles.InfoP}>Wooden house in California 564</h4>
-          <h4 class={styles.ContryAndCityP}>َAmrica</h4>
-          <h4 class={styles.ContryAndCityP}>California</h4>
-        </span>
-        <span class={styles.LockSpan2}>
-          <h4 class={styles.SellPosition}>true</h4>
-        </span>
-      </div>
+      <table cellpadding="0" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th></th>
+            <th></th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Sell position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <img src={img} className={styles.EstateImg} />
+            </td>
+            <td>Beach home in ohaio 867</td>
+            <td></td>
+            <td></td>
+            <td>Iran</td>
+            <td>Tabriz</td>
+
+            <td>
+              true
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

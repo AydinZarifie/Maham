@@ -1,18 +1,40 @@
 import styles from "../../../styles/adminEstates.module.css";
 
-import LockLogo from "../../../images/lock-keyhole-svgrepo-com.svg";
+import img from "../../../images/4918.jpg";
+import lockLogo from "../../../images/lock-keyhole-svgrepo-com.svg";
 
 const LockPosition = () => {
   return (
     <div class={styles.Lock}>
-      <div class={styles.LockPositin}>
-        <span class={styles.LockSpan}>
-          <h4 class={styles.InfoP}>Beach home in ohaio 867</h4>
-          <h4 class={styles.ContryAndCityP}>Iran</h4>
-          <h4 class={styles.ContryAndCityP}>Tabriz</h4>
-        </span>
-        <img src={LockLogo} class={styles.LockIcon} />
-      </div>
+      <table cellpadding="0" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th></th>
+            <th></th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Lock position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <img src={img} className={styles.EstateImg} />
+            </td>
+            <td>Beach home in ohaio 867</td>
+            <td></td>
+            <td></td>
+            <td>Iran</td>
+            <td>Tabriz</td>
+
+            <td>
+              <img src={lockLogo} className={styles.LockIcon} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

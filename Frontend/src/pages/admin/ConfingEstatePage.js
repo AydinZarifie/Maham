@@ -26,6 +26,7 @@ import deleteIcon from "../../images/delete-svgrepo-com.svg";
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const [filters, setFilters] = useState([]);
 
   useEffect(() => {
     const fetchCountryData = async () => {
@@ -673,7 +674,6 @@ const ConfingEstate = ({ method, estate }) => {
   return (
     <form method={method} encType="multipart/form-data">
       <div className={styles.EstateInfo}>
-        {/*  */}
         <div
           className={styles.select2}
           style={{ margin: "45px auto 20px auto" }}
@@ -687,9 +687,14 @@ const ConfingEstate = ({ method, estate }) => {
           >
             <option value="">Choose an option</option>
             <option value="pool">pool</option>
+            {filters.map((option) => (
+              <option key={option.filter_name} value={option.filter_name}>
+                {option.filter_name}
+              </option>
+            ))}
           </select>
         </div>
-        {/*  */}
+
         <div className={styles.wrapper}>
           <div className={styles.inputData}>
             <input
@@ -720,7 +725,7 @@ const ConfingEstate = ({ method, estate }) => {
               >
                 <option value="">Choose an option</option>
                 {countries.map((option) => (
-                  <option value={option.country_name}>
+                  <option key={option.country_name} value={option.country_name}>
                     {option.country_name}
                   </option>
                 ))}
@@ -741,7 +746,9 @@ const ConfingEstate = ({ method, estate }) => {
               >
                 <option value="">Choose an option</option>
                 {cities.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>

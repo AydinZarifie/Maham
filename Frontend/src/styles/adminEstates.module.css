@@ -1,3 +1,61 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+@media (min-width: 750px) {
+  .EstateImg {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 20%; */
+  }
+  th {
+    padding: 20px 15px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #140707;
+    text-transform: uppercase;
+    background-color: #e8e8e8;
+    text-align: center;
+    overflow: hidden;
+  }
+  td {
+    padding: 15px;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 14px;
+    color: #0d0808;
+    text-align: center;
+    border-bottom: 1px solid #b9b9b9;
+  }
+}
+@media (max-width: 750px) {
+  .EstateImg {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 20%; */
+  }
+  th {
+    padding: 20px 5px;
+    font-weight: 500;
+    font-size: 10px;
+    color: #140707;
+    text-transform: uppercase;
+    background-color: #e8e8e8;
+    text-align: center;
+    overflow: hidden;
+  }
+  td {
+    padding: 5px;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 10px;
+    color: #0d0808;
+    text-align: center;
+    border-bottom: 1px solid #b9b9b9;
+  }
+}
+
 .Lock {
   display: flex;
   flex-direction: column;

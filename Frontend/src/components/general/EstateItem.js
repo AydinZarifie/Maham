@@ -43,7 +43,8 @@ const EstateItem = (props) => {
   return (
     <div className={styles.sliderContainer}>
       <div onScroll={scrollHandler} ref={slider} className={styles.slider}>
-        {/* {props.imageUrl.map((img) => (
+        
+        {/* {props.props.imageUrl.map((img) => (
           <img
             src={`http://localhost:5000/${img.replace(
               /\\/g,
@@ -53,9 +54,10 @@ const EstateItem = (props) => {
             className={styles.slide}
           />
         ))} */}
-        <img src={image1} alt="" className={styles.slide} />
+        
+        {/* <img src={image1} alt="" className={styles.slide} />
         <img src={image2} alt="" className={styles.slide} />
-        <img src={image3} alt="" className={styles.slide} />
+        <img src={image3} alt="" className={styles.slide} /> */}
         <div className={styles.buttons}>
           <button
             className={`${styles.RLBtn} ${styles.Right}`}

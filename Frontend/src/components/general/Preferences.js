@@ -9,7 +9,7 @@ const Preferences = (props) => {
   return (
     <>
       <div className={styles.row3}>
-        <Filters admin={false} />
+        <Filters filters={props.filters} admin={false} />
         <div className={styles.FilterandSearch}>
           <div>
             <button

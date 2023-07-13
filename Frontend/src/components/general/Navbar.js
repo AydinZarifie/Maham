@@ -7,8 +7,16 @@ import ethLogo from "../../images/ethereum-svgrepo-com.svg";
 import PhoneMenu from "./PhoneMenu";
 import FilterModal from "./FilterModal";
 import SearchModal from "./SearchModal";
+import { useState } from "react";
 
 const Navbar = (props) => {
+  const [searchPhrase, setSearchPhrase] = useState("");
+
+  const eventHandler = (event) => {
+    const { value } = event.target;
+    setSearchPhrase(value);
+  };
+
   return (
     <div className={styles.Menu}>
       {/* <!--name and logo--> */}
@@ -23,11 +31,16 @@ const Navbar = (props) => {
 
       {/* <!--Searh and filter In mobile--> */}
       <div className={styles.inputContainer}>
-        <form className={styles.searchContainer}>
+        <form
+          onSubmit={() => props.submitSearch(searchPhrase)}
+          className={styles.searchContainer}
+        >
           <input
             type="text"
             className={`${styles.searchBox} ${styles.searchBar}`}
             placeholder="What can I help you with today?"
+            onChange={eventHandler}
+            value={searchPhrase}
           />
         </form>
         <button onClick={props.filterShowHandler}>
@@ -35,12 +48,15 @@ const Navbar = (props) => {
         </button>
       </div>
       {props.filterShown && (
-        <FilterModal toggleFilter={props.filterShowHandler} />
+        <FilterModal onSubmit={props.submitFilterSearch} toggleFilter={props.filterShowHandler} />
       )}
 
       {/* <!--   search in open div   --> */}
       {props.searchShown && (
-        <SearchModal closeHandler={props.searchCloseHandler} />
+        <SearchModal
+          submitSearch={props.submitSearch}
+          closeHandler={props.searchCloseHandler}
+        />
       )}
 
       {/* <!--litle menu--> */}
