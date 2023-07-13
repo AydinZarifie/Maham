@@ -4,8 +4,6 @@ import serachIcon from "../../images/search-svgrepo-com.svg";
 import filterIcon from "../../images/filter-alt-2-svgrepo-com (4).svg";
 
 import Filters from "../filter/Filters";
-import { useState } from "react";
-import SearchModal from "./SearchModal";
 
 const Preferences = (props) => {
   return (

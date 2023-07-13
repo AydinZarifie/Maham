@@ -4,6 +4,7 @@ const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require("../../models/country");
+const filterDB = require('../../models/filter');
 
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
@@ -403,6 +404,30 @@ exports.getCities = async(req,res) => {
         data : country_name[0].cities
     })
 }
+
+exports.postFilter = catchAsync(async (req,res) => {
+
+    console.log("hep");
+	const filterName = req.body.filterName;
+    console.log(req.files);
+	const imageUrl = req.files.images[0].path; 
+    console.log(imageUrl);
+
+	if(!filterName || !imageUrl){
+		return res.status(403).json({message : "filtername or image was empty"});
+	}
+
+	const filter = new filterDB({
+		filterName : filterName,
+		filterImageUrl : imageUrl
+	})
+
+	await filter.save();
+
+	return res.status(200).json({message : "Successfully"});
+
+})
+
 
 const clearImage = async (filePath) => {
     filePath.forEach(async (imagePath) => {

@@ -1,14 +1,22 @@
-const bcrypt = require("bcryptjs");
-const adminDB = require("../../models/admin");
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const bcrypt = require('bcryptjs');
+const Memcached = require('memcached');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const { validationResult } = require('express-validator');
+/////////////////////////////////////////////////////
+const adminDB = require('../../models/admin');
+/////////////////////////
 const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError'); 
+const AppError = require('./../../utilities/appError');
+/////////////////////////////////////////////////////
 
-const { validationResult } = require("express-validator");
+const signToken = (email, adminId) => {
+	return jwt.sign({ email, adminId }, process.env.JWT_SECRET, {
+		expiresIn: process.env.JWT_EXPIRES_IN,
+	});
+};
 
 exports.signUp = catchAsync(async (req, res, next) => {
-
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
@@ -59,90 +67,94 @@ exports.signUp = catchAsync(async (req, res, next) => {
 	// catch (error) {}
 });
 
-exports.logIn =  catchAsync(async (req, res, next) => {
-  
-  const { password ,inputVerificationCode} = req.body;
-  const email = req.body.username;
+exports.logIn = catchAsync(async (req, res, next) => {
+	const { password, inputVerificationCode } = req.body;
+	const email = req.body.username;
 
-  const verificationCode = req.session.verificationCode;
-  console.log(verificationCode);
+  console.log(req.session.name);
 
-  if (!email || !password) {
+	// const verificationCode = req.session.verificationCode;
+	// console.log(verificationCode);
+
+	// 1) check if email or password provided
+	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
 
+  
+	// 2) check if user exists && password is correct
+	const admin = await adminDB.findOne({ email })
 
-  const admin = await adminDB.find({email:email});
+ /*  if(inputVerificationCode !== req.session.name.toString()){
+    return res.status(202).json({
+      message : "verification code is not valid"
+    })
+  } */
 
-  if(verificationCode.toString() !== inputVerificationCode){
-    return next(new AppError('verification code was wrong', 400));
-  }
+	if (!admin) {
+		return next(new AppError('admin not found', 400));
+	}
 
-  if(!admin){
-    const err = new Error("admin not found");
-    err.statusCode = 402;
-    throw err;
-  }
-  const isEqual = await bcrypt.compare(password , admin[0].password);
 
-  if(!isEqual){
-    return next(
+	const isEqual = await bcrypt.compare(password, admin.password);
+	if (!isEqual) {
+		return next(
 			new AppError('username or password is incorrect ', 401) //not authorized
 		);
-  }
+	}
 
-  const token = jwt.sign({email:email , adminId:admin[0]._id.toString()},"MatbietRixineum",{
-    expiresIn:"1h"
-  })
-  
-  return res.status(202).json({
-    token : token,
-    adminId : admin._id
-  })
+
+
+	// 3) if everything okay , create & send token to client
+	const token = await signToken(email, admin._id);
+
+	return res.status(202).json({
+		status: 'success',
+		token: token,
+		adminId: admin._id,
+	});
 });
 
+exports.verificationCode = async (req, res) => {
+	const email = req.body.username
+	const password = req.body.password;
 
-exports.verificationCode = async (req,res) => {
+	const admin = await adminDB.findOne({ email });
 
-  console.log("hello");
+	if (!admin) {
+		return res.status(401).json({
+			message: 'email wrong',
+		});
+	}
 
-  const email = req.body.username;
-  const password = req.body.password;
+	const isEqual = await bcrypt.compare(password, admin.password);
 
-  console.log(email);
+	if (!isEqual) {
+		return res.status(401).json({
+			message: 'password wrong',
+		});
+	}
 
-  const admin = await adminDB.find({email});
+	const verificationCode = Math.floor(100000 + Math.random() * 900000);
 
-  if(!admin[0]){
-    console.log("l");
-    return res.status(401).json({
-      message : "email wrong"
-    })
-  }
+  req.session.name = verificationCode;
+  console.log(req.session.name);
+  
+  admin.verificationCode = verificationCode
 
-  const isEqual =await bcrypt.compare(password , admin[0].password);
+	const transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'aydinzarifieaszo@gmail.com',
+			pass: 'rwtrwybhtbugnqxc',
+		},
+	});
 
-  if(!isEqual){
-    return res.status(401).json({
-      message : "password wrong"
-    })
-  }
-
-  const verificationCode = Math.floor(1000 + Math.random() * 9000);
-  req.session.verificationCode = verificationCode;
-  const transporter = nodemailer.createTransport({
-    service : "gmail",
-    auth : {
-      user : 'aydinzarifieaszo@gmail.com',
-      pass : "rwtrwybhtbugnqxc"
-    }
-  })
-
-  const mailOptions = {
-    from: 'aydinzarifieaszo@gmail.com',
-    to: email,
-    subject: 'Ver',
-    html : `  
+	const mailOptions = {
+		from: 'aydinzarifieaszo@gmail.com',
+		to: email,
+		subject: 'Ver',
+		html: `  
     <div
       style="
         background: linear-gradient(to left, #ef4057, #ef4077);
@@ -417,25 +429,25 @@ exports.verificationCode = async (req,res) => {
         </p>
       </div>
     </div>`,
-        attachments: [
-          {
-            filename: 'Maham2.png',   
-            path: './public/images/Maham2.png',
-            cid: 'myImage' // Content ID of the image
-          }
-        ]
-  };
-  
-  transporter.sendMail(mailOptions , (err,info) => {
-    if(err){
-        console.log(err);
-    }
-    else {
-        console.log(info);
-    }
-  })
+		attachments: [
+			{
+				filename: 'Maham2.png',
+				path: './public/images/Maham2.png',
+				cid: 'myImage', // Content ID of the image
+			},
+		],
+	};
 
-  return res.status(201).json({
-    message : "Success",
-  }) 
-}
+	transporter.sendMail(mailOptions, (err, info) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(info);
+		}
+	});
+
+	return res.status(201).json({
+		message: 'Success',
+	});
+};
+

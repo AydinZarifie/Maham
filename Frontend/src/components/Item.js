@@ -1,5 +1,7 @@
-import { useState } from "react";
+//old
 import styles from "../styles/Maham.module.css";
+
+import { useState } from "react";
 
 export default function Item(props) {
   const [currentIndex, setCurrentIndex] = useState(0);

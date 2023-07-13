@@ -1,17 +1,24 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import OldHomePage from "./pages/OldHomePage";
 import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
-import AdminPage, {
-  action as manipulateEstateAction,
-} from "./pages/admin/AdminPage";
+import AdminPage from "./pages/admin/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
 import AdminEstates from "./pages/admin/AdminEstates";
 import NewEstate from "./components/adminPage/NewEstate";
 import EditState from "./components/adminPage/EditEstate";
 import ManagementPage from "./pages/admin/ManagementPage";
 import HomePage from "./pages/HomePage";
-import Signin from "./components/adminPage/authentication/Signin";
+import SigninPage from "./pages/admin/SigninPage";
+import AdminPanel from "./pages/admin/AdminPanel";
+import AdminList from "./components/adminPage/adminPanel/AdminList";
+import AddAdmin from "./components/adminPage/adminPanel/AddAdmin";
+import LockPosition from "./components/adminPage/AdminEstate/LockPosition";
+import SellPosition from "./components/adminPage/AdminEstate/SellPosition";
+import GetDocuments from "./components/adminPage/AdminEstate/GetDocuments";
+import Estates from "./components/adminPage/AdminEstate/Estates";
+import { action as logoutAction } from "./pages/admin/Logout";
+
+import { checkAuthLoader } from "./util/auth";
 
 const router = createBrowserRouter([
   {
@@ -32,13 +39,22 @@ const router = createBrowserRouter([
   {
     path: "admin",
     element: <AdminPage />,
+    loader: checkAuthLoader,
     children: [
       { index: true, element: <Dashboard /> },
       {
         path: "estates",
-        // element: <Estates />,
         children: [
-          { index: true, element: <AdminEstates /> },
+          {
+            path: "",
+            element: <AdminEstates />,
+            children: [
+              { index: true, element: <Estates /> },
+              { path: "LockPosition", element: <LockPosition /> },
+              { path: "SellPosition", element: <SellPosition /> },
+              { path: "GetDocuments", element: <GetDocuments /> },
+            ],
+          },
           {
             path: "new",
             element: <NewEstate />,
@@ -57,18 +73,31 @@ const router = createBrowserRouter([
         path: "management",
         element: <ManagementPage />,
       },
+      {
+        path: "admins",
+        element: <AdminPanel />,
+        children: [
+          { index: true, element: <AdminList /> },
+          {
+            path: "addAdmin",
+            element: <AddAdmin />,
+          },
+        ],
+      },
+      {
+        path: "logout",
+        action: logoutAction,
+      },
     ],
+  },
+  {
+    path: "loginAdmin",
+    element: <SigninPage />,
   },
 ]);
 
 function App() {
-  return(
-  <RouterProvider router={router} />
-  
-  // <Signin />
-  )
-  
-  
+  return <RouterProvider router={router} />;
 }
 
 export default App;

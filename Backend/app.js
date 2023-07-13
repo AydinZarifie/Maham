@@ -39,6 +39,9 @@ const storage = multer.diskStorage({
             cb(null, path);
         }
       }
+      if(req.body.filterName){
+        cb(null, "./uploads/images/filters/");
+      }
       else {
         cb(null, "./uploads/images/country/");
       }
@@ -106,9 +109,9 @@ app.use(globalErrorHandler);
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(express.json());
 app.use(session({
-  secret : "Maham",
-  resave : false,
-  saveUninitialized : false
+  secret:process.env.SESSION_SECRET_KEY,
+  saveUninitialized: false,
+  resave : true
 }))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));

@@ -1,0 +1,192 @@
+.Lock {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.Sell {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.getDocument {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.LockPositin:last-child {
+  border: none;
+}
+
+.LockSpan {
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+}
+.LockSpan2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.GetDocument:last-child {
+  border: none;
+}
+
+.DocumentSpan {
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+}
+.DocumentBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.DocumentBtn:hover {
+  opacity: 0.8;
+  transform: scale(1.04);
+}
+
+@media (min-width: 750px) {
+  .LockPositin {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 70%;
+    /* margin-left: 5%; */
+    align-items: center;
+    border-bottom: 1px solid #7c7c7c;
+    padding: 0 12px;
+  }
+
+  .GetDocument {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 70%;
+    /* margin-left: 5%; */
+    align-items: center;
+    border-bottom: 1px solid #7c7c7c;
+    padding: 0 40px;
+  }
+
+  .SellPosition {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    min-width: 60px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .InfoP {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    width: 40%;
+    min-width: 220px;
+    overflow: hidden;
+    text-align: left;
+  }
+  .ContryAndCityP {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    width: 110px;
+    overflow-x: hidden;
+    text-align: center;
+  }
+  .LockIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .MintId {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    min-width: 70px;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .DocumentIcon {
+    width: 35px;
+    height: 35px;
+  }
+}
+@media (max-width: 750px) {
+  .LockPositin {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 90%;
+    /* margin-left: 5%; */
+    align-items: center;
+    border-bottom: 1px solid #7c7c7c;
+    padding: 0 12px;
+  }
+
+  .GetDocument {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 90%;
+    /* margin-left: 5%; */
+    align-items: center;
+    border-bottom: 1px solid #7c7c7c;
+    padding: 0 40px;
+  }
+
+  .SellPosition {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    min-width: 30px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 10px;
+  }
+  .InfoP {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    width: 40%;
+    min-width: 120px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 10px;
+  }
+  .ContryAndCityP {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    width: 50px;
+    overflow-x: hidden;
+    text-align: center;
+    font-size: 10px;
+  }
+  .LockIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .MintId {
+    color: #434343;
+    font-weight: 400;
+    white-space: nowrap;
+    min-width: 70px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 10px;
+  }
+  .DocumentIcon {
+    width: 25px;
+    height: 25px;
+  }
+}

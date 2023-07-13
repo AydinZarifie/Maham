@@ -24,5 +24,9 @@ router
     .route('/estate/getCities/:countryName')
     .get(adminPage_Controller.getCities);
 
+router
+    .route('/estates/addFilter')
+    .post(adminPage_Controller.postFilter);
+
 
 module.exports = router;

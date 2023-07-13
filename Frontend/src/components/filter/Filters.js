@@ -1,6 +1,9 @@
-import { useRef } from "react";
 import styles from "../../styles/homePage.module.css";
+
 import data from "../../dummyData/newFilterData";
+
+import { useRef } from "react";
+
 import FilterItem from "./FilterItem";
 
 const Filters = (props) => {
@@ -25,7 +28,7 @@ const Filters = (props) => {
     } else {
       leftButton.current.style.opacity = ".2";
     }
-    if (scrollx + scrollx2 >= scrollx3-1) {
+    if (scrollx + scrollx2 >= scrollx3 - 1) {
       rightButton.current.style.opacity = ".2";
     } else {
       rightButton.current.style.opacity = "1";
@@ -33,7 +36,10 @@ const Filters = (props) => {
   };
 
   return (
-    <form className={props.admin ? `${styles.FilterAdmin}`:`${styles.Filter}`} method="post">
+    <form
+      className={props.admin ? `${styles.FilterAdmin}` : `${styles.Filter}`}
+      method="post"
+    >
       <div>
         <button
           ref={leftButton}
@@ -51,15 +57,13 @@ const Filters = (props) => {
         ref={filter}
         className={styles.FilterMenu}
       >
-        <section className={styles.navSection2}>
-          <nav className={styles.nav2}>
-            <span className={styles.navSpan2}>
-              {data.map((item) => {
-                return <FilterItem name={item.name} img={item.img} />;
-              })}
-            </span>
-          </nav>
-        </section>
+        <div className={styles.menuBig}>
+          {data.map((item) => {
+            return (
+              <FilterItem key={item.name} name={item.name} img={item.img} />
+            );
+          })}
+        </div>
       </div>
 
       <div>

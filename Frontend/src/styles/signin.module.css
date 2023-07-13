@@ -1,3 +1,14 @@
+.PWrong{
+  position: absolute;
+  font-weight: 400;
+  font-size: 12px;
+  margin: -35px 0 0 45px;
+  padding: 12px 10px 0 10px;
+  white-space: nowrap;
+  z-index: 9999;
+  color: #f83b3b;
+}
+
 .activeButton {
   -webkit-appearance: none;
   width: auto;
@@ -26,21 +37,26 @@
 }
 
 .invalid2 {
+
   margin-top: -4px;
-  outline: 0;
   color: #4b4b4b;
   border: none;
-  width: 5.75ch;
+  width: 8.48ch;
   background: repeating-linear-gradient(
       90deg,
       rgb(83, 83, 83) 0,
-      rgb(83, 83, 83) 1.1ch,
+      rgb(83, 83, 83) 1.05ch,
       transparent 0,
-      transparent 1.45ch
+      transparent 1.46ch
     )
     0 100%/100% 2px no-repeat;
-  font: 3.3ch consolas, monospace;
-  letter-spacing: 0.4ch;
+  font: 3ch consolas, monospace;
+  letter-spacing: 0.41ch;
+
+  outline: 0;
+  color: #4b4b4b;
+  border: none;
+
   border-radius: 4px;
   background-color: rgba(187, 47, 50, 0.377);
 }
@@ -52,7 +68,8 @@
   scroll-behavior: smooth;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
+  overflow-y: scroll;
 }
 .AdminH4 {
   font-size: 24px;
@@ -84,7 +101,7 @@
 .SignIn h4 span {
   color: #727272;
 }
-.SignIn p {
+.SignIn .WelcomeP {
   line-height: 155%;
   margin-bottom: 5px;
   font-size: 14px;
@@ -100,10 +117,10 @@ a.discrete {
   font-size: 14px;
   border-bottom: solid 1px rgba(0, 0, 0, 0);
   padding-bottom: 4px;
-  margin-left: 92px;
-  font-weight: 900;
+  margin-left: 100px;
+  font-weight: 400;
   transition: all 0.3s ease;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 a.discrete:hover {
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
@@ -116,7 +133,7 @@ a.discrete:hover {
   border-radius: 4px;
   text-align: center;
   padding: 12px 40px;
-  margin-top: 15px;
+  margin-top: 22px;
   background-color: #eaeaea;
   color: #6c6c6c;
   font-size: 14px;
@@ -151,7 +168,7 @@ a.discrete:hover {
 .InputAdmin {
   font-size: 14px;
   padding: 20px 7px;
-  height: 56px;
+  height: 50px;
   border: none;
   border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   /* background: #fefefe; */
@@ -161,7 +178,9 @@ a.discrete:hover {
   color: #000;
   font-weight: 400;
   -webkit-appearance: none;
-  border-radius: 3px;
+  border-radius:0 8px 8px 0;
+  border: 1px solid #e0e0e0;
+  border-left: none;
 }
 .InputAdmin:focus {
   border-bottom: solid 1px #4097ef;
@@ -191,16 +210,22 @@ a.discrete:hover {
   position: absolute;
   top: 0;
   left: 0;
-  height: 56px;
+  height: 50px;
   width: 44px;
-  display: flex;
+  display: flex; 
+  background-color:#fff;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  
 }
 .floatingLabel .icon svg {
-  height: 30px;
-  width: 30px;
+  height: 28px;
+  width: 28px;
   margin: auto;
   opacity: 0.15;
   transition: all 0.3s ease;
+ 
 }
 .floatingLabel .icon svg path {
   transition: all 0.3s ease;
@@ -320,7 +345,7 @@ a.discrete:hover {
   justify-content: space-around;
   align-items: center;
   gap: 30px;
-  margin-left: 70px;
+  margin-left: 35px;
 }
 .button {
   display: block;
@@ -342,17 +367,17 @@ a.discrete:hover {
   margin-top: -4px;
   color: #4b4b4b;
   border: none;
-  width: 5.75ch;
+  width: 8.48ch;
   background: repeating-linear-gradient(
       90deg,
       rgb(83, 83, 83) 0,
-      rgb(83, 83, 83) 1.1ch,
+      rgb(83, 83, 83) 1.05ch,
       transparent 0,
-      transparent 1.45ch
+      transparent 1.46ch
     )
     0 100%/100% 2px no-repeat;
-  font: 3.3ch consolas, monospace;
-  letter-spacing: 0.4ch;
+  font: 3ch consolas, monospace;
+  letter-spacing: 0.41ch;
 }
 .VcodeInput:focus {
   outline: 0;

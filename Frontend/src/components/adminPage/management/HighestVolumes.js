@@ -1,11 +1,11 @@
-import data from "../../../dummyData/highestVolumeData";
-
-import HighestVolumeItem from "./HighestVolumeItem";
-
 import styles from "../../../styles/Management.module.css";
+
+import data from "../../../dummyData/highestVolumeData";
 
 import volumeIcon from "../../../images/SVGRepo_iconCarrier.svg";
 import orderIcon from "../../../images/SVGRepo_iconCarrier (1).svg";
+
+import HighestVolumeItem from "./HighestVolumeItem";
 
 const HighestVolumes = () => {
   return (
@@ -27,7 +27,7 @@ const HighestVolumes = () => {
           </thead>
           <tbody>
             {data.map((item) => (
-              <HighestVolumeItem {...item} />
+              <HighestVolumeItem key={item.id} {...item} />
             ))}
           </tbody>
         </table>

@@ -31,16 +31,14 @@
 .dropdown {
   position: relative;
   /* width: 400px; */
- 
-  
 }
-.menuResult{
+.menuResult {
   display: flex;
   flex-direction: row;
-  align-items:center;
+  align-items: center;
   gap: 10px;
 }
-.Logo{
+.Logo {
   width: 30px;
   height: 30px;
 }
@@ -50,7 +48,7 @@
 
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 0 10px;
   background-color: #e5e5e5;
   /* border: 1px solid #909090; */
   cursor: pointer;
@@ -58,6 +56,7 @@
   font-weight: 400;
   white-space: nowrap;
   height: 50px;
+  color: #3d3a3a;
 }
 
 .selectedOption:hover {
@@ -119,7 +118,6 @@
   z-index: 999;
 }
 
-
 .options li {
   display: flex;
   align-items: center;
@@ -135,7 +133,6 @@
   width: 30px;
   margin-right: 10px;
 }
-
 
 .CountryMenu {
   display: flex;
@@ -217,6 +214,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
   z-index: 9999;
   cursor: pointer;
 }
@@ -339,7 +337,7 @@
     z-index: 9999;
     width: 330px;
     max-width: 100%;
-    height: 530px;
+    height: 500px;
     padding: 20px 0;
     text-align: center;
     background-color: white;
@@ -386,7 +384,7 @@
     z-index: 9999;
     width: 330px;
     max-width: 100%;
-    height: 530px;
+    height: 500px;
     padding: 20px 0;
     text-align: center;
     background-color: white;
@@ -710,7 +708,7 @@
   position: absolute;
   height: 2px;
   width: 80%;
-  bottom: 0px;
+  bottom: -4px;
 }
 .inputData .underline:before {
   position: absolute;

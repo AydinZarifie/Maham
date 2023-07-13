@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const adminSchema = mongoose.Schema({
-    
     firstname :{
         type : String,
         required : true
@@ -28,6 +27,9 @@ const adminSchema = mongoose.Schema({
         type:String,
         required:true,
     },
+    verification_code : {
+        type : String,
+    }
     //store acitivity of admins
 },{ timestamps: true ,strict: true})
 

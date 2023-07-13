@@ -6,6 +6,11 @@
   height: 90px;
 } */
 
+.sidenav a.active {
+  background-color: #444444;
+  pointer-events: none;
+}
+
 /*** LayOut  ***/
 .column1 {
   display: flex;
@@ -17,6 +22,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 4px;
 }
 .Logo2 {
   display: flex;
@@ -187,7 +193,7 @@
     font-size: 35px;
     cursor: pointer;
     margin-left: 30px;
-    margin-top: 0;
+    margin-top: 0px;
   }
 }
 @media (max-width: 710px) {
@@ -197,7 +203,7 @@
   .LogoName {
     display: none;
   }
-   .LogoImg {
+  .LogoImg {
     display: none;
   }
   .column1 {
@@ -294,24 +300,20 @@
   .header {
     border-bottom: 1px solid;
     display: flex;
-    justify-content:space-around;
+    justify-content: space-around;
     align-items: center;
     height: 90px;
-    
   }
   .column2 {
-    
     display: flex;
     flex-direction: row;
     align-items: center;
-
-    
   }
   .Buttons {
     order: 2;
     gap: 10px;
   }
-  
+
   .h3AdminName {
     font-size: 0.8rem;
   }
@@ -379,15 +381,12 @@
     gap: 40px;
     margin-right: 11%;
   }
-
-
- 
 }
 @media (min-width: 430px) {
   .header {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     height: 90px;
   }
@@ -408,42 +407,40 @@
     margin: 0;
     margin-bottom: 8px;
     margin-right: 15px;
-    width:170px;
+    width: 170px;
     white-space: nowrap;
     overflow: hidden;
     font-size: 1rem;
   }
 }
-@media (min-width:400px) and (max-width: 430px){
+@media (min-width: 400px) and (max-width: 430px) {
   .h3AdminName {
     margin: 0;
     margin-bottom: 8px;
     margin-right: 40px;
-    width:120px;
+    width: 120px;
     white-space: nowrap;
     overflow: hidden;
   }
   .header {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
-    justify-content:start;
+    justify-content: start;
     align-items: center;
     height: 90px;
   }
- 
 }
-@media (min-width:0px) and (max-width: 400px)  {
+@media (min-width: 0px) and (max-width: 400px) {
   .h3AdminName {
-    
     margin: 0;
     margin-bottom: 8px;
     margin-right: 20px;
-    width:120px;
+    width: 120px;
     white-space: nowrap;
     overflow: hidden;
-  
-  font-size: 0.7rem;
-}
+
+    font-size: 0.7rem;
+  }
 }
 @media (max-width: 347px) {
   .Buttons {
@@ -501,7 +498,7 @@
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 999;
+  z-index: 9999;
   top: 0;
   left: 0;
   background-color: #242323;
@@ -534,9 +531,8 @@
   margin-left: 50px;
   cursor: pointer;
 }
-.OpenNav:hover{
- color: #4d4d4d;
-
+.OpenNav:hover {
+  color: #4d4d4d;
 }
 @media screen and (max-height: 450px) {
   .sidenav {
@@ -549,40 +545,39 @@
 .Dashboard {
   display: flex;
   justify-content: left;
-  align-items:center;
+  align-items: center;
   font-size: 1.15rem;
-color: #353535;
-font-weight: 400;
+  color: #353535;
+  font-weight: 400;
 }
 
 .Dashboard2 {
   display: flex;
   justify-content: left;
-  align-items:center;
+  align-items: center;
   font-size: 1rem;
-color: #f1f1f1;
-transition: .3s;
-font-weight: 600;
+  color: #f1f1f1;
+  transition: 0.3s;
+  font-weight: 600;
 }
-.Dashboard2:hover{
-color: rgb(205, 205, 205);
+.Dashboard2:hover {
+  color: rgb(205, 205, 205);
 }
 .DashboardIcn {
-  width: 40px;
-  height: 40px;
-  padding-right: 15px;
+  width: 30px;
+  height: 30px;
+  padding: 10px 15px 10px 0px;
 }
 /***   ***/
 
 /***  Logo  ***/
 .LogoImage {
-  width: 20px;
+  width: 21px;
   height: 30px;
-  margin-left: 23px;
-  margin-top: 5px;
+  margin-left: 26px;
+  margin-top: 4px;
   background-color: #ffffff;
   border-radius: 3px;
-
 }
 .h1Name {
   font-size: 2.5rem;
@@ -748,7 +743,7 @@ color: rgb(205, 205, 205);
   height: 22px;
   margin-top: 15px;
   margin-left: 5px;
-  opacity: .7;
+  opacity: 0.7;
 }
 .h4TransactionPrice {
   margin-top: -10px;

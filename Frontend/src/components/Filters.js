@@ -1,7 +1,11 @@
-import Filter from "./Filter";
-import filterData from "../dummyData/filterData";
-import { useRef } from "react";
+//old
 import styles from "../styles/Maham.module.css";
+
+import filterData from "../dummyData/filterData";
+
+import { useRef } from "react";
+
+import Filter from "./Filter";
 
 export default function Filters() {
   const slideRef = useRef(null);

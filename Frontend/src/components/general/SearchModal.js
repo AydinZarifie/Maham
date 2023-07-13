@@ -1,5 +1,4 @@
 import styles from "../../styles/homePage.module.css"
-
 import overlayStyles from "../../styles/overlay.module.css"
 
 const SearchModal = (props) => {

@@ -1,10 +1,11 @@
 const countryDB = require('../../models/country');
 const catchAsync = require('./../../utilities/catchAsync');
 const estateDB = require("../../models/estate");
+const filter = require('../../models/filter');
 
 
 
-exports.getAllCountries = catchAsync(async (req, res, next) => {
+exports.getAllCountries = catchAsync(async (req, res) => {
 
 	console.log("req.session.verificationCode");
     const countries = await countryDB.find()
@@ -17,7 +18,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 })
 
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
-exports.postAddCountry = catchAsync(async (req, res, next) => {
+exports.postAddCountry = catchAsync(async (req, res) => {
 	const inputs = {
 		countryName: req.body.countryName,
 		countryLogo: req.files.images[0].path,
@@ -40,7 +41,7 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.addCity = catchAsync(async (req, res, next) => {
+exports.addCity = catchAsync(async (req, res) => {
 	console.log(req.body.cityName);
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({
@@ -65,7 +66,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 });
 
 /// get all cities of given country
-exports.getAllCities = catchAsync(async (req, res, next) => {
+exports.getAllCities = catchAsync(async (req, res) => {
 
 	const country = await countryDB.findOne({
 		country_name: req.params.countryName,
@@ -81,7 +82,7 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	}
 });
 
-exports.getEstates = async(req,res) => {
+exports.getEstates = catchAsync(async(req,res) => {
 	
 	const countryName = req.params.countryName;
 	const cityName = req.params.cityName;
@@ -97,4 +98,6 @@ exports.getEstates = async(req,res) => {
 	})
 
 
-}
+})
+
+//No testing
