@@ -58,6 +58,9 @@ const Filters = (props) => {
         className={styles.FilterMenu}
       >
         <div className={styles.menuBig}>
+          {/* {props.filter.map((filter) => {
+            return <FilterItem key={filter} name={filter} img={filter} />;
+          })} */}
           {data.map((item) => {
             return (
               <FilterItem key={item.name} name={item.name} img={item.img} />

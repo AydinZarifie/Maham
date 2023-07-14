@@ -34,11 +34,6 @@ const Signin = () => {
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
   const codeIsInvalid = !enteredCodeIsValid && touched.code;
 
-  const blurHandler = (event) => {
-    const { name } = event.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
   const eventHandler = (event) => {
     const { name, value } = event.target;
 
@@ -46,14 +41,8 @@ const Signin = () => {
       if (value.length >= 6) {
         const newValue = value.slice(0, 6);
         setInput((prev) => ({ ...prev, [name]: newValue }));
-        // submitButton.current.style.background =
-        //   "linear-gradient(0.25turn, #00B4DB, #0083B0)";
-        // submitButton.current.style.color = "white";
       } else {
         setInput((prev) => ({ ...prev, [name]: value }));
-        // submitButton.current.style.background = "#eaeaea";
-        // submitButton.current.style.color = "#6c6c6c";
-        // submitButton.current.style.border = "1px solid rgb(207, 205, 205)";
       }
     } else {
       setInput((prev) => ({ ...prev, [name]: value }));
@@ -72,37 +61,44 @@ const Signin = () => {
       return;
     }
 
-     fetch("http://localhost:5000/admin/auth/verification", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const response = await fetch(
+        "http://localhost:5000/admin/auth/verification",
+        {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: input.username,
+            password: input.password,
+          }),
         },
-        body: JSON.stringify({
-          username: input.username,
-          password: input.password,
-        }),
-      },{withCredentials : true}).then((response) => {
+        { withCredentials: true }
+      );
 
-      
-      setIsSendingSms(true);
-      setSmsCountdown(60);
+      if (response.ok) {
+        setIsSendingSms(true);
+        setSmsCountdown(60);
 
-      const countdownInterval = setInterval(() => {
-        setSmsCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
+        const countdownInterval = setInterval(() => {
+          setSmsCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
 
-      setTimeout(() => {
-        clearInterval(countdownInterval);
-        setIsSendingSms(false);
-      }, 60000);
-
-      }).catch(err => {
-        console.log(err.response.data);
-      });
-
-  
+        setTimeout(() => {
+          clearInterval(countdownInterval);
+          setIsSendingSms(false);
+        }, 60000);
+      }
+      if (response.status == 405) {
+        setError("Email or password is not correct");
+      }
+    } catch (error) {
+      console.error("Failed to send SMS!", error);
+      // setError(error);
+    }
   };
 
   let formIsValid = false;
@@ -125,35 +121,44 @@ const Signin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/admin/auth/login", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "http://localhost:5000/admin/auth/login",
+        {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: input.username,
+            password: input.password,
+            verificationCode: input.code,
+          }),
         },
-        body: JSON.stringify({
-          username: input.username,
-          password: input.password,
-          verificationCode: input.code,
-        }),
-      });
+        { withCredentials: true }
+      );
 
-      console.log(response.json());
       if (response.ok) {
         const data = await response.json();
         // console.log("Signup successful!", data);
         const token = data.token;
+        const name = data.name;
+        const type = data.type;
         localStorage.setItem("token", token);
-        navigate('/admin')
-      } else {
-        setError(true);
-        // const errorData = await response.json();
-        // console.error("Signup failed!", errorData);
+        // localStorage.setItem('name',name)
+        // localStorage.setItem('type',type)
+        navigate("/admin");
+      }
+      if (response.status == 405) {
+        setError("Email or password is not correct");
+      }
+      if (response.status == 401) {
+        setError("Entered code is invalid");
       }
     } catch (error) {
       // console.error("Signup failed!", error);
-      setError(error.message);
+      // setError("Entered code is invalid");
     }
   };
 
@@ -185,9 +190,7 @@ const Signin = () => {
           </p>
 
           <div className={styles.floatingLabel}>
-            {error && (
-              <p className={styles.PWrong}>Email or password is not correct</p>
-            )}
+            {error && <p className={styles.PWrong}>{error}</p>}
 
             <input
               className={usernameClass}

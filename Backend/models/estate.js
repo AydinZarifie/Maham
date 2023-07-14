@@ -224,8 +224,12 @@ const estateSchema = new mongoose.Schema({
         type: String,
         set: (a) => (a === '' ? undefined : a),
     },
-    price: {
+    customer_price: {
         type: String,
+        set: (a) => (a === '' ? undefined : a),
+    },
+    maham_price : {
+        type : String,
         set: (a) => (a === '' ? undefined : a),
     },
     ///

@@ -8,6 +8,7 @@ import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
 import FilterModal from "../../components/general/FilterModal";
 
 export default function Estates() {
+  
   const [data, setData] = useState([]);
 
   const [filterShown, setFilterShown] = useState(false);
@@ -34,14 +35,26 @@ export default function Estates() {
       body: formData,
     });
     if(response.ok){
-      navigate('/admin/estates')
+      navigate('/admin')
     }
+  };
+
+  const submitFilterSearch = async (country, city, lowPrice, highPrice) => {
+    const formData = new FormData();
+    formData.append("country", country);
+    formData.append("city", city);
+    formData.append("lowPrice", lowPrice);
+    formData.append("highPrice", highPrice);
+    const response = await fetch("url", {
+      method: "POST",
+      body: formData,
+    });
   };
 
   return (
     <>
       <div className={homePageStyles.Menu} style={{ height: 0 }}>
-        {filterShown && <FilterModal toggleFilter={toggleFilterShown} />}
+        {filterShown && <FilterModal onSubmit={submitFilterSearch}  toggleFilter={toggleFilterShown} />}
       </div>
 
       <FilterWithAdder submitHandler={submitFilterHandler} />

@@ -16,7 +16,7 @@ const signToken = (email, adminId) => {
 	});
 };
 
-exports.signUp = catchAsync(async (req, res, next) => {
+exports.signUp = catchAsync(async (req, res, next) => {``
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
@@ -36,6 +36,8 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		phoneNumber,
 	} = req.body;
 
+console.log(adminType);
+console.log(phoneNumber);
 	if (password !== confirmPassword) {
 		return next(
 			new AppError('password and password confirmation doesnt match', 400)
@@ -87,7 +89,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	const admin = await adminDB.findOne({ email })
 
   if(verificationCode !== req.session.verification.toString()){
-      return res.status(403).json({
+      return res.status(401).json({
       message : "verification code is not valid"
     })
   }
@@ -115,8 +117,18 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
 });
 
-exports.verificationCode = async (req, res) => {  
-	const email = req.body.username
+exports.verificationCode = async (req, res) => {    
+
+  const error = validationResult(req);
+	if (!error.isEmpty()) {
+		console.log(error.array());
+		return res.status(422).json({
+			message: 'Error 422',
+		});
+	}
+
+
+  const email = req.body.username
 	const password = req.body.password;
 
 	const admin = await adminDB.findOne({ email });

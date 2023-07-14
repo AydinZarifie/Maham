@@ -27,7 +27,9 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 });
 
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
-exports.createEstate = catchAsync(async (req, res, next) => {
+exports.createEstate = catchAsync(async (req, res) => {
+    
+    console.log("hellooo");
     console.log(req.files);
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
@@ -40,7 +42,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         location: req.body.location,
         state_description: req.body.description,
         estate_type: req.body.type,
-        price : req.body.price,
+        maham_price : req.body.mahamPrice,
+        customer_price : req.body.customerPrice,
         unit_number  : req.body.numberOfUnit,
         imageUrl: req.files.images.map((el) => {
             return el.path;
@@ -118,7 +121,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         estate_type: inputs.estate_type,
         imageUrl: inputs.imageUrl,
         introduction_video: inputs.introduction_video,
-        price : inputs.price,
+        customer_price : inputs.customer_price,
+        maham_price : inputs.maham_price,
         // minor_street: inputs.minor_street,
         unit_number: inputs.unit_number ,
         // postal_code: inputs.postal_code ,
@@ -186,6 +190,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
         ],
     });
 
+    
     await estate.save();
     // return null // for now null
 
@@ -213,6 +218,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         location: req.body.location,
         state_description: req.body.description,
         estate_type: req.body.type,
+        price : req.body.price,
 
         // introduction_video: req.files.video.map((el) => {
         //     return el.path;
@@ -289,8 +295,10 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         (estate.floor_number = inputs.floor_number),
         (estate.location = inputs.location),
         (estate.state_description = inputs.state_description),
+        (estate.price = inputs.price),
         (estate.estate_type = inputs.estate_type);
-    // get & set images
+    // get & set images 
+
     if (req.files.images) {
         clearImage(estate.imageUrl);
         estate.imageUrl = req.files.images.map((el) => {
@@ -348,6 +356,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         (estate.estate_facilities[0].barbique = inputs.barbique),
         await estate.save();
 
+        console.log(estate.price);
     return res.status(200).json({
         status: 'success',
         message: 'succesfuly updated!',
@@ -393,7 +402,7 @@ exports.getCountry= async(req,res) => {
 exports.getCities = async(req,res) => {
     const country = req.params.countryName;
 
-    console.log(country);
+    console.log("fuckkkkkkkkkkkkkkkkkk");
 
     const country_name = await countryDB.find({country_name : country});
 
@@ -407,12 +416,8 @@ exports.getCities = async(req,res) => {
 
 exports.postFilter = catchAsync(async (req,res) => {
 
-    console.log("hep");
 	const filterName = req.body.filterName;
-    console.log(req.files);
 	const imageUrl = req.files.images[0].path; 
-    console.log(imageUrl);
-
 	if(!filterName || !imageUrl){
 		return res.status(403).json({message : "filtername or image was empty"});
 	}

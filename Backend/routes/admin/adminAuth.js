@@ -13,6 +13,9 @@ router.post("/auth/signup",[
 
 router.post("/auth/login" , adminAuthController.logIn);
 
-router.post("/auth/verification",adminAuthController.verificationCode);
+router.post("/auth/verification",[
+    body('email').isEmail(),
+    body('password').trim().isLength({min : 4}),
+],adminAuthController.verificationCode);
 
 module.exports = router;

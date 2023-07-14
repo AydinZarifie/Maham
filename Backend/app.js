@@ -43,9 +43,6 @@ const storage = multer.diskStorage({
       if(req.body.filterName){
         cb(null, "./uploads/images/filters/");
       }
-      else {
-        cb(null, "./uploads/images/country/");
-      }
   } 
     
     else if (file.fieldname == "video") {
