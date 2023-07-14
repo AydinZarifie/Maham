@@ -72,9 +72,10 @@ const Signin = () => {
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:5000/admin/auth/verification", {
+     fetch("http://localhost:5000/admin/auth/verification", {
         method: "POST",
+        mode: "cors",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -82,8 +83,9 @@ const Signin = () => {
           username: input.username,
           password: input.password,
         }),
-      },{withCredentials : true});
+      },{withCredentials : true}).then((response) => {
 
+      
       setIsSendingSms(true);
       setSmsCountdown(60);
 
@@ -96,13 +98,11 @@ const Signin = () => {
         setIsSendingSms(false);
       }, 60000);
 
-      if (!response.ok) {
-        setError(true);
-      }
-    } catch (error) {
-      console.error("Failed to send SMS!", error);
-      setError(error.message);
-    }
+      }).catch(err => {
+        console.log(err.response.data);
+      });
+
+  
   };
 
   let formIsValid = false;
@@ -127,16 +127,19 @@ const Signin = () => {
     try {
       const response = await fetch("http://localhost:5000/admin/auth/login", {
         method: "POST",
+        mode: "cors",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: input.username,
           password: input.password,
-          code: input.code,
+          verificationCode: input.code,
         }),
-      },{withCredentials : true});
+      });
 
+      console.log(response.json());
       if (response.ok) {
         const data = await response.json();
         // console.log("Signup successful!", data);

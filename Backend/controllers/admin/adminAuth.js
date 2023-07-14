@@ -68,11 +68,12 @@ exports.signUp = catchAsync(async (req, res, next) => {
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
-	const { password, inputVerificationCode } = req.body;
+
+  const { password, verificationCode } = req.body;
 	const email = req.body.username;
 
-  console.log(req.session.name);
-
+  console.log(req.session.verification.toString());
+  console.log(verificationCode);
 	// const verificationCode = req.session.verificationCode;
 	// console.log(verificationCode);
 
@@ -85,11 +86,11 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	// 2) check if user exists && password is correct
 	const admin = await adminDB.findOne({ email })
 
- /*  if(inputVerificationCode !== req.session.name.toString()){
-    return res.status(202).json({
+  if(verificationCode !== req.session.verification.toString()){
+      return res.status(403).json({
       message : "verification code is not valid"
     })
-  } */
+  }
 
 	if (!admin) {
 		return next(new AppError('admin not found', 400));
@@ -98,12 +99,10 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
 	const isEqual = await bcrypt.compare(password, admin.password);
 	if (!isEqual) {
-		return next(
-			new AppError('username or password is incorrect ', 401) //not authorized
+    return next(
+			new AppError('username or password is incorrect ', 405) //not authorized
 		);
 	}
-
-
 
 	// 3) if everything okay , create & send token to client
 	const token = await signToken(email, admin._id);
@@ -113,9 +112,10 @@ exports.logIn = catchAsync(async (req, res, next) => {
 		token: token,
 		adminId: admin._id,
 	});
+
 });
 
-exports.verificationCode = async (req, res) => {
+exports.verificationCode = async (req, res) => {  
 	const email = req.body.username
 	const password = req.body.password;
 
@@ -130,15 +130,13 @@ exports.verificationCode = async (req, res) => {
 	const isEqual = await bcrypt.compare(password, admin.password);
 
 	if (!isEqual) {
-		return res.status(401).json({
-			message: 'password wrong',
-		});
+		return res.status(405).json('password wrong');
 	}
 
 	const verificationCode = Math.floor(100000 + Math.random() * 900000);
 
-  req.session.name = verificationCode;
-  console.log(req.session.name);
+  req.session.verification = verificationCode;
+  console.log(req.session.verification);
   
   admin.verificationCode = verificationCode
 

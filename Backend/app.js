@@ -4,6 +4,7 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const session = require("express-session");
+const cors = require("cors")
 //////////////////////////////////////////////
 const adminPage_Router = require("./routes/admin/adminPage");
 const managmentPage_Router = require("./routes/admin/adminManagment");
@@ -64,32 +65,6 @@ const storage = multer.diskStorage({
   },
 });
 
-function checkFileType(file, cb) {
-  if (file.fieldname === "video") {
-    if (
-      file.mimetype === "video/mp4" ||
-      file.mimetype === "video/jpeg" ||
-      file.mimetype === "video/mpv" ||
-      file.mimetype === "video/quicktime"
-    ) {
-      cb(null, true);
-    } else {
-      cb(new Error("video type not supported!"), false);
-    }
-  } else if (file.fieldname === "images") {
-    if (
-      file.mimetype === "image/png" ||
-      file.mimetype === "image/jpg" ||
-      file.mimetype === "image/jpeg" ||
-      fiel.mimetype === "image/gif"
-    ) {
-      cb(null, true);
-    } else {
-      cb(new Error("image type not supported!"), false);
-    }
-  }
-}
-
 const upload = multer({
   storage: storage,
 }).fields([
@@ -107,12 +82,13 @@ const upload = multer({
 app.use(globalErrorHandler);
 
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
-app.use(express.json());
-app.use(session({
-  secret:process.env.SESSION_SECRET_KEY,
-  saveUninitialized: false,
-  resave : true
+app.use(cors({
+  origin : "http://localhost:3000",
+  credentials : true
 }))
+
+app.use(express.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 app.use(express.static('public')) 
@@ -123,15 +99,16 @@ app.use(
 
 app.use(upload);
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+app.use(session({
+  secret:process.env.SESSION_SECRET_KEY,
+  saveUninitialized: false,
+  resave : true,
+  cookie:{
+    maxAge : 1000 * 60 * 60,
+    sameSite : 'lax',
+    secure : false
+  }
+}))
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 app.use("/admin", adminPage_Router);
