@@ -19,6 +19,10 @@ router
 router.route('/estate/getCountries').get(adminPage_Controller.getCountry);
 
 router
+	.route('/estates/generateMint')
+	.post(adminPage_Controller.toLowerCase, adminPage_Controller.generateMint);
+
+router
 	.route('/estate/getCities/:countryName')
 	.get(adminPage_Controller.getCities);
 
