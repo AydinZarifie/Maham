@@ -8,6 +8,7 @@ import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
 import FilterModal from "../../components/general/FilterModal";
 
 export default function Estates() {
+  
   const [data, setData] = useState([]);
 
   const [filterShown, setFilterShown] = useState(false);
@@ -34,7 +35,7 @@ export default function Estates() {
       body: formData,
     });
     if(response.ok){
-      navigate('/admin/estates')
+      navigate('/admin')
     }
   };
 

@@ -79,35 +79,35 @@ const EstateItem = (props) => {
       <div className={styles.Info}>
         <div className={styles.PMDiv}>
           <span className={styles.TitleSpan}>
-            <h3 className={styles.titleH3}>{props.estate_title}</h3>
+            <h3 className={styles.titleH3}>{props.props.estate_title}</h3>
           </span>
           <span className={styles.InfoDivPM}>
             <h4 className={styles.InfoH4}>P/M:</h4>
-            <h4 className={styles.InfoH4}>{props.PM}</h4>
+            <h4 className={styles.InfoH4}>{props.props.PM}</h4>
           </span>
         </div>
         <span className={styles.InfoDiv}>
-          <h4 className={styles.InfoH4}>{props.countryName}</h4>
+          <h4 className={styles.InfoH4}>{props.props.country_name}</h4>
           <h4 className={styles.InfoH4}>|</h4>
-          <h4 className={styles.InfoH4}>{props.cityName}</h4>
+          <h4 className={styles.InfoH4}>{props.props.city_name}</h4>
         </span>
         <div className={styles.InfoDiv2}>
           <span>
             <h4 className={styles.InfoH4}>
-              Built {props.monthOfBuild} {props.yearOfBuild}
+              Built {props.props.monthOfBuild} {props.props.yearOfBuild}
             </h4>
           </span>
           <h4 className={styles.InfoH4}>|</h4>
           <span className={styles.InfoDiv}>
             <h4 className={styles.InfoH4}>Metrage:</h4>
             <h4 className={styles.InfoH4}>
-              {props.metrage} m<sup>2</sup>
+              {props.props.metrage} m<sup>2</sup>
             </h4>
           </span>
         </div>
         <span className={styles.InfoDiv}>
           <img src={ethLogo} className={styles.EthIcn2} />
-          <h4 className={styles.EthH4}>{props.price} ETH</h4>
+          <h4 className={styles.EthH4}>{props.props.customer_price} ETH</h4>
         </span>
       </div>
     </div>

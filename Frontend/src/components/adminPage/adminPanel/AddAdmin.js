@@ -103,7 +103,8 @@ const AddAdmin = () => {
       data.phoneNumber,
       data.country,
       data.city,
-      data.password
+      data.password,
+      data.confirmPassword
     );
   };
 
