@@ -1,10 +1,10 @@
 import styles from "../../styles/Admin.module.css";
 import overlayStyle from "../../styles/overlay.module.css";
-import managementStyles from "../../styles/Management.module.css"
 
 import { useRef, useState } from "react";
 
 import logo from "../../images/Maham2.png";
+import logOutIcon from "../../images/logout-svgrepo-com.svg";
 import dashboardIcon from "../../images/dashboard-1-svgrepo-com.svg";
 import settingIcon from "../../images/setting-svgrepo-com.svg";
 import notificationIcon from "../../images/notification-svgrepo-com.svg";
@@ -14,6 +14,7 @@ import profileIcon from "../../images/user-svgrepo-com.svg";
 import adminPanelIcon from "../../images/opencontacts-svgrepo-com.svg";
 
 import AdminMenuItem from "./AdminMenuItem";
+import { Form } from "react-router-dom";
 
 export default function AdminNavbar() {
   const [overlay, setOverlay] = useState(false);
@@ -141,33 +142,39 @@ export default function AdminNavbar() {
           </div>
         </div>
         {/*  */}
-        <div className={managementStyles.dropdown}>
-          <div className={managementStyles.selectedOption} onClick={toggleDropdown}>
+        <div className={styles.dropdown}>
+          <div className={styles.selectedOption} onClick={toggleDropdown}>
             <span></span>
 
             <span
-              className={`${managementStyles.arrow} ${
-                dropdown ? `${managementStyles.open}` : ""
-              }`}
+              className={`${styles.arrow} ${dropdown ? `${styles.open}` : ""}`}
             >
               &#9660;
             </span>
           </div>
           {dropdown && (
             <>
-              <div className={managementStyles.overlay2} onClick={toggleDropdown}></div>
-              <ul className={managementStyles.options}>
-                <li
-                //  onClick={() => handleCountryOptionSelect(option)}
-                 >
-                  <img src="" alt="" />
-                  koskhol
+              <div
+                className={overlayStyle.overlayWithoutBlur}
+                onClick={toggleDropdown}
+              ></div>
+              <ul className={styles.options}>
+                <li>
+                  <button className={styles.PAndLBttons}>
+                    <img src={profileIcon} />
+                    Profile
+                  </button>
                 </li>
-                <li
-                //  onClick={() => handleCountryOptionSelect(option)}
-                 >
-                  <img src="" alt="" />
-                  koskhol
+                <li>
+                <Form action="/admin/logout" method="post" style={{width:"100%"}}>
+                    <button
+                      className={styles.PAndLBttons}
+                      style={{ color: "#ff2e2e" }}
+                    >
+                      <img src={logOutIcon} />
+                      Log out
+                    </button>
+                  </Form>
                 </li>
               </ul>
             </>

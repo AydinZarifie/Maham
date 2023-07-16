@@ -1,3 +1,112 @@
+
+/* .dropdown {
+  position: relative;
+right: 60px;
+  
+} */
+.menuResult {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.Logo {
+  width: 30px;
+  height: 30px;
+}
+.selectedOption {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  background-color: #e5e5e5;
+  cursor: pointer;
+  border-radius: 50%;
+  font-weight: 400;
+  white-space: nowrap;
+  height: 40px;
+  color: #3d3a3a;
+
+}
+
+.selectedOption:hover {
+  background-color: #e1e1e1;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 160px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  height: 82px;
+  scrollbar-width: none;
+  font-weight: 600;
+  color: #585858;
+  border-radius:3px;
+}
+.options li {
+  display: flex;
+  align-items: center;
+  /* padding: 12px 0; */
+}
+.options li:hover{
+  background-color: #dadada;
+}
+
+
+.PAndLBttons{
+  background-color:transparent;
+  width: 100%;
+  cursor: pointer;
+  height: 100%;
+  border:none;
+  border-radius: 10px;
+  color: #444444;
+  transition: .3s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 0;
+}
+/* .PAndLBttons:hover{
+  transform: translateY(1px);
+  background-color: #ebebeb;
+} */
+.PAndLBttons svg ,img{
+  width: 18px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* .header {
   border-bottom: 1px solid;
   display: flex;
@@ -123,7 +232,7 @@
   }
   /***    ***/
 }
-@media (min-width: 710px) {
+@media (min-width: 760px) {
   .hrPurchase {
     background-color: #111;
     height: 70px;
@@ -196,7 +305,7 @@
     margin-top: 0px;
   }
 }
-@media (max-width: 710px) {
+@media (max-width: 760px) {
   .Header {
     height: 104.8px;
   }
@@ -296,9 +405,84 @@
     top: -10px;
   }
 }
-@media (max-width: 430px) {
+
+
+@media (min-width: 490px){
+  .ProfileButton {
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    border: 1px solid rgb(134, 132, 132);
+    background: #ede9e9;
+    padding: 0;
+  }
+
+
+  .iconButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: #333333;
+    background: #ede9e9;
+    border: 1px solid rgb(134, 132, 132);
+    outline: none;
+    border-radius: 50%;
+  }
+
+  .ChatButton {
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    border: 1px solid rgb(134, 132, 132);
+    background: #ede9e9;
+  }
+
+  .dropdown {
+    position: relative;
+  right: 60px;
+    
+  }
+
+  /* .h3AdminName {
+    margin: 0;
+    margin-bottom: 8px;
+    margin-right: 15px;
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1rem;
+  } */
+}
+@media (max-width: 510px){
+  .column2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+  }
+  .Buttons {
+    order: 2;
+    gap: 10px;
+    display: none;
+  }
+}
+@media (min-width: 470px){
+.h3AdminName {
+  margin: 0;
+  margin-bottom: 8px;
+  margin-right: 15px;
+  width: 170px;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1rem;
+}
+}
+@media (max-width: 470px) {
   .header {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -308,15 +492,17 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 80%;
   }
-  .Buttons {
+  /* .Buttons {
     order: 2;
     gap: 10px;
-  }
+    display: none;
+  } */
 
-  .h3AdminName {
+  /* .h3AdminName {
     font-size: 0.8rem;
-  }
+  } */
   .h6AdminInformations {
     font-size: 0.6rem;
   }
@@ -381,6 +567,59 @@
     gap: 40px;
     margin-right: 11%;
   }
+
+
+
+  .ProfileButton {
+    width: 34px;
+    height: 34px;
+    border-radius: 100%;
+    border: 1px solid rgb(134, 132, 132);
+    background: #ede9e9;
+    padding: 0;
+  }
+
+
+
+  .iconButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: #333333;
+    background: #ede9e9;
+    border: 1px solid rgb(134, 132, 132);
+    outline: none;
+    border-radius: 50%;
+  }
+
+
+  .ChatButton {
+    width: 34px;
+    height: 34px;
+    border-radius: 100%;
+    border: 1px solid rgb(134, 132, 132);
+    background: #ede9e9;
+  }
+
+  .dropdown {
+    position: relative;
+  /* right: 60px; */
+  /* right: 5px; */
+    
+  }
+
+  .h3AdminName {
+    margin: 0;
+    margin-bottom: 8px;
+    margin-right: 15px;
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: .8rem;
+  }
 }
 @media (min-width: 430px) {
   .header {
@@ -400,10 +639,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 40px;
   }
 
-  .h3AdminName {
+  /* .h3AdminName {
     margin: 0;
     margin-bottom: 8px;
     margin-right: 15px;
@@ -411,86 +650,11 @@
     white-space: nowrap;
     overflow: hidden;
     font-size: 1rem;
-  }
-}
-@media (min-width: 400px) and (max-width: 430px) {
-  .h3AdminName {
-    margin: 0;
-    margin-bottom: 8px;
-    margin-right: 40px;
-    width: 120px;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .header {
-    border-bottom: 1px solid rgb(165, 165, 165);
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    height: 90px;
-  }
-}
-@media (min-width: 0px) and (max-width: 400px) {
-  .h3AdminName {
-    margin: 0;
-    margin-bottom: 8px;
-    margin-right: 20px;
-    width: 120px;
-    white-space: nowrap;
-    overflow: hidden;
-
-    font-size: 0.7rem;
-  }
-}
-@media (max-width: 347px) {
-  .Buttons {
-    gap: 2px;
-  }
-  .column2 {
-    gap: 0;
-  }
-  /* .h3AdminName {
-    
-      margin: 0;
-      margin-bottom: 8px;
-      margin-right: 70px;
-      width:120px;
-      white-space: nowrap;
-      overflow: hidden;
-    
-    font-size: 0.6rem;
   } */
-  .h6AdminInformations {
-    font-size: 0.4rem;
-  }
 
-  .h4TotalIncome {
-    color: #ffffff;
-    font-size: 60%;
-  }
-  .h2TotalIncomePrice {
-    color: #ffffff;
-    font-size: 60%;
-  }
 
-  .h4NbrODct {
-    color: #ffffff;
-    font-size: 60%;
-  }
-  .h2NumberOfDocuments {
-    color: #ffffff;
-    font-size: 60%;
-  }
-
-  .h4NbrOClt {
-    color: #ffffff;
-    font-size: 60%;
-  }
-  .h2NumberOfClients {
-    color: #ffffff;
-    font-size: 60%;
-  }
 }
+
 /***    ***/
 
 /*** SideNav  ***/
@@ -604,13 +768,13 @@
 
 /***  Buttons  ***/
 /*  ChatBtn  */
-.ChatButton {
+/* .ChatButton {
   width: 44px;
   height: 44px;
   border-radius: 100%;
   border: 1px solid rgb(134, 132, 132);
   background: #ede9e9;
-}
+} */
 .ChatButton:hover {
   cursor: pointer;
   background-color: #e4dede;
@@ -625,7 +789,7 @@
 /*   */
 
 /*  NotifBtn  */
-.iconButton {
+/* .iconButton {
   position: relative;
   display: flex;
   align-items: center;
@@ -635,10 +799,9 @@
   color: #333333;
   background: #ede9e9;
   border: 1px solid rgb(134, 132, 132);
-  /* border: none; */
   outline: none;
   border-radius: 50%;
-}
+} */
 
 .iconButton:hover {
   cursor: pointer;
@@ -669,14 +832,14 @@
 /*   */
 
 /*  ProfileBtn  */
-.ProfileButton {
+/* .ProfileButton {
   width: 44px;
   height: 44px;
   border-radius: 100%;
   border: 1px solid rgb(134, 132, 132);
   background: #ede9e9;
   padding: 0;
-}
+} */
 .ProfileButton:hover {
   cursor: pointer;
   background-color: #e4dede;

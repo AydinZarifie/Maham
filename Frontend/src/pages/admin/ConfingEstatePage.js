@@ -132,14 +132,14 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
-
     filter: estate ? estate.filter : "",
-
     mahamPrice: estate ? estate.mahamPrice : "",
-    customerPrice: estate ? estate.customerPrice : "",
+    customerPrice: "",
+    // estate ? estate.customerPrice : "",
+    id: "",
+    // estate ? estate.id : "",
 
     //  plate: estate ? estate.plate : "",
-    id: estate ? estate.id : "",
     //  walletAddress:estate ? estate.walletAddress :"",
   });
 
@@ -325,12 +325,12 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredTypeIsValid = information.type.trim() !== "";
   const enteredDescriptionIsValid = information.description.trim() !== "";
   const enteredMahamPriceIsValid = information.mahamPrice.trim() !== "";
-  const enteredCustomemPriceIsValid = information.customerPrice.trim() !== "";
+  const enteredCustomerPriceIsValid = information.customerPrice.trim() !== "";
+  const enteredImageIsValid = selectedImages.length > 0;
+  const enteredVideoIsValid = selectedVideo.length > 0;
+  const enteredIdIsValid = information.id.trim() !== "";
 
-  // const enteredImageIsValid = selectedImages.length > 0;
-  // const enteredVideoIsValid = selectedVideo.length > 0;
   // const enteredPlateIsValid = information.plate.trim() !== "";
-  // const enteredIdIsValid = information.id.trim() !== "";
   // const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
 
   const [touched, setTouched] = useState({
@@ -347,11 +347,11 @@ const ConfingEstate = ({ method, estate }) => {
     mahamPrice: false,
     customerPrice: false,
     filter: false,
-
-    // image: false,
-    // video: false,
-    // plate: false,
+    image: false,
+    video: false,
     id: false,
+
+    // plate: false,
     // walletAddress: false,
   });
 
@@ -372,17 +372,18 @@ const ConfingEstate = ({ method, estate }) => {
     !enteredDescriptionIsValid && touched.description;
   const priceMahamIsInvalid = !enteredMahamPriceIsValid && touched.mahamPrice;
   const priceCustomerIsInvalid =
-    !enteredCustomemPriceIsValid && touched.customerPrice;
+    !enteredCustomerPriceIsValid && touched.customerPrice;
   const filterIsInvalid = !enteredFilterIsValid && touched.filter;
+  const imageIsInvalid = !enteredImageIsValid && touched.image;
+  const videoIsInvalid = !enteredVideoIsValid && touched.video;
+  const idIsInvalid = !enteredIdIsValid && touched.id;
 
-  // const imageIsInvalid = !enteredImageIsValid && touched.image;
-  // const videoIsInvalid = !enteredVideoIsValid && touched.video;
   // const plateIsInvalid = !enteredPlateIsValid && touched.plate;
-  // const idIsInvalid = !enteredIdIsValid && touched.id;
   // const walletAddressIsInvalid =
   // !enteredWalletAddressIsValid && touched.walletAddress;
 
-  let formIsValid = false;
+  let formIsValidForAdding = false;
+  let formIsValidForEditing = false;
 
   if (
     enteredFilterIsValid &&
@@ -397,15 +398,34 @@ const ConfingEstate = ({ method, estate }) => {
     enteredTypeIsValid &&
     enteredDescriptionIsValid &&
     enteredMahamPriceIsValid &&
-    enteredCustomemPriceIsValid
+    enteredCustomerPriceIsValid &&
+    enteredImageIsValid &&
+    enteredVideoIsValid &&
+    enteredIdIsValid
 
-    // enteredImageIsValid &&
-    // enteredVideoIsValid &&
     // enteredPlateIsValid &&
-    // enteredIdIsValid &&
     // enteredWalletAddressIsValid
   ) {
-    formIsValid = true;
+    formIsValidForAdding = true;
+  }
+
+  if (
+    enteredFilterIsValid &&
+    enteredTitleIsValid &&
+    enteredCountryNameIsValid &&
+    enteredCityNameIsValid &&
+    enteredStreetNameIsValid &&
+    enteredNumberOfPlateIsValid &&
+    enteredNumberOfFloorIsValid &&
+    enteredNumberOfUnitIsValid &&
+    enteredLocationIsValid &&
+    enteredTypeIsValid &&
+    enteredDescriptionIsValid &&
+    enteredMahamPriceIsValid
+
+    // enteredPlateIsValid &&
+  ) {
+    formIsValidForAdding = true;
   }
 
   const blurHandler = (event) => {
@@ -452,21 +472,18 @@ const ConfingEstate = ({ method, estate }) => {
   const customerPriceClass = priceCustomerIsInvalid
     ? `${styles.invalid} ${styles.textinput} `
     : `${styles.textinput} `;
+  const imageClass = imageIsInvalid
+    ? `${styles.invalid} ${styles.previewContainer} `
+    : `${styles.previewContainer} `;
+  const videoClass = videoIsInvalid
+    ? `${styles.invalid} ${styles.previewContainer2} `
+    : `${styles.previewContainer2} `;
+  const idClass = idIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
 
-  const imageClass = styles.previewContainer;
-  // imageIsInvalid
-  //   ? `${styles.invalid} ${styles.previewContainer} `
-  //   : `${styles.previewContainer} `;
-  const videoClass = styles.previewContainer2;
-  //  videoIsInvalid
-  //   ? `${styles.invalid} ${styles.previewContainer2} `
-  //   : `${styles.previewContainer2} `;
   const plateClass = styles.textinput;
   // plateIsInvalid
-  //   ? `${styles.invalid} ${styles.textinput} `
-  //   : `${styles.textinput} `;
-  const idClass = styles.textinput;
-  // idIsInvalid
   //   ? `${styles.invalid} ${styles.textinput} `
   //   : `${styles.textinput} `;
   const walletAddressClass = styles.textinput;
@@ -490,17 +507,24 @@ const ConfingEstate = ({ method, estate }) => {
       mahamPrice: true,
       customerPrice: true,
       filter: true,
-
-      // image: true,
-      // video: true,
-      // plate: true,
+      image: true,
+      video: true,
       id: true,
+
+      // plate: true,
       // walletAddress: true,
     });
 
-    if (!formIsValid) {
-      return;
+    if (estate) {
+      if (!formIsValidForEditing) {
+        return;
+      }
+    } else {
+      if (!formIsValidForAdding) {
+        return;
+      }
     }
+
     console.log("entered submit handler");
     // event.preventDefault();
 
@@ -516,11 +540,12 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("numberOfPlate", information.numberOfPlate);
     formData.append("numberOfFloor", information.numberOfFloor);
     formData.append("location", information.location);
-
     formData.append("mahamPrice", information.mahamPrice);
-    formData.append("customerPrice", information.customerPrice);
-
     formData.append("type", information.type);
+
+    if (estate) {
+      formData.append("customerPrice", information.customerPrice);
+    }
 
     formData.append("checkBedroom", bedroom.checked);
     if (bedroom.checked) {
@@ -624,15 +649,17 @@ const ConfingEstate = ({ method, estate }) => {
 
     formData.append("description", information.description);
 
-    selectedImages.forEach((file) => {
-      console.log(file);
-      formData.append("images", file);
-    });
+    if (selectedImages.length > 0) {
+      selectedImages.forEach((file) => {
+        formData.append("images", file);
+      });
+    }
 
-    console.log(selectedImages);
-    selectedVideo.forEach((file) => {
-      formData.append("video", file);
-    });
+    if (selectedVideo.length > 0) {
+      selectedVideo.forEach((file) => {
+        formData.append("video", file);
+      });
+    }
 
     let url = "http://localhost:5000/admin/estates";
 
@@ -640,12 +667,11 @@ const ConfingEstate = ({ method, estate }) => {
       const estateId = estate._id;
       url = "http://localhost:5000/admin/estates/" + estateId;
     }
-    console.log("HEELLOOO");
+
     const response = await fetch(url, {
       method: method,
       body: formData,
     });
-    console.log(response);
 
     console.log("finished submit");
 
@@ -675,28 +701,13 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const idManipulataionHandler = async () => {
-    setTouched({
+    setTouched((prev) => ({
+      ...prev,
       title: true,
-      countryName: false,
       cityName: true,
       streetName: true,
-      numberOfPlate: false,
-      numberOfFloor: false,
-      numberOfUnit: false,
-      location: false,
-      type: false,
-      description: false,
-      image: false,
-      mahamPrice: false,
-      customerPrice: false,
-      filter: false,
+    }));
 
-      // image: true,
-      // video: true,
-      // plate: true,
-      id: true,
-      // walletAddress: true,
-    });
     if (
       !(
         enteredTitleIsValid &&
@@ -706,6 +717,7 @@ const ConfingEstate = ({ method, estate }) => {
     ) {
       return;
     }
+    
     const formData = new FormData();
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
@@ -798,7 +810,6 @@ const ConfingEstate = ({ method, estate }) => {
                     {option}
                   </option>
                 ))}
-                <option value="fdsmkfds">dsaf</option>
               </select>
             </div>
           </div>
@@ -891,54 +902,58 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
 
-        <div className={styles.IdAndWallet}>
-          <div className={styles.IdAndMint}>
-            <div className={styles.wrapper4}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="number"
-                  className={idClass}
-                  value={information.id}
-                  // onChange={basicEventHandler}
-                  name="id"
-                  disabled
-                  placeholder="Id"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                {/* <label className={styles.label}>Id</label> */}
+        {!estate && (
+          <div className={styles.IdAndWallet}>
+            <div className={styles.IdAndMint}>
+              <div className={styles.wrapper4}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="number"
+                    className={idClass}
+                    value={information.id}
+                    // onChange={basicEventHandler}
+                    name="id"
+                    disabled
+                    placeholder="Id"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  {/* <label className={styles.label}>Id</label> */}
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={idManipulataionHandler}
+                className={styles.MintBtn}
+              >
+                {estate ? "Burn" : "Mint"}
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={idManipulataionHandler}
-              className={styles.MintBtn}
-            >
-              {estate ? "Burn" : "Mint"}
-            </button>
-          </div>
-          <div className={styles.IdAndMint}>
-            <div className={styles.wrapper4}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="number"
-                  className={walletAddressClass}
-                  // value={information.location}
-                  // onChange={basicEventHandler}
-                  name="walletAddress"
-                  disabled
-                  placeholder="Wallet Address"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                {/* <label className={styles.label}>Id</label> */}
+            <div className={styles.IdAndMint}>
+              <div className={styles.wrapper4}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="number"
+                    className={walletAddressClass}
+                    // value={information.location}
+                    // onChange={basicEventHandler}
+                    name="walletAddress"
+                    disabled
+                    placeholder="Wallet Address"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  {/* <label className={styles.label}>Id</label> */}
+                </div>
               </div>
+              <button className={styles.ConnectWalletBtn}>
+                Connect Wallet
+              </button>
             </div>
-            <button className={styles.ConnectWalletBtn}>Connect Wallet</button>
           </div>
-        </div>
+        )}
 
         <div className={styles.row}>
           <div className={styles.column}>
@@ -975,21 +990,23 @@ const ConfingEstate = ({ method, estate }) => {
                 <label className={styles.label}>Maham price</label>
               </div>
             </div>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="number"
-                  className={customerPriceClass}
-                  value={information.customerPrice}
-                  onChange={basicEventHandler}
-                  name="customerPrice"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Customer Price</label>
+            {!estate && (
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="number"
+                    className={customerPriceClass}
+                    value={information.customerPrice}
+                    onChange={basicEventHandler}
+                    name="customerPrice"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Customer Price</label>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

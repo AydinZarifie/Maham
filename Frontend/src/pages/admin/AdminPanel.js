@@ -7,6 +7,9 @@ import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
 
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [error, setError] = useState(false);
   const filter = useRef();
   const overlay = useRef();
 
@@ -27,7 +30,7 @@ const AdminPanel = () => {
     formData.append("country", country);
     formData.append("city", city);
 
-    const response = await fetch("url", {
+    const response = await fetch("", {
       method: "POST",
       body: formData,
     });
@@ -59,16 +62,36 @@ const AdminPanel = () => {
       method: "POST",
       body: formData,
     });
+    if (response.ok) {
+      setError(null);
+      alert("Admin successfully added");
+    }
+    if (response.status == 401) {
+      setError("This email has an account");
+    }
   };
 
   useEffect(() => {
     const fetchAdmins = async () => {
-      const data = await fetch("url");
+      const data = await fetch("http://localhost:5000/admin/panel/getAdmins");
       const json = await data.json();
       setAdmins(json.data);
     };
     fetchAdmins();
+
+    const fetchCountries = async () => {
+      const data = await fetch("url");
+      const json = await data.json();
+      setCountries(json.data);
+    };
+    fetchCountries();
   }, []);
+
+  const cityFetch = async (name) => {
+    const response = await fetch("url" + name);
+    const json = await response.json();
+    setCities(json.data);
+  };
 
   return (
     <div className={styles.Main}>
@@ -107,7 +130,15 @@ const AdminPanel = () => {
           </a>
         </div>
 
-        <Outlet context={{ submitAddAdminHandler, admins }} />
+        <Outlet
+          context={{
+            error,
+            submitAddAdminHandler,
+            admins,
+            countries,
+            cityFetch,
+          }}
+        />
       </div>
 
       <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div>
