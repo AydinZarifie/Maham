@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const estateDB = require('./estate.js');
 
 const country = new mongoose.Schema({
+	country_code: {
+		type: String,
+	},
 	country_name: {
 		type: String,
 	},
@@ -16,6 +18,12 @@ const country = new mongoose.Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'real-estates',
+		},
+	],
+	country_admins: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Admin',
 		},
 	],
 });

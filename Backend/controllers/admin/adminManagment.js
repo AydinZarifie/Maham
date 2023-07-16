@@ -95,15 +95,14 @@ assignCityCode = (countryName, cityName) => {
 };
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
-	//////////////  execute the query
-	const features = new APIFeatures(countryDB.find(), req.query)
-		.filter()
-		.sort()
-		.fieldLimit()
-		.paging();
-	const countries = await features.query;
-
+	const countries = await countryDB.find();
+	if (!countries) {
+		return next(
+			new AppError('there is no country , please create a country first', 404)
+		);
+	}
 	return res.status(200).json({
+		message: ' success',
 		data: countries,
 	});
 });
@@ -149,11 +148,9 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 	if (!req.files.images) {
 		return next(new AppError('no country logo provided', 400));
 	}
-
 	const newCountry = new countryDB({
 		country_name: countryName,
 		country_logo: countryLogo,
-		country_cities: [],
 	});
 
 	await assignCountryCode(countryName);
@@ -181,7 +178,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 			// if all is ok , adds the city to cities collection of chosen country
 		} else {
-			country.country_cities.push(exports.beutifyFunc(req.body.cityName));
+			country.country_cities.push(exports.beautify(req.body.cityName));
 			await assignCityCode(req.body.countryName, req.body.cityName);
 			await country.save();
 		}

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-
 const adminAuthController = require('../../controllers/admin/adminAuth');
 
 router.post(
@@ -11,6 +10,7 @@ router.post(
 );
 
 router.post('/auth/login', adminAuthController.logIn);
+
 router.post('/auth/verification', adminAuthController.verificationCode);
 
 module.exports = router;

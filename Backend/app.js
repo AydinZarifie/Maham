@@ -1,11 +1,12 @@
 const express = require('express');
-const cookieParser = require('cookie-parser'); /////////////////////////////////////
+// const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
+const session = require('express-session');
 const cors = require('cors');
 //////////////////////////////////////////////
 const adminPage_Router = require('./routes/admin/adminPage');
@@ -37,6 +38,9 @@ const storage = multer.diskStorage({
 					fs.mkdirSync(path);
 					cb(null, path);
 				}
+			}
+			if (req.body.filterName) {
+				cb(null, './uploads/images/filters/');
 			} else {
 				cb(null, './uploads/images/country/');
 			}
@@ -97,11 +101,29 @@ const upload = multer({
 	},
 ]);
 
+app.use(globalErrorHandler);
+
+app.use(
+	cors({
+		origin: 'http://localhost:3000',
+		credentials: true,
+	})
+);
+
 app.use(express.json());
 
-///////////////////////////////
-app.use(cookieParser());
-///////////////////////////////
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET_KEY,
+		saveUninitialized: false,
+		resave: true,
+		cookie: {
+			maxAge: 1000 * 10 * 60,
+			sameSite: 'lax',
+			secure: false,
+		},
+	})
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -109,7 +131,7 @@ app.use(
 	'uploads/static/',
 	express.static(path.join(__dirname, '/uploads/static'))
 );
-
+app.use('/uploads', express.static('uploads'));
 app.use(upload);
 
 app.use((req, res, next) => {
@@ -122,7 +144,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use(cors({ credentials: true, origin: true }));
+// app.use(cors({ credentials: true, origin: true }));
 
 app.use('/admin', adminPage_Router);
 app.use('/admin', managmentPage_Router);
@@ -140,8 +162,6 @@ mongoose.connect(DBlocal).then(() => {
 app.all('*', (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
-
-app.use(globalErrorHandler);
 
 process.on('unhandledRejection', (err) => {
 	console.log('UNHANDLED REJECTION!');

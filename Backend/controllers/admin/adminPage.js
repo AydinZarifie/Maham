@@ -19,9 +19,8 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	const countries = await countryDB.find();
 	if (!countries) {
-		console.log(2);
 		return next(
-			new AppError('there is no countries , please create country first', 404)
+			new AppError('there is no country , please create the country first', 404)
 		);
 	}
 	return res.status(200).json({
@@ -63,7 +62,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		country_name: `${req.body.countryName}`,
 	});
 	if (!country) {
-		return new AppError('please create country first', 404);
+		return next(new AppError('please create country first', 404));
 	}
 	const Id = country.id;
 
@@ -145,7 +144,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	const estate = new estateDB({
 		///////////////////////////////////////////////////////////// setState :
 		// stateId : ,
-		estate_country: Id,
+		estate_country_ref: Id,
 		estate_title: inputs.estate_title,
 		city_name: inputs.city_name,
 		country_name: inputs.country_name,
@@ -399,27 +398,25 @@ exports.getEditEstate = async (req, res) => {
 	res.status(200).json(estate);
 };
 
-function generateUniqueNumber(data1, data2, data3) {
-	let datas = [];
-	const length = 9;
+function generateUniqueNumber() {
+	const length = 10;
 	// Additional data (e.g., current timestamp)
 	const additionalData = new Date().getTime().toString();
 
-	datas.push(data1, data2, data3, additionalData);
-	const combinedData = datas.join('');
-
 	// Apply SHA-256 hash function
-	const hash = crypto.createHash('sha256').update(combinedData).digest('hex');
+	const hash = crypto.createHash('sha256').update(additionalData).digest('hex');
+	console.log(hash);
+	const number = parseInt(hash.slice(0, length - 1), 16);
+	console.log(number);
 
-	const number = parseInt(hash.slice(0, length), 16);
-	return number;
+	return number + 483;
 }
 
-exports.generateMint = catchAsync(async (req, res, next) => {
+exports.generateMint = (req, res, next) => {
 	// specify the length of the mint
-	const length = 10;
+	const length = 8;
 
-	const fields = ['cityName', 'countryName', 'title', 'type'];
+	const fields = ['cityName', 'countryName'];
 
 	const modifiedValues = {};
 
@@ -431,31 +428,22 @@ exports.generateMint = catchAsync(async (req, res, next) => {
 	const countryCode = countryCityRef[modifiedValues.countryName].countryRefCode;
 	const cityCode =
 		countryCityRef[modifiedValues.countryName][modifiedValues.cityName];
-	const typeCode = typeRef[modifiedValues.type];
 
-	if (!countryCode || !cityCode || !typeCode) {
-		return next(
-			new AppError('invalid country or city name or estate Type', 400)
-		);
+	if (!countryCode || !cityCode) {
+		return next(new AppError('invalid country or city name', 400));
 	}
 
-	const randomHash = await generateUniqueNumber(
-		countryCode,
-		cityCode,
-		modifiedValues.title
-	);
+	const randomHash = generateUniqueNumber();
+	console.log(randomHash);
 
-	const mint = (countryCode + cityCode + typeCode + randomHash).slice(
-		0,
-		length - 1
-	);
+	const mint = (countryCode + cityCode + randomHash).slice(0, length - 1);
 	console.log(mint);
 	return res.status(200).json({
 		status: 'seccess',
 		message: 'mint created succesfully ',
 		data: mint,
 	});
-});
+};
 
 // every field in requset object that its value is String >> changes to lowercase
 exports.toLowerCase = (req, res, next) => {
@@ -466,6 +454,27 @@ exports.toLowerCase = (req, res, next) => {
 	}
 	next();
 };
+
+exports.postFilter = catchAsync(async (req, res) => {
+	console.log('hep');
+	const filterName = req.body.filterName;
+	console.log(req.files);
+	const imageUrl = req.files.images[0].path;
+	console.log(imageUrl);
+
+	if (!filterName || !imageUrl) {
+		return res.status(403).json({ message: 'filtername or image was empty' });
+	}
+
+	const filter = new filterDB({
+		filterName: filterName,
+		filterImageUrl: imageUrl,
+	});
+
+	await filter.save();
+
+	return res.status(200).json({ message: 'Successfully' });
+});
 
 exports.deleteEstate = catchAsync(async (req, res, next) => {
 	const est = await estateDB.findByIdAndDelete(req.params.estateId);

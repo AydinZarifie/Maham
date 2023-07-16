@@ -15,7 +15,6 @@ const signToken = (email, adminId) => {
 		expiresIn: process.env.JWT_EXPIRES_IN,
 	});
 };
-//
 
 exports.signUp = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
@@ -51,8 +50,8 @@ exports.signUp = catchAsync(async (req, res, next) => {
 	const hashedPassword = await bcrypt.hash(password, 12);
 
 	const admin = new adminDB({
-		firstname: firstName,
-		lastname: lastName,
+		first_name: firstName,
+		last_name: lastName,
 		password: hashedPassword,
 		admin_type: adminType,
 		phone_number: phoneNumber,
@@ -64,37 +63,45 @@ exports.signUp = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		message: 'signed up successfully',
+		number: admin.testField,
 	});
 	// catch (error) {}
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
-	const { password, inputVerificationCode } = req.body;
+	const { password, VerificationCode } = req.body;
 	const email = req.body.username;
+
+	console.log(req.session.verification.toString());
+	console.log(verificationCode);
 
 	// 1) check if email or password provided
 	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
 
-	// 2) check if user exists && password is correct
+	// 3) check if user exists && password is correct
 	const admin = await adminDB.findOne({ email }).select('+password');
 
 	if (!admin) {
-		return next(new AppError('admin not found', 400));
+		return next(new AppError('admin not found', 404));
 	}
 
 	const isEqual = await bcrypt.compare(password, admin.password);
 	if (!isEqual) {
 		return next(
-			new AppError('username or password is incorrect ', 401) //not authorized
+			new AppError('username or password is incorrect ', 405) //not authorized
 		);
 	}
 
 	///////////////////////////////////////////////////////////////
+	if (verificationCode !== req.session.verification.toString()) {
+		return next(new AppError('verification code is not valid', 403));
+	}
+	///////////////////////////////////////////////////////////////
 	console.log(req.cookies);
 	console.log(req.cookies.verifyToken);
-	if (req.cookies.verifyToken.toString() !== inputVerificationCode) {
+	if (req.session.verifyToken.toString() !== VerificationCode) {
 		return next(
 			new AppError('token is not correct', 401) //not authorized
 		);
@@ -118,26 +125,19 @@ exports.verificationCode = async (req, res) => {
 	const admin = await adminDB.findOne({ email }).select('+password');
 
 	if (!admin) {
-		return res.status(401).json({
-			message: 'wrong email',
-		});
+		return next(new AppError('Wrong email', 401));
 	}
 
 	const isEqual = await bcrypt.compare(password, admin.password);
 
 	if (!isEqual) {
-		return res.status(401).json({
-			message: 'password wrong',
-		});
+		return next(new AppError('Wrong password', 401));
 	}
 
 	const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
 	////////////////////////////////////////////////////
-	res.cookie('verifyToken', verificationCode, {
-		expires: new Date(Date.now() + 180000),
-		httpOnly: false,
-	});
+	req.session.verification = verificationCode;
 	////////////////////////////////////////////////////
 	console.log(verificationCode);
 
