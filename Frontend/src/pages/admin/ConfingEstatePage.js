@@ -40,6 +40,13 @@ const ConfingEstate = ({ method, estate }) => {
     if (estate) {
       cityFetch(estate.country_name);
     }
+
+    const fetchFilterData = async () => {
+      const data = await fetch("url");
+      const json = await data.json();
+      setFilters(json.data);
+    };
+    fetchFilterData();
   }, []);
 
   const cityFetch = async (name) => {
@@ -344,7 +351,7 @@ const ConfingEstate = ({ method, estate }) => {
     // image: false,
     // video: false,
     // plate: false,
-    // id: false,
+    id: false,
     // walletAddress: false,
   });
 
@@ -487,7 +494,7 @@ const ConfingEstate = ({ method, estate }) => {
       // image: true,
       // video: true,
       // plate: true,
-      // id: true,
+      id: true,
       // walletAddress: true,
     });
 
@@ -687,7 +694,7 @@ const ConfingEstate = ({ method, estate }) => {
       // image: true,
       // video: true,
       // plate: true,
-      // id: true,
+      id: true,
       // walletAddress: true,
     });
     if (
@@ -727,7 +734,7 @@ const ConfingEstate = ({ method, estate }) => {
             onBlur={blurHandler}
           >
             <option value="">Choose an option</option>
-            <option value="pool">pool</option>
+            {/* <option value="pool">pool</option> */}
             {filters.map((option) => (
               <option key={option.filter_name} value={option.filter_name}>
                 {option.filter_name}
@@ -791,9 +798,7 @@ const ConfingEstate = ({ method, estate }) => {
                     {option}
                   </option>
                 ))}
-                <option  value="fdsmkfds">
-                   dsaf
-                  </option>
+                <option value="fdsmkfds">dsaf</option>
               </select>
             </div>
           </div>
@@ -905,7 +910,11 @@ const ConfingEstate = ({ method, estate }) => {
                 {/* <label className={styles.label}>Id</label> */}
               </div>
             </div>
-            <button type="button" onClick={idManipulataionHandler} className={styles.MintBtn}>
+            <button
+              type="button"
+              onClick={idManipulataionHandler}
+              className={styles.MintBtn}
+            >
               {estate ? "Burn" : "Mint"}
             </button>
           </div>

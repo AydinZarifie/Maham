@@ -20,13 +20,13 @@ const AdminPanel = () => {
     overlay.current.style.visibility = "visible";
   };
 
-  const submitFilterHandler =async (name, type, country, city) => {
+  const submitFilterHandler = async (name, type, country, city) => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("type", type);
     formData.append("country", country);
     formData.append("city", city);
-    
+
     const response = await fetch("url", {
       method: "POST",
       body: formData,
@@ -53,7 +53,7 @@ const AdminPanel = () => {
     formData.append("country", country);
     formData.append("city", city);
     formData.append("password", password);
-    formData.append("confirmPassword" ,confirmPassword )
+    formData.append("confirmPassword", confirmPassword);
 
     const response = await fetch("http://localhost:5000/admin/auth/signup", {
       method: "POST",
