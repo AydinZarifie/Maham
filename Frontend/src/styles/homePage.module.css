@@ -863,7 +863,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 68%;
+    width: 65%;
   }
 }
 @media (max-width: 430px) {

@@ -121,7 +121,7 @@ export default function Estates() {
 
   return (
     <>
-      <div className={homePageStyles.Menu} style={{ height: 0 }}>
+      <div className={homePageStyles.Menu} style={{ height: 0 ,border:'none'}}>
         {filterShown && (
           <FilterModal
             onSubmit={submitFilterSearch}
