@@ -24,13 +24,20 @@ const HomePage = () => {
   const [estates, setEstates] = useState([]);
 
   useEffect(() => {
-    const fetchFilters = async () => {
-      const data = await fetch("url");
+    const fetchEstatesData = async () => {
+      const data = await fetch("urlForEstates");
+      const json = await data.json();
+      setEstates(json.data);
+    };
+    fetchEstatesData();
+
+    const fetchFilterData = async () => {
+      const data = await fetch("urlForFilters");
       const json = await data.json();
       setFilters(json.data);
     };
-    fetchFilters();
-  }, [filters]);
+    fetchFilterData();
+  }, [filters, estates]);
 
   const submitSearch = async (searchPhrase) => {
     const formData = new FormData();
@@ -70,7 +77,9 @@ const HomePage = () => {
         filters={filters}
       />
       <div id="container2" className={styles.container2}>
-        <EstateItem props={estates} />
+        {estates.map((estate) => {
+          return <EstateItem props={estate} />;
+        })}
       </div>
     </>
   );

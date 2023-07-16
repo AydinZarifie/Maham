@@ -18,7 +18,6 @@ const Estates = () => {
             </Link>
           </div>
         ))}
-      
     </div>
   );
 };

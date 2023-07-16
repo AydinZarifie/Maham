@@ -1,7 +1,7 @@
 import styles from "../../styles/homePage.module.css";
 import overlayStyle from "../../styles/overlay.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import homeLogo from "../../images/home-home-svgrepo-com (1).svg";
 import creditLogo from "../../images/credit-card-2-svgrepo-com.svg";

@@ -20,6 +20,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(3px);
   cursor: pointer;
+  z-index: 9999;
 }
 
 @media (min-width: 701px) {
