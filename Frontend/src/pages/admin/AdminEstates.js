@@ -41,7 +41,7 @@ export default function Estates() {
     fetchData();
 
     const fetchFilterData = async () => {
-      const data = await fetch("urlForFilters");
+      const data = await fetch("http://localhost:5000/admin/getFilters");
       const json = await data.json();
       setFilters(json.data);
     };
@@ -60,8 +60,8 @@ export default function Estates() {
         body: formData,
       }
     );
+
     if (response.ok) {
-      setFilterShown(false);
     }
   };
 
@@ -121,7 +121,10 @@ export default function Estates() {
 
   return (
     <>
-      <div className={homePageStyles.Menu} style={{ height: 0 }}>
+      <div
+        className={homePageStyles.Menu}
+        style={{ height: 0, border: "none" }}
+      >
         {filterShown && (
           <FilterModal
             onSubmit={submitFilterSearch}

@@ -29,8 +29,13 @@ router
     .post(adminPage_Controller.postFilter);
 
 router
+    .route("/estate/getAddEstateFilters")
+    .get(adminPage_Controller.getAddEstateFilters);  
+    
+router
     .route("/getFilters")
-    .get(adminPage_Controller.getAllFilters);    
+    .get(adminPage_Controller.getAllFilters);
+
 
 
 module.exports = router;

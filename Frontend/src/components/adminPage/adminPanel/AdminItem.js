@@ -7,6 +7,7 @@ const AdminItem = (props) => {
   return (
     <div className={styles.Profile}>
       <div className={styles.profileChildDiv}>
+        {console.log(props)}
         {/* <img src={profileLogo} /> */}
         <svg
           width="64px"
@@ -48,11 +49,11 @@ const AdminItem = (props) => {
             />
           </g>
         </svg>
-        <h5>{props.name}</h5>
+        <h5>{props.firstname + " " + props.lastname}</h5>
       </div>
-      <h5>{props.type}</h5>
-      <h5>{props.country}</h5>
-      <h5>{props.city}</h5>
+      <h5>{props.admin_type}</h5>
+      <h5>{props.admin_country}</h5>
+      <h5>{props.admin_city}</h5>
 
       <div className={styles.profileChildDiv}>
         <button className={styles.EandDBtn}>

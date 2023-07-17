@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const Memcached = require('memcached');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
@@ -16,61 +15,56 @@ const signToken = (email, adminId) => {
 	});
 };
 
-exports.signUp = catchAsync(async (req, res, next) => {``
-	const error = validationResult(req);
-	if (!error.isEmpty()) {
-		console.log(error.array());
-		return res.status(422).json({
-			message: 'Error 422',
-		});
-	}
+exports.signUp =async (req, res, next) => {
 
-	// getting information from request body
-	const {
-		firstName,
-		lastName,
-		password,
-		email,
-		confirmPassword,
-		adminType,
-		phoneNumber,
-	} = req.body;
+  try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      console.log(error.array());
+      return res.status(422).json({
+        message: 'Error 422',
+      });
+    }
+  
+    // getting information from request body
+    const {
+      firstName,
+      lastName,
+      password,
+      email,
+      confirmPassword,
+      adminType,
+      phoneNumber,
+    } = req.body;
 
-  const checkEmail = await adminDB.find({email});
-  const checkPhone = await adminDB.find({phone_number : phoneNumber})
-
-  if(checkEmail !== 'null' || checkPhone !== 'null'){
-    res.status(403).json({
-      message : 'admin already exist'
-    })
+    if (password !== confirmPassword) {
+      return next(
+        new AppError('password and password confirmation doesnt match', 400)
+      );
+    }
+  
+    const hashedPassword = await bcrypt.hash(password, 12);
+  
+    const admin = new adminDB({
+      firstname: firstName,
+      lastname: lastName,
+      password: hashedPassword,
+      admin_type: adminType,
+      phone_number: phoneNumber,
+      email: email,
+    });
+  
+    await admin.save();
+  
+    return res.status(202).json({
+      status: 'success',
+      message: 'signed up successfully',
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(401).json({message : 'failed'})
   }
-
-
-	if (password !== confirmPassword) {
-		return next(
-			new AppError('password and password confirmation doesnt match', 400)
-		);
-	}
-
-	const hashedPassword = await bcrypt.hash(password, 12);
-
-	const admin = new adminDB({
-		firstname: firstName,
-		lastname: lastName,
-		password: hashedPassword,
-		admin_type: adminType,
-		phone_number: phoneNumber,
-		email: email,
-	});
-
-	await admin.save();
-
-	return res.status(202).json({
-		status: 'success',
-		message: 'signed up successfully',
-	});
-	// catch (error) {}
-});
+};
 
 exports.logIn = catchAsync(async (req, res, next) => {
   console.log("hellooo");

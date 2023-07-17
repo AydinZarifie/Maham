@@ -58,14 +58,15 @@ const Filters = (props) => {
         className={styles.FilterMenu}
       >
         <div className={styles.menuBig}>
-          {/* {props.filters.map((filter) => {
-            return <FilterItem key={filter.name} name={filter.name} img={filter.img} />;
-          })} */}
-          {data.map((item) => {
+          {console.log(props.filters)}
+          {props.filters.map((filter) => {
+            return <FilterItem key={filter.filterName} name={filter.filterName} img={filter.filterImageUrl} />;
+          })}
+          {/* {data.map((item) => {
             return (
               <FilterItem key={item.name} name={item.name} img={item.img} />
             );
-          })}
+          })} */}
         </div>
       </div>
 

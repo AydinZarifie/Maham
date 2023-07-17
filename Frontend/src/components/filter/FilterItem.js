@@ -5,8 +5,8 @@ const FilterItem = (props) => {
     <div className={styles.underline2} key={props.name}>
       <a href="#" className={styles.AfilterTag}>
         <img
-          src={require(`../../images/${props.img}`)}
-          // src={`http://localhost:5000/${props.img.replace(/\\/g, "/")}`}
+          // src={require(`../../images/${props.img}`)}
+          src={`http://localhost:5000/${props.img.replace(/\\/g, "/")}`}
           alt={props.name}
           className={styles.FilterIcn}
         />

@@ -18,6 +18,62 @@ const Estates = () => {
             </Link>
           </div>
         ))}
+      {/*  */}
+      {/* <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div>
+      <div className={styles.estateDiv}>
+        <EstateItem props={data} />
+        <Link>
+          <button className={styles.editButton}>Edit</button>
+        </Link>
+      </div> */}
+      {/*  */}
     </div>
   );
 };

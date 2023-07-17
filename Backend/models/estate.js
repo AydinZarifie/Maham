@@ -275,6 +275,9 @@ const estateSchema = new mongoose.Schema({
     getDocument:{
         type : Boolean
     },
+    filter:{
+        type:String
+    },
     //////////////////////////
 
     //import createdBy///////

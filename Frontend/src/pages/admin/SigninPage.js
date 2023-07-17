@@ -94,6 +94,8 @@ const Signin = () => {
       }
       if (response.status == 405) {
         setError("Email or password is not correct");
+      } else {
+        setError(null);
       }
     } catch (error) {
       console.error("Failed to send SMS!", error);
@@ -152,9 +154,10 @@ const Signin = () => {
       }
       if (response.status == 405) {
         setError("Email or password is not correct");
-      }
-      if (response.status == 401) {
+      } else if (response.status == 401) {
         setError("Entered code is invalid");
+      } else{
+        setError(null)
       }
     } catch (error) {
       // console.error("Signup failed!", error);

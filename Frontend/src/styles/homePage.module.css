@@ -306,7 +306,7 @@
   .row3 {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: center;
     gap: 3%;
     align-items: center;
     position: sticky;
@@ -325,7 +325,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 71%;
+    max-width: 71%;
     padding: 0 1%;
     margin-left: 5%;
     max-height: 80px;
@@ -361,7 +361,7 @@
   .menuBig {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     white-space: nowrap;
     gap: 22px;
   }
@@ -863,7 +863,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 68%;
+    width: 65%;
   }
 }
 @media (max-width: 430px) {

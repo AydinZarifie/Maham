@@ -29,8 +29,7 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res) => {
     
-    console.log("hellooo");
-    console.log(req.files);
+
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
@@ -45,6 +44,7 @@ exports.createEstate = catchAsync(async (req, res) => {
         maham_price : req.body.mahamPrice,
         customer_price : req.body.customerPrice,
         unit_number  : req.body.numberOfUnit,
+        filter_name : req.body.filter,
         imageUrl: req.files.images.map((el) => {
             return el.path;
         }),
@@ -125,6 +125,7 @@ exports.createEstate = catchAsync(async (req, res) => {
         maham_price : inputs.maham_price,
         // minor_street: inputs.minor_street,
         unit_number: inputs.unit_number ,
+        filter : inputs.filter_name,
         // postal_code: inputs.postal_code ,
         // estate_view: inputs.estate_view ,
         sell_position : true,
@@ -389,7 +390,7 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
     });
 }); 
 
-exports.getAllFilters = catchAsync(async (req,res,next) => {
+exports.getAddEstateFilters = catchAsync(async (req,res,next) => {
     const filter = await filterDB.find().select({filterName : 1 })
     
     return res.status(200).json({
@@ -411,9 +412,6 @@ exports.getCountry=  catchAsync(async(req,res) => {
 
 exports.getCities =  catchAsync(async(req,res) => {
     const country = req.params.countryName;
-
-    console.log("fuckkkkkkkkkkkkkkkkkk");
-
     const country_name = await countryDB.find({country_name : country});
 
     console.log(country_name[0].cities);
@@ -443,6 +441,10 @@ exports.postFilter = catchAsync(async (req,res) => {
 
 })
 
+exports.getAllFilters = catchAsync(async (req,res) => {
+    const filters = await filterDB.find();
+    return res.status(200).json({data : filters});
+})
 
 const clearImage = async (filePath) => {
     filePath.forEach(async (imagePath) => {
