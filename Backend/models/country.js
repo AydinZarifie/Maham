@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const estateDB = require('./estate.js');
 
-const country = new mongoose.Schema({
+const countrySchema = new mongoose.Schema({
+	country_code: {
+		type: String,
+	},
 	country_name: {
 		type: String,
 	},
@@ -12,12 +14,40 @@ const country = new mongoose.Schema({
 	country_logo: {
 		type: String,
 	},
+	available_mints: {
+		type: [],
+		default: [],
+	},
+	last_mints: {
+		type: Object,
+		default: {},
+	},
 	country_estates: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'real-estates',
 		},
 	],
+	country_admins: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Admin',
+		},
+	],
 });
 
-module.exports = mongoose.model('Country', country);
+countrySchema.virtual('totalCities').get(function () {
+	return this.country_cities.length;
+});
+
+countrySchema.virtual('totalEstates').get(function () {
+	return this.country_Estates.length;
+});
+
+// country.pre('save', function () {
+// 	if (!this.isNew) return next();
+// 	totalCountries++;
+// 	next();
+// });
+
+module.exports = mongoose.model('Country', countrySchema);

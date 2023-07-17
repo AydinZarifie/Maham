@@ -3,10 +3,12 @@ const nodemailer = require('nodemailer');
 const sendEmail = async (options) => {
 	// 1) create transporter >>> like gmail
 	const transporter = nodemailer.createTransport({
-		// service: 'Gmail',
+		// service: 'gmail',
 		host: process.env.EMAIL_HOST,
 		port: process.env.EMAIL_PORT,
 		auth: {
+			// user: 'aydinzarifieaszo@gmail.com',
+			// pass: 'rwtrwybhtbugnqxc',
 			user: process.env.EMAIL_USERNAME,
 			pass: process.env.EMAIL_PASSWORD,
 		},
@@ -16,6 +18,7 @@ const sendEmail = async (options) => {
 	// 2) set options
 	const mailOptions = {
 		from: 'moein Agasi <gartalTraxtor345@yahoo.com>',
+		// from: 'aydinzarifieaszo@gmail.com',
 		to: options.email,
 		subject: options.subject,
 		text: options.message,
@@ -294,13 +297,13 @@ const sendEmail = async (options) => {
 		    </p>
 		  </div>
 		</div>`,
-		attachments: [
-			{
-				filename: 'bunnybunny.jpg',
-				path: './public/images/bunnybunny.jpg',
-				cid: 'myImage', // Content ID of the image
-			},
-		],
+		// attachments: [
+		// 	{
+		// 		filename: 'bunnybunny.jpg',
+		// 		path: './public/images/bunnybunny.jpg',
+		// 		cid: 'myImage', // Content ID of the image
+		// 	},
+		// ],
 	};
 
 	// 3) send email

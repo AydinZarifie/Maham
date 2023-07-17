@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const countryDB = require('./country');
+const AppError = require('../utilities/appError');
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema
@@ -180,9 +182,6 @@ const estateFacilitiesSchema = new mongoose.Schema({
 });
 
 const estateSchema = new mongoose.Schema({
-	estateId: {
-		type: String,
-	},
 	country_name: {
 		type: String,
 		set: (a) => (a === '' ? undefined : a),
@@ -224,7 +223,15 @@ const estateSchema = new mongoose.Schema({
 		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},
-	price: {
+	costumer_price: {
+		type: String,
+		set: (a) => (a === '' ? undefined : a),
+	},
+	maham_price: {
+		type: String,
+		set: (a) => (a === '' ? undefined : a),
+	},
+	filter: {
 		type: String,
 		set: (a) => (a === '' ? undefined : a),
 	},
@@ -291,15 +298,16 @@ const estateSchema = new mongoose.Schema({
 
 	estate_rooms: [estateRoomsSchema],
 	estate_facilities: [estateFacilitiesSchema],
-	estate_country: [
+	estate_country_ref: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Country',
-			required: [true, 'estate must have belong to a country'],
+			required: [true, 'estate must belong to a country'],
 		},
 	],
 });
 
+// refrences the estate to its country model
 estateSchema.pre('save', async function (next) {
 	const country = await countryDB.findOne({
 		country_name: this.country_name,
@@ -311,12 +319,13 @@ estateSchema.pre('save', async function (next) {
 		);
 	}
 
-	this.estate_country = country._id;
+	this.estate_country_ref = country._id;
 	next();
 });
 
+// puts the estates id inside the countries estates array
 estateSchema.post('save', async function (doc, next) {
-	const refCountry = await countryDB.findById(doc.estate_country);
+	const refCountry = await countryDB.findById(doc.estate_country_ref);
 	if (!refCountry) {
 		next(
 			new AppError('country does not exist , please create country first ', 404)
@@ -324,6 +333,17 @@ estateSchema.post('save', async function (doc, next) {
 	}
 	refCountry.country_estates.push(doc.id);
 	refCountry.save();
+});
+
+estateSchema.pre('remove', async function () {
+	const deletedId = this._id;
+	const deletedMint = this.mint_id;
+	const country = await countryDB.findOne({ country_name: this.country_name });
+	country.country_estates.splice(country.country_estates.indexOf(deletedId), 1);
+	countryDB.updateOne(
+		{ _id: country._id },
+		{ $push: { available_mints: deletedMint } }
+	);
 });
 
 module.exports = mongoose.model('real-estates', estateSchema);

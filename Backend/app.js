@@ -1,15 +1,18 @@
 const express = require('express');
-const cookieParser = require('cookie-parser'); /////////////////////////////////////
+// const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
+const session = require('express-session');
+const cors = require('cors');
 //////////////////////////////////////////////
-const adminPage_Router = require('./routes/admin/adminPage');
-const managmentPage_Router = require('./routes/admin/adminManagment');
-const adminAuth_Router = require('./routes/admin/adminAuth');
+const adminPage_router = require('./routes/admin/adminPage');
+const managmentPage_router = require('./routes/admin/adminManagment');
+const adminAuth_router = require('./routes/admin/adminAuth');
+const adminPanel_router = require('./routes/admin/adminAuth');
 //////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/appError');
@@ -36,8 +39,11 @@ const storage = multer.diskStorage({
 					fs.mkdirSync(path);
 					cb(null, path);
 				}
+			}
+			if (req.body.filterName) {
+				cb(null, './uploads/images/filters/');
 			} else {
-				cb(null, './uploads/images/country/');
+				cb(null, './uploads/images/countries/');
 			}
 		} else if (file.fieldname == 'video') {
 			cb(null, './uploads/videos/');
@@ -96,34 +102,51 @@ const upload = multer({
 	},
 ]);
 
+app.use(
+	cors({
+		origin: 'http://localhost:3000',
+		credentials: true,
+	})
+);
+
 app.use(express.json());
-
-///////////////////////////////
-app.use(cookieParser());
-///////////////////////////////
-
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use('/uploads', express.static('uploads'));
 app.use(
 	'uploads/static/',
 	express.static(path.join(__dirname, '/uploads/static'))
 );
-
 app.use(upload);
 
-app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader(
-		'Access-Control-Allow-Methods',
-		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-	);
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-	next();
-});
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET_KEY,
+		saveUninitialized: false,
+		resave: true,
+		cookie: {
+			maxAge: 1000 * 10 * 60,
+			sameSite: 'lax',
+			secure: false,
+		},
+	})
+);
 
-app.use('/admin', adminPage_Router);
-app.use('/admin', managmentPage_Router);
-app.use('/admin', adminAuth_Router);
+// app.use((req, res, next) => {
+// 	res.setHeader('Access-Control-Allow-Origin', '*');
+// 	res.setHeader(
+// 		'Access-Control-Allow-Methods',
+// 		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+// 	);
+// 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// 	next();
+// });
+
+// app.use(cors({ credentials: true, origin: true }));
+
+app.use('/admin', adminPage_router);
+app.use('/admin', managmentPage_router);
+app.use('/admin', adminAuth_router);
+app.use('/admin', adminPanel_router);
 
 const DBlocal = process.env.LOCAL_DATABASE;
 const port = process.env.PORT;

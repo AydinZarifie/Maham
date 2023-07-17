@@ -34,11 +34,12 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		confirmPassword,
 		adminType,
 		phoneNumber,
+		countryName,
 	} = req.body;
 
 	if (password !== confirmPassword) {
 		return next(
-			new AppError('password and password confirmation doesnt match', 400)
+			new AppError('password and password confirmation does not match', 400)
 		);
 	}
 
@@ -50,12 +51,13 @@ exports.signUp = catchAsync(async (req, res, next) => {
 	const hashedPassword = await bcrypt.hash(password, 12);
 
 	const admin = new adminDB({
-		firstname: firstName,
-		lastname: lastName,
+		first_name: firstName,
+		last_name: lastName,
 		password: hashedPassword,
 		admin_type: adminType,
 		phone_number: phoneNumber,
 		email: email,
+		admin_country: countryName,
 	});
 
 	await admin.save();
@@ -63,43 +65,44 @@ exports.signUp = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		message: 'signed up successfully',
+		number: admin.testField,
 	});
 	// catch (error) {}
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
-	const { password, inputVerificationCode } = req.body;
-	const email = req.body.username;
+	const { password, email, verificationCode } = req.body;
+
+	console.log(verificationCode);
+	console.log(req.session.verification.toString());
 
 	// 1) check if email or password provided
 	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
 
-	// 2) check if user exists && password is correct
+	// 3) check if user exists && password is correct
 	const admin = await adminDB.findOne({ email }).select('+password');
 
 	if (!admin) {
-		return next(new AppError('admin not found', 400));
+		return next(new AppError('admin not found', 404));
 	}
 
 	const isEqual = await bcrypt.compare(password, admin.password);
 	if (!isEqual) {
 		return next(
-			new AppError('username or password is incorrect ', 401) //not authorized
+			new AppError('email or password is incorrect ', 405) //not authorized
 		);
 	}
 
-	///////////////////////////////////////////////////////////////
-	if (req.cookies.verifyToken !== inputVerificationCode) {
-		return next(
-			new AppError('token is not correct', 401) //not authorized
-		);
+	if (verificationCode !== req.session.verification.toString()) {
+		return next(new AppError('verification code is not valid', 401));
 	}
+
 	///////////////////////////////////////////////////////////////
 
 	// 3) if everything okay , create & send token to client
-	const token = await signToken(email, admin._id);
+	const token = signToken(email, admin._id);
 
 	return res.status(202).json({
 		status: 'success',
@@ -108,43 +111,40 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.verificationCode = async (req, res) => {
-	const email = req.body.username;
-	const password = req.body.password;
-
-	const admin = await adminDB.findOne({ email }).select('+password');
-
-	if (!admin) {
-		return res.status(401).json({
-			message: 'wrong email',
-		});
-	}
-
-	const isEqual = await bcrypt.compare(password, admin.password);
-
-	if (!isEqual) {
-		return res.status(401).json({
-			message: 'password wrong',
-		});
-	}
-
-	const verificationCode = Math.floor(1000 + Math.random() * 9000);
-
-	////////////////////////////////////////////////////
-	res.cookie('verifyToken', verificationCode, {
-		expires: new Date(Date.now() + 180000),
-		httpOnly: true,
-	});
-	////////////////////////////////////////////////////
-
-	const mailOptions = {
-		email: email,
-		subject: 'Ver',
-		text: 'hello there ',
-		verificationCode,
-	};
-
+exports.verificationCode = catchAsync(async (req, res, next) => {
 	try {
+		// const error = validationResult(req);
+		// if (!error.isEmpty()) {
+		// 	console.log(error.array());
+		// 	return res.status(405).json({
+		// 		message: 'Error 405',
+		// 	});
+		// }
+		const { email, password } = req.body;
+
+		const admin = await adminDB.findOne({ email }).select('+password');
+		if (!admin) {
+			return next(new AppError('Wrong email', 401));
+		}
+
+		const isEqual = await bcrypt.compare(password, admin.password);
+
+		if (!isEqual) {
+			return next(new AppError('Wrong password', 401));
+		}
+
+		const verificationCode = Math.floor(100000 + Math.random() * 9000);
+
+		req.session.verification = verificationCode;
+		console.log(verificationCode);
+
+		const mailOptions = {
+			email: email,
+			subject: 'Ver',
+			text: 'hello there ',
+			verificationCode,
+		};
+
 		await sendEmail(mailOptions);
 		return res.status(201).json({
 			message: 'Success',
@@ -152,7 +152,7 @@ exports.verificationCode = async (req, res) => {
 	} catch (err) {
 		console.log(err);
 	}
-};
+});
 
 // not complete
 exports.resetPassword = catchAsync(async (req, res, next) => {

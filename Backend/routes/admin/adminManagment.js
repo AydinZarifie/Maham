@@ -25,21 +25,21 @@ router
 	.get(managementController.getEstatesOfCCEasy);
 // .get(managementController.getEstatesOfCC, managementController.getAllEstates);
 
-router
-	.route('/managment/getTopGainers')
-	// .get(managementController.getTopGainersEasy);
-	.get(managementController.getTopGainers, managementController.getAllEstates);
+// router
+// 	.route('/managment/getTopGainers')
+// 	// .get(managementController.getTopGainersEasy);
+// 	.get(managementController.getTopGainers, managementController.getAllEstates);
 
-router
-	.route('/managment/getHighestVolume')
-	// .get(managementController.getHighestVolumeEasy);
-	.get(
-		managementController.getHighestVolume,
-		managementController.getAllEstates
-	);
+// router
+// 	.route('/managment/getHighestVolume')
+// 	// .get(managementController.getHighestVolumeEasy);
+// 	.get(
+// 		managementController.getHighestVolume,
+// 		managementController.getAllEstates
+// 	);
 
-router
-	.route('/managment/getCountriesInfo')
-	.get(managementController.getCountriesInfo);
+// router
+// 	.route('/managment/getCountriesInfo')
+// 	.get(managementController.getCountriesInfo);
 
 module.exports = router;

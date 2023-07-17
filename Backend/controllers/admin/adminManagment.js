@@ -3,107 +3,31 @@ const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
-const {
-	countryCityRef,
-} = require('./../../utilities/refrences/cityCountryRef.js');
-const fs = require('fs');
 ///////////////////////////////////////////////////
 
 exports.beautify = (str) => {
-	formattedstr = str.trim().toLowerCase().replace(/\s+/g, '_');
+	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
 	return formattedstr;
 };
 
-assignCountryCode = (countryname) => {
-	const formattedCountryName = exports.beautify(countryname);
-	console.log(formattedCountryName);
-	let countryCode;
-
-	// Check if the country already exists
-	if (countryCityRef[formattedCountryName]) {
-		return; // Country already exists, do nothing
-	}
-
-	const countryCount = countryCityRef.totalCountries + 1;
-
-	if (countryCount % 10 === countryCount) {
-		countryCode = String(countryCount).padStart(2, '0');
+exports.assignCode = (num) => {
+	if (num < 10) {
+		code = String(num).padStart(2, '0');
 	} else {
-		countryCode = countryCount.toString();
+		code = num.toString();
 	}
-
-	const updatedCountryCityRef = {
-		...countryCityRef,
-		[formattedCountryName]: {
-			countryRefCode: countryCode,
-			totalCities: 0,
-		},
-		totalCountries: countryCount,
-	};
-
-	// Update the countryCityRef object in the file
-	fs.writeFileSync(
-		`D:/maham/Maham/backend/utilities/refrences/cityCountryRef.js`,
-		`exports.countryCityRef = ${JSON.stringify(
-			updatedCountryCityRef,
-			null,
-			2
-		)};\n`,
-		{ flag: 'w' },
-		() => {
-			console.log('country refCode added successfully');
-		}
-	);
-};
-
-assignCityCode = (countryName, cityName) => {
-	const formattedCityName = exports.beautify(cityName);
-	const formattedCountryName = exports.beautify(countryName);
-
-	let cityCode;
-
-	// Check if the city already exists
-	if (countryCityRef[formattedCountryName][formattedCityName]) {
-		return; // City already exists, do nothing
-	}
-
-	const cityCount = countryCityRef[formattedCountryName].totalCities + 1;
-
-	if (cityCount % 10 === cityCount) {
-		cityCode = String(cityCount).padStart(2, '0');
-	} else {
-		cityCode = cityCount.toString();
-	}
-
-	countryCityRef[formattedCountryName][formattedCityName] = cityCode;
-
-	countryCityRef[formattedCountryName].totalCities = cityCount;
-
-	// Update the countryCityRef object in the file
-	const updatedContent = `exports.countryCityRef = ${JSON.stringify(
-		countryCityRef,
-		null,
-		2
-	)};\n`;
-
-	fs.writeFileSync(
-		`D:/maham/Maham/backend/utilities/refrences/cityCountryRef.js`,
-		updatedContent
-	);
-
-	console.log('Successfully updated countryCityRef');
+	return code;
 };
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
-	//////////////  execute the query
-	const features = new APIFeatures(countryDB.find(), req.query)
-		.filter()
-		.sort()
-		.fieldLimit()
-		.paging();
-	const countries = await features.query;
-
+	const countries = await countryDB.find();
+	if (!countries) {
+		return next(
+			new AppError('there is no country , please create a country first', 404)
+		);
+	}
 	return res.status(200).json({
+		message: ' success',
 		data: countries,
 	});
 });
@@ -138,7 +62,6 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 	});
 });
 
-// age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
 exports.postAddCountry = catchAsync(async (req, res, next) => {
 	countryName = exports.beautify(req.body.countryName);
 	countryLogo = req.files.images[0].path;
@@ -150,13 +73,30 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 		return next(new AppError('no country logo provided', 400));
 	}
 
+	let countryCode;
+	try {
+		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
+		console.log(totalCountries);
+
+		totalCountries++;
+
+		if (totalCountries < 10) {
+			countryCode = String(totalCountries).padStart(2, '0');
+		} else {
+			countryCode = totalCountries.toString();
+		}
+	} catch (err) {
+		console.error(err);
+		return next(new AppError('error on assigning countryCode', 400));
+	}
+
 	const newCountry = new countryDB({
 		country_name: countryName,
 		country_logo: countryLogo,
-		country_cities: [],
+		country_code: countryCode,
 	});
 
-	await assignCountryCode(countryName);
+	// await assignCountryCode(countryName);
 	await newCountry.save();
 
 	return res.status(201).json({
@@ -180,12 +120,27 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			return next(new AppError('plesae insert city', 400));
 
 			// if all is ok , adds the city to cities collection of chosen country
-		} else {
-			country.country_cities.push(exports.beutifyFunc(req.body.cityName));
-			await assignCityCode(req.body.countryName, req.body.cityName);
-			await country.save();
 		}
 
+		country.country_cities.push(exports.beautify(req.body.cityName));
+
+		// Set the 'last_mints' property
+		const cityCount = country.country_cities.length;
+		const assignedCode = exports.assignCode(cityCount);
+		const propertyKey = country.country_code + assignedCode;
+
+		let obj;
+		if (!country.last_mints[propertyKey]) {
+			obj = {
+				...country.last_mints,
+				[propertyKey]: 10000,
+			};
+		}
+
+		country.last_mints = obj;
+		console.log(country.last_mints);
+
+		await country.save();
 		// send response
 		return res.status(200).json({
 			status: 'success',
@@ -198,6 +153,62 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
+exports.getCountriesInfo = catchAsync(async (req, res, next) => {
+	const countriesInfo = await countryDB
+		.find()
+		.select(['country_logo', 'country_name', 'country_estates'])
+		.populate({
+			path: 'country_estates',
+			select: ['volume'],
+		});
+
+	if (countriesInfo.length === 0) {
+		return next('no such countries found', 404);
+	}
+
+	const countriesData = countriesInfo.map((country) => {
+		const sumVolume = country.country_estates.reduce((total, estate) => {
+			return total + estate.volume;
+		}, 0);
+
+		const totalEstates = country.country_estates.length;
+
+		return {
+			country_logo: country.country_logo,
+			country_name: country.country_name,
+			sumVolume,
+			totalEstates,
+		};
+	});
+
+	return res.status(200).json({
+		status: 'success',
+		data: countriesData,
+		// data: { countriesInfo, sumVolume, totalEstates },
+	});
+});
+
+exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
+	const data2 = await estateDB
+		.find({
+			country_name: `${req.params.countryName}`,
+			city_name: `${req.params.cityName}`,
+		})
+		.select([
+			'estate_title',
+			'volume',
+			'price', //'landlord_address', 'change',
+		])
+		.sort('createdAt')
+		.limit(10);
+	// console.log(estateDB.query);
+	return res.status(200).json({
+		status: 'success',
+		data: data2,
+	});
+});
+
+/*
 exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'change';
@@ -251,71 +262,9 @@ exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
 		city_name: `${req.params.cityName}`,
 	};
 	req.query.sort = 'createdAt';
-	req.query.fields = 'estate_title,price,volume'; /*landlord_address,change*/ // and more fields that not exist yet
+	req.query.fields = 'estate_title,price,volume'; //landlord_address,change // and more fields that not exist yet
 	next();
 });
 ///////////////////
-exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
-	const data2 = await estateDB
-		.find({
-			country_name: `${req.params.countryName}`,
-			city_name: `${req.params.cityName}`,
-		})
-		.select([
-			'estate_title',
-			'volume',
-			'price' /*'landlord_address',*/ /*'change'*/,
-		])
-		.sort('createdAt')
-		.limit(10);
-	// console.log(estateDB.query);
-	return res.status(200).json({
-		status: 'success',
-		data: data2,
-	});
-});
 
-exports.getCountriesInfo = catchAsync(async (req, res, next) => {
-	let sumVolume = 0;
-	let totalEstates = 0;
-	const countriesInfo = await countryDB
-		.find()
-		.select(['country_logo', 'country_name', 'country_estates'])
-		.populate({
-			path: 'country_estates',
-			select: ['volume'],
-		});
-
-	if (countriesInfo.length === 0) {
-		return next('no such countries found', 404);
-	}
-
-	// // calculates sumVol and totalEstates of all  the data that exists in DB
-	// countriesInfo.forEach((country) => {
-	// 	sumVolume += country.country_estates.reduce((total, estate) => {
-	// 		totalEstates++;
-	// 		return total + estate.volume;
-	// 	}, 0);
-	// });
-
-	const countriesData = countriesInfo.map((country) => {
-		const sumVolume = country.country_estates.reduce((total, estate) => {
-			return total + estate.volume;
-		}, 0);
-
-		const totalEstates = country.country_estates.length;
-
-		return {
-			country_logo: country.country_logo,
-			country_name: country.country_name,
-			sumVolume,
-			totalEstates,
-		};
-	});
-
-	return res.status(200).json({
-		status: 'success',
-		data: countriesData,
-		// data: { countriesInfo, sumVolume, totalEstates },
-	});
-});
+*/
