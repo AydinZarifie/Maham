@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const adminPage_Controller = require('../../controllers/admin/adminPage');
-const adminAuthController = require('../../controllers/admin/adminAuth');
+// const adminAuthController = require('../../controllers/admin/adminAuth');
 
 // 2023/05/8 >> changed the logic of written code to 'mounting the routes'
 //    "      >> added main functions to control estates
@@ -27,6 +27,14 @@ router
 	.route('/estate/getCities/:countryName')
 	.get(adminPage_Controller.getCities);
 
+// estates or estate ?
 router.route('/estates/addFilter').post(adminPage_Controller.postFilter);
+
+router
+	.route('/estate/getAddEstateFilters')
+	.get(adminPage_Controller.getAddEstateFilters);
+
+// /getFilters or /estates/getFilters
+router.route('getFilters').get(adminPage_Controller.getAllFilters);
 
 module.exports = router;

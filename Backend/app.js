@@ -9,9 +9,10 @@ const fs = require('fs');
 const session = require('express-session');
 const cors = require('cors');
 //////////////////////////////////////////////
-const adminPage_Router = require('./routes/admin/adminPage');
-const managmentPage_Router = require('./routes/admin/adminManagment');
-const adminAuth_Router = require('./routes/admin/adminAuth');
+const adminPage_router = require('./routes/admin/adminPage');
+const managmentPage_router = require('./routes/admin/adminManagment');
+const adminAuth_router = require('./routes/admin/adminAuth');
+const adminPanel_router = require('./routes/admin/adminAuth');
 //////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/appError');
@@ -42,7 +43,7 @@ const storage = multer.diskStorage({
 			if (req.body.filterName) {
 				cb(null, './uploads/images/filters/');
 			} else {
-				cb(null, './uploads/images/country/');
+				cb(null, './uploads/images/countries/');
 			}
 		} else if (file.fieldname == 'video') {
 			cb(null, './uploads/videos/');
@@ -101,8 +102,6 @@ const upload = multer({
 	},
 ]);
 
-app.use(globalErrorHandler);
-
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
@@ -144,9 +143,10 @@ app.use(
 
 // app.use(cors({ credentials: true, origin: true }));
 
-app.use('/admin', adminPage_Router);
-app.use('/admin', managmentPage_Router);
-app.use('/admin', adminAuth_Router);
+app.use('/admin', adminPage_router);
+app.use('/admin', managmentPage_router);
+app.use('/admin', adminAuth_router);
+app.use('/admin', adminPanel_router);
 
 const DBlocal = process.env.LOCAL_DATABASE;
 const port = process.env.PORT;
@@ -160,6 +160,8 @@ mongoose.connect(DBlocal).then(() => {
 app.all('*', (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+
+app.use(globalErrorHandler);
 
 process.on('unhandledRejection', (err) => {
 	console.log('UNHANDLED REJECTION!');

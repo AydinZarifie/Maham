@@ -39,7 +39,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 
 	if (password !== confirmPassword) {
 		return next(
-			new AppError('password and password confirmation doesnt match', 400)
+			new AppError('password and password confirmation does not match', 400)
 		);
 	}
 
@@ -111,33 +111,40 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.verificationCode = async (req, res, next) => {
-	const { email, password } = req.body;
-
-	const admin = await adminDB.findOne({ email }).select('+password');
-	if (!admin) {
-		return next(new AppError('Wrong email', 401));
-	}
-
-	const isEqual = await bcrypt.compare(password, admin.password);
-
-	if (!isEqual) {
-		return next(new AppError('Wrong password', 401));
-	}
-
-	const verificationCode = Math.floor(100000 + Math.random() * 9000);
-
-	req.session.verification = verificationCode;
-	console.log(verificationCode);
-
-	const mailOptions = {
-		email: email,
-		subject: 'Ver',
-		text: 'hello there ',
-		verificationCode,
-	};
-
+exports.verificationCode = catchAsync(async (req, res, next) => {
 	try {
+		// const error = validationResult(req);
+		// if (!error.isEmpty()) {
+		// 	console.log(error.array());
+		// 	return res.status(405).json({
+		// 		message: 'Error 405',
+		// 	});
+		// }
+		const { email, password } = req.body;
+
+		const admin = await adminDB.findOne({ email }).select('+password');
+		if (!admin) {
+			return next(new AppError('Wrong email', 401));
+		}
+
+		const isEqual = await bcrypt.compare(password, admin.password);
+
+		if (!isEqual) {
+			return next(new AppError('Wrong password', 401));
+		}
+
+		const verificationCode = Math.floor(100000 + Math.random() * 9000);
+
+		req.session.verification = verificationCode;
+		console.log(verificationCode);
+
+		const mailOptions = {
+			email: email,
+			subject: 'Ver',
+			text: 'hello there ',
+			verificationCode,
+		};
+
 		await sendEmail(mailOptions);
 		return res.status(201).json({
 			message: 'Success',
@@ -145,7 +152,7 @@ exports.verificationCode = async (req, res, next) => {
 	} catch (err) {
 		console.log(err);
 	}
-};
+});
 
 // not complete
 exports.resetPassword = catchAsync(async (req, res, next) => {

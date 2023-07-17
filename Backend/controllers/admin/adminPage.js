@@ -4,6 +4,7 @@ const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require('../../models/country');
+const filterDB = require('../../models/filter');
 const { beautify } = require('./adminManagment');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
@@ -72,7 +73,10 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		location: req.body.location.toLowerCase(),
 		state_description: req.body.description,
 		estate_type: req.body.type,
-		estate_price: req.body.price,
+		costumer_price: req.body.costumerPrice,
+		maham_price: req.body.mahamPrice,
+		filter_name: req.body.filter,
+		mintId: req.body.mintId,
 		unit_number: req.body.numberOfUnit,
 		imageUrl: req.files.images.map((el) => {
 			return el.path;
@@ -151,7 +155,10 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_type: inputs.estate_type,
 		imageUrl: inputs.imageUrl,
 		introduction_video: inputs.introduction_video,
-		price: inputs.estate_price,
+		costumer_price: inputs.costumer_Price,
+		maham_price: inputs.maham_price,
+		filter: inputs.filter_name,
+		mint_id: inputs.mintId,
 		unit_number: inputs.unit_number,
 		// minor_street: inputs.minor_street,
 		// postal_code: inputs.postal_code ,
@@ -244,6 +251,9 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		location: req.body.location,
 		state_description: req.body.description,
 		estate_type: req.body.type,
+		maham_price: req.body.mahamPrice,
+		filter_name: req.body.filter,
+		mintId: req.body.mintId,
 
 		// introduction_video: req.files.video.map((el) => {
 		//     return el.path;
@@ -320,7 +330,11 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		(estate.floor_number = inputs.floor_number),
 		(estate.location = inputs.location),
 		(estate.state_description = inputs.state_description),
-		(estate.estate_type = inputs.estate_type);
+		(estate.estate_type = inputs.estate_type),
+		(estate.costumer_price = inputs.costumerPrice),
+		(estate.maham_price = inputs.maham_price),
+		(estate.filter = inputs.filter_name),
+		(estate.mint_id = inputs.mintId);
 	// get & set images
 	if (req.files.images) {
 		clearImage(estate.imageUrl);
@@ -387,11 +401,17 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEditEstate = async (req, res) => {
+exports.getEditEstate = catchAsync(async (req, res) => {
 	const estateId = req.params.estateId;
+	if (!estateId) {
+		return next(new AppError('please provide estate id', 400));
+	}
 	const estate = await estateDB.findById(estateId);
+	if (!estate) {
+		return next(new AppError('estate wth that ID does not exists', 404));
+	}
 	res.status(200).json(estate);
-};
+});
 
 exports.generateMint = catchAsync(async (req, res, next) => {
 	// specify the length of the mint
@@ -475,15 +495,13 @@ exports.toLowerCase = (req, res, next) => {
 	next();
 };
 
-exports.postFilter = catchAsync(async (req, res) => {
-	console.log('hep');
+exports.postFilter = catchAsync(async (req, res, next) => {
 	const filterName = req.body.filterName;
-	console.log(req.files);
 	const imageUrl = req.files.images[0].path;
-	console.log(imageUrl);
 
 	if (!filterName || !imageUrl) {
-		return res.status(403).json({ message: 'filtername or image was empty' });
+		return next(new AppError('filtername or image was empty', 403));
+		// res.status(403).json({ message: 'filtername or image was empty' });
 	}
 
 	const filter = new filterDB({
@@ -493,7 +511,34 @@ exports.postFilter = catchAsync(async (req, res) => {
 
 	await filter.save();
 
-	return res.status(200).json({ message: 'Successfully' });
+	return res.status(202).json({
+		status: 'success',
+		message: 'successfully added filter',
+	});
+});
+
+exports.getAllFilters = catchAsync(async (req, res, next) => {
+	const filters = await filterDB.find();
+	if (!filters) {
+		return next(new AppError('there is no filter', 200));
+	}
+	return res.status(200).json({
+		status: 'success',
+		data: filters,
+	});
+});
+
+exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
+	const filter = await filterDB.find().select('filterName');
+
+	if (!filter) {
+		return next(new AppError('no such a filter', 200));
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: filter,
+	});
 });
 
 exports.deleteEstate = catchAsync(async (req, res, next) => {
@@ -521,11 +566,15 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 	});
 });
 
-const clearImage = async (filePath) => {
+const clearImage = catchAsync(async (filePath, next) => {
+	if (!filePath) {
+		return next(new AppError('path not found', 404));
+	}
+
 	filePath.forEach(async (imagePath) => {
 		imagePath = path.join(__dirname, '../..', imagePath);
-		if (await fs.existsSync(imagePath)) {
-			await fs.unlinkSync(imagePath, (err) => {
+		if (fs.existsSync(imagePath)) {
+			fs.unlinkSync(imagePath, (err) => {
 				throw err;
 			});
 			console.log('Image deleted successfully');
@@ -533,12 +582,16 @@ const clearImage = async (filePath) => {
 			console.log('Image not found');
 		}
 	});
-};
-const clearVideo = async (filePath) => {
+});
+const clearVideo = catchAsync(async (filePath) => {
+	if (!filePath) {
+		return next(new AppError('path not found', 404));
+	}
+
 	filePath.forEach(async (videoPath) => {
 		videoPath = path.join(__dirname, '../..', videoPath);
-		if (await fs.existsSync(videoPath)) {
-			await fs.unlinkSync(videoPath, (err) => {
+		if (fs.existsSync(videoPath)) {
+			fs.unlinkSync(videoPath, (err) => {
 				throw err;
 			});
 			console.log('Image deleted successfully');
@@ -546,4 +599,4 @@ const clearVideo = async (filePath) => {
 			console.log('Image not found');
 		}
 	});
-};
+});

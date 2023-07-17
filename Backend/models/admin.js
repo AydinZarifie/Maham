@@ -28,7 +28,6 @@ const adminSchema = mongoose.Schema(
 			required: true,
 			unique: true,
 			lowercase: true, // converts all characters to lowercase
-			validate: [validator.isEmail, 'please provide a valid email'],
 		},
 		admin_country: {
 			type: String,
@@ -36,6 +35,13 @@ const adminSchema = mongoose.Schema(
 		admin_City: {
 			type: String,
 		},
+		admin_country_ref: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Country',
+				required: [true, 'admin must belong to a country'],
+			},
+		],
 		password: {
 			type: String,
 			required: [true, 'please provided a password'],
@@ -50,13 +56,6 @@ const adminSchema = mongoose.Schema(
 			default: Date.now(),
 			selsect: false,
 		},
-		admin_country_ref: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Country',
-				required: [true, 'admin must belong to a country'],
-			},
-		],
 		//store acitivity of admins
 	},
 	{ timestamps: true, strict: true }

@@ -153,7 +153,6 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
-/*
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	const countriesInfo = await countryDB
 		.find()
@@ -189,7 +188,27 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	});
 });
 
+exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
+	const data2 = await estateDB
+		.find({
+			country_name: `${req.params.countryName}`,
+			city_name: `${req.params.cityName}`,
+		})
+		.select([
+			'estate_title',
+			'volume',
+			'price', //'landlord_address', 'change',
+		])
+		.sort('createdAt')
+		.limit(10);
+	// console.log(estateDB.query);
+	return res.status(200).json({
+		status: 'success',
+		data: data2,
+	});
+});
 
+/*
 exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'change';
@@ -247,23 +266,5 @@ exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
 	next();
 });
 ///////////////////
-exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
-	const data2 = await estateDB
-		.find({
-			country_name: `${req.params.countryName}`,
-			city_name: `${req.params.cityName}`,
-		})
-		.select([
-			'estate_title',
-			'volume',
-			'price' //'landlord_address', 'change',
-		])
-		.sort('createdAt')
-		.limit(10);
-	// console.log(estateDB.query);
-	return res.status(200).json({
-		status: 'success',
-		data: data2,
-	});
-});
+
 */
