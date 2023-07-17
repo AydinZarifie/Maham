@@ -306,8 +306,8 @@
   .row3 {
     display: flex;
     flex-direction: row;
-    justify-content: start;
-    gap: 3%;
+    justify-content: space-evenly;
+    /* gap: 3%; */
     align-items: center;
     position: sticky;
     top: 64px;
@@ -325,17 +325,17 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 71%;
+    max-width: 68%;
     padding: 0 1%;
-    margin-left: 5%;
+    /* margin-left: 5%; */
     max-height: 80px;
   }
   .FilterandSearch {
     display: flex;
     flex-direction: row;
     width: 15%;
-    justify-content: space-around;
-    gap: 5px;
+    justify-content: center;
+    gap: 15px;
   }
   .nav2 a {
     white-space: nowrap;
@@ -361,7 +361,7 @@
   .menuBig {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     white-space: nowrap;
     gap: 22px;
   }
@@ -620,7 +620,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
+    max-width: 100%;
     padding: 0 12px;
     max-height: 80px;
   }
@@ -827,7 +827,7 @@
   .row3 {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     position: sticky;
     top: 64px;
@@ -889,7 +889,7 @@
   .row3 {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content:center;
     margin-top: 0%;
     align-items: center;
     position: sticky;

@@ -1,7 +1,7 @@
 import styles from "../../styles/AdminPanel.module.css";
 
 import { useEffect, useRef, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
 
@@ -12,6 +12,7 @@ const AdminPanel = () => {
   const [error, setError] = useState(false);
   const filter = useRef();
   const overlay = useRef();
+  const navigate = useNavigate();
 
   const closeFilter = () => {
     filter.current.style.visibility = "hidden";
@@ -65,9 +66,10 @@ const AdminPanel = () => {
     if (response.ok) {
       setError(null);
       alert("Admin successfully added");
+      navigate("/admin/admins");
     }
     if (response.status == 401) {
-      setError("This email has an account");
+      setError("Email already exists");
     }
   };
 
@@ -80,8 +82,9 @@ const AdminPanel = () => {
     fetchAdmins();
 
     const fetchCountries = async () => {
-      const data = await fetch("url");
+      const data = await fetch("http://localhost:5000/admin/managment");
       const json = await data.json();
+      console.log(json);
       setCountries(json.data);
     };
     fetchCountries();
@@ -137,6 +140,7 @@ const AdminPanel = () => {
             admins,
             countries,
             cityFetch,
+            cities,
           }}
         />
       </div>

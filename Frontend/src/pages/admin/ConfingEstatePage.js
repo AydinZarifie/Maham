@@ -42,7 +42,9 @@ const ConfingEstate = ({ method, estate }) => {
     }
 
     const fetchFilterData = async () => {
-      const data = await fetch("url");
+      const data = await fetch(
+        "http://localhost:5000/admin/estate/getAddEstateFilters"
+      );
       const json = await data.json();
       setFilters(json.data);
     };
@@ -133,7 +135,7 @@ const ConfingEstate = ({ method, estate }) => {
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
     filter: estate ? estate.filter : "",
-    mahamPrice: estate ? estate.mahamPrice : "",
+    mahamPrice: estate ? estate.maham_price : "",
     customerPrice: "",
     // estate ? estate.customerPrice : "",
     id: "",
@@ -425,7 +427,7 @@ const ConfingEstate = ({ method, estate }) => {
 
     // enteredPlateIsValid &&
   ) {
-    formIsValidForAdding = true;
+    formIsValidForEditing = true;
   }
 
   const blurHandler = (event) => {
@@ -514,7 +516,7 @@ const ConfingEstate = ({ method, estate }) => {
       // plate: true,
       // walletAddress: true,
     });
-
+    
     if (estate) {
       if (!formIsValidForEditing) {
         return;
@@ -703,25 +705,17 @@ const ConfingEstate = ({ method, estate }) => {
   const idManipulataionHandler = async () => {
     setTouched((prev) => ({
       ...prev,
-      title: true,
       cityName: true,
-      streetName: true,
+      countryName: true,
     }));
 
-    if (
-      !(
-        enteredTitleIsValid &&
-        enteredCityNameIsValid &&
-        enteredStreetNameIsValid
-      )
-    ) {
+    if (!(enteredCountryNameIsValid && enteredCityNameIsValid)) {
       return;
     }
-    
+
     const formData = new FormData();
-    formData.append("title", information.title);
     formData.append("cityName", information.cityName);
-    formData.append("StreetName", information.streetName);
+    formData.append("countryName", information.countryName);
     const response = await fetch("url", {
       method: "POST",
       body: formData,
@@ -748,8 +742,8 @@ const ConfingEstate = ({ method, estate }) => {
             <option value="">Choose an option</option>
             {/* <option value="pool">pool</option> */}
             {filters.map((option) => (
-              <option key={option.filter_name} value={option.filter_name}>
-                {option.filter_name}
+              <option key={option.filterName} value={option.filtername}>
+                {option.filterName}
               </option>
             ))}
           </select>
@@ -1833,8 +1827,17 @@ const ConfingEstate = ({ method, estate }) => {
             type="button"
             onClick={() => submitHandler()}
           >
-            <span className={styles.text}>Add</span>
-            <span>+</span>
+            {estate ? (
+              <>
+                <span className={styles.text}>Edit</span>
+                <span>+</span>
+              </>
+            ) : (
+              <>
+                <span className={styles.text}>Add</span>
+                <span>+</span>
+              </>
+            )}
           </button>
           {estate && (
             <button
