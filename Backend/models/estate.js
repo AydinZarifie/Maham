@@ -327,4 +327,15 @@ estateSchema.post('save', async function (doc, next) {
 	refCountry.save();
 });
 
+estateSchema.pre('remove', async function () {
+	const deletedId = this._id;
+	const deletedMint = this.mint_id;
+	const country = await countryDB.findOne({ country_name: this.country_name });
+	country.country_estates.splice(country.country_estates.indexOf(deletedId), 1);
+	countryDB.updateOne(
+		{ _id: country._id },
+		{ $push: { available_mints: deletedMint } }
+	);
+});
+
 module.exports = mongoose.model('real-estates', estateSchema);

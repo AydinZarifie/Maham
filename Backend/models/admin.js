@@ -57,10 +57,6 @@ const adminSchema = mongoose.Schema(
 				required: [true, 'admin must belong to a country'],
 			},
 		],
-		testField: {
-			type: Number,
-			required: true,
-		},
 		//store acitivity of admins
 	},
 	{ timestamps: true, strict: true }
@@ -69,11 +65,6 @@ const adminSchema = mongoose.Schema(
 adminSchema.virtual('full_name').get(function () {
 	return `${this.first_name} ${this.last_name}`;
 });
-
-// adminSchema.pre('save', async function (next) {
-// 	this.testField = 12;
-// 	next();
-// });
 
 adminSchema.pre('save', async function (next) {
 	const country = await countryDB.findOne({

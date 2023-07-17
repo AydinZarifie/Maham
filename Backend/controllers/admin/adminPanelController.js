@@ -12,51 +12,15 @@ exports.getAllAdmins = catchAsync(async (req, res, next) => {
 		.paging();
 	const admins = await features.query;
 
+	if (!admins) {
+		return next(new AppError('nothing matches', 404));
+	}
+
 	return res.status(200).json({
 		status: 'success',
 		data: admins,
 	});
 });
-
-// exports.createAdmin = catchAsync(async (req, res, next) => {
-// 	// refrencing the admin to its country instance in countryDB
-// 	const country = await countryDB.findOne({
-// 		country_name: `${req.body.countryName}`,
-// 	});
-
-// 	if (country === 0) {
-// 		return next(new AppError('Please create the country first', 404));
-// 	}
-// 	const countryId = country.id;
-
-// 	const {
-// 		firstName,
-// 		lastName,
-// 		adminType,
-// 		countryName,
-// 		cityName,
-// 		phoneNumber,
-// 		email,
-// 	} = req.body;
-
-// 	const newAdmin = new adminDB({
-// 		admin_type: adminType,
-// 		first_name: firstName,
-// 		last_name: lastName,
-// 		phone_number: phoneNumber,
-// 		email: email,
-// 		admin_City: cityName,
-// 		admin_country: countryName,
-// 		admin_country_ref: countryId,
-// 	});
-
-// 	await newAdmin.save();
-
-// 	return res.status(201).json({
-// 		status: 'success',
-// 		message: 'admin created successfuly',
-// 	});
-// });
 
 // not complete
 exports.CurrentAdmin = catchAsync(async (req, res, next) => {

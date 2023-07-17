@@ -111,6 +111,13 @@ app.use(
 );
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
+app.use(
+	'uploads/static/',
+	express.static(path.join(__dirname, '/uploads/static'))
+);
+app.use(upload);
 
 app.use(
 	session({
@@ -125,24 +132,15 @@ app.use(
 	})
 );
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(
-	'uploads/static/',
-	express.static(path.join(__dirname, '/uploads/static'))
-);
-app.use('/uploads', express.static('uploads'));
-app.use(upload);
-
-app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader(
-		'Access-Control-Allow-Methods',
-		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-	);
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-	next();
-});
+// app.use((req, res, next) => {
+// 	res.setHeader('Access-Control-Allow-Origin', '*');
+// 	res.setHeader(
+// 		'Access-Control-Allow-Methods',
+// 		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+// 	);
+// 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// 	next();
+// });
 
 // app.use(cors({ credentials: true, origin: true }));
 

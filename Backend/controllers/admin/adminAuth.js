@@ -34,6 +34,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		confirmPassword,
 		adminType,
 		phoneNumber,
+		countryName,
 	} = req.body;
 
 	if (password !== confirmPassword) {
@@ -56,6 +57,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		admin_type: adminType,
 		phone_number: phoneNumber,
 		email: email,
+		admin_country: countryName,
 	});
 
 	await admin.save();
@@ -69,11 +71,10 @@ exports.signUp = catchAsync(async (req, res, next) => {
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
-	const { password, VerificationCode } = req.body;
-	const email = req.body.username;
+	const { password, email, verificationCode } = req.body;
 
-	console.log(req.session.verification.toString());
 	console.log(verificationCode);
+	console.log(req.session.verification.toString());
 
 	// 1) check if email or password provided
 	if (!email || !password) {
@@ -90,26 +91,18 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	const isEqual = await bcrypt.compare(password, admin.password);
 	if (!isEqual) {
 		return next(
-			new AppError('username or password is incorrect ', 405) //not authorized
+			new AppError('email or password is incorrect ', 405) //not authorized
 		);
 	}
 
-	///////////////////////////////////////////////////////////////
 	if (verificationCode !== req.session.verification.toString()) {
-		return next(new AppError('verification code is not valid', 403));
+		return next(new AppError('verification code is not valid', 401));
 	}
-	///////////////////////////////////////////////////////////////
-	console.log(req.cookies);
-	console.log(req.cookies.verifyToken);
-	if (req.session.verifyToken.toString() !== VerificationCode) {
-		return next(
-			new AppError('token is not correct', 401) //not authorized
-		);
-	}
+
 	///////////////////////////////////////////////////////////////
 
 	// 3) if everything okay , create & send token to client
-	const token = await signToken(email, admin._id);
+	const token = signToken(email, admin._id);
 
 	return res.status(202).json({
 		status: 'success',
@@ -118,12 +111,10 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.verificationCode = async (req, res) => {
-	const email = req.body.username;
-	const password = req.body.password;
+exports.verificationCode = async (req, res, next) => {
+	const { email, password } = req.body;
 
 	const admin = await adminDB.findOne({ email }).select('+password');
-
 	if (!admin) {
 		return next(new AppError('Wrong email', 401));
 	}
@@ -136,9 +127,7 @@ exports.verificationCode = async (req, res) => {
 
 	const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
-	////////////////////////////////////////////////////
 	req.session.verification = verificationCode;
-	////////////////////////////////////////////////////
 	console.log(verificationCode);
 
 	const mailOptions = {

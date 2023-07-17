@@ -4,12 +4,7 @@ const path = require('path');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require('../../models/country');
-const crypto = require('crypto');
 const { beautify } = require('./adminManagment');
-const {
-	countryCityRef,
-} = require('./../../utilities/refrences/cityCountryRef');
-const { typeRef } = require('./../../utilities/refrences/typeRef.js');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
@@ -398,52 +393,77 @@ exports.getEditEstate = async (req, res) => {
 	res.status(200).json(estate);
 };
 
-function generateUniqueNumber() {
-	const length = 10;
-	// Additional data (e.g., current timestamp)
-	const additionalData = new Date().getTime().toString();
-
-	// Apply SHA-256 hash function
-	const hash = crypto.createHash('sha256').update(additionalData).digest('hex');
-	console.log(hash);
-	const number = parseInt(hash.slice(0, length - 1), 16);
-	console.log(number);
-
-	return number + 483;
-}
-
-exports.generateMint = (req, res, next) => {
+exports.generateMint = catchAsync(async (req, res, next) => {
 	// specify the length of the mint
-	const length = 8;
+	const modifiedCountryName = beautify(req.body.countryName);
+	const modifiedCityName = beautify(req.body.cityName);
+	/////////////////////////////////////////
+	const country = await countryDB
+		.findOne({ country_name: modifiedCountryName })
+		.select([
+			'country_code',
+			'country_name',
+			'country_cities',
+			'country_estates',
+			'last_mints',
+			'available_mints',
+		]);
 
-	const fields = ['cityName', 'countryName'];
-
-	const modifiedValues = {};
-
-	for (const variable of fields) {
-		let value = req.body[variable];
-		value = value.split(' ').join('_');
-		modifiedValues[variable] = value;
+	if (!country) {
+		return next(new AppError('country does not exists!', 404));
 	}
-	const countryCode = countryCityRef[modifiedValues.countryName].countryRefCode;
-	const cityCode =
-		countryCityRef[modifiedValues.countryName][modifiedValues.cityName];
+	///////////////////////////////////
+	// specify the containers of mint args
+	const countryCode = country.country_code;
+	let cityCode;
+	let estateCode;
+	// assign city code
+	const cityIndex = country.country_cities.indexOf(modifiedCityName) + 1;
+	if (cityIndex < 10) {
+		cityCode = String(cityIndex).padStart(2, '0');
+	} else {
+		cityCode = cityIndex.toString();
+	}
+	// assining the estate Code
+	// let availableMints = country.available_mints;
+	const startsWith = countryCode + cityCode;
 
-	if (!countryCode || !cityCode) {
-		return next(new AppError('invalid country or city name', 400));
+	const pattern = new RegExp(`^${startsWith}`, 'i');
+	if (country.available_mints.length === 0) {
+		estateNum = country.last_mints[countryCode + cityCode] + 1;
+		estateCode = String(estateNum).slice(1, 5);
+	} else {
+		for (let i = 0; i < country.available_mints.length; i++) {
+			if (pattern.test(country.available_mints[i])) {
+				// If a match is found, print the element and stop searching
+				estateCode = country.available_mints.splice(i, 1)[0];
+				break;
+			}
+		}
 	}
 
-	const randomHash = generateUniqueNumber();
-	console.log(randomHash);
+	// update the last_mints object on database
+	const obj = {
+		...country.last_mints,
+		[startsWith]: estateNum,
+	};
+	country.last_mints = obj;
 
-	const mint = (countryCode + cityCode + randomHash).slice(0, length - 1);
-	console.log(mint);
+	console.log(`estateCode is : ${estateCode}`);
+
+	// save the modified country to database
+	await country.save();
+
+	// generating the mint
+	const mint = countryCode + cityCode + estateCode;
+
+	// send respose
 	return res.status(200).json({
-		status: 'seccess',
+		status: 'success',
 		message: 'mint created succesfully ',
 		data: mint,
 	});
-};
+});
 
 // every field in requset object that its value is String >> changes to lowercase
 exports.toLowerCase = (req, res, next) => {
@@ -478,13 +498,21 @@ exports.postFilter = catchAsync(async (req, res) => {
 
 exports.deleteEstate = catchAsync(async (req, res, next) => {
 	const est = await estateDB.findByIdAndDelete(req.params.estateId);
-
+	const deletedMint = est.mint_id;
+	const deletedId = est._id;
 	if (!est) {
 		return next(new AppError('estate with that Id not found', 404));
 	}
 
 	await clearImage(est.imageUrl);
 	await clearVideo(est.introduction_video);
+
+	const country = await countryDB
+		.findOne({ country_name: est.country_name })
+		.select('avalible_mints', 'country_estates');
+	country.country_estates.delete(deletedId);
+	country.available_mints.push(deletedMint);
+	country.save({ runValidators: false });
 
 	return res.status(204).json({
 		status: 'success',
