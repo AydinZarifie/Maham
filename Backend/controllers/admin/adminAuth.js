@@ -36,18 +36,21 @@ exports.signUp = catchAsync(async (req, res, next) => {``
 		phoneNumber,
 	} = req.body;
 
-console.log(adminType);
-console.log(phoneNumber);
+  const checkEmail = await adminDB.find({email});
+  const checkPhone = await adminDB.find({phone_number : phoneNumber})
+
+  if(checkEmail !== 'null' || checkPhone !== 'null'){
+    res.status(403).json({
+      message : 'admin already exist'
+    })
+  }
+
+
 	if (password !== confirmPassword) {
 		return next(
 			new AppError('password and password confirmation doesnt match', 400)
 		);
 	}
-
-	// if (password !== confirmPassword) {
-	// 	const err = new Error('Password and confirm password was diffrent');
-	// 	throw err;
-	// }
 
 	const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -70,21 +73,20 @@ console.log(phoneNumber);
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
-
-  const { password, verificationCode } = req.body;
-	const email = req.body.username;
-
-  console.log(req.session.verification.toString());
-  console.log(verificationCode);
-	// const verificationCode = req.session.verificationCode;
-	// console.log(verificationCode);
+  console.log("hellooo");
+  const error = validationResult(req);
+	if (!error.isEmpty()) {
+		console.log(error.array());
+		return res.status(422).json({
+			message: 'Error 422',
+		});
+	}
+  const { email,password, verificationCode } = req.body;
 
 	// 1) check if email or password provided
 	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
-
-  
 	// 2) check if user exists && password is correct
 	const admin = await adminDB.findOne({ email })
 
@@ -113,28 +115,29 @@ exports.logIn = catchAsync(async (req, res, next) => {
 		status: 'success',
 		token: token,
 		adminId: admin._id,
-	});
+	})
 
 });
 
 exports.verificationCode = async (req, res) => {    
-
   const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
-		return res.status(422).json({
+		return res.status(405).json({
 			message: 'Error 422',
 		});
 	}
 
 
-  const email = req.body.username
+  const email = req.body.email
 	const password = req.body.password;
 
 	const admin = await adminDB.findOne({ email });
 
+  console.log(admin);
+
 	if (!admin) {
-		return res.status(401).json({
+		return res.status(405).json({
 			message: 'email wrong',
 		});
 	}

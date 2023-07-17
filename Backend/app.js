@@ -40,8 +40,11 @@ const storage = multer.diskStorage({
             cb(null, path);
         }
       }
-      if(req.body.filterName){
+     else if(req.body.filterName){
         cb(null, "./uploads/images/filters/");
+      }
+     else if(req.body.countryName && !req.body.title){
+        cb(null,"./uploads/images/countries/")
       }
   } 
     
@@ -83,7 +86,7 @@ app.use(cors({
   origin : "http://localhost:3000",
   credentials : true
 }))
-
+1
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));

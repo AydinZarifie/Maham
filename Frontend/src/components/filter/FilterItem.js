@@ -6,6 +6,7 @@ const FilterItem = (props) => {
       <a href="#" className={styles.AfilterTag}>
         <img
           src={require(`../../images/${props.img}`)}
+          // src={`http://localhost:5000/${props.img.replace(/\\/g, "/")}`}
           alt={props.name}
           className={styles.FilterIcn}
         />

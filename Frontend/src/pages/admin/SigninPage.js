@@ -72,7 +72,7 @@ const Signin = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: input.username,
+            email: input.username,
             password: input.password,
           }),
         },
@@ -131,7 +131,7 @@ const Signin = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: input.username,
+            email: input.username,
             password: input.password,
             verificationCode: input.code,
           }),

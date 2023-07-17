@@ -1,5 +1,6 @@
 import styles from "../../styles/Admin.module.css";
 import overlayStyle from "../../styles/overlay.module.css";
+import managementStyles from "../../styles/Management.module.css"
 
 import { useRef, useState } from "react";
 
@@ -16,6 +17,7 @@ import AdminMenuItem from "./AdminMenuItem";
 
 export default function AdminNavbar() {
   const [overlay, setOverlay] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
 
   const Nav = useRef(null);
 
@@ -29,6 +31,10 @@ export default function AdminNavbar() {
     setOverlay(false);
   }
 
+  const toggleDropdown = () => {
+    setDropdown((prev) => !prev);
+  };
+
   return (
     <header className={styles.header}>
       {overlay && (
@@ -37,7 +43,7 @@ export default function AdminNavbar() {
           onClick={closeNav}
         ></div>
       )}
-      {/* <div className={styles.Container}> */}
+
       <div className={styles.column1}>
         <div className={styles.SideMenu}>
           <div ref={Nav} id="mySidenav" className={styles.sidenav}>
@@ -134,8 +140,41 @@ export default function AdminNavbar() {
             <h6 className={styles.h6AdminInformations}>SuperViser</h6>
           </div>
         </div>
+        {/*  */}
+        <div className={managementStyles.dropdown}>
+          <div className={managementStyles.selectedOption} onClick={toggleDropdown}>
+            <span></span>
+
+            <span
+              className={`${managementStyles.arrow} ${
+                dropdown ? `${managementStyles.open}` : ""
+              }`}
+            >
+              &#9660;
+            </span>
+          </div>
+          {dropdown && (
+            <>
+              <div className={managementStyles.overlay2} onClick={toggleDropdown}></div>
+              <ul className={managementStyles.options}>
+                <li
+                //  onClick={() => handleCountryOptionSelect(option)}
+                 >
+                  <img src="" alt="" />
+                  koskhol
+                </li>
+                <li
+                //  onClick={() => handleCountryOptionSelect(option)}
+                 >
+                  <img src="" alt="" />
+                  koskhol
+                </li>
+              </ul>
+            </>
+          )}
+        </div>
+        {/*  */}
       </div>
-      {/* </div> */}
     </header>
   );
 }

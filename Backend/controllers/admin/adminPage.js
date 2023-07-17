@@ -219,6 +219,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         state_description: req.body.description,
         estate_type: req.body.type,
         price : req.body.price,
+        mint_id : req.body.mintId,
 
         // introduction_video: req.files.video.map((el) => {
         //     return el.path;
@@ -285,20 +286,20 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 
     ///////////////////////////////////////////////////////////// setState :
     // stateId : ,
-        (estate.estate_title = inputs.estate_title),
-        (estate.unit_number = inputs.unitNumber),
-        (estate.city_name = inputs.city_name),
-        (estate.country_name = inputs.country_name),
-        (estate.main_street = inputs.main_street),
-        (estate.minor_street = inputs.minor_street),
-        (estate.building_number = inputs.building_number),
-        (estate.floor_number = inputs.floor_number),
-        (estate.location = inputs.location),
-        (estate.state_description = inputs.state_description),
-        (estate.price = inputs.price),
-        (estate.estate_type = inputs.estate_type);
+    (estate.estate_title = inputs.estate_title),
+    (estate.unit_number = inputs.unitNumber),
+    (estate.city_name = inputs.city_name),
+    (estate.country_name = inputs.country_name),
+    (estate.main_street = inputs.main_street),
+    (estate.minor_street = inputs.minor_street),
+    (estate.building_number = inputs.building_number),
+    (estate.floor_number = inputs.floor_number),
+    (estate.location = inputs.location),
+    (estate.state_description = inputs.state_description),
+    (estate.price = inputs.price),
+    (estate.estate_type = inputs.estate_type);
+    (estate.mint_id = inputs.mint_id);  
     // get & set images 
-
     if (req.files.images) {
         clearImage(estate.imageUrl);
         estate.imageUrl = req.files.images.map((el) => {
@@ -364,11 +365,11 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getEditEstate = async (req, res) => {
+exports.getEditEstate =  catchAsync(async (req, res) => {
     const estateId = req.params.estateId;
     const estate = await estateDB.findById(estateId);
     res.status(200).json(estate);
-};
+});
 
 //added : 2023/05/08  , implemented : 2023/06/04
 exports.deleteEstate = catchAsync(async (req, res, next) => {
@@ -388,7 +389,16 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
     });
 }); 
 
-exports.getCountry= async(req,res) => {
+exports.getAllFilters = catchAsync(async (req,res,next) => {
+    const filter = await filterDB.find().select({filterName : 1 })
+    
+    return res.status(200).json({
+        data : filter,
+        message : 'Success'
+    })
+})
+
+exports.getCountry=  catchAsync(async(req,res) => {
 
     const countries = await countryDB.find();
     
@@ -397,9 +407,9 @@ exports.getCountry= async(req,res) => {
         message : "Successfully"
     })
 
-}
+})
 
-exports.getCities = async(req,res) => {
+exports.getCities =  catchAsync(async(req,res) => {
     const country = req.params.countryName;
 
     console.log("fuckkkkkkkkkkkkkkkkkk");
@@ -412,7 +422,7 @@ exports.getCities = async(req,res) => {
         message : "Successfully",
         data : country_name[0].cities
     })
-}
+})
 
 exports.postFilter = catchAsync(async (req,res) => {
 

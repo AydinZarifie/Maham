@@ -13,37 +13,72 @@ const EstateItem = (props) => {
   const slider = useRef(null);
 
   const goToRight = () => {
-    slider.current.scrollBy({
-      left: slider.current.offsetWidth,
-    });
-  };
-
-  const goToLeft = () => {
-    slider.current.scrollBy({
-      left: -slider.current.offsetWidth,
-    });
-  };
-
-  const scrollHandler = () => {
     var scrollx = slider.current.scrollLeft;
     var scrollx2 = slider.current.clientWidth;
     var scrollx3 = slider.current.scrollWidth;
-    if (scrollx > 0) {
-      leftButton.current.style.opacity = "1";
-    } else {
-      leftButton.current.style.opacity = ".2";
-    }
+
     if (scrollx + scrollx2 >= scrollx3 - 1) {
-      rightButton.current.style.opacity = ".2";
+      // rightButton.current.style.opacity = ".2";
+      slider.current.scrollBy({
+        left: -slider.current.scrollWidth,
+      });
     } else {
-      rightButton.current.style.opacity = "1";
+      // rightButton.current.style.opacity = "1";
+      slider.current.scrollBy({
+        left: slider.current.offsetWidth,
+      });
     }
   };
 
+  const goToLeft = () => {
+    var scrollx = slider.current.scrollLeft;
+
+    if (scrollx > 0) {
+      // leftButton.current.style.opacity = "1";
+      slider.current.scrollBy({
+        left: -slider.current.offsetWidth,
+      });
+    } else {
+      // leftButton.current.style.opacity = ".2";
+      slider.current.scrollBy({
+        left: slider.current.scrollWidth,
+      });
+    }
+  };
+
+  const onMouseEnter=()=>{
+    rightButton.current.style.opacity = "1";
+    leftButton.current.style.opacity = "1";
+  }
+
+  const onMouseLeave=()=>{
+    rightButton.current.style.opacity = "0";
+    leftButton.current.style.opacity = "0";
+  }
+
+  // const scrollHandler = () => {
+  //   var scrollx = slider.current.scrollLeft;
+  //   var scrollx2 = slider.current.clientWidth;
+  //   var scrollx3 = slider.current.scrollWidth;
+  //   if (scrollx > 0) {
+  //     // leftButton.current.style.opacity = "1";
+  //   } else {
+  //     // leftButton.current.style.opacity = ".2";
+  //   }
+  //   if (scrollx + scrollx2 >= scrollx3 - 1) {
+  //     // rightButton.current.style.opacity = ".2";
+  //   } else {
+  //     // rightButton.current.style.opacity = "1";
+  //   }
+  // };
+
   return (
-    <div className={styles.sliderContainer}>
-      <div onScroll={scrollHandler} ref={slider} className={styles.slider}>
-        
+    <div className={styles.sliderContainer} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <div
+        //  onScroll={scrollHandler}
+        ref={slider}
+        className={styles.slider}
+      >
         {props.props.imageUrl.map((img) => (
           <img
             src={`http://localhost:5000/${img.replace(
@@ -54,7 +89,7 @@ const EstateItem = (props) => {
             className={styles.slide}
           />
         ))}
-        
+
         {/* <img src={image1} alt="" className={styles.slide} />
         <img src={image2} alt="" className={styles.slide} />
         <img src={image3} alt="" className={styles.slide} /> */}
