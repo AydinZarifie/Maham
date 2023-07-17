@@ -14,6 +14,8 @@ import ConfirmationModal from "../../components/adminPage/AdminEstate/Confirmati
 export default function Estates() {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [lockPositionData, setLockPositionData] = useState([]);
+  const [sellPositionData, setSellPositionData] = useState([]);
   const [showProfile, setShowProfile] = useState(false);
   const [filterShown, setFilterShown] = useState(false);
   const [isSendingSms, setIsSendingSms] = useState(false);
@@ -41,7 +43,7 @@ export default function Estates() {
     fetchData();
 
     const fetchFilterData = async () => {
-      const data = await fetch("urlForFilters");
+      const data = await fetch("http://localhost:5000/admin/getFilters");
       const json = await data.json();
       setFilters(json.data);
     };
@@ -52,7 +54,6 @@ export default function Estates() {
     const formData = new FormData();
     formData.append("filterName", filterName);
     formData.append("images", filterImg);
-
     const response = await fetch(
       "http://localhost:5000/admin/estates/addFilter",
       {
@@ -61,7 +62,7 @@ export default function Estates() {
       }
     );
     if (response.ok) {
-      setFilterShown(false);
+      window.location.reload(true);
     }
   };
 
@@ -119,9 +120,24 @@ export default function Estates() {
 
   const GetDocument = async () => {};
 
+  const fetchLockPositionData = async () => {
+    const data = await fetch("url");
+    const json = await data.json();
+    setLockPositionData(json.data);
+  };
+
+  const fetchSellPositionData = async () => {
+    const data = await fetch("url");
+    const json = await data.json();
+    setSellPositionData(json.data);
+  };
+
   return (
     <>
-      <div className={homePageStyles.Menu} style={{ height: 0 ,border:'none'}}>
+      <div
+        className={homePageStyles.Menu}
+        style={{ height: 0, border: "none" }}
+      >
         {filterShown && (
           <FilterModal
             onSubmit={submitFilterSearch}
@@ -214,7 +230,11 @@ export default function Estates() {
             context={{
               data,
               toggleShowProfile,
-              toggeConfirmationMessage: toggleConfirmationMessage,
+              toggleConfirmationMessage,
+              sellPositionData,
+              fetchSellPositionData,
+              lockPositionData,
+              fetchLockPositionData,
             }}
           />
         </div>

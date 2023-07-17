@@ -27,7 +27,22 @@ table {
     color: #0d0808;
     text-align: center;
     border-bottom: 1px solid #b9b9b9;
+    overflow-x: scroll;
+ 
+    /* overflow-y: scroll; */
+   
   }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  td::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+td {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 }
 @media (max-width: 750px) {
   .EstateImg {
@@ -53,6 +68,18 @@ table {
     color: #0d0808;
     text-align: center;
     border-bottom: 1px solid #b9b9b9;
+    overflow-x: scroll;
+
+  }
+
+  td::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  td {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 

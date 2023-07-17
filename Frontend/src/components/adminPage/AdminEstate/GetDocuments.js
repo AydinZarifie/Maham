@@ -7,7 +7,7 @@ import TrueLogo from "../../../images/tickGreen-svgrepo-com.svg";
 import FalseLogo from "../../../images/wrong-delete-remove-trash-minus-cancel-close-2-svgrepo-com.svg";
 
 const GetDocuments = () => {
-  const { toggleShowProfile, toggeConfirmationMessage } = useOutletContext();
+  const { toggleShowProfile, toggleConfirmationMessage } = useOutletContext();
 
   return (
     <div className={styles.getDocument}>
@@ -42,7 +42,7 @@ const GetDocuments = () => {
             <td>
               <button
                 className={styles.DocumentBtn}
-                onClick={toggeConfirmationMessage}
+                onClick={toggleConfirmationMessage}
               >
                 <img src={TrueLogo} className={styles.DocumentIcon} />
               </button>
