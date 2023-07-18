@@ -5,7 +5,10 @@ const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require('../../models/country');
 const filterDB = require('../../models/filter');
-const { formatStr } = require('./../../utilities/speciallFunctions');
+const {
+	formatStr,
+	generateMint,
+} = require('./../../utilities/specialFunctions');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
@@ -231,6 +234,42 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	return res.status(201).json({
 		status: 'success',
 		message: 'estate created',
+	});
+});
+
+exports.sendMint = catchAsync(async (req, res, next) => {
+	// 1) get the Country & City name from Response
+	const modifiedCountryName = formatStr(req.body.countryName);
+	const modifiedCityName = formatStr(req.body.cityName);
+
+	// 2) find the country
+	const country = await countryDB
+		.findOne({ country_name: modifiedCountryName })
+		.select([
+			'country_code',
+			'country_name',
+			'country_cities',
+			'country_estates',
+			'last_mints',
+			'available_mints',
+		]);
+
+	if (!country) {
+		return next(new AppError('country does not exist!', 404));
+	}
+
+	// 3) generate the Mint based on given country and city
+	const mint = generateMint(country, modifiedCityName);
+	console.log(mint);
+
+	// 4) save the modified country to database
+	await country.save();
+
+	// 5) ssend respose
+	return res.status(200).json({
+		status: 'success',
+		message: 'mint created succesfully ',
+		data: mint,
 	});
 });
 

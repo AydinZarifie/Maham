@@ -6,7 +6,7 @@ const APIFeatures = require('./../../utilities/APIFeatures');
 const {
 	formatStr,
 	assignCode,
-} = require('./../../utilities/speciallFunctions');
+} = require('./../../utilities/specialFunctions');
 ///////////////////////////////////////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
