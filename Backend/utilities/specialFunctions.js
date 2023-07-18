@@ -16,26 +16,7 @@ exports.assignCode = (len, num) => {
 	return newNum;
 };
 
-exports.generateMint = catchAsync(async (req, res, next) => {
-	// specify the length of the mint
-	const modifiedCountryName = exports.formatStr(req.body.countryName);
-	const modifiedCityName = exports.formatStr(req.body.cityName);
-	/////////////////////////////////////////
-	const country = await countryDB
-		.findOne({ country_name: modifiedCountryName })
-		.select([
-			'country_code',
-			'country_name',
-			'country_cities',
-			'country_estates',
-			'last_mints',
-			'available_mints',
-		]);
-
-	if (!country) {
-		return next(new AppError('country does not exists!', 404));
-	}
-	///////////////////////////////////
+exports.generateMint = (country, modifiedCityName) => {
 	// specify the containers of mint args
 	const countryCode = country.country_code;
 	let cityCode;
@@ -47,6 +28,7 @@ exports.generateMint = catchAsync(async (req, res, next) => {
 	} else {
 		cityCode = cityIndex.toString();
 	}
+
 	// assining the estate Code
 	// let availableMints = country.available_mints;
 	const startsWith = countryCode + cityCode;
@@ -72,21 +54,9 @@ exports.generateMint = catchAsync(async (req, res, next) => {
 	};
 	country.last_mints = obj;
 
-	console.log(`estateCode is : ${estateCode}`);
-
-	// save the modified country to database
-	await country.save();
-
 	// generating the mint
-	const mint = countryCode + cityCode + estateCode;
-
-	// send respose
-	return res.status(200).json({
-		status: 'success',
-		message: 'mint created succesfully ',
-		data: mint,
-	});
-});
+	return (mint = countryCode + cityCode + estateCode);
+};
 
 // every field in requset object that its value is String >> changes to lowercase
 // exports.toLowerCase = (req, res, next) => {
