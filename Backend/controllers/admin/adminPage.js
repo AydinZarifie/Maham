@@ -5,7 +5,7 @@ const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const countryDB = require('../../models/country');
 const filterDB = require('../../models/filter');
-const { beautify } = require('./adminManagment');
+const { formatStr } = require('./../../utilities/speciallFunctions');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
@@ -64,16 +64,16 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
-		estate_title: beautify(req.body.title),
+		estate_title: formatStr(req.body.title),
 		city_name: req.body.cityName,
 		country_name: req.body.countryName,
-		main_street: beautify(req.body.streetName),
+		main_street: formatStr(req.body.streetName),
 		building_number: req.body.plate,
 		floor_number: req.body.numberOfFloor,
 		location: req.body.location.toLowerCase(),
 		state_description: req.body.description,
 		estate_type: req.body.type,
-		costumer_price: req.body.costumerPrice,
+		customer_price: req.body.customerPrice,
 		maham_price: req.body.mahamPrice,
 		filter_name: req.body.filter,
 		mintId: req.body.mintId,
@@ -155,7 +155,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_type: inputs.estate_type,
 		imageUrl: inputs.imageUrl,
 		introduction_video: inputs.introduction_video,
-		costumer_price: inputs.costumer_Price,
+		customer_price: inputs.customer_Price,
 		maham_price: inputs.maham_price,
 		filter: inputs.filter_name,
 		mint_id: inputs.mintId,
@@ -331,7 +331,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		(estate.location = inputs.location),
 		(estate.state_description = inputs.state_description),
 		(estate.estate_type = inputs.estate_type),
-		(estate.costumer_price = inputs.costumerPrice),
+		(estate.customer_price = inputs.customerPrice),
 		(estate.maham_price = inputs.maham_price),
 		(estate.filter = inputs.filter_name),
 		(estate.mint_id = inputs.mintId);
@@ -412,88 +412,6 @@ exports.getEditEstate = catchAsync(async (req, res) => {
 	}
 	res.status(200).json(estate);
 });
-
-exports.generateMint = catchAsync(async (req, res, next) => {
-	// specify the length of the mint
-	const modifiedCountryName = beautify(req.body.countryName);
-	const modifiedCityName = beautify(req.body.cityName);
-	/////////////////////////////////////////
-	const country = await countryDB
-		.findOne({ country_name: modifiedCountryName })
-		.select([
-			'country_code',
-			'country_name',
-			'country_cities',
-			'country_estates',
-			'last_mints',
-			'available_mints',
-		]);
-
-	if (!country) {
-		return next(new AppError('country does not exists!', 404));
-	}
-	///////////////////////////////////
-	// specify the containers of mint args
-	const countryCode = country.country_code;
-	let cityCode;
-	let estateCode;
-	// assign city code
-	const cityIndex = country.country_cities.indexOf(modifiedCityName) + 1;
-	if (cityIndex < 10) {
-		cityCode = String(cityIndex).padStart(2, '0');
-	} else {
-		cityCode = cityIndex.toString();
-	}
-	// assining the estate Code
-	// let availableMints = country.available_mints;
-	const startsWith = countryCode + cityCode;
-
-	const pattern = new RegExp(`^${startsWith}`, 'i');
-	if (country.available_mints.length === 0) {
-		estateNum = country.last_mints[countryCode + cityCode] + 1;
-		estateCode = String(estateNum).slice(1, 5);
-	} else {
-		for (let i = 0; i < country.available_mints.length; i++) {
-			if (pattern.test(country.available_mints[i])) {
-				// If a match is found, print the element and stop searching
-				estateCode = country.available_mints.splice(i, 1)[0];
-				break;
-			}
-		}
-	}
-
-	// update the last_mints object on database
-	const obj = {
-		...country.last_mints,
-		[startsWith]: estateNum,
-	};
-	country.last_mints = obj;
-
-	console.log(`estateCode is : ${estateCode}`);
-
-	// save the modified country to database
-	await country.save();
-
-	// generating the mint
-	const mint = countryCode + cityCode + estateCode;
-
-	// send respose
-	return res.status(200).json({
-		status: 'success',
-		message: 'mint created succesfully ',
-		data: mint,
-	});
-});
-
-// every field in requset object that its value is String >> changes to lowercase
-exports.toLowerCase = (req, res, next) => {
-	for (let key in req.body) {
-		if (typeof req.body[key] === 'string') {
-			req.body[key] = req.body[key].toLowerCase();
-		}
-	}
-	next();
-};
 
 exports.postFilter = catchAsync(async (req, res, next) => {
 	const filterName = req.body.filterName;
@@ -583,6 +501,7 @@ const clearImage = catchAsync(async (filePath, next) => {
 		}
 	});
 });
+
 const clearVideo = catchAsync(async (filePath) => {
 	if (!filePath) {
 		return next(new AppError('path not found', 404));

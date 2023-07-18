@@ -3,21 +3,11 @@ const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/catchAsync');
 const AppError = require('./../../utilities/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
+const {
+	formatStr,
+	assignCode,
+} = require('./../../utilities/speciallFunctions');
 ///////////////////////////////////////////////////
-
-exports.beautify = (str) => {
-	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
-	return formattedstr;
-};
-
-exports.assignCode = (num) => {
-	if (num < 10) {
-		code = String(num).padStart(2, '0');
-	} else {
-		code = num.toString();
-	}
-	return code;
-};
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	const countries = await countryDB.find();
@@ -63,7 +53,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 });
 
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	countryName = exports.beautify(req.body.countryName);
+	countryName = formatStr(req.body.countryName);
 	countryLogo = req.files.images[0].path;
 
 	if (!req.body.countryName) {
@@ -122,11 +112,11 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			// if all is ok , adds the city to cities collection of chosen country
 		}
 
-		country.country_cities.push(exports.beautify(req.body.cityName));
+		country.country_cities.push(formatStr(req.body.cityName));
 
 		// Set the 'last_mints' property
 		const cityCount = country.country_cities.length;
-		const assignedCode = exports.assignCode(cityCount);
+		const assignedCode = assignCode(2, cityCount);
 		const propertyKey = country.country_code + assignedCode;
 
 		let obj;
