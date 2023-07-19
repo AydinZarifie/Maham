@@ -24,6 +24,7 @@ const AdminPanel = () => {
     overlay.current.style.visibility = "visible";
   };
 
+  //search
   const submitFilterHandler = async (name, type, country, city) => {
     const formData = new FormData();
     formData.append("name", name);
@@ -91,8 +92,9 @@ const AdminPanel = () => {
   }, []);
 
   const cityFetch = async (name) => {
-    const response = await fetch("url" + name);
+    const response = await fetch("http://localhost:5000/admin/managment/getCities/" + name);
     const json = await response.json();
+    console.log(json.data);
     setCities(json.data);
   };
 

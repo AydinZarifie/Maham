@@ -9,7 +9,7 @@ const LockPosition = () => {
 
   useEffect(() => {
     fetchLockPositionData();
-  }, [lockPositionData]);
+  }, []);
 
   return (
     <div class={styles.Lock}>
@@ -17,25 +17,31 @@ const LockPosition = () => {
         <thead>
           <tr>
             <th>Title</th>
+            <th></th>
+            <th></th>
             <th>Contract address</th>
             <th>Landlore address</th>
-            <th></th>
-            <th></th>
+
             <th>Country</th>
             <th>City</th>
+            <th>Price</th>
+            <th>P/M</th>
             <th>Lock position</th>
           </tr>
         </thead>
         <tbody>
           {lockPositionData.map((item) => (
             <tr>
-              <td>{item.title}</td>
+              <td>{item.estate_title}</td>
+              <td></td>
+              <td></td>
               <td>{item.contractAddress}</td>
               <td>{item.landloreAddress}</td>
-              <td></td>
-              <td></td>
-              <td>{item.country}</td>
-              <td>{item.city}</td>
+
+              <td>{item.country_name}</td>
+              <td>{item.city_name}</td>
+              <td>{item.maham_price} ETH</td>
+              <td>1.96</td>
               <td>
                 <img src={lockLogo} className={styles.LockIcon} />
               </td>
