@@ -6,6 +6,7 @@ import Gallery from "../components/detailPage/Gallery";
 import Headline from "../components/detailPage/Headline";
 import Metrage from "../components/detailPage/Metrage";
 import Navbar from "../components/Navbar";
+import fetchInstance from "../util/fetchInstance";
 
 const DetailPage = () => {
   return (
@@ -62,8 +63,7 @@ export default DetailPage;
 
 export async function loader({ request, params }) {
   const id = params.estateId;
-  const response = await fetch("http://localhost:5000/admin/estates/" + id);
-  return response.json();
-
+  let { response,data } = await fetchInstance("/admin/estates/" + id);
+  return data;
   // return loadEstate(id);
 }

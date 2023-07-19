@@ -22,19 +22,21 @@ import poolIcon from "../../images/pool-svgrepo-com.svg";
 import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
 import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
 import deleteIcon from "../../images/delete-svgrepo-com.svg";
+import fetchInstance from "../../util/fetchInstance";
 
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [mintUsed, setMintUsed] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      const data = await fetch(
-        "http://localhost:5000/admin/estate/getCountries"
+      let { response, data } = await fetchInstance(
+        "/admin/estate/getCountries"
       );
-      const json = await data.json();
-      setCountries(json.data);
+      setCountries(data.data);
     };
     fetchCountryData();
     if (estate) {
@@ -42,21 +44,19 @@ const ConfingEstate = ({ method, estate }) => {
     }
 
     const fetchFilterData = async () => {
-      const data = await fetch(
-        "http://localhost:5000/admin/estate/getAddEstateFilters"
+      let { response, data } = await fetchInstance(
+        "/admin/estate/getAddEstateFilters"
       );
-      const json = await data.json();
-      setFilters(json.data);
+      setFilters(data.data);
     };
     fetchFilterData();
   }, []);
 
   const cityFetch = async (name) => {
-    const response = await fetch(
-      "http://localhost:5000/admin/estate/getCities/" + name
+    let { response, data } = await fetchInstance(
+      "/admin/estate/getCities/" + name
     );
-    const json = await response.json();
-    setCities(json.data);
+    setCities(data.data);
   };
 
   const navigate = useNavigate();
@@ -403,7 +403,6 @@ const ConfingEstate = ({ method, estate }) => {
     enteredCustomerPriceIsValid &&
     enteredImageIsValid &&
     enteredVideoIsValid
-   
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -515,7 +514,7 @@ const ConfingEstate = ({ method, estate }) => {
       // plate: true,
       // walletAddress: true,
     });
-    
+
     if (estate) {
       if (!formIsValidForEditing) {
         return;
@@ -669,38 +668,37 @@ const ConfingEstate = ({ method, estate }) => {
       url = "http://localhost:5000/admin/estates/" + estateId;
     }
 
-    const response = await fetch(url, {
+    let { response } = await fetchInstance(url, {
       method: method,
       body: formData,
     });
-
     console.log("finished submit");
 
-    navigate("/admin/estates");
+    if (response.ok) {
+      navigate("/admin/estates");
+    }
+
+    if ((response.status = 404)) {
+      setError(true)
+      setMintUsed(false)
+    }
   };
 
-  const deleteHandler = () => {
+  const deleteHandler = async () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const estateId = estate._id;
       const url = "http://localhost:5000/admin/estates/" + estateId;
-      fetch(url, {
+      let { response } = await fetchInstance(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => {
-          if (response.ok) {
-            console.log("Delete request succeeded");
-          } else {
-            console.error("Delete request failed");
-          }
-        })
-        .catch((error) => {
-          console.error("error occured while sending delete request:", error);
-        });
+      });
+      if (response.ok) {
+        navigate("admin/estates");
+      }
     }
   };
-  //mint
+
   const idManipulataionHandler = async () => {
     setTouched((prev) => ({
       ...prev,
@@ -715,13 +713,17 @@ const ConfingEstate = ({ method, estate }) => {
     const formData = new FormData();
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
-    const response = await fetch("http://localhost:5000/admin/estates/generateMint", {
-      method: "POST",
-      body: formData,
-    });
-    const data = response.json();
-    console.log(data.data);
-    setInformation((prev) => ({ ...prev, id: data.data }));
+    let { response, data } = await fetchInstance(
+      "/admin/estates/generateMint",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    if (response.ok) {
+      setMintUsed(true);
+      setInformation((prev) => ({ ...prev, id: data.data }));
+    }
   };
 
   return (
@@ -918,6 +920,7 @@ const ConfingEstate = ({ method, estate }) => {
               <button
                 type="button"
                 onClick={idManipulataionHandler}
+                disabled={mintUsed}
                 className={styles.MintBtn}
               >
                 {estate ? "Burn" : "Mint"}

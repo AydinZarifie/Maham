@@ -37,16 +37,14 @@ export default function Estates() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch("http://localhost:5000/admin/estates");
-      const json = await data.json();
-      setData(json);
+      let { response, data } = await fetchInstance("/admin/estates");
+      setData(data);
     };
     fetchData();
 
     const fetchFilterData = async () => {
-      const data = await fetch("http://localhost:5000/admin/getFilters");
-      const json = await data.json();
-      setFilters(json.data);
+      let { response, data } = await fetchInstance("/admin/getFilters");
+      setFilters(data.data);
     };
     fetchFilterData();
   }, []);
@@ -56,20 +54,11 @@ export default function Estates() {
     formData.append("filterName", filterName);
     formData.append("images", filterImg);
 
-    console.log('1');
     let { response } = await fetchInstance("/admin/estates/addFilter", {
       method: "POST",
       body: formData,
     });
-    console.log('2');
 
-    // const response = await fetch(
-    //   "http://localhost:5000/admin/estates/addFilter",
-    //   {
-    //     method: "POST",
-    //     body: formData,
-    //   }
-    // );
     if (response.ok) {
       window.location.reload(true);
     }
@@ -81,7 +70,7 @@ export default function Estates() {
     formData.append("city", city);
     formData.append("lowPrice", lowPrice);
     formData.append("highPrice", highPrice);
-    const response = await fetch("url", {
+    let { response } = await fetchInstance("url", {
       method: "POST",
       body: formData,
     });
@@ -89,21 +78,15 @@ export default function Estates() {
 
   const getSmsForDocument = async (code) => {
     try {
-      const response = await fetch(
-        "url",
-        {
-          method: "POST",
-          // mode: "cors",
-          // credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            code: code,
-          }),
+      let { response } = await fetchInstance("url", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        { withCredentials: true }
-      );
+        body: JSON.stringify({
+          code: code,
+        }),
+      });
 
       if (response.ok) {
         setIsSendingSms(true);
@@ -130,20 +113,15 @@ export default function Estates() {
   const GetDocument = async () => {};
 
   const fetchLockPositionData = async () => {
-    const data = await fetch(
-      "http://localhost:5000/admin/panel/getLockEstates"
-    );
-    const json = await data.json();
-    setLockPositionData(json.data);
+    let { response, data } = await fetchInstance("/admin/panel/getLockEstates");
+    setLockPositionData(data.data);
   };
 
   const fetchSellPositionData = async () => {
-    const data = await fetch(
-      "http://localhost:5000/admin/panel/getSellPositionEstates"
+    let { response, data } = await fetchInstance(
+      "/admin/panel/getSellPositionEstates"
     );
-    const json = await data.json();
-    console.log(json);
-    setSellPositionData(json.data);
+    setSellPositionData(data.data);
   };
 
   return (

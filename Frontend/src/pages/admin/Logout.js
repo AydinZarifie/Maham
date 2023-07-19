@@ -1,7 +1,22 @@
-import { redirect } from 'react-router-dom';
+import { redirect } from "react-router-dom";
+import fetchInstance from "../../util/fetchInstance";
 
 export function action() {
-  localStorage.removeItem('token');
-  // localStorage.removeItem('expiration');
-  return redirect('/loginAdmin');
+  const logout = async () => {
+    let { response } = await fetchInstance(
+      "urlForLogout",
+      {
+        method: "post",
+        mode: "cors",
+        credentials: "include",
+      },
+      { withCredentials: true }
+    );
+    if (response.ok) {
+      localStorage.removeItem("token");
+      return redirect("/loginAdmin");
+    }
+  };
+  logout();
+  return;
 }

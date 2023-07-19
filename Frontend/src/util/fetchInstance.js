@@ -2,11 +2,10 @@ import { getAuthToken } from "./auth";
 
 let baseURL = "http://localhost:5000";
 
-let originalRequest = async (url, config) => {
+let originalRequest = async (url, config,credentials) => {
   url = `${baseURL}${url}`;
-  let response = await fetch(url, config);
+  let response = await fetch(url, config,credentials);
   let data = await response.json();
-  console.log("REQUESTING:", data);
   return { response, data };
 };
 
@@ -14,7 +13,7 @@ let refreshToken = async () => {
   let response = await fetch(
     "urlForRefreshToken",
     {
-      method: "POST",
+      method: "get",
       mode: "cors",
       credentials: "include",
     },
@@ -22,29 +21,27 @@ let refreshToken = async () => {
   );
 
   let data = await response.json();
-  localStorage.setItem("token", data.token);
+  localStorage.setItem("token", data.accessToken);
   return data;
 };
 
-const fetchInstance = async (url, config = {}) => {
+const fetchInstance = async (url, config = {},credentials={}) => {
   let authTokens = getAuthToken();
 
   config["headers"] = {
     Authorization: `Bearer ${authTokens}`,
   };
 
-  console.log("Before Request");
-  let { response, data } = await originalRequest(url, config);
-  console.log("After Request");
+  let { response, data } = await originalRequest(url, config,credentials);
 
-  if (response.statusText === "Unauthorized") {
+  if (response.status === 401) {
     authTokens = await refreshToken();
 
     config["headers"] = {
       Authorization: `Bearer ${authTokens}`,
     };
 
-    let newResponse = await originalRequest(url, config);
+    let newResponse = await originalRequest(url, config,credentials);
     response = newResponse.response;
     data = newResponse.data;
   }
