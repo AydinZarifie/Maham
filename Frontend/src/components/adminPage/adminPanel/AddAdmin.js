@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const AddAdmin = () => {
-  const { error, submitAddAdminHandler, countries, cityFetch, citites } =
+  const { error, submitAddAdminHandler, countries, cityFetch, cities } =
     useOutletContext();
   const [data, setData] = useState({
     type: "",
@@ -318,7 +318,7 @@ const AddAdmin = () => {
               <option className={styles.SelectOption} value="">
                 Country
               </option>
-              {/* {countries.map((country) => (
+              {countries.map((country) => (
                 <option
                   key={country.country_name}
                   className={styles.SelectOption}
@@ -326,7 +326,7 @@ const AddAdmin = () => {
                 >
                   {country.country_name}
                 </option>
-              ))} */}
+              ))}
             </select>
           </div>
           <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
@@ -341,15 +341,17 @@ const AddAdmin = () => {
               <option className={styles.SelectOption} value="">
                 City
               </option>
-              {/* {citites.map((city) => (
+              {console.log(cities)}
+              
+            {cities.length >0 && cities.map((city) => (
                 <option
-                  key={city.city_name}
+                  key={city}
                   className={styles.SelectOption}
-                  value={city.city_name}
+                  value={city}
                 >
-                  {city.city_name}
+                  {city}
                 </option>
-              ))} */}
+              ))}
             </select>
           </div>
         </div>

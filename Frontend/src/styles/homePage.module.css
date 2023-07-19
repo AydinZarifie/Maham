@@ -863,7 +863,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 65%;
+   max-width: 65%;
   }
 }
 @media (max-width: 430px) {
@@ -908,7 +908,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 55%;
+    max-width: 55%;
   }
 }
 

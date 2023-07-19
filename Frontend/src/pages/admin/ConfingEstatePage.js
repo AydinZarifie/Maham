@@ -402,8 +402,8 @@ const ConfingEstate = ({ method, estate }) => {
     enteredMahamPriceIsValid &&
     enteredCustomerPriceIsValid &&
     enteredImageIsValid &&
-    enteredVideoIsValid &&
-    enteredIdIsValid
+    enteredVideoIsValid
+   
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -422,8 +422,7 @@ const ConfingEstate = ({ method, estate }) => {
     enteredNumberOfUnitIsValid &&
     enteredLocationIsValid &&
     enteredTypeIsValid &&
-    enteredDescriptionIsValid &&
-    enteredMahamPriceIsValid
+    enteredDescriptionIsValid
 
     // enteredPlateIsValid &&
   ) {
@@ -701,7 +700,7 @@ const ConfingEstate = ({ method, estate }) => {
         });
     }
   };
-
+  //mint
   const idManipulataionHandler = async () => {
     setTouched((prev) => ({
       ...prev,
@@ -716,7 +715,7 @@ const ConfingEstate = ({ method, estate }) => {
     const formData = new FormData();
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
-    const response = await fetch("url", {
+    const response = await fetch("http://localhost:5000/admin/estates/generateMint", {
       method: "POST",
       body: formData,
     });

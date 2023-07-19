@@ -8,7 +8,7 @@ const SellPosition = () => {
 
   useEffect(() => {
     fetchSellPositionData();
-  }, [sellPositionData]);
+  }, []);
 
   return (
     <div class={styles.Sell}>
@@ -16,25 +16,29 @@ const SellPosition = () => {
         <thead>
           <tr>
             <th>Title</th>
+            <th></th>
+            <th></th>
             <th>Contract address</th>
             <th>Landlore address</th>
-            <th></th>
-            <th></th>
+
             <th>Country</th>
             <th>City</th>
+            <th>Price</th>
+            <th>P/M</th>
             <th>Sell position</th>
           </tr>
         </thead>
         <tbody>
           {sellPositionData.map((item) => (
             <tr>
-              <td>{item.title}</td>
+              <td>{item.estate_title}</td> <td></td>
+              <td></td>
               <td>{item.contractAddress}</td>
               <td>{item.landloreAddress}</td>
-              <td></td>
-              <td></td>
-              <td>{item.country}</td>
-              <td>{item.city}</td>
+              <td>{item.country_name}</td>
+              <td>{item.city_name}</td>
+              <td>{item.maham_price} ETH</td>
+              <td>1.36</td>
               <td>true</td>
             </tr>
           ))}

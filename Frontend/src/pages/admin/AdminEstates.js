@@ -10,6 +10,7 @@ import FilterWithAdder from "../../components/adminPage/FilterWithAdder";
 import FilterModal from "../../components/general/FilterModal";
 import ProfileModal from "../../components/adminPage/AdminEstate/ProfileModal";
 import ConfirmationModal from "../../components/adminPage/AdminEstate/ConfirmationModal";
+import fetchInstance from "../../util/fetchInstance";
 
 export default function Estates() {
   const [data, setData] = useState([]);
@@ -54,13 +55,21 @@ export default function Estates() {
     const formData = new FormData();
     formData.append("filterName", filterName);
     formData.append("images", filterImg);
-    const response = await fetch(
-      "http://localhost:5000/admin/estates/addFilter",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+
+    console.log('1');
+    let { response } = await fetchInstance("/admin/estates/addFilter", {
+      method: "POST",
+      body: formData,
+    });
+    console.log('2');
+
+    // const response = await fetch(
+    //   "http://localhost:5000/admin/estates/addFilter",
+    //   {
+    //     method: "POST",
+    //     body: formData,
+    //   }
+    // );
     if (response.ok) {
       window.location.reload(true);
     }
@@ -121,14 +130,19 @@ export default function Estates() {
   const GetDocument = async () => {};
 
   const fetchLockPositionData = async () => {
-    const data = await fetch("url");
+    const data = await fetch(
+      "http://localhost:5000/admin/panel/getLockEstates"
+    );
     const json = await data.json();
     setLockPositionData(json.data);
   };
 
   const fetchSellPositionData = async () => {
-    const data = await fetch("url");
+    const data = await fetch(
+      "http://localhost:5000/admin/panel/getSellPositionEstates"
+    );
     const json = await data.json();
+    console.log(json);
     setSellPositionData(json.data);
   };
 
