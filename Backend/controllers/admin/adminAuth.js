@@ -35,6 +35,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		adminType,
 		phoneNumber,
 		countryName,
+		cityName,
 	} = req.body;
 
 	if (password !== confirmPassword) {
@@ -58,6 +59,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		phone_number: phoneNumber,
 		email: email,
 		admin_country: countryName,
+		admin_city: cityName,
 	});
 
 	await admin.save();
@@ -124,13 +126,13 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 
 		const admin = await adminDB.findOne({ email }).select('+password');
 		if (!admin) {
-			return next(new AppError('Wrong email', 401));
+			return next(new AppError('Wrong email!', 401));
 		}
 
 		const isEqual = await bcrypt.compare(password, admin.password);
 
 		if (!isEqual) {
-			return next(new AppError('Wrong password', 401));
+			return next(new AppError('Wrong password!', 401));
 		}
 
 		const verificationCode = Math.floor(100000 + Math.random() * 9000);
@@ -141,13 +143,14 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 		const mailOptions = {
 			email: email,
 			subject: 'Ver',
-			text: 'hello there ',
+			text: 'hello there',
 			verificationCode,
 		};
-
 		await sendEmail(mailOptions);
+
 		return res.status(201).json({
-			message: 'Success',
+			status: 'success',
+			message: `Email sent to ${email} `,
 		});
 	} catch (err) {
 		console.log(err);

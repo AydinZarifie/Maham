@@ -192,6 +192,7 @@ const estateSchema = new mongoose.Schema({
 	},
 	estate_title: {
 		type: String,
+		// unique: true,
 		required: [true, 'must have a title'],
 		set: (a) => (a === '' ? undefined : a),
 	},
@@ -307,8 +308,10 @@ const estateSchema = new mongoose.Schema({
 	],
 });
 
-// refrences the estate to its country model
+// refrences the estate to its country model & updates last_mints object of country document
 estateSchema.pre('save', async function (next) {
+	if (this.isNew()) return next();
+
 	const country = await countryDB.findOne({
 		country_name: this.country_name,
 	});
@@ -319,7 +322,20 @@ estateSchema.pre('save', async function (next) {
 		);
 	}
 
+	const startsWith =
+		country.country_code +
+		(country.country_cities.indexOf(this.city_name) + 1).toString();
+
+	const estateNum = this.mint_id.slice(0, startsWith.length - 1);
+
+	const obj = {
+		...country.last_mints,
+		[startsWith]: estateNum,
+	};
+
+	country.last_mints = obj;
 	this.estate_country_ref = country._id;
+
 	next();
 });
 

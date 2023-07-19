@@ -12,7 +12,7 @@ const cors = require('cors');
 const adminPage_router = require('./routes/admin/adminPage');
 const managmentPage_router = require('./routes/admin/adminManagment');
 const adminAuth_router = require('./routes/admin/adminAuth');
-const adminPanel_router = require('./routes/admin/adminAuth');
+const adminPanel_router = require('./routes/admin/adminPanel');
 //////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/appError');

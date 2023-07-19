@@ -440,7 +440,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEditEstate = catchAsync(async (req, res) => {
+exports.getEditEstate = catchAsync(async (req, res , next) => {
 	const estateId = req.params.estateId;
 	if (!estateId) {
 		return next(new AppError('please provide estate id', 400));

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// mongoose.set('debug', true);
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const AppError = require('../utilities/appError');
@@ -32,7 +33,7 @@ const adminSchema = mongoose.Schema(
 		admin_country: {
 			type: String,
 		},
-		admin_City: {
+		admin_city: {
 			type: String,
 		},
 		admin_country_ref: [
@@ -58,7 +59,12 @@ const adminSchema = mongoose.Schema(
 		},
 		//store acitivity of admins
 	},
-	{ timestamps: true, strict: true }
+	{
+		timestamps: true,
+		strict: true,
+		toJson: { virtuals: true },
+		toObject: { virtuals: true },
+	}
 );
 
 adminSchema.virtual('full_name').get(function () {
