@@ -14,6 +14,8 @@ import ConfirmationModal from "../../components/adminPage/AdminEstate/Confirmati
 export default function Estates() {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [lockPositionData, setLockPositionData] = useState([]);
+  const [sellPositionData, setSellPositionData] = useState([]);
   const [showProfile, setShowProfile] = useState(false);
   const [filterShown, setFilterShown] = useState(false);
   const [isSendingSms, setIsSendingSms] = useState(false);
@@ -52,7 +54,6 @@ export default function Estates() {
     const formData = new FormData();
     formData.append("filterName", filterName);
     formData.append("images", filterImg);
-
     const response = await fetch(
       "http://localhost:5000/admin/estates/addFilter",
       {
@@ -60,8 +61,8 @@ export default function Estates() {
         body: formData,
       }
     );
-
     if (response.ok) {
+      window.location.reload(true);
     }
   };
 
@@ -118,6 +119,19 @@ export default function Estates() {
   };
 
   const GetDocument = async () => {};
+
+  const fetchLockPositionData = async () => {
+    const data = await fetch("http://localhost:5000/admin/panel/getLockEstates");
+    const json = await data.json();
+    setLockPositionData(json.data);
+  };
+
+  const fetchSellPositionData = async () => {
+    const data = await fetch("http://localhost:5000/admin/panel/getSellPositionEstates");
+    const json = await data.json();
+    console.log(json);
+    setSellPositionData(json.data);
+  };
 
   return (
     <>
@@ -217,7 +231,11 @@ export default function Estates() {
             context={{
               data,
               toggleShowProfile,
-              toggeConfirmationMessage: toggleConfirmationMessage,
+              toggleConfirmationMessage,
+              sellPositionData,
+              fetchSellPositionData,
+              lockPositionData,
+              fetchLockPositionData,
             }}
           />
         </div>

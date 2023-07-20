@@ -58,7 +58,6 @@ const Filters = (props) => {
         className={styles.FilterMenu}
       >
         <div className={styles.menuBig}>
-          {console.log(props.filters)}
           {props.filters.map((filter) => {
             return <FilterItem key={filter.filterName} name={filter.filterName} img={filter.filterImageUrl} />;
           })}

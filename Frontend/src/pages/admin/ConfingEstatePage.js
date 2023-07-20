@@ -42,9 +42,10 @@ const ConfingEstate = ({ method, estate }) => {
     }
 
     const fetchFilterData = async () => {
-      const data = await fetch("http://localhost:5000/admin/estate/getAddEstateFilters");
+      const data = await fetch(
+        "http://localhost:5000/admin/estate/getAddEstateFilters"
+      );
       const json = await data.json();
-      console.log(json);
       setFilters(json.data);
     };
     fetchFilterData();
@@ -401,8 +402,8 @@ const ConfingEstate = ({ method, estate }) => {
     enteredMahamPriceIsValid &&
     enteredCustomerPriceIsValid &&
     enteredImageIsValid &&
-    enteredVideoIsValid &&
-    enteredIdIsValid
+    enteredVideoIsValid
+   
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -421,8 +422,7 @@ const ConfingEstate = ({ method, estate }) => {
     enteredNumberOfUnitIsValid &&
     enteredLocationIsValid &&
     enteredTypeIsValid &&
-    enteredDescriptionIsValid &&
-    enteredMahamPriceIsValid
+    enteredDescriptionIsValid
 
     // enteredPlateIsValid &&
   ) {
@@ -515,7 +515,7 @@ const ConfingEstate = ({ method, estate }) => {
       // plate: true,
       // walletAddress: true,
     });
-console.log(1);
+    
     if (estate) {
       if (!formIsValidForEditing) {
         return;
@@ -525,7 +525,7 @@ console.log(1);
         return;
       }
     }
-console.log(3);
+
     console.log("entered submit handler");
     // event.preventDefault();
 
@@ -700,30 +700,22 @@ console.log(3);
         });
     }
   };
-
+  //mint
   const idManipulataionHandler = async () => {
     setTouched((prev) => ({
       ...prev,
-      title: true,
       cityName: true,
-      streetName: true,
+      countryName: true,
     }));
 
-    if (
-      !(
-        enteredTitleIsValid &&
-        enteredCityNameIsValid &&
-        enteredStreetNameIsValid
-      )
-    ) {
+    if (!(enteredCountryNameIsValid && enteredCityNameIsValid)) {
       return;
     }
-    
+
     const formData = new FormData();
-    formData.append("title", information.title);
     formData.append("cityName", information.cityName);
-    formData.append("StreetName", information.streetName);
-    const response = await fetch("url", {
+    formData.append("countryName", information.countryName);
+    const response = await fetch("http://localhost:5000/admin/estates/generateMint", {
       method: "POST",
       body: formData,
     });
@@ -734,7 +726,6 @@ console.log(3);
 
   return (
     <form method={method} encType="multipart/form-data">
-      {console.log(estate)}
       <div className={styles.EstateInfo}>
         <div
           className={styles.select2}
@@ -1835,8 +1826,17 @@ console.log(3);
             type="button"
             onClick={() => submitHandler()}
           >
-            <span className={styles.text}>Add</span>
-            <span>+</span>
+            {estate ? (
+              <>
+                <span className={styles.text}>Edit</span>
+                <span>+</span>
+              </>
+            ) : (
+              <>
+                <span className={styles.text}>Add</span>
+                <span>+</span>
+              </>
+            )}
           </button>
           {estate && (
             <button

@@ -1,7 +1,7 @@
 import styles from "../../styles/AdminPanel.module.css";
 
 import { useEffect, useRef, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
 
@@ -12,6 +12,7 @@ const AdminPanel = () => {
   const [error, setError] = useState(false);
   const filter = useRef();
   const overlay = useRef();
+  const navigate = useNavigate();
 
   const closeFilter = () => {
     filter.current.style.visibility = "hidden";
@@ -23,6 +24,7 @@ const AdminPanel = () => {
     overlay.current.style.visibility = "visible";
   };
 
+  //search
   const submitFilterHandler = async (name, type, country, city) => {
     const formData = new FormData();
     formData.append("name", name);
@@ -65,9 +67,10 @@ const AdminPanel = () => {
     if (response.ok) {
       setError(null);
       alert("Admin successfully added");
+      navigate("/admin/admins");
     }
     if (response.status == 401) {
-      setError("This email has an account");
+      setError("Email already exists");
     }
   };
 
@@ -89,8 +92,9 @@ const AdminPanel = () => {
   }, []);
 
   const cityFetch = async (name) => {
-    const response = await fetch("url" + name);
+    const response = await fetch("http://localhost:5000/admin/managment/getCities/" + name);
     const json = await response.json();
+    console.log(json.data);
     setCities(json.data);
   };
 
@@ -138,6 +142,7 @@ const AdminPanel = () => {
             admins,
             countries,
             cityFetch,
+            cities,
           }}
         />
       </div>
