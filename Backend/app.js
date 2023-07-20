@@ -8,6 +8,8 @@ const multer = require('multer');
 const fs = require('fs');
 const session = require('express-session');
 const cors = require('cors');
+const helmet = require('helmet');
+const hpp = require('hpp');
 //////////////////////////////////////////////
 const adminPage_router = require('./routes/admin/adminPage');
 const managmentPage_router = require('./routes/admin/adminManagment');
@@ -102,6 +104,8 @@ const upload = multer({
 	},
 ]);
 
+app.use(helmet());
+
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
@@ -110,6 +114,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(hpp({ whitelist: ['price'] }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 app.use(

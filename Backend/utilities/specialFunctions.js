@@ -45,13 +45,6 @@ exports.generateMint = (country, modifiedCityName) => {
 		}
 	}
 
-	// update the last_mints object on database
-	const obj = {
-		...country.last_mints,
-		[startsWith]: estateNum,
-	};
-	country.last_mints = obj;
-
 	// generating the mint
 	return (mint = countryCode + cityCode + estateCode);
 };
@@ -64,7 +57,7 @@ exports.filterObj = (obj, ...allowedFields) => {
 		}
 	});
 	return newObj;
-}
+};
 
 // every field in requset object that its value is String >> changes to lowercase
 // exports.toLowerCase = (req, res, next) => {
