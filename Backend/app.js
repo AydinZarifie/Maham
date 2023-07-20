@@ -14,8 +14,9 @@ const adminPanel_Router = require("./routes/admin/adminPanel");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const globalErrorHandler = require("./controllers/globalErrorHandler");
-const AppError = require("./utilities/appError");
+const AppError = require("./utilities/Errors/appError");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config({ path: "./config.env" });
 const app = express();
@@ -82,12 +83,13 @@ const upload = multer({
 
 app.use(globalErrorHandler);
 
+app.use(cookieParser());
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(cors({
   origin : "http://localhost:3000",
   credentials : true
 }))
-1
+
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -112,10 +114,10 @@ app.use(session({
 }))
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
-app.use("/admin", adminPage_Router);
-app.use("/admin", managmentPage_Router);
 app.use("/admin" , adminAuth_Router);
-app.use("/admin", adminPanel_Router);
+app.use("/admin" , adminPage_Router);
+app.use("/admin", managmentPage_Router);
+app.use("/admin" , adminPanel_Router);
 
 mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {
   console.log(`DB connection sucessful`);

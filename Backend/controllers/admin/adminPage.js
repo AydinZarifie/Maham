@@ -1,11 +1,12 @@
 const estateDB = require('../../models/estate');
 const fs = require('fs');
 const path = require('path');
-const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError');
+const catchAsync = require('../../utilities/Errors/catchAsync');
+const AppError = require('../../utilities/Errors/appError');
 const countryDB = require("../../models/country");
 const filterDB = require('../../models/filter');
-
+const {formatStr,generateMint} = require('../../utilities/Mint');
+const {clearImage , clearVideo} = require("../../utilities/clearFiles")
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
     if (
@@ -29,7 +30,6 @@ exports.getAllEstates = catchAsync(async (req, res) => {
 //2023/05/08 chenged the name from 'postAddEstate' to the 'createEstate'
 exports.createEstate = catchAsync(async (req, res) => {
     
-
     const inputs = {
         ///////////////////////////////////////////////////////////// getState
         estate_title: req.body.title,
@@ -372,6 +372,46 @@ exports.getEditEstate =  catchAsync(async (req, res) => {
     res.status(200).json(estate);
 });
 
+exports.sendMint = catchAsync(async (req, res, next) => {
+	// 1) get the Country & City name from Response
+	const modifiedCountryName = req.body.countryName;
+	const modifiedCityName = req.body.cityName;
+    
+
+    console.log(modifiedCityName);
+
+	// 2) find the country
+	const country = await countryDB
+		.findOne({ country_name: modifiedCountryName })
+		.select([
+			'country_code',
+			'country_name',
+			'country_estates',
+            'cities',
+			'last_mints',
+			'available_mints',
+		]);
+        
+	if (!country) {
+		return next(new AppError('country does not exist!', 404));
+	}
+
+	// 3) generate the Mint based on given country and city
+	const mint = generateMint(country, modifiedCityName);
+	console.log(mint);
+
+	// 4) save the modified country to database
+	await country.save();
+
+    console.log(mint);
+	// 5) ssend respose
+	return res.status(200).json({
+		status: 'success',
+		message: 'mint created succesfully ',
+		data: mint,
+	});
+});
+
 //added : 2023/05/08  , implemented : 2023/06/04
 exports.deleteEstate = catchAsync(async (req, res, next) => {
     const est = await estateDB.findByIdAndDelete(req.params.estateId);
@@ -446,30 +486,5 @@ exports.getAllFilters = catchAsync(async (req,res) => {
     return res.status(200).json({data : filters});
 })
 
-const clearImage = async (filePath) => {
-    filePath.forEach(async (imagePath) => {
-      imagePath = path.join(__dirname, "../..", imagePath);
-      if (await fs.existsSync(imagePath)) {
-        await fs.unlinkSync(imagePath, (err) => {
-          throw err;
-        });
-        console.log("Image deleted successfully");
-      } else {
-        console.log("Image not found");
-      }
-    });
-};
-const clearVideo = async (filePath) => {
-    filePath.forEach(async (videoPath) => {
-      videoPath = path.join(__dirname, "../..", videoPath);
-      if (await fs.existsSync(videoPath)) {
-        await fs.unlinkSync(videoPath, (err) => {
-          throw err;
-        });
-        console.log("Image deleted successfully");
-      } else {
-        console.log("Image not found");
-      }
-    });
-};
+
   

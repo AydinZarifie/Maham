@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const adminPage_Controller = require('../../controllers/admin/adminPage');
+/* const verifyAccessToken = require("../../middleware/verifyToken");
+
+router.use(verifyAccessToken); */
 
 // 2023/05/8 >> changed the logic of written code to 'mounting the routes'
 //    "      >> added main functions to control estates
@@ -35,6 +38,10 @@ router
 router
     .route("/getFilters")
     .get(adminPage_Controller.getAllFilters);
+
+router
+    .route('/estates/generateMint')
+    .post(adminPage_Controller.sendMint);
 
 
 

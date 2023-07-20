@@ -27,9 +27,15 @@ const adminSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    verification_code : {
+    country_name : {
         type : String,
+        required : true,
+    },
+    city_name : {
+        type : String,
+        required : true,
     }
+
     //store acitivity of admins
 },{ timestamps: true ,strict: true})
 

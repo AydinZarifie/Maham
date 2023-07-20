@@ -1,7 +1,8 @@
 const countryDB = require("../../models/country");
-const catchAsync = require("./../../utilities/catchAsync");
+const catchAsync = require("../../utilities/Errors/catchAsync");
 const estateDB = require("../../models/estate");
-const AppError = require('./../../utilities/appError');
+const AppError = require('../../utilities/Errors/appError');
+const {formatStr,assignCode} = require('./../../utilities/Mint');
 
 exports.getAllCountries = catchAsync(async (req, res) => {
   const countries = await countryDB.find();
@@ -12,56 +13,95 @@ exports.getAllCountries = catchAsync(async (req, res) => {
 });
 
 // age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
-exports.postAddCountry = catchAsync(async (req, res) => {
-  const inputs = {
-    countryName: req.body.countryName,
-    countryLogo: req.files.images[0].path,
-  };
-  if (!req.body.countryName) {
-    return next(new AppError("no country name provided", 401));
-  }
-  if (!req.files.images) {
-    return next(new AppError("no country logo provided", 402));
-  }
-  const newCountry = new countryDB({
-    country_name: inputs.countryName,
-    country_logo: inputs.countryLogo,
-  });
+exports.postAddCountry = catchAsync(async (req, res, next) => {
+	countryName = formatStr(req.body.countryName);
+	countryLogo = req.files.images[0].path;
 
-  await newCountry.save();
+	if (!req.body.countryName) {
+		return next(new AppError('no country name provided', 400));
+	}
+	if (!req.files.images) {
+		return next(new AppError('no country logo provided', 400));
+	}
 
-  return res.status(201).json({
-    status: "success",
-  });
+	let countryCode;
+	try {
+		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
+		console.log(totalCountries);
+
+		totalCountries++;
+
+		if (totalCountries < 10) {
+			countryCode = String(totalCountries).padStart(2, '0');
+		} else {
+			countryCode = totalCountries.toString();
+		}
+	} catch (err) {
+		console.error(err);
+		return next(new AppError('error on assigning countryCode', 400));
+	}
+
+	const newCountry = new countryDB({
+		country_name: countryName,
+		country_logo: countryLogo,
+		country_code: countryCode,
+	});
+
+	// await assignCountryCode(countryName);
+	await newCountry.save();
+
+	return res.status(201).json({
+		status: 'success',
+	});
 });
 
-exports.addCity = catchAsync(async (req, res) => {
+exports.addCity = catchAsync(async (req, res, next) => {
+	// check if country selected
+	if (req.body.countryName) {
+		const country = await countryDB.findOne({
+			country_name: req.body.countryName,
+		});
 
-	const country_name = req.body.countryName;
-	const city_name = req.body.cityName;
+		// check if selected country actually exists in DB
+		if (!country) {
+			return next(new AppError('country not found', 404));
 
-	if(country_name == 'null'){
-		console.log(1);
-		return res.status(401).json({
-			message : "coutnry name was empty"
-		})
+			// check if cityName is inserted
+		} else if (!req.body.cityName) {
+			return next(new AppError('plesae insert city', 400));
+
+			// if all is ok , adds the city to cities collection of chosen country
+		}
+
+		country.cities.push(formatStr(req.body.cityName));
+
+		// Set the 'last_mints' property
+		const cityCount = country.cities.length;
+		const assignedCode = assignCode(2, cityCount);
+		const propertyKey = country.country_code + assignedCode;
+
+		let obj;
+		if (!country.last_mints[propertyKey]) {
+			obj = {
+				...country.last_mints,
+				[propertyKey]: 10000,
+			};
+		}
+
+		country.last_mints = obj;
+		console.log(country.last_mints);
+
+		await country.save();
+		// send response
+		return res.status(200).json({
+			status: 'success',
+			message: 'city was added succesfully',
+		});
+
+		// if country was not selected >> return with error
+	} else {
+		return next(new AppError('no country selected', 400));
 	}
-	if(city_name == 'null'){
-		return res.status(402).json({
-			message : "city name was empty"
-		})
-	}
-  const country = await countryDB.findOne({
-    country_name: req.body.countryName,
-  });
-
-  await country.cities.push(req.body.cityName);
-  country.save();
-
-  return res.status(200).json({
-    status: "success",
-    message: "city was added succesfully",
-  });
 });
 
 /// get all cities of given country

@@ -1,6 +1,6 @@
 // NEW MODULE , ERROR HANDLING
 
-const AppError = require('./../utilities/appError');
+const AppError = require('../utilities/Errors/appError');
 
 // if incorrent type of values accored ;
 const handleCastErrorDB = (err) => {

@@ -5,10 +5,8 @@ exports.getAllAdmins = async(req,res) => {
     const admin = await admibDB.find();
     return res.status(200).json({data:admin});
 }
-
 exports.getLockEstates = async(req,res) => {
     const lockEstate = await estateDB.find({lock_position : true});
-    console.log("hell");
     return res.status(200).json({data : lockEstate , message:"hello"});
 }
 
