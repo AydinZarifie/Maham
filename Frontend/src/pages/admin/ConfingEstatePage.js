@@ -402,7 +402,8 @@ const ConfingEstate = ({ method, estate }) => {
     enteredMahamPriceIsValid &&
     enteredCustomerPriceIsValid &&
     enteredImageIsValid &&
-    enteredVideoIsValid
+    enteredVideoIsValid &&
+    enteredIdIsValid
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -661,11 +662,11 @@ const ConfingEstate = ({ method, estate }) => {
       });
     }
 
-    let url = "http://localhost:5000/admin/estates";
+    let url = "/admin/estates";
 
     if (method === "PUT") {
       const estateId = estate._id;
-      url = "http://localhost:5000/admin/estates/" + estateId;
+      url = "/admin/estates/" + estateId;
     }
 
     let { response } = await fetchInstance(url, {
@@ -688,13 +689,13 @@ const ConfingEstate = ({ method, estate }) => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const estateId = estate._id;
-      const url = "http://localhost:5000/admin/estates/" + estateId;
+      const url = "/admin/estates/" + estateId;
       let { response } = await fetchInstance(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        navigate("admin/estates");
+        navigate("/admin/estates");
       }
     }
   };
@@ -714,7 +715,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
     let { response, data } = await fetchInstance(
-      "/admin/estates/generateMint",
+      "/admin/generateMint",
       {
         method: "POST",
         body: formData,
@@ -722,7 +723,7 @@ const ConfingEstate = ({ method, estate }) => {
     );
     if (response.ok) {
       setMintUsed(true);
-      setInformation((prev) => ({ ...prev, id: data.data }));
+      setInformation((prev) => ({ ...prev, id: data.mint }));
     }
   };
 

@@ -3,7 +3,6 @@ import ConfingEstate from "../../pages/admin/ConfingEstatePage";
 
 const EditState = () => {
   const data = useRouteLoaderData("estate-detail");
-  console.log(data);
   return <ConfingEstate method="PUT" estate={data} />;
 };
 
