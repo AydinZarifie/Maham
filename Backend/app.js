@@ -102,7 +102,7 @@ app.use(
 
 app.use(upload);
 
-app.use(session({
+/* app.use(session({
   secret:process.env.SESSION_SECRET_KEY,
   saveUninitialized: false,
   resave : true,
@@ -111,7 +111,7 @@ app.use(session({
     sameSite : 'lax',
     secure : false
   }
-}))
+})) */
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 app.use("/admin" , adminAuth_Router);

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import image from "../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
+import fetchInstance from "../../util/fetchInstance";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const Signin = () => {
     }
 
     try {
-      const response = await fetch(
+      const  response  = await fetch(
         "http://localhost:5000/admin/auth/verification",
         {
           method: "POST",
@@ -79,6 +80,7 @@ const Signin = () => {
         { withCredentials: true }
       );
 
+      console.log(response);
       if (response.ok) {
         setIsSendingSms(true);
         setSmsCountdown(60);
@@ -123,7 +125,7 @@ const Signin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(
+      const response  = await fetch(
         "http://localhost:5000/admin/auth/login",
         {
           method: "POST",
@@ -156,8 +158,8 @@ const Signin = () => {
         setError("Email or password is not correct");
       } else if (response.status == 401) {
         setError("Entered code is invalid");
-      } else{
-        setError(null)
+      } else {
+        setError(null);
       }
     } catch (error) {
       // console.error("Signup failed!", error);

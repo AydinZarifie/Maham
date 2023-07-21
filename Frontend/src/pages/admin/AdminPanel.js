@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
+import fetchInstance from "../../util/fetchInstance";
 
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
@@ -32,7 +33,7 @@ const AdminPanel = () => {
     formData.append("country", country);
     formData.append("city", city);
 
-    const response = await fetch("", {
+    let { response } = await fetchInstance("url", {
       method: "POST",
       body: formData,
     });
@@ -60,10 +61,11 @@ const AdminPanel = () => {
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
 
-    const response = await fetch("http://localhost:5000/admin/auth/signup", {
+    let { response } = await fetchInstance("/admin/auth/signup", {
       method: "POST",
       body: formData,
     });
+
     if (response.ok) {
       setError(null);
       alert("Admin successfully added");
@@ -76,26 +78,23 @@ const AdminPanel = () => {
 
   useEffect(() => {
     const fetchAdmins = async () => {
-      const data = await fetch("http://localhost:5000/admin/panel/getAdmins");
-      const json = await data.json();
-      setAdmins(json.data);
+      let { response, data } = await fetchInstance("/admin/panel/getAdmins");
+      setAdmins(data.data);
     };
     fetchAdmins();
 
     const fetchCountries = async () => {
-      const data = await fetch("http://localhost:5000/admin/managment");
-      const json = await data.json();
-      console.log(json);
-      setCountries(json.data);
+      let { response, data } = await fetchInstance("/admin/managment");
+      setCountries(data.data);
     };
     fetchCountries();
   }, []);
 
   const cityFetch = async (name) => {
-    const response = await fetch("http://localhost:5000/admin/managment/getCities/" + name);
-    const json = await response.json();
-    console.log(json.data);
-    setCities(json.data);
+    let { response, data } = await fetchInstance(
+      "/admin/managment/getCities/" + name
+    );
+    setCities(data.data);
   };
 
   return (

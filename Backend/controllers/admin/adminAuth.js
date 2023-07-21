@@ -80,6 +80,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	}
 
   const { email,password, verificationCode } = req.body;
+  const verificationCodeCookies = req.cookies.verificationCode;
 
 	// 1) check if email or password provided
 	if (!email || !password) {
@@ -101,8 +102,16 @@ exports.logIn = catchAsync(async (req, res, next) => {
       new AppError('username or password is incorrect ', 405) //not authorized
     );
   }
-  // 5) check verificationCode
-  if(verificationCode !== req.session.verification.toString()){
+
+  // 5) check cookie expire
+  if(!req.cookies.verificationCode){
+    return res.status(402).json({
+      message : "cookie was expire"
+    })
+  }
+
+  // 6) check verificationCode
+  if(verificationCode !== verificationCodeCookies.toString()){
       return res.status(401).json({
       message : "verification code is not valid"
     })
@@ -117,7 +126,9 @@ exports.logIn = catchAsync(async (req, res, next) => {
       secure : true,
       sameSite:'none',
       maxAge : 7 * 60 * 60 * 100,
-  })
+  });
+
+  res.clearCookie("verificationCode",{httpOnly:true , secure : true, sameSite :'none'})
 
   return res.status(200).json({
     token : accessToken
@@ -125,7 +136,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
 });
 
-exports.verificationCode = catchAsync(async (req, res) => {    
+exports.verificationCode = catchAsync(async (req, res) => {  
   const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
@@ -153,8 +164,15 @@ exports.verificationCode = catchAsync(async (req, res) => {
 
 	const verificationCode = Math.floor(100000 + Math.random() * 900000);
 
-  req.session.verification = verificationCode;
-  console.log(req.session.verification);
+  console.log(verificationCode);
+
+  await res.cookie('verificationCode' , verificationCode ,{
+    httpOnly : true,
+    secure : true,
+    sameSite : 'None',
+    maxAge : 60 * 1000    
+  })
+  
 
 
   const mailOptions = {
@@ -166,7 +184,6 @@ exports.verificationCode = catchAsync(async (req, res) => {
 
   await sendEmail(mailOptions);
  
-
 	return res.status(201).json({
 		message: 'Success',
 	});
@@ -174,6 +191,7 @@ exports.verificationCode = catchAsync(async (req, res) => {
 
 exports.refreshToken = catchAsync(async (req,res) => {
 
+    console.log("refresh");
     const cookie = req.cookies;
     if(!cookie?.jwt){return res.status(403).json({message : "cookie empty"})};
 

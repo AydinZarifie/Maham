@@ -7,6 +7,7 @@ import CountryInformations from "../../components/adminPage/management/CountryIn
 import EstateTable from "../../components/adminPage/management/EstateTable";
 import Gainers from "../../components/adminPage/management/Gainers";
 import HighestVolumes from "../../components/adminPage/management/HighestVolumes";
+import fetchInstance from "../../util/fetchInstance";
 
 const ManagementPage = () => {
   const [countryMenuShown, setCountryMenuShown] = useState(false);
@@ -42,23 +43,21 @@ const ManagementPage = () => {
     setSelectedCityOption(option);
     setCityMenuShown(false);
 
-    const res = await fetch(
-      "http://localhost:5000/admin/managment/getEstates/" +
+    let { response, data } = await fetchInstance(
+      "/admin/managment/getEstates/" +
         option +
         "/" +
         selectedCountryOption.country_name
     );
-    const json = await res.json();
-    console.log(json.data);
-    setSearchedEstates(json.data);
+
+    setSearchedEstates(data.data);
   };
 
   const cityFetch = async (name) => {
-    const response = await fetch(
-      "http://localhost:5000/admin/managment/getCities/" + name.country_name
+    let { response, data } = await fetchInstance(
+      "/admin/managment/getCities/" + name.country_name
     );
-    const json = await response.json();
-    setCities(json.data);
+    setCities(data.data);
   };
 
   const submitHandler = async (cityName, countryName, img) => {
@@ -69,25 +68,26 @@ const ManagementPage = () => {
 
     let url;
     if (img) {
-      url = "http://localhost:5000/admin/managment/addCountry";
+      url = "/admin/managment/addCountry";
       formData.append("images", img);
     } else {
-      url = "http://localhost:5000/admin/managment/addCity";
+      url = "/admin/managment/addCity";
     }
 
-    const response = await fetch(url, {
+    let { response } = await fetchInstance(url, {
       method: "POST",
       body: formData,
     });
 
-    showAddHandler();
+    if (response.ok) {
+      showAddHandler();
+    }
   };
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      const data = await fetch("http://localhost:5000/admin/managment");
-      const json = await data.json();
-      setCountries(json.data);
+      let { response,data } = await fetchInstance("/admin/managment");
+      setCountries(data.data);
     };
     fetchCountryData();
   }, []);
@@ -114,7 +114,7 @@ const ManagementPage = () => {
               {selectedCountryOption ? (
                 <div className={styles.menuResult}>
                   <img
-                    src={`http://localhost:5000/${selectedCountryOption.country_logo.replace(
+                    src={`/${selectedCountryOption.country_logo.replace(
                       /\\/g,
                       "/"
                     )}`}
@@ -147,7 +147,7 @@ const ManagementPage = () => {
                       onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
-                        src={`http://localhost:5000/${option.country_logo.replace(
+                        src={`/${option.country_logo.replace(
                           /\\/g,
                           "/"
                         )}`}

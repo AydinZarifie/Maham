@@ -2,22 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 const adminPage_Controller = require('../../controllers/admin/adminPage');
-/* const verifyAccessToken = require("../../middleware/verifyToken");
-
-router.use(verifyAccessToken); */
+const verifyToken = require("../../middleware/verifyToken");
+    
 
 // 2023/05/8 >> changed the logic of written code to 'mounting the routes'
 //    "      >> added main functions to control estates
 router
     .route('/estates')
-    .get(adminPage_Controller.getAllEstates)
-    .post(adminPage_Controller.createEstate );
+    .get(verifyToken,adminPage_Controller.getAllEstates)
+    .post(verifyToken,adminPage_Controller.createEstate );
 
 router
     .route('/estates/:estateId')
-    .get(adminPage_Controller.getEditEstate)
-    .delete(adminPage_Controller.deleteEstate)
-    .put(adminPage_Controller.updateEstate);
+    .get(verifyToken,adminPage_Controller.getEditEstate)
+    .delete(verifyToken,adminPage_Controller.deleteEstate)
+    .put(verifyToken,adminPage_Controller.updateEstate);
 
 router
     .route('/estate/getCountries')
@@ -29,7 +28,7 @@ router
 
 router
     .route('/estates/addFilter')
-    .post(adminPage_Controller.postFilter);
+    .post(verifyToken,adminPage_Controller.postFilter);
 
 router
     .route("/estate/getAddEstateFilters")
@@ -40,7 +39,7 @@ router
     .get(adminPage_Controller.getAllFilters);
 
 router
-    .route('/estates/generateMint')
+    .route('/generateMint')
     .post(adminPage_Controller.sendMint);
 
 

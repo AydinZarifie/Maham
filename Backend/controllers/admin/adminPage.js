@@ -405,20 +405,17 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 
     console.log(mint);
 	// 5) ssend respose
-	return res.status(200).json({
-		status: 'success',
-		message: 'mint created succesfully ',
-		data: mint,
-	});
+	return res.status(200).json({mint});
 });
 
 //added : 2023/05/08  , implemented : 2023/06/04
 exports.deleteEstate = catchAsync(async (req, res, next) => {
+
     const est = await estateDB.findByIdAndDelete(req.params.estateId);
 
     if (!est) {
         return next(new AppError('estate with that Id not found', 404));
-    }
+   }
 
     await clearImage(est.imageUrl);
     await clearVideo(est.introduction_video);
