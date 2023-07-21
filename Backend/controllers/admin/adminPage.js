@@ -1,10 +1,11 @@
 const estateDB = require('../../models/estate');
 const fs = require('fs');
 const path = require('path');
-const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError');
+const catchAsync = require('./../../utilities/error/catchAsync');
+const AppError = require('./../../utilities/error/appError');
 const countryDB = require('../../models/country');
 const filterDB = require('../../models/filter');
+const { clearVideo, clearImage } = require('./../../utilities/clearFiles');
 const {
 	formatStr,
 	generateMint,
@@ -440,7 +441,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEditEstate = catchAsync(async (req, res , next) => {
+exports.getEditEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
 	if (!estateId) {
 		return next(new AppError('please provide estate id', 400));
@@ -506,8 +507,8 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 		return next(new AppError('estate with that Id not found', 404));
 	}
 
-	await clearImage(est.imageUrl);
-	await clearVideo(est.introduction_video);
+	clearImage(est.imageUrl);
+	clearVideo(est.introduction_video);
 
 	const country = await countryDB
 		.findOne({ country_name: est.country_name })
@@ -520,41 +521,5 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 		status: 'success',
 		message: `estate with ID deleted`,
 		data: null,
-	});
-});
-
-const clearImage = catchAsync(async (filePath, next) => {
-	if (!filePath) {
-		return next(new AppError('path not found', 404));
-	}
-
-	filePath.forEach(async (imagePath) => {
-		imagePath = path.join(__dirname, '../..', imagePath);
-		if (fs.existsSync(imagePath)) {
-			fs.unlinkSync(imagePath, (err) => {
-				throw err;
-			});
-			console.log('Image deleted successfully');
-		} else {
-			console.log('Image not found');
-		}
-	});
-});
-
-const clearVideo = catchAsync(async (filePath) => {
-	if (!filePath) {
-		return next(new AppError('path not found', 404));
-	}
-
-	filePath.forEach(async (videoPath) => {
-		videoPath = path.join(__dirname, '../..', videoPath);
-		if (fs.existsSync(videoPath)) {
-			fs.unlinkSync(videoPath, (err) => {
-				throw err;
-			});
-			console.log('Image deleted successfully');
-		} else {
-			console.log('Image not found');
-		}
 	});
 });

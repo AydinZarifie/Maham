@@ -5,9 +5,12 @@ const { promisify } = require('util');
 /////////////////////////////////////////////////////
 const adminDB = require('../../models/admin');
 /////////////////////////
-const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError');
+const catchAsync = require('./../../utilities/error/catchAsync');
+const AppError = require('./../../utilities/error/appError');
 const sendEmail = require('./../../utilities/email');
+const generateTokens = require('./../../utilities/token/generateToken');
+const verifyRefreshToken = require('./../../utilities/token/verifyRefreshToken');
+const signAccessToken = require('./../../utilities/token/signAccessToken');
 /////////////////////////////////////////////////////
 
 const signToken = (email, adminId) => {
@@ -34,13 +37,13 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		confirmPassword,
 		adminType,
 		phoneNumber,
-		countryName,
-		cityName,
+		country,
+		city,
 	} = req.body;
 
 	if (password !== confirmPassword) {
 		return next(
-			new AppError('password and password confirmation does not match', 400)
+			new AppError('password and password confirmation does not match', 401)
 		);
 	}
 
@@ -58,8 +61,8 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		admin_type: adminType,
 		phone_number: phoneNumber,
 		email: email,
-		admin_country: countryName,
-		admin_city: cityName,
+		admin_country: country,
+		admin_city: city,
 	});
 
 	await admin.save();
@@ -73,12 +76,19 @@ exports.signUp = catchAsync(async (req, res, next) => {
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
+	// 1) validate the request body
+	const error = validationResult(req);
+	if (!error.isEmpty()) {
+		console.log(error.array());
+		return res.status(422).json({
+			message: 'Error 422',
+		});
+	}
+
 	const { password, email, verificationCode } = req.body;
+	const verificationCodeCookies = req.cookies.verificationCode;
 
-	console.log(verificationCode);
-	console.log(req.session.verification.toString());
-
-	// 1) check if email or password provided
+	// 2) check if email or password provided
 	if (!email || !password) {
 		return next(new AppError('please provide email and password', 400));
 	}
@@ -87,9 +97,10 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	const admin = await adminDB.findOne({ email }).select('+password');
 
 	if (!admin) {
-		return next(new AppError('admin not found', 404));
+		return next(new AppError('admin not found', 405));
 	}
 
+	// 4) check if password is correct
 	const isEqual = await bcrypt.compare(password, admin.password);
 	if (!isEqual) {
 		return next(
@@ -97,18 +108,40 @@ exports.logIn = catchAsync(async (req, res, next) => {
 		);
 	}
 
-	if (verificationCode !== req.session.verification.toString()) {
+	// 5) check if cookie expired
+	if (!req.cookies.verificationCode) {
+		return next(new AppError('cookie has expired', 402));
+	}
+
+	// 6) validate the verificaion code
+	if (verificationCode !== verificationCodeCookies.toString()) {
 		return next(new AppError('verification code is not valid', 401));
 	}
 
+	// 7) refrech and access token
+	const { accessToken, refreshToken } = await generateTokens(admin);
+
+	res.cookie('jwt', refreshToken, {
+		httpOnly: true,
+		secure: true,
+		sameSite: 'none',
+		maxAge: 7 * 60 * 60 * 100,
+	});
+
+	res.clearCookie('verificationCode', {
+		httpOnly: true,
+		secure: true,
+		sameSite: 'none',
+	});
+
 	///////////////////////////////////////////////////////////////
 
-	// 3) if everything okay , create & send token to client
+	// 8) if everything okay , create & send token to client
 	const token = signToken(email, admin._id);
 
 	return res.status(202).json({
 		status: 'success',
-		token: token,
+		token: accessToken,
 		adminId: admin._id,
 	});
 });
@@ -126,18 +159,23 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 
 		const admin = await adminDB.findOne({ email }).select('+password');
 		if (!admin) {
-			return next(new AppError('Wrong email!', 401));
+			return next(new AppError('Wrong email!', 405));
 		}
 
 		const isEqual = await bcrypt.compare(password, admin.password);
 
 		if (!isEqual) {
-			return next(new AppError('Wrong password!', 401));
+			return next(new AppError('Wrong password!', 405));
 		}
 
 		const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
-		req.session.verification = verificationCode;
+		await res.cookie('verificationCode', verificationCode, {
+			httpOnly: true,
+			secure: true,
+			sameSite: 'None',
+			maxAge: 60 * 1000,
+		});
 		console.log(verificationCode);
 
 		const mailOptions = {
@@ -155,6 +193,45 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 	} catch (err) {
 		console.log(err);
 	}
+});
+
+exports.refreshToken = catchAsync(async (req, res, next) => {
+	const cookie = req.cookies;
+	if (!cookie?.jwt) {
+		return next(new AppError('cookie does not exists!', 204));
+	}
+
+	const refreshToken = cookie.jwt;
+
+	const decode = await verifyRefreshToken(refreshToken);
+	if (!decode) {
+		return next(new AppError('refreshToken in not valid', 403));
+	}
+
+	console.log(decode);
+
+	const admin = await adminDB.findOne({ email: decode.email });
+	if (!admin) {
+		return next(new AppError('Unauthorization', 401));
+	}
+
+	const accessToken = await signAccessToken(admin);
+
+	return res.status(201).json(accessToken);
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+	const cookie = req.cookies;
+
+	if (!cookie?.jwt) {
+		return next(new AppError('cookie does not exists!', 204));
+	}
+
+	res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+
+	return res
+		.status(200)
+		.json({ status: 'success', message: 'logged out successfully!' });
 });
 
 // not complete

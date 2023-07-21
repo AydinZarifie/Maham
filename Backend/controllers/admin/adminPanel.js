@@ -1,7 +1,7 @@
 const adminDB = require('../../models/admin');
 const estateDB = require('../../models/estate');
-const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError');
+const catchAsync = require('./../../utilities/error/catchAsync');
+const AppError = require('./../../utilities/error/appError');
 const { filterObj } = require('./../../utilities/specialFunctions');
 
 exports.getAllAdmins = catchAsync(async (req, res, next) => {

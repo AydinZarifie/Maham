@@ -1,7 +1,7 @@
 const countryDB = require('../../models/country');
 const estateDB = require('../../models/estate');
-const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError');
+const catchAsync = require('./../../utilities/error/catchAsync');
+const AppError = require('./../../utilities/error/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
 const { formatStr, assignCode } = require('./../../utilities/specialFunctions');
 ///////////////////////////////////////////////////
@@ -42,13 +42,13 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
-	// console.log(req.query);
-	const features = new APIFeatures(estateDB.find(), req.query)
-		.filter()
-		.sort()
-		.fieldLimit()
-		.paging();
-	const estates = await features.query;
+	const estates = await estateDB.find().select(['-__V']);
+
+	if (estates.length === 0) {
+		return res.status(204).json({
+			message: ' no estate exists in the DB',
+		});
+	}
 
 	return res.status(200).json({
 		status: 'success',

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const countryDB = require('./country');
-const AppError = require('../utilities/appError');
+const AppError = require('../utilities/error/appError');
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema

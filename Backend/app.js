@@ -10,6 +10,7 @@ const session = require('express-session');
 const cors = require('cors');
 const helmet = require('helmet');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 //////////////////////////////////////////////
 const adminPage_router = require('./routes/admin/adminPage');
 const managmentPage_router = require('./routes/admin/adminManagment');
@@ -17,7 +18,7 @@ const adminAuth_router = require('./routes/admin/adminAuth');
 const adminPanel_router = require('./routes/admin/adminPanel');
 //////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
-const AppError = require('./utilities/appError');
+const AppError = require('./utilities/error/appError');
 //////////////////////////////////////////////
 dotenv.config({ path: './config.env' });
 const app = express();
@@ -104,15 +105,14 @@ const upload = multer({
 	},
 ]);
 
+//////////////////////////////////////////////
 app.use(helmet());
-
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
 		credentials: true,
 	})
 );
-
 app.use(express.json());
 app.use(hpp({ whitelist: ['price'] }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -123,18 +123,20 @@ app.use(
 );
 app.use(upload);
 
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET_KEY,
-		saveUninitialized: false,
-		resave: true,
-		cookie: {
-			maxAge: 1000 * 10 * 60,
-			sameSite: 'lax',
-			secure: false,
-		},
-	})
-);
+app.use(cookieParser());
+
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET_KEY,
+// 		saveUninitialized: false,
+// 		resave: true,
+// 		cookie: {
+// 			maxAge: 1000 * 10 * 60,
+// 			sameSite: 'lax',
+// 			secure: false,
+// 		},
+// 	})
+// );
 
 // app.use((req, res, next) => {
 // 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -145,7 +147,6 @@ app.use(
 // 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 // 	next();
 // });
-
 // app.use(cors({ credentials: true, origin: true }));
 
 app.use('/admin', adminPage_router);

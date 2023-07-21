@@ -1,7 +1,3 @@
-const countryDB = require('../models/country');
-const AppError = require('./appError');
-const catchAsync = require('./catchAsync');
-
 exports.formatStr = (str) => {
 	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
 	return formattedstr;

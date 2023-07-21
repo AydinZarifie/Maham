@@ -3,43 +3,30 @@ const express = require('express');
 const router = express.Router();
 const managementController = require('../../controllers/admin/adminManagment');
 const adminAuthController = require('../../controllers/admin/adminAuth');
-// const adminVerifyToken = require('../../middleware/verify-token');
+const verifyToken = require('../../middleware/verifyToken');
 
-router.route('/managment').get(managementController.getAllCountries);
-
-router.route('/managment/addCountry').post(managementController.postAddCountry);
+router
+	.route('/managment')
+	.get(verifyToken, managementController.getAllCountries);
 
 router
 	.route('/managment/getCities/:countryName')
-	.get(managementController.getAllCities);
-
-router.route('/managment/addCity').post(managementController.addCity);
+	.get(verifyToken, managementController.getAllCities);
 
 router
 	.route('/managment/getEstates')
-	// .get(managementController.getEstatesOfSelectedCountryCityEasy);
-	.get(managementController.getAllEstates);
+	.get(verifyToken, managementController.getAllEstates);
+
+router
+	.route('/managment/addCountry')
+	.post(verifyToken, managementController.postAddCountry);
+
+router
+	.route('/managment/addCity')
+	.post(verifyToken, managementController.addCity);
 
 router
 	.route('/managment/getEstates/:countryName/:cityName')
-	.get(managementController.getEstatesOfCCEasy);
-// .get(managementController.getEstatesOfCC, managementController.getAllEstates);
-
-// router
-// 	.route('/managment/getTopGainers')
-// 	// .get(managementController.getTopGainersEasy);
-// 	.get(managementController.getTopGainers, managementController.getAllEstates);
-
-// router
-// 	.route('/managment/getHighestVolume')
-// 	// .get(managementController.getHighestVolumeEasy);
-// 	.get(
-// 		managementController.getHighestVolume,
-// 		managementController.getAllEstates
-// 	);
-
-// router
-// 	.route('/managment/getCountriesInfo')
-// 	.get(managementController.getCountriesInfo);
+	.get(verifyToken, managementController.getEstatesOfCCEasy);
 
 module.exports = router;
