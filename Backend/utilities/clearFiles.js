@@ -1,18 +1,21 @@
 const fs = require("fs");
 const path = require("path")
-const clearImage = async (filePath) => {
-    filePath.forEach(async (imagePath) => {
-      console.log(imagePath);
-      imagePath = path.join(__dirname, "../", imagePath);
-      if (await fs.existsSync(imagePath)) {
-        await fs.unlinkSync(imagePath, (err) => {
-          throw err;
-        });
-        console.log("Image deleted successfully");
-      } else {
-        console.log("Image not found");
-      }
-    });
+const clearImage = async (estate) => {
+
+  console.log(estate);
+
+  const filePath = path.join(__dirname , `../uploads/images/estates/${estate.country_name}_${estate.city_name}_${estate.estate_title}`);
+  console.log(filePath);
+
+  fs.rmSync(filePath , {recursive : true} , (err) => {
+    if(err){
+      console.log("Delete files was failed");
+    }
+    else{
+      console.log("Delete file successfully");
+    }
+  })
+
 };
 const clearVideo = async (filePath) => {
     filePath.forEach(async (videoPath) => {

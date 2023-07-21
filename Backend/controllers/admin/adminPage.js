@@ -7,6 +7,8 @@ const countryDB = require("../../models/country");
 const filterDB = require('../../models/filter');
 const {formatStr,generateMint} = require('../../utilities/Mint');
 const {clearImage , clearVideo} = require("../../utilities/clearFiles")
+
+
 //2023/05/08 added`
 exports.checkBody = (req, res, next) => {
     if (
@@ -411,13 +413,20 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 //added : 2023/05/08  , implemented : 2023/06/04
 exports.deleteEstate = catchAsync(async (req, res, next) => {
 
-    const est = await estateDB.findByIdAndDelete(req.params.estateId);
+    const est = await estateDB.findByIdAndDelete(req.params.estateId)
+    .select([
+        'country_name',
+        'city_name',
+        'estate_title'
+    ]);
 
     if (!est) {
         return next(new AppError('estate with that Id not found', 404));
    }
 
-    await clearImage(est.imageUrl);
+
+
+    await clearImage(est);
     await clearVideo(est.introduction_video);
 
     return res.status(204).json({
