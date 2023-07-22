@@ -8,10 +8,8 @@ router.get(
 	adminPanelController.getSellPositionEstates
 );
 router.get('/panel/getAdmins', adminPanelController.getAllAdmins);
-router.get(
-	'/panel/searchAdmins',
-	adminPanelController.searchAdmins,
-	adminPanelController.getAllAdmins
-);
+router.get('/panel/getCurrentAdmin', adminPanelController.currentAdmin);
+router.get('/panel/searchAdmins', adminPanelController.searchAdmins);
+router.get('/panel/searchName', adminPanelController.searchName);
 
 module.exports = router;

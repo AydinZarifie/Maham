@@ -1,12 +1,9 @@
 const countryDB = require('../../models/country');
 const estateDB = require('../../models/estate');
-const catchAsync = require('./../../utilities/catchAsync');
-const AppError = require('./../../utilities/appError');
+const catchAsync = require('./../../utilities/error/catchAsync');
+const AppError = require('./../../utilities/error/appError');
 const APIFeatures = require('./../../utilities/APIFeatures');
-const {
-	formatStr,
-	assignCode,
-} = require('./../../utilities/specialFunctions');
+const { formatStr, assignCode } = require('./../../utilities/specialFunctions');
 ///////////////////////////////////////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
@@ -24,27 +21,34 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 
 /// get all cities of given country
 exports.getAllCities = catchAsync(async (req, res, next) => {
-	const country = await countryDB.findOne({
-		country_name: req.params.countryName,
-	});
-	if (!country) {
-		return next(new AppError('country not found', 404));
-	} else {
-		return res.status(200).json({
-			status: 'success',
-			data: country.country_cities,
-		});
+	const countryCities = await countryDB
+		.findOne({
+			country_name: req.params.countryName,
+		})
+		.select('country_cities');
+
+	if (!countryCities) {
+		return next(new AppError('Country does not exist', 404));
 	}
+
+	if (countryCities.length === 0) {
+		return next(new AppError('Country has no city defined yet', 404));
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: countryCities,
+	});
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
-	// console.log(req.query);
-	const features = new APIFeatures(estateDB.find(), req.query)
-		.filter()
-		.sort()
-		.fieldLimit()
-		.paging();
-	const estates = await features.query;
+	const estates = await estateDB.find().select(['-__V']);
+
+	if (estates.length === 0) {
+		return res.status(204).json({
+			message: ' no estate exists in the DB',
+		});
+	}
 
 	return res.status(200).json({
 		status: 'success',
@@ -66,18 +70,11 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 	let countryCode;
 	try {
 		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
-		console.log(totalCountries);
-
 		totalCountries++;
-
-		if (totalCountries < 10) {
-			countryCode = String(totalCountries).padStart(2, '0');
-		} else {
-			countryCode = totalCountries.toString();
-		}
+		countryCode = totalCountries.toString();
 	} catch (err) {
 		console.error(err);
-		return next(new AppError('error on assigning countryCode', 400));
+		return next(new AppError('error aquired on assigning countryCode', 400));
 	}
 
 	const newCountry = new countryDB({
@@ -116,14 +113,14 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 		// Set the 'last_mints' property
 		const cityCount = country.country_cities.length;
-		const assignedCode = assignCode(2, cityCount);
+		const assignedCode = cityCount.toString();
 		const propertyKey = country.country_code + assignedCode;
 
 		let obj;
 		if (!country.last_mints[propertyKey]) {
 			obj = {
 				...country.last_mints,
-				[propertyKey]: 10000,
+				[propertyKey]: 0,
 			};
 		}
 
@@ -149,7 +146,7 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 		.select(['country_logo', 'country_name', 'country_estates'])
 		.populate({
 			path: 'country_estates',
-			select: ['volume'],
+			select: 'volume',
 		});
 
 	if (countriesInfo.length === 0) {

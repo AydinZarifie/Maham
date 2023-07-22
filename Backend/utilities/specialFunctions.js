@@ -1,7 +1,3 @@
-const countryDB = require('../models/country');
-const AppError = require('./appError');
-const catchAsync = require('./catchAsync');
-
 exports.formatStr = (str) => {
 	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
 	return formattedstr;
@@ -21,13 +17,10 @@ exports.generateMint = (country, modifiedCityName) => {
 	const countryCode = country.country_code;
 	let cityCode;
 	let estateCode;
+
 	// assign city code
 	const cityIndex = country.country_cities.indexOf(modifiedCityName) + 1;
-	if (cityIndex < 10) {
-		cityCode = String(cityIndex).padStart(2, '0');
-	} else {
-		cityCode = cityIndex.toString();
-	}
+	cityCode = cityIndex.toString();
 
 	// assining the estate Code
 	// let availableMints = country.available_mints;
@@ -36,7 +29,8 @@ exports.generateMint = (country, modifiedCityName) => {
 	const pattern = new RegExp(`^${startsWith}`, 'i');
 	if (country.available_mints.length === 0) {
 		estateNum = country.last_mints[countryCode + cityCode] + 1;
-		estateCode = String(estateNum).slice(1, 5);
+		console.log(estateNum);
+		estateCode = estateNum.toString();
 	} else {
 		for (let i = 0; i < country.available_mints.length; i++) {
 			if (pattern.test(country.available_mints[i])) {
@@ -47,15 +41,18 @@ exports.generateMint = (country, modifiedCityName) => {
 		}
 	}
 
-	// update the last_mints object on database
-	const obj = {
-		...country.last_mints,
-		[startsWith]: estateNum,
-	};
-	country.last_mints = obj;
-
 	// generating the mint
 	return (mint = countryCode + cityCode + estateCode);
+};
+
+exports.filterObj = (obj, ...allowedFields) => {
+	const newObj = {};
+	Object.keys(obj).forEach((el) => {
+		if (allowedFields.includes(el)) {
+			newObj[el] = obj[el];
+		}
+	});
+	return newObj;
 };
 
 // every field in requset object that its value is String >> changes to lowercase

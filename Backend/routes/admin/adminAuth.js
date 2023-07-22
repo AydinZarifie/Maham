@@ -1,20 +1,25 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const {body} = require("express-validator");
+const { body } = require('express-validator');
+const adminAuthController = require('../../controllers/admin/adminAuth');
 
+router
+	.route('/auth/signup')
+	.post(
+		[body('email').isEmail(), body('password').trim().isLength({ min: 4 })],
+		adminAuthController.signUp
+	);
 
-const adminAuthController = require("../../controllers/admin/adminAuth");
+router
+	.route('/auth/login')
+	.post([body('email').isEmail()], adminAuthController.logIn);
 
+router.route('/auth/refresh').get(adminAuthController.refreshToken);
 
-router.post("/auth/signup",[
-    body('email').isEmail(),
-    body('password').trim().isLength({min : 4}),
-],adminAuthController.signUp);
+router.route('/auth/logout').post(adminAuthController.logout);
 
-router.post("/auth/login" , adminAuthController.logIn);
-
-router.post("/auth/verification",[
-    body('email').isEmail(),
-],adminAuthController.verificationCode);
+router
+	.route('/auth/verification')
+	.post([body('email').isEmail()], adminAuthController.verificationCode);
 
 module.exports = router;
