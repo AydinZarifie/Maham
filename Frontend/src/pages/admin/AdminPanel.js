@@ -3,14 +3,18 @@ import styles from "../../styles/AdminPanel.module.css";
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
+import trueLogo from "../../images/tick-svgrepo-com_1.svg";
+
 import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
 import fetchInstance from "../../util/fetchInstance";
+import Alert from "../../components/general/Alert";
 
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(false);
+  const [alert, setAlert] = useState(false);
   const filter = useRef();
   const overlay = useRef();
   const navigate = useNavigate();
@@ -68,7 +72,8 @@ const AdminPanel = () => {
 
     if (response.ok) {
       setError(null);
-      alert("Admin successfully added");
+      // alert("Admin successfully added");
+      setAlert(true);
       navigate("/admin/admins");
     }
     if (response.status == 401) {
@@ -97,13 +102,36 @@ const AdminPanel = () => {
     setCities(data.data);
   };
 
+  const nameChangeFetch = async (name) => {
+    const formData = new FormData();
+    formData.append("name", name);
+    let { response, data } = await fetchInstance("url", {
+      method: "POST",
+      body: formData,
+    });
+
+    setAdmins(data);
+  };
+
   return (
     <div className={styles.Main}>
+      {alert && (
+        <Alert
+          lineColor="#0aff0e"
+          img={trueLogo}
+          title="Success!"
+          detail="Your work has been successfully completed and your information has been saved"
+          closeHandler={() => {
+            setAlert(false);
+          }}
+        />
+      )}
       <AdminFilter
         submitHandler={submitFilterHandler}
         closeHandler={closeFilter}
         openHandler={openFilter}
         ref={filter}
+        nameChangeFetchHandler={nameChangeFetch}
       />
       <div className={styles.AdminInfo}>
         <div className={styles.Buttons}>

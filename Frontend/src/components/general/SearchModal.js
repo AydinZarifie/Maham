@@ -10,13 +10,6 @@ const SearchModal = (props) => {
     setSearchPhrase(value);
   };
 
-  useEffect(() => {
-    document.body.classList.add(styles.disableScroll);
-    return () => {
-      document.body.classList.remove(styles.disableScroll);
-    };
-  }, []);
-
   return (
     <div className={styles.SerchINOpenDiv}>
       <div
