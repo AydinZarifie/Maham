@@ -42,13 +42,6 @@ const FilterModal = (props) => {
     setCities(json.data);
   };
 
-  useEffect(() => {
-    document.body.classList.add(styles.disableScroll);
-    return () => {
-      document.body.classList.remove(styles.disableScroll);
-    };
-  }, []);
-
   return (
     <>
       <div className={overlayStyle.overlay2} onClick={props.toggleFilter}></div>
