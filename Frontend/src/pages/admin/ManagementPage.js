@@ -44,7 +44,7 @@ const ManagementPage = () => {
     setCityMenuShown(false);
 
     let { response, data } = await fetchInstance(
-      "http://localhost:5000/admin/managment/getEstates/" +
+      "/admin/managment/getEstates/" +
         option +
         "/" +
         selectedCountryOption.country_name
@@ -55,7 +55,7 @@ const ManagementPage = () => {
 
   const cityFetch = async (name) => {
     let { response, data } = await fetchInstance(
-      "http://localhost:5000/admin/managment/getCities/" + name.country_name
+      "/admin/managment/getCities/" + name.country_name
     );
     setCities(data.data);
   };
@@ -68,10 +68,10 @@ const ManagementPage = () => {
 
     let url;
     if (img) {
-      url = "http://localhost:5000/admin/managment/addCountry";
+      url = "/admin/managment/addCountry";
       formData.append("images", img);
     } else {
-      url = "http://localhost:5000/admin/managment/addCity";
+      url = "/admin/managment/addCity";
     }
 
     let { response } = await fetchInstance(url, {
@@ -86,7 +86,7 @@ const ManagementPage = () => {
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      let { response,data } = await fetchInstance("http://localhost:5000/admin/managment");
+      let { response,data } = await fetchInstance("/admin/managment");
       setCountries(data.data);
     };
     fetchCountryData();
@@ -114,7 +114,7 @@ const ManagementPage = () => {
               {selectedCountryOption ? (
                 <div className={styles.menuResult}>
                   <img
-                    src={`http://localhost:5000/${selectedCountryOption.country_logo.replace(
+                    src={`/${selectedCountryOption.country_logo.replace(
                       /\\/g,
                       "/"
                     )}`}
@@ -147,7 +147,7 @@ const ManagementPage = () => {
                       onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
-                        src={`http://localhost:5000/${option.country_logo.replace(
+                        src={`/${option.country_logo.replace(
                           /\\/g,
                           "/"
                         )}`}

@@ -88,8 +88,6 @@ const FilterModal = (props) => {
               <option value="">City</option>
               <option value="Tabriz">Tabriz</option>
               <option value="Esfahan">Esfahan</option>
-              <option value="Tehran">Tehran</option>
-              <option value="Mashhad">Mashhad</option>
               {cities.map((option) => (
                 <option key={option} value={option}>
                   {option}

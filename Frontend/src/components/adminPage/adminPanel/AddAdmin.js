@@ -341,17 +341,17 @@ const AddAdmin = () => {
               <option className={styles.SelectOption} value="">
                 City
               </option>
-              {console.log(cities)}
-              
-            {cities.length >0 && cities.map((city) => (
-                <option
-                  key={city}
-                  className={styles.SelectOption}
-                  value={city}
-                >
-                  {city}
-                </option>
-              ))}
+
+              {cities.length > 0 &&
+                cities.map((city) => (
+                  <option
+                    key={city}
+                    className={styles.SelectOption}
+                    value={city}
+                  >
+                    {city}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
