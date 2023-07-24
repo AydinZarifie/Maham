@@ -7,8 +7,8 @@ const adminDB = require('../../models/admin');
 /////////////////////////
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
-const sendEmail = require('./../../utilities/email');
-const generateTokens = require('./../../utilities/token/generateToken');
+const sendEmail = require('./../../utilities/sendEmail');
+const generateToken = require('./../../utilities/token/generateToken');
 const verifyRefreshToken = require('./../../utilities/token/verifyRefreshToken');
 const signAccessToken = require('./../../utilities/token/signAccessToken');
 /////////////////////////////////////////////////////
@@ -70,7 +70,6 @@ exports.signUp = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		message: 'signed up successfully',
-		number: admin.testField,
 	});
 	// catch (error) {}
 });
@@ -118,8 +117,8 @@ exports.logIn = catchAsync(async (req, res, next) => {
 		return next(new AppError('verification code is not valid', 401));
 	}
 
-	// 7) refrech and access token
-	const { accessToken, refreshToken } = await generateTokens(admin);
+	// 7) refresh and access token
+	const { accessToken, refreshToken } = await generateToken(admin);
 
 	res.cookie('jwt', refreshToken, {
 		httpOnly: true,
@@ -184,6 +183,7 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 			text: 'hello there',
 			verificationCode,
 		};
+
 		await sendEmail(mailOptions);
 
 		return res.status(201).json({

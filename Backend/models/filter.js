@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const filterSchema = mongoose.Schema({
+const filterSchema = new mongoose.Schema({
 	filterName: {
 		type: String,
 		required: true,

@@ -36,6 +36,7 @@ const sendErrorDev = (err, res) => {
 		message: err.message,
 		stack: err.stack,
 	});
+	console.log(err.message);
 };
 
 const sendErrorProd = (err, res) => {
@@ -73,7 +74,7 @@ module.exports = (err, req, res, next) => {
 
 		console.log(err);
 		if (error.name === 'CastError') error = handleCastErrorDB(error);
-		if (error.code === E11000) error = handleDuplicateFieldsDB(error);
+		if (error.code === 11000) error = handleDuplicateFieldsDB(error);
 		if (error.name === 'ValidationError')
 			error = handleValidationErrorDB(error);
 		if (error.name === 'JsonWebTokenError') error = handleJWTError();

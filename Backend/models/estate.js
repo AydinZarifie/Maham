@@ -362,4 +362,4 @@ estateSchema.pre('remove', async function () {
 	);
 });
 
-module.exports = mongoose.model('real-estates', estateSchema);
+module.exports = mongoose.model('Estate', estateSchema);

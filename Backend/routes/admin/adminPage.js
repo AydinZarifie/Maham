@@ -8,9 +8,7 @@ router
 	.get(verifyToken, adminPage_Controller.getAllEstates)
 	.post(verifyToken, adminPage_Controller.createEstate);
 
-router
-	.route('/estates/generateMint')
-	.post(verifyToken, adminPage_Controller.sendMint);
+router.route('/generateMint').post(adminPage_Controller.sendMint);
 
 router
 	.route('/estates/:estateId')
@@ -36,6 +34,6 @@ router
 	.get(verifyToken, adminPage_Controller.getAddEstateFilters);
 
 // /getFilters or /estates/getFilters
-router.route('getFilters').get(verifyToken, adminPage_Controller.getAllFilters);
+router.route('/getFilters').get(adminPage_Controller.getAllFilters);
 
 module.exports = router;
