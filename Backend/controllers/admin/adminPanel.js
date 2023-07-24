@@ -78,6 +78,10 @@ exports.searchAdmins = catchAsync(async (req, res, next) => {
 		'last_name'
 	);
 
+	if (Object.keys(newObj).length === 0) {
+		return next(new AppError('please insert some criteria', 400));
+	}
+
 	const admins = await adminDB
 		.find(newObj)
 		.sort('createdAt')
@@ -98,7 +102,7 @@ exports.searchAdmins = catchAsync(async (req, res, next) => {
 });
 
 exports.currentAdmin = catchAsync(async (req, res, next) => {
-	const { id } = req.query;
+	const { id } = req.params;
 
 	const admin = await adminDB
 		.findOne({ _id: id })
@@ -111,6 +115,49 @@ exports.currentAdmin = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: admin,
+	});
+});
+
+exports.updateAdmin = catchAsync(async (req, res, next) => {
+	// 1) update admin document
+	const filteredFields = {
+		first_name: req.body.firstName,
+		last_name: req.body.lastName,
+		email: req.body.email,
+		phone_number: req.body.phoneNumber,
+		// profile_image: req.files.images[0].path,
+	};
+
+	const updatedAdmin = await adminDB.findByIdAndUpdate(
+		// req.admin.id,
+		req.body._id,
+		filteredFields,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+
+	if (!updatedAdmin) {
+		return next(new AppError('Updated successfully ', 200));
+	}
+	res.status(200).json({
+		status: 'success',
+		message: 'updated successfully',
+		data: updatedAdmin,
+	});
+});
+
+exports.deleteAdmin = catchAsync(async (req, res, next) => {
+	const admin = adminDB.findByIdAndDelete(req.params.id);
+
+	if (!admin) {
+		return next(new AppError('admin with that id not found!', 404));
+	}
+
+	return res.status(204).json({
+		status: 'success',
+		message: 'admin deleted successfully',
 	});
 });
 

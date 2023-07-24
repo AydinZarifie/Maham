@@ -1,15 +1,15 @@
 const express = require('express');
-// const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
-const session = require('express-session');
+// const session = require('express-session');
 const cors = require('cors');
 const helmet = require('helmet');
 const hpp = require('hpp');
+const xss = require('xss');
 const cookieParser = require('cookie-parser');
 //////////////////////////////////////////////
 const adminPage_router = require('./routes/admin/adminPage');
@@ -42,8 +42,7 @@ const storage = multer.diskStorage({
 					fs.mkdirSync(path);
 					cb(null, path);
 				}
-			}
-			if (req.body.filterName) {
+			} else if (req.body.filterName) {
 				cb(null, './uploads/images/filters/');
 			} else {
 				cb(null, './uploads/images/countries/');
@@ -106,24 +105,25 @@ const upload = multer({
 ]);
 
 //////////////////////////////////////////////
-app.use(helmet());
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
 		credentials: true,
 	})
 );
+app.use(express.static('public'));
+app.use(helmet());
 app.use(express.json());
-app.use(hpp({ whitelist: ['price'] }));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/uploads', express.static('uploads'));
-app.use(
-	'uploads/static/',
-	express.static(path.join(__dirname, '/uploads/static'))
-);
+app.use(hpp({ whitelist: ['price'] }));
 app.use(upload);
 
-app.use(cookieParser());
+// app.use('/uploads', express.static('uploads'));
+// app.use(
+// 	'uploads/static/',
+// 	express.static(path.join(__dirname, '/uploads/static'))
+// );
 
 // app.use(
 // 	session({
@@ -145,14 +145,23 @@ app.use(cookieParser());
 // 		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
 // 	);
 // 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// 	res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
 // 	next();
 // });
 // app.use(cors({ credentials: true, origin: true }));
 
-app.use('/admin', adminPage_router);
-app.use('/admin', managmentPage_router);
-app.use('/admin', adminAuth_router);
-app.use('/admin', adminPanel_router);
+// app.use('/admin', adminPage_router);
+// app.use('/admin', managmentPage_router);
+// app.use('/admin', adminAuth_router);
+// app.use('/admin', adminPanel_router);
+app.use(
+	'/admin',
+	adminPage_router,
+	managmentPage_router,
+	adminAuth_router,
+	adminPanel_router,
+	adminPanel_router
+);
 
 const DBlocal = process.env.LOCAL_DATABASE;
 const port = process.env.PORT;

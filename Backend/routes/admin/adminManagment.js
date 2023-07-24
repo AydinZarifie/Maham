@@ -27,6 +27,6 @@ router
 
 router
 	.route('/managment/getEstates/:countryName/:cityName')
-	.get(verifyToken, managementController.getEstatesOfCCEasy);
+	.get(verifyToken, managementController.getEstatesOfCC);
 
 module.exports = router;

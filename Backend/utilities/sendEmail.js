@@ -309,4 +309,4 @@ const sendEmail = async (options) => {
 	transporter.sendMail(mailOptions);
 };
 
-module.exports = {sendEmail};
+module.exports = sendEmail;

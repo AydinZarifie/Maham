@@ -71,7 +71,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_title: formatStr(req.body.title),
 		city_name: req.body.cityName,
 		country_name: req.body.countryName,
-		main_street: formatStr(req.body.streetName),
+		main_street: req.body.streetName,
 		building_number: req.body.plate,
 		floor_number: req.body.numberOfFloor,
 		location: req.body.location.toLowerCase(),
@@ -255,8 +255,8 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 			'available_mints',
 		]);
 
-	if (!country) {
-		return next(new AppError('country does not exist!', 404));
+	if (!country || !country.country_cities.includes(modifiedCityName)) {
+		return next(new AppError('country or city does not exist!', 404));
 	}
 
 	// 3) generate the Mint based on given country and city
@@ -266,7 +266,7 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 	// 4) save the modified country to database
 	await country.save();
 
-	// 5) ssend respose
+	// 5) send respose
 	return res.status(200).json({
 		status: 'success',
 		message: 'mint created succesfully ',
@@ -477,9 +477,9 @@ exports.postFilter = catchAsync(async (req, res, next) => {
 
 exports.getAllFilters = catchAsync(async (req, res, next) => {
 	const filters = await filterDB.find();
-	if (!filters) {
-		return next(new AppError('there is no filter', 200));
-	}
+	// if (filters.length === 0) {
+	// 	return next(new AppError('there is no filter', 200));
+	// }
 	return res.status(200).json({
 		status: 'success',
 		data: filters,

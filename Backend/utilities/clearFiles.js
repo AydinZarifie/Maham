@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const clearImage = async (estate) => {
+exports.clearImage = async (estate) => {
 	console.log(estate);
 
 	const filePath = path.join(
@@ -19,7 +19,7 @@ const clearImage = async (estate) => {
 	});
 };
 
-const clearVideo = async (filePath) => {
+exports.clearVideo = async (filePath) => {
 	filePath.forEach(async (videoPath) => {
 		console.log(videoPath);
 
@@ -36,5 +36,3 @@ const clearVideo = async (filePath) => {
 		}
 	});
 };
-
-module.exports = { clearImage, clearVideo };

@@ -11,5 +11,9 @@ router.get('/panel/getAdmins', adminPanelController.getAllAdmins);
 router.get('/panel/getCurrentAdmin', adminPanelController.currentAdmin);
 router.get('/panel/searchAdmins', adminPanelController.searchAdmins);
 router.get('/panel/searchName', adminPanelController.searchName);
+router
+	.route('/panel/updateAdmin/:adminId')
+	.patch(adminPanelController.updateAdmin)
+	.delete(adminPanelController.deleteAdmin);
 
 module.exports = router;

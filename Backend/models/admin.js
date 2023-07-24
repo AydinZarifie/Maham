@@ -5,7 +5,7 @@ const validator = require('validator');
 const AppError = require('../utilities/error/appError');
 const countryDB = require('./country');
 
-const adminSchema = mongoose.Schema(
+const adminSchema = new mongoose.Schema(
 	{
 		admin_type: {
 			type: String,
@@ -29,6 +29,9 @@ const adminSchema = mongoose.Schema(
 			required: true,
 			unique: true,
 			lowercase: true, // converts all characters to lowercase
+		},
+		profile_image: {
+			type: String,
 		},
 		admin_country: {
 			type: String,

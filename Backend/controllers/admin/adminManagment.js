@@ -2,42 +2,51 @@ const countryDB = require('../../models/country');
 const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
-const APIFeatures = require('./../../utilities/APIFeatures');
-const { formatStr, assignCode } = require('./../../utilities/specialFunctions');
+// const APIFeatures = require('./../../utilities/APIFeatures');
+const { formatStr } = require('./../../utilities/specialFunctions');
 ///////////////////////////////////////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
 	const countries = await countryDB.find();
-	if (!countries) {
-		return next(
-			new AppError('there is no country , please create a country first', 404)
-		);
+	if (countries.length === 0) {
+		return res.status(204).json({
+			status: 'success',
+			message: 'there is no countries please create one first',
+		});
 	}
+
 	return res.status(200).json({
-		message: ' success',
+		message: 'success',
 		data: countries,
 	});
 });
 
 /// get all cities of given country
 exports.getAllCities = catchAsync(async (req, res, next) => {
-	const countryCities = await countryDB
+	if (!req.params.countryName) {
+		return next(new AppError('please select a country ', 404));
+	}
+
+	const country = await countryDB
 		.findOne({
 			country_name: req.params.countryName,
 		})
 		.select('country_cities');
 
-	if (!countryCities) {
+	if (!country) {
 		return next(new AppError('Country does not exist', 404));
 	}
 
-	if (countryCities.length === 0) {
-		return next(new AppError('Country has no city defined yet', 404));
+	if (country.country_cities.length === 0) {
+		return res.status(204).json({
+			status: 'success',
+			message: 'the country has no city defined',
+		});
 	}
 
 	return res.status(200).json({
 		status: 'success',
-		data: countryCities,
+		data: country.country_cities,
 	});
 });
 
@@ -175,8 +184,8 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
-	const data2 = await estateDB
+exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
+	const estates = await estateDB
 		.find({
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
@@ -186,12 +195,11 @@ exports.getEstatesOfCCEasy = catchAsync(async (req, res, next) => {
 			'volume',
 			'price', //'landlord_address', 'change',
 		])
-		.sort('createdAt')
-		.limit(10);
-	// console.log(estateDB.query);
+		.sort('createdAt');
+
 	return res.status(200).json({
 		status: 'success',
-		data: data2,
+		data: estates,
 	});
 });
 
