@@ -2,6 +2,7 @@ import styles from "../../../styles/AdminPanel.module.css";
 
 import editLogo from "../../../images/edit-pencil-line-01-svgrepo-com.svg";
 import deleteLogo from "../../../images/delete-1-svgrepo-com.svg";
+import { Link } from "react-router-dom";
 
 const AdminItem = (props) => {
   return (
@@ -55,10 +56,15 @@ const AdminItem = (props) => {
       <h5>{props.city_name}</h5>
 
       <div className={styles.profileChildDiv}>
-        <button className={styles.EandDBtn}>
-          <img src={editLogo} className={styles.ProfileIcon} />
-        </button>
-        <button className={styles.EandDBtn}>
+        <Link to={`${props._id}`}>
+          <button className={styles.EandDBtn}>
+            <img src={editLogo} className={styles.ProfileIcon} />
+          </button>
+        </Link>
+        <button
+          className={styles.EandDBtn}
+          onClick={() => props.deleteHandler(props._id)}
+        >
           <img src={deleteLogo} className={styles.ProfileIcon} />
         </button>
       </div>

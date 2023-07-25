@@ -1,6 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
+import DetailPage, {
+  loader as estateDetailLoader,
+  loader,
+} from "./pages/DetailPage";
 import AdminPage from "./pages/admin/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
 import AdminEstates from "./pages/admin/AdminEstates";
@@ -19,6 +22,10 @@ import Estates from "./components/adminPage/AdminEstate/Estates";
 import { action as logoutAction } from "./pages/admin/Logout";
 
 import { checkAuthLoader } from "./util/auth";
+import New from "./pages/New";
+import EditAdmin, {
+  loader as adminDetailLoader,
+} from "./components/adminPage/adminPanel/EditAdmin";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +89,11 @@ const router = createBrowserRouter([
             path: "addAdmin",
             element: <AddAdmin />,
           },
+          {
+            path: ":adminId",
+            element: <EditAdmin />,
+            loader: adminDetailLoader,
+          },
         ],
       },
       {
@@ -98,6 +110,7 @@ const router = createBrowserRouter([
 
 function App() {
   return <RouterProvider router={router} />;
+  // return <New />;
 }
 
 export default App;
