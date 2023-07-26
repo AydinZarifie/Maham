@@ -150,16 +150,11 @@ app.use(upload);
 // });
 // app.use(cors({ credentials: true, origin: true }));
 
-// app.use('/admin', adminPage_router);
-// app.use('/admin', managmentPage_router);
-// app.use('/admin', adminAuth_router);
-// app.use('/admin', adminPanel_router);
 app.use(
 	'/admin',
 	adminPage_router,
 	managmentPage_router,
 	adminAuth_router,
-	adminPanel_router,
 	adminPanel_router
 );
 

@@ -351,15 +351,28 @@ estateSchema.post('save', async function (doc, next) {
 	refCountry.save();
 });
 
-estateSchema.pre('remove', async function () {
-	const deletedId = this._id;
-	const deletedMint = this.mint_id;
-	const country = await countryDB.findOne({ country_name: this.country_name });
-	country.country_estates.splice(country.country_estates.indexOf(deletedId), 1);
-	countryDB.updateOne(
-		{ _id: country._id },
-		{ $push: { available_mints: deletedMint } }
-	);
-});
+estateSchema.pre(
+	'deleteOne',
+	{ document: true, query: false },
+	async function (next) {
+		const deletedEstateId = this._id;
+		const deletedMint = this.mint_id;
+
+		const country = await countryDB.findOne({
+			country_name: this.country_name,
+		});
+
+		country.country_estates.splice(
+			country.country_estates.indexOf(deletedEstateId),
+			1
+		);
+
+		country.available_mints.push(deletedMint);
+
+		await country.save({ runValidators: false });
+
+		next();
+	}
+);
 
 module.exports = mongoose.model('Estate', estateSchema);

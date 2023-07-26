@@ -500,22 +500,16 @@ exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteEstate = catchAsync(async (req, res, next) => {
-	const est = await estateDB.findByIdAndDelete(req.params.estateId);
-	const deletedMint = est.mint_id;
-	const deletedId = est._id;
-	if (!est) {
+	const deletingEstate = await estateDB.findById(req.params.estateId);
+
+	if (!deletingEstate) {
 		return next(new AppError('estate with that Id not found', 404));
 	}
 
-	clearImage(est.imageUrl);
-	clearVideo(est.introduction_video);
+	clearImage(deletingEstate.imageUrl);
+	clearVideo(deletingEstate.introduction_video);
 
-	const country = await countryDB
-		.findOne({ country_name: est.country_name })
-		.select('avalible_mints', 'country_estates');
-	country.country_estates.delete(deletedId);
-	country.available_mints.push(deletedMint);
-	country.save({ runValidators: false });
+	await deletingEstate.deleteOne();
 
 	return res.status(204).json({
 		status: 'success',

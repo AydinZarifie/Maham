@@ -1,5 +1,6 @@
 exports.formatStr = (str) => {
 	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
+	// "  UniTed stateS   of AmerICA "   >>   "united states of america"
 	return formattedstr;
 };
 
@@ -45,11 +46,19 @@ exports.generateMint = (country, modifiedCityName) => {
 	return (mint = countryCode + cityCode + estateCode);
 };
 
-exports.filterObj = (obj, ...allowedFields) => {
+exports.changeCase = (camelCaseStr) => {
+	let underScoreCaseStr = camelCaseStr.replace(
+		/[A-Z]/g,
+		(str) => '_' + str.toLowerCase()
+	);
+	return underScoreCaseStr;
+};
+
+exports.filterObj = (obj, allowedFields) => {
 	const newObj = {};
 	Object.keys(obj).forEach((el) => {
 		if (allowedFields.includes(el)) {
-			newObj[el] = obj[el];
+			newObj[exports.changeCase(el)] = obj[el];
 		}
 	});
 	return newObj;

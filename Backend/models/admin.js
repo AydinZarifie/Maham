@@ -19,6 +19,9 @@ const adminSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		full_name: {
+			type: String,
+		},
 		phone_number: {
 			type: String,
 			// required: true,
@@ -70,8 +73,9 @@ const adminSchema = new mongoose.Schema(
 	}
 );
 
-adminSchema.virtual('full_name').get(function () {
-	return `${this.first_name} ${this.last_name}`;
+adminSchema.pre('save', function (next) {
+	this.full_name = `${this.first_name}${this.last_name}`;
+	next();
 });
 
 adminSchema.pre('save', async function (next) {
@@ -89,6 +93,31 @@ adminSchema.pre('save', async function (next) {
 	next();
 });
 
+adminSchema.pre(
+	'deleteOne',
+	{ document: true, query: false },
+	async function (next) {
+		const deletedAdminId = this._id;
+
+		// 1) find the country based on admin_country_ref
+		const country = await countryDB.findById(this.admin_country_ref[0]);
+
+		if (!country) {
+			console.log('country does not exists!'); // return next(new AppError('country does not exists', 404));
+		}
+
+		// 2) find de index of deleted admin's id within country_admins array and delete it
+		country.country_admins.splice(
+			country.country_admins.indexOf(deletedAdminId),
+			1
+		);
+
+		// 3) save the updated country
+		await country.save();
+		next();
+	}
+);
+
 adminSchema.post('save', async function (doc, next) {
 	const refCountry = await countryDB.findById(doc.admin_country_ref);
 	if (!refCountry) {
@@ -97,7 +126,7 @@ adminSchema.post('save', async function (doc, next) {
 		);
 	}
 	refCountry.country_admins.push(doc.id);
-	refCountry.save();
+	await refCountry.save();
 });
 
 adminSchema.methods.correctPassword = async function (
