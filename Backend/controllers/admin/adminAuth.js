@@ -10,6 +10,7 @@ const AppError = require('../../utilities/Errors/appError');
 const {generateTokens} = require("../../utilities/token/generateToken")
 const {signAccessToken} = require("../../utilities/token/signAccessToken");
 const {verifyRefreshToken} = require("../../utilities/token/verifyRefreshToken");
+const {formStr} = require("../../utilities/Mint");
 const {sendEmail} = require("../../utilities/sendEmail");
 
 
@@ -46,14 +47,14 @@ exports.signUp =async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
   
     const admin = new adminDB({
-      firstname: firstName,
-      lastname: lastName,
+      firstname: formStr(firstName),
+      lastname: formStr(lastName),
       password: hashedPassword,
-      admin_type: adminType,
+      admin_type: formStr(adminType),
       phone_number: phoneNumber,
       email: email,
-      country_name : country,
-      city_name : city,
+      country_name : formStr(country),
+      city_name : formStr(city),
     });
   
     await admin.save();
@@ -74,13 +75,13 @@ exports.logIn = catchAsync(async (req, res, next) => {
   const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
-		return res.status(422).json({
-			message: 'Error 422',
+		return res.status(405).json({
+			message: 'Error 405',
 		});
 	}
 
   const { email,password, verificationCode } = req.body;
-  const verificationCodeCookies = req.cookies.verificationCode;
+  const verificationCodeSession = req.session.verificationCode;
 
 	// 1) check if email or password provided
 	if (!email || !password) {
@@ -104,14 +105,14 @@ exports.logIn = catchAsync(async (req, res, next) => {
   }
 
   // 5) check cookie expire
-  if(!req.cookies.verificationCode){
+  if(!req.session.verificationCode){
     return res.status(402).json({
-      message : "cookie was expire"
+      message : "session was expire"
     })
   }
 
   // 6) check verificationCode
-  if(verificationCode !== verificationCodeCookies.toString()){
+  if(verificationCode !== verificationCodeSession.toString()){
       return res.status(401).json({
       message : "verification code is not valid"
     })
@@ -128,11 +129,16 @@ exports.logIn = catchAsync(async (req, res, next) => {
       maxAge : 7 * 60 * 60 * 100,
   });
 
-  res.clearCookie("verificationCode",{httpOnly:true , secure : true, sameSite :'none'})
+  req.session.destroy((err) => {
+    if(err){
+      console.log("destroyed failed");
+    }
+  });
 
   return res.status(200).json({
     token : accessToken
   })
+
 
 });
 
@@ -140,8 +146,8 @@ exports.verificationCode = catchAsync(async (req, res) => {
   const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
-		  return res.status(422).json({
-			message: 'Error 422',
+		  return res.status(405).json({
+			message: 'Error 405',
 		});
 	}
 
@@ -166,13 +172,9 @@ exports.verificationCode = catchAsync(async (req, res) => {
 
   console.log(verificationCode);
 
-  await res.cookie('verificationCode' , verificationCode ,{
-    httpOnly : true,
-    secure : true,
-    sameSite : 'None',
-    maxAge : 60 * 1000    
-  })
-  
+  req.session.verificationCode = verificationCode;
+
+  console.log(req.session.verificationCode);
 
 
   const mailOptions = {

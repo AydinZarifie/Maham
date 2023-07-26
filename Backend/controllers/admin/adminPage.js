@@ -5,7 +5,7 @@ const catchAsync = require('../../utilities/Errors/catchAsync');
 const AppError = require('../../utilities/Errors/appError');
 const countryDB = require("../../models/country");
 const filterDB = require('../../models/filter');
-const {formatStr,generateMint} = require('../../utilities/Mint');
+const {generateMint} = require('../../utilities/Mint');
 const {clearImage , clearVideo} = require("../../utilities/clearFiles")
 
 

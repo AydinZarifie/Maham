@@ -4,6 +4,7 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const cors = require("cors");
+const helmet = require("helmet");
 //////////////////////////////////////////////
 const adminPage_Router = require("./routes/admin/adminPage");
 const managmentPage_Router = require("./routes/admin/adminManagment");
@@ -16,6 +17,7 @@ const globalErrorHandler = require("./controllers/globalErrorHandler");
 const AppError = require("./utilities/Errors/appError");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 dotenv.config({ path: "./config.env" });
 const app = express();
@@ -80,8 +82,19 @@ const upload = multer({
   }
 ]);
 
+app.use(helmet());
 app.use(globalErrorHandler);
+app.use(session({
+  secret : process.env.SESSION_SECRET_KEY,
+  saveUninitialized: false,
+  resave : false,
+  cookie : {
+    secure : false,
+    maxAge : 70 * 1000
+  }
+}))
 app.use(cookieParser());
+
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(cors({
   origin : "http://localhost:3000",
