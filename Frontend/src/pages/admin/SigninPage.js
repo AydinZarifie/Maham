@@ -63,7 +63,7 @@ const Signin = () => {
     }
 
     try {
-      const  response  = await fetch(
+      const response = await fetch(
         "http://localhost:5000/admin/auth/verification",
         {
           method: "POST",
@@ -80,7 +80,6 @@ const Signin = () => {
         { withCredentials: true }
       );
 
-      console.log(response);
       if (response.ok) {
         setIsSendingSms(true);
         setSmsCountdown(60);
@@ -125,7 +124,7 @@ const Signin = () => {
     event.preventDefault();
 
     try {
-      const response  = await fetch(
+      const response = await fetch(
         "http://localhost:5000/admin/auth/login",
         {
           method: "POST",
@@ -145,7 +144,6 @@ const Signin = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("Signup successful!", data);
         const token = data.token;
         const name = data.name;
         const type = data.type;
@@ -158,6 +156,8 @@ const Signin = () => {
         setError("Email or password is not correct");
       } else if (response.status == 401) {
         setError("Entered code is invalid");
+      } else if (response.status == 403) {
+        setError("Entered code is expired. Please try again");
       } else {
         setError(null);
       }

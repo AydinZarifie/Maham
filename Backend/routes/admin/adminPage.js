@@ -15,7 +15,7 @@ router
 router
     .route('/estates/:estateId')
     .get(verifyToken,adminPage_Controller.getEditEstate)
-    .delete(adminPage_Controller.deleteEstate)
+    .delete(verifyToken,adminPage_Controller.deleteEstate)
     .put(verifyToken,adminPage_Controller.updateEstate);
 
 router

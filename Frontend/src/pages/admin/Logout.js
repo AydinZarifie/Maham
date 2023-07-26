@@ -4,7 +4,7 @@ import fetchInstance from "../../util/fetchInstance";
 export function action() {
   const logout = async () => {
     let { response } = await fetchInstance(
-      "urlForLogout",
+      "/admin/auth/logout",
       {
         method: "post",
         mode: "cors",

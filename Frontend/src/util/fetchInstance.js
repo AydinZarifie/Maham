@@ -2,19 +2,14 @@ import { getAuthToken } from "./auth";
 
 let baseURL = "http://localhost:5000";
 
-let originalRequest = async (url, config,credentials) => {
-  console.log('entered original submit handler');
- 
+let originalRequest = async (url, config, credentials) => {
   url = `${baseURL}${url}`;
-  let response = await fetch(url, config,credentials);
+  let response = await fetch(url, config, credentials);
   let data = await response.json();
   return { response, data };
 };
 
 let refreshToken = async () => {
-
-  console.log('entered refresh submit handler');
- 
   let response = await fetch(
     "http://localhost:5000/admin/auth/refresh",
     {
@@ -30,26 +25,23 @@ let refreshToken = async () => {
   return data.accessToken;
 };
 
-const fetchInstance = async (url, config = {},credentials={}) => {
-  console.log('entered submit handler');
+const fetchInstance = async (url, config = {}, credentials = {}) => {
   let authTokens = getAuthToken();
 
   config["headers"] = {
     Authorization: `Bearer ${authTokens}`,
   };
 
-  let { response, data } = await originalRequest(url, config,credentials);
+  let { response, data } = await originalRequest(url, config, credentials);
 
-  
   if (response.status === 403) {
     authTokens = await refreshToken();
-
-    console.log(authTokens);
+    
     config["headers"] = {
       Authorization: `Bearer ${authTokens}`,
     };
 
-    let newResponse = await originalRequest(url, config,credentials);
+    let newResponse = await originalRequest(url, config, credentials);
     response = newResponse.response;
     data = newResponse.data;
   }

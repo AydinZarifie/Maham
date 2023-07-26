@@ -492,5 +492,17 @@ exports.getAllFilters = catchAsync(async (req,res) => {
     return res.status(200).json({data : filters});
 })
 
+exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
+	const filter = await filterDB.find().select('filterName');
+
+	if (!filter) {
+		return next(new AppError('no such a filter', 200));
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: filter,
+	});
+});
 
   

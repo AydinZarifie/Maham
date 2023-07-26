@@ -44,10 +44,4 @@ countrySchema.virtual('totalEstates').get(function () {
 	return this.country_estates.length;
 });
 
-// country.pre('save', function () {
-// 	if (!this.isNew) return next();
-// 	totalCountries++;
-// 	next();
-// });
-
 module.exports = mongoose.model('Country', countrySchema);

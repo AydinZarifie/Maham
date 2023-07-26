@@ -42,13 +42,6 @@ const FilterModal = (props) => {
     setCities(json.data);
   };
 
-  useEffect(() => {
-    document.body.classList.add(styles.disableScroll);
-    return () => {
-      document.body.classList.remove(styles.disableScroll);
-    };
-  }, []);
-
   return (
     <>
       <div className={overlayStyle.overlay2} onClick={props.toggleFilter}></div>
@@ -88,8 +81,6 @@ const FilterModal = (props) => {
               <option value="">City</option>
               <option value="Tabriz">Tabriz</option>
               <option value="Esfahan">Esfahan</option>
-              <option value="Tehran">Tehran</option>
-              <option value="Mashhad">Mashhad</option>
               {cities.map((option) => (
                 <option key={option} value={option}>
                   {option}

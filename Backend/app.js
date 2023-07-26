@@ -3,8 +3,7 @@ const express = require("express");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
-const session = require("express-session");
-const cors = require("cors")
+const cors = require("cors");
 //////////////////////////////////////////////
 const adminPage_Router = require("./routes/admin/adminPage");
 const managmentPage_Router = require("./routes/admin/adminManagment");
@@ -82,13 +81,12 @@ const upload = multer({
 ]);
 
 app.use(globalErrorHandler);
-
 app.use(cookieParser());
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(cors({
   origin : "http://localhost:3000",
   credentials : true
-}))
+}))   
 
 app.use(express.json());
 
@@ -101,17 +99,6 @@ app.use(
 );
 
 app.use(upload);
-
-/* app.use(session({
-  secret:process.env.SESSION_SECRET_KEY,
-  saveUninitialized: false,
-  resave : true,
-  cookie:{
-    maxAge : 1000 * 60 * 60,
-    sameSite : 'lax',
-    secure : false
-  }
-})) */
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 app.use("/admin" , adminAuth_Router);
@@ -127,8 +114,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {
 });
 
 /////////////////////////////////////////////
-// ERROR HANDLING
 
+// ERROR HANDLING
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });

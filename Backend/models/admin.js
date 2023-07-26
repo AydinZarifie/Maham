@@ -39,4 +39,8 @@ const adminSchema = mongoose.Schema({
     //store acitivity of admins
 },{ timestamps: true ,strict: true})
 
+adminSchema.virtual('full_name').get(function () {
+	return `${this.first_name} ${this.last_name}`;
+});
+
 module.exports = mongoose.model("Admin" , adminSchema); 

@@ -13,6 +13,9 @@ const AdminFilter = forwardRef((props, ref) => {
   const eventHandler = (event) => {
     const { name, value } = event.target;
     setFilterData((prev) => ({ ...prev, [name]: value }));
+    if (name == "name") {
+      props.nameChangeFetchHandler(value);
+    }
   };
 
   return (

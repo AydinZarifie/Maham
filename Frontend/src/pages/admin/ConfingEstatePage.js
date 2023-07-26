@@ -695,7 +695,7 @@ const ConfingEstate = ({ method, estate }) => {
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        navigate("admin/estates");
+        navigate("/admin/estates");
       }
     }
   };
@@ -722,7 +722,6 @@ const ConfingEstate = ({ method, estate }) => {
       }
     );
     if (response.ok) {
-      console.log(data.mint);
       setMintUsed(true);
       setInformation((prev) => ({ ...prev, id: data.mint }));
     }
