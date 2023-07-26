@@ -33,14 +33,15 @@ const AdminPanel = () => {
   const submitFilterHandler = async (name, type, country, city) => {
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("type", type);
-    formData.append("country", country);
-    formData.append("city", city);
+    formData.append("adminType", type);
+    formData.append("countryName", country);
+    formData.append("cityName", city);
 
-    let { response } = await fetchInstance("url", {
+    let { response , data } = await fetchInstance("/admin/panel/getAdminsWithFilter", {
       method: "POST",
       body: formData,
     });
+    console.log(data);
   };
 
   const submitAddAdminHandler = async (

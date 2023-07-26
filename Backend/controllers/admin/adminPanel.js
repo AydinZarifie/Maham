@@ -65,6 +65,12 @@ exports.serachWithFilters = catchAsync(async (req,res,next) => {
 	
 	const {adminType , countryName , cityName} = req.body;
 
+	if(!adminType && !countryName && !cityName){
+		return res.status(400).json({
+			message : "empty value"
+		})
+	}
+
 	const query = {};
 
 	if(adminType){
@@ -76,7 +82,6 @@ exports.serachWithFilters = catchAsync(async (req,res,next) => {
 	if(cityName){
 		query.city_name = cityName;
 	}
-
 	const admins = await adminDB.find(query)
 
 	return res.status(200).json({
