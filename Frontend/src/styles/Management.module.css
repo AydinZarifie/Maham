@@ -84,7 +84,8 @@
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 999;
-  height: 150px;
+  min-height: 0px;
+  max-height: 150px;
   overflow: scroll;
   scrollbar-width: none;
   font-weight: 600;

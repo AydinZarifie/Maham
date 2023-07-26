@@ -12,6 +12,7 @@ import Alert from "../../components/general/Alert";
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [searchedAdmins, setSearchedAdmins] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -33,17 +34,23 @@ const AdminPanel = () => {
   const submitFilterHandler = async (name, type, country, city) => {
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("type", type);
-    formData.append("country", country);
-    formData.append("city", city);
+    formData.append("adminType", type);
+    formData.append("countryName", country);
+    formData.append("cityName", city);
 
-    let { response } = await fetchInstance("url", {
-      method: "POST",
-      body: formData,
-    });
+    let { response, data } = await fetchInstance(
+      "/admin/panel/getAdminsWithFilter",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    setAdmins(data.data);
   };
 
   const submitAddAdminHandler = async (
+    method,
     type,
     firstName,
     lastName,
@@ -52,7 +59,8 @@ const AdminPanel = () => {
     country,
     city,
     password,
-    confirmPassword
+    confirmPassword,
+    id
   ) => {
     const formData = new FormData();
     formData.append("adminType", type);
@@ -65,8 +73,14 @@ const AdminPanel = () => {
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
 
-    let { response } = await fetchInstance("/admin/auth/signup", {
-      method: "POST",
+    let url = "/admin/auth/signup";
+
+    if (method === "PUT") {
+      url = "/admin/auth/signup/" + id;
+    }
+
+    let { response } = await fetchInstance(url, {
+      method: method,
       body: formData,
     });
 
@@ -103,14 +117,30 @@ const AdminPanel = () => {
   };
 
   const nameChangeFetch = async (name) => {
-    const formData = new FormData();
-    formData.append("name", name);
-    let { response, data } = await fetchInstance("url", {
-      method: "POST",
-      body: formData,
-    });
+    if (name.length > 0) {
+      const formData = new FormData();
+      name = name.trim();
+      formData.append("name", name);
+      let { response, data } = await fetchInstance("/admin/panel/searchName", {
+        method: "POST",
+        body: formData,
+      });
+      setSearchedAdmins(data.data);
+    }
+  };
 
-    setAdmins(data);
+  const deleteHandler = async (id) => {
+    const proceed = window.confirm("Are you Sure?");
+    if (proceed) {
+      const url = "/admin/estates/" + id;
+      let { response } = await fetchInstance(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        navigate("/admin/admins");
+      }
+    }
   };
 
   return (
@@ -132,6 +162,10 @@ const AdminPanel = () => {
         openHandler={openFilter}
         ref={filter}
         nameChangeFetchHandler={nameChangeFetch}
+        countries={countries}
+        cities={cities}
+        cityFetch={cityFetch}
+        searchedAdmins={searchedAdmins}
       />
       <div className={styles.AdminInfo}>
         <div className={styles.Buttons}>
@@ -170,6 +204,7 @@ const AdminPanel = () => {
             countries,
             cityFetch,
             cities,
+            deleteHandler,
           }}
         />
       </div>

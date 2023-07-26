@@ -13,7 +13,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       const data = await fetch("url");
       const json = await data.json();
-      setCountries(json.data);
+      //setCountries(json.data);
     };
     fetchUserData();
   }, []);
