@@ -8,12 +8,16 @@ router.get(
 	adminPanelController.getSellPositionEstates
 );
 router.get('/panel/getAdmins', adminPanelController.getAllAdmins);
-router.get('/panel/getCurrentAdmin', adminPanelController.currentAdmin);
-router.get('/panel/searchAdmins', adminPanelController.searchAdmins);
-router.get('/panel/searchName', adminPanelController.searchName);
+router.post('/panel/searchName', adminPanelController.searchAdminWithName);
+router.post(
+	'/panel/getAdminsWithFilter',
+	adminPanelController.serachWithFilters
+);
+
 router
-	.route('/panel/updateAdmin/:adminId')
-	.patch(adminPanelController.updateAdmin)
+	.route('/panel/editAdmin/:id')
+	.get(adminPanelController.getEditAdmin)
+	.put(adminPanelController.updateAdmin)
 	.delete(adminPanelController.deleteAdmin);
 
 module.exports = router;

@@ -6,10 +6,7 @@ const AppError = require('./../../utilities/error/appError');
 const countryDB = require('../../models/country');
 const filterDB = require('../../models/filter');
 const { clearVideo, clearImage } = require('./../../utilities/clearFiles');
-const {
-	formatStr,
-	generateMint,
-} = require('./../../utilities/specialFunctions');
+const { formatStr, generateMint } = require('./../../utilities/mint');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();
@@ -32,7 +29,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 exports.getCities = catchAsync(async (req, res, next) => {
 	const country = await countryDB
 		.findOne({ country_name: `${req.params.countryName}` })
-		.select(['country_cities', '-_id']);
+		.select(['cities', '-_id']);
 
 	if (!country) {
 		return next(
@@ -42,7 +39,7 @@ exports.getCities = catchAsync(async (req, res, next) => {
 			)
 		);
 	}
-	if (country.country_cities.length === 0) {
+	if (country.cities.length === 0) {
 		return next(
 			new AppError(
 				'the country has no defined cities yet ,  please add a city first ',
@@ -52,7 +49,7 @@ exports.getCities = catchAsync(async (req, res, next) => {
 	}
 	return res.status(200).json({
 		message: 'success',
-		data: country.country_cities,
+		data: country.cities,
 	});
 });
 
@@ -249,13 +246,13 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 		.select([
 			'country_code',
 			'country_name',
-			'country_cities',
+			'cities',
 			'country_estates',
 			'last_mints',
 			'available_mints',
 		]);
 
-	if (!country || !country.country_cities.includes(modifiedCityName)) {
+	if (!country || !country.cities.includes(modifiedCityName)) {
 		return next(new AppError('country or city does not exist!', 404));
 	}
 
@@ -500,22 +497,16 @@ exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteEstate = catchAsync(async (req, res, next) => {
-	const est = await estateDB.findByIdAndDelete(req.params.estateId);
-	const deletedMint = est.mint_id;
-	const deletedId = est._id;
-	if (!est) {
+	const deletingEstate = await estateDB.findById(req.params.estateId);
+
+	if (!deletingEstate) {
 		return next(new AppError('estate with that Id not found', 404));
 	}
 
-	clearImage(est.imageUrl);
-	clearVideo(est.introduction_video);
+	clearImage(deletingEstate.imageUrl);
+	clearVideo(deletingEstate.introduction_video);
 
-	const country = await countryDB
-		.findOne({ country_name: est.country_name })
-		.select('avalible_mints', 'country_estates');
-	country.country_estates.delete(deletedId);
-	country.available_mints.push(deletedMint);
-	country.save({ runValidators: false });
+	await deletingEstate.deleteOne();
 
 	return res.status(204).json({
 		status: 'success',

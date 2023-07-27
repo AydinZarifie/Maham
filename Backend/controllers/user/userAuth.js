@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const { promisify } = require('util');
 /////////////////////////////////////////////////////
-const adminDB = require('../../models/admin');
+const userDB = require('../../models/user');
 /////////////////////////
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
@@ -11,8 +11,13 @@ const sendEmail = require('./../../utilities/sendEmail');
 const generateToken = require('./../../utilities/token/generateToken');
 const verifyRefreshToken = require('./../../utilities/token/verifyRefreshToken');
 const signAccessToken = require('./../../utilities/token/signAccessToken');
-const { formatStr } = require('../../utilities/mint.js');
 /////////////////////////////////////////////////////
+
+const signToken = (email, userId) => {
+	return jwt.sign({ email, userId }, process.env.JWT_SECRET, {
+		expiresIn: process.env.JWT_EXPIRES_IN,
+	});
+};
 
 exports.signUp = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
@@ -30,7 +35,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 		password,
 		email,
 		confirmPassword,
-		adminType,
+		birthDate,
 		phoneNumber,
 		country,
 		city,
@@ -49,18 +54,18 @@ exports.signUp = catchAsync(async (req, res, next) => {
 
 	const hashedPassword = await bcrypt.hash(password, 12);
 
-	const admin = new adminDB({
-		first_name: formatStr(firstName),
-		last_name: formatStr(lastName),
+	const user = new userDB({
+		first_name: firstName,
+		last_name: lastName,
 		password: hashedPassword,
-		admin_type: formatStr(adminType),
+		birth_date: birthDate,
 		phone_number: phoneNumber,
-		email: formatStr(email),
-		admin_country: formatStr(country),
-		admin_city: formatStr(city),
+		email: email,
+		country: country,
+		city: city,
 	});
 
-	await admin.save();
+	await user.save();
 
 	return res.status(202).json({
 		status: 'success',
@@ -74,8 +79,8 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
-		return res.status(405).json({
-			message: 'Error 405',
+		return res.status(422).json({
+			message: 'Error 422',
 		});
 	}
 
@@ -87,15 +92,15 @@ exports.logIn = catchAsync(async (req, res, next) => {
 		return next(new AppError('please provide email and password', 400));
 	}
 
-	// 3) check if user exists
-	const admin = await adminDB.findOne({ email }).select('+password');
+	// 3) check if user exists && password is correct
+	const user = await userDB.findOne({ email }).select('+password');
 
-	if (!admin) {
-		return next(new AppError('admin not found', 405));
+	if (!user) {
+		return next(new AppError('user not found', 405));
 	}
 
 	// 4) check if password is correct
-	const isEqual = await bcrypt.compare(password, admin.password);
+	const isEqual = await bcrypt.compare(password, user.password);
 	if (!isEqual) {
 		return next(
 			new AppError('email or password is incorrect ', 405) //not authorized
@@ -113,7 +118,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	}
 
 	// 7) refresh and access token
-	const { accessToken, refreshToken } = await generateToken(admin);
+	const { accessToken, refreshToken } = await generateToken(user);
 
 	res.cookie('jwt', refreshToken, {
 		httpOnly: true,
@@ -133,8 +138,22 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		token: accessToken,
-		adminId: admin._id,
+		userId: user._id,
 	});
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+	const cookie = req.cookies;
+
+	if (!cookie?.jwt) {
+		return next(new AppError('cookie does not exists!', 204));
+	}
+
+	res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+
+	return res
+		.status(200)
+		.json({ status: 'success', message: 'logged out successfully!' });
 });
 
 exports.verificationCode = catchAsync(async (req, res, next) => {
@@ -148,12 +167,12 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 		}
 		const { email, password } = req.body;
 
-		const admin = await adminDB.findOne({ email }).select('+password');
-		if (!admin) {
+		const user = await userDB.findOne({ email }).select('+password');
+		if (!user) {
 			return next(new AppError('Wrong email!', 405));
 		}
 
-		const isEqual = await bcrypt.compare(password, admin.password);
+		const isEqual = await bcrypt.compare(password, user.password);
 
 		if (!isEqual) {
 			return next(new AppError('Wrong password!', 405));
@@ -186,39 +205,24 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 exports.refreshToken = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 	if (!cookie?.jwt) {
-		return next(new AppError('cookieis is empty!', 403));
+		return next(new AppError('cookie does not exists!', 204));
 	}
 
 	const refreshToken = cookie.jwt;
 
 	const decode = await verifyRefreshToken(refreshToken);
-
 	if (!decode) {
 		return next(new AppError('refreshToken in not valid', 403));
 	}
 
 	console.log(decode);
 
-	const admin = await adminDB.findOne({ email: decode.email });
-	if (!admin) {
-		return next(new AppError('Unauthorized', 401));
+	const user = await userDB.findOne({ email: decode.email });
+	if (!user) {
+		return next(new AppError('Unauthorization', 401));
 	}
 
-	const accessToken = await signAccessToken(admin);
+	const accessToken = await signAccessToken(user);
 
 	return res.status(201).json(accessToken);
-});
-
-exports.logout = catchAsync(async (req, res, next) => {
-	const cookie = req.cookies;
-
-	if (!cookie?.jwt) {
-		return next(new AppError('cookie does not exists!', 204));
-	}
-
-	res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
-
-	return res
-		.status(200)
-		.json({ status: 'success', message: 'logged out successfully!' });
 });

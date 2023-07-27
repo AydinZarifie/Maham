@@ -36,7 +36,7 @@ const sendErrorDev = (err, res) => {
 		message: err.message,
 		stack: err.stack,
 	});
-	console.log(err.message);
+	console.log(`\n>> error << \n ${err.message}`);
 };
 
 const sendErrorProd = (err, res) => {
