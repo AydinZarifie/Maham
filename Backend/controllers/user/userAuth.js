@@ -85,7 +85,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	}
 
 	const { password, email, verificationCode } = req.body;
-	const verificationCodeCookies = req.cookies.verificationCode;
+	const verificationCodeSession = req.session.verificationCode;
 
 	// 2) check if email or password provided
 	if (!email || !password) {
@@ -108,12 +108,12 @@ exports.logIn = catchAsync(async (req, res, next) => {
 	}
 
 	// 5) check if cookie expired
-	if (!req.cookies.verificationCode) {
+	if (!req.session.verificationCode) {
 		return next(new AppError('cookie has expired', 402));
 	}
 
 	// 6) validate the verificaion code
-	if (verificationCode !== verificationCodeCookies.toString()) {
+	if (verificationCode !== verificationCodeSession.toString()) {
 		return next(new AppError('verification code is not valid', 401));
 	}
 
@@ -127,16 +127,13 @@ exports.logIn = catchAsync(async (req, res, next) => {
 		maxAge: 7 * 60 * 60 * 100,
 	});
 
-	res.clearCookie('verificationCode', {
-		httpOnly: true,
-		secure: true,
-		sameSite: 'none',
+	// **** putting the token within cookie and then destroying the whole SESSION ? why.
+
+	req.session.destroy((err) => {
+		if (err) {
+			console.log('Failed to destroy the session');
+		}
 	});
-
-	///////////////////////////////////////////////////////////////
-
-	// 8) if everything okay , create & send token to client
-	const token = signToken(email, user._id);
 
 	return res.status(202).json({
 		status: 'success',
@@ -161,13 +158,13 @@ exports.logout = catchAsync(async (req, res, next) => {
 
 exports.verificationCode = catchAsync(async (req, res, next) => {
 	try {
-		// const error = validationResult(req);
-		// if (!error.isEmpty()) {
-		// 	console.log(error.array());
-		// 	return res.status(405).json({
-		// 		message: 'Error 405',
-		// 	});
-		// }
+		const error = validationResult(req);
+		if (!error.isEmpty()) {
+			console.log(error.array());
+			return res.status(405).json({
+				message: 'Error 405',
+			});
+		}
 		const { email, password } = req.body;
 
 		const user = await userDB.findOne({ email }).select('+password');
@@ -183,12 +180,8 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 
 		const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
-		await res.cookie('verificationCode', verificationCode, {
-			httpOnly: true,
-			secure: true,
-			sameSite: 'None',
-			maxAge: 60 * 1000,
-		});
+		res.session.verificationCode = verificationCode;
+
 		console.log(verificationCode);
 
 		const mailOptions = {
@@ -232,72 +225,4 @@ exports.refreshToken = catchAsync(async (req, res, next) => {
 	const accessToken = await signAccessToken(user);
 
 	return res.status(201).json(accessToken);
-});
-
-// not complete
-exports.resetPassword = catchAsync(async (req, res, next) => {
-	// 1) Get user based on the token
-	const hashedToken = crypto
-		.createHash('sha256')
-		.update(req.params.token)
-		.digest('hex');
-
-	const user = await userDB.findOne({
-		passwordResetToken: hashedToken,
-		passwordResetExpires: { $gt: Date.now() },
-	});
-
-	// 2) If token has not expired, and there is user, set the new password
-	if (!user) {
-		return next(new AppError('Token is invalid or has expired', 400));
-	}
-	user.password = req.body.password;
-	user.passwordConfirm = req.body.passwordConfirm;
-	user.passwordResetToken = undefined;
-	user.passwordResetExpires = undefined;
-	await user.save();
-
-	// 3) Update changedPasswordAt property for the user
-	// 4) Log the user in, send JWT
-	createSendToken(user, 200, res);
-});
-
-exports.protect = catchAsync(async (req, res, next) => {
-	// 1) getting token and see if it is there
-	let token;
-	if (
-		req.headers.authorization &&
-		req.headers.authorization.startsWith('Bearer')
-	) {
-		// splits the string and returns back arrays of splited parts
-		token = req.headers.authorization.split(' ')[1];
-	}
-
-	if (!token) {
-		return next(
-			new AppError('your are not logged in , please login to get access ', 401)
-			// cause we have token , if we are logged in
-		);
-	}
-
-	// 2) validate token
-	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-	// 3) check if the user is still there >> not deleted
-	const currentUser = await userDB.findById(decoded.userId);
-	if (!currentUser) {
-		next(
-			new AppError('the user belonging to this token no longer exists', 401)
-		);
-	}
-
-	// 4)check if changed password after got the token
-	if (currentUser.changedPasswordAfter(decoded.iat)) {
-		return next(
-			new AppError('user password changed recently , please login again', 401)
-		);
-	}
-
-	// grant access to protected route
-	next();
 });

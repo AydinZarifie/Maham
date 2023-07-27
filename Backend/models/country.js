@@ -8,7 +8,7 @@ const countrySchema = new mongoose.Schema(
 		country_name: {
 			type: String,
 		},
-		country_cities: {
+		cities: {
 			type: Array,
 			default: [],
 		},
@@ -47,7 +47,7 @@ countrySchema.virtual('totalCities').get(function () {
 });
 
 countrySchema.virtual('totalEstates').get(function () {
-	return this.country_Estates.length;
+	return this.country_estates.length;
 });
 
 // countrySchema.virtual('admins', {

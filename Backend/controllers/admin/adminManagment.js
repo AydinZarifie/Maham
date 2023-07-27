@@ -3,7 +3,7 @@ const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 // const APIFeatures = require('./../../utilities/APIFeatures');
-const { formatStr } = require('./../../utilities/specialFunctions');
+const { formatStr } = require('./../../utilities/mint');
 ///////////////////////////////////////////////////
 
 exports.getAllCountries = catchAsync(async (req, res, next) => {
@@ -51,7 +51,7 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
-	const estates = await estateDB.find().select(['-__V']);
+	const estates = await estateDB.find().select('-__V');
 
 	if (estates.length === 0) {
 		return res.status(204).json({
@@ -137,6 +137,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 		console.log(country.last_mints);
 
 		await country.save();
+
 		// send response
 		return res.status(200).json({
 			status: 'success',
@@ -149,6 +150,26 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
+exports.getEstates = catchAsync(async (req, res, next) => {
+	const estates = await estateDB
+		.find({
+			country_name: `${req.params.countryName}`,
+			city_name: `${req.params.cityName}`,
+		})
+		.select([
+			'estate_title',
+			'volume',
+			'price', //'landlord_address', 'change',
+		])
+		.sort('createdAt');
+
+	return res.status(200).json({
+		status: 'success',
+		data: estates,
+	});
+});
+
+/*
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	const countriesInfo = await countryDB
 		.find()
@@ -184,26 +205,6 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
-	const estates = await estateDB
-		.find({
-			country_name: `${req.params.countryName}`,
-			city_name: `${req.params.cityName}`,
-		})
-		.select([
-			'estate_title',
-			'volume',
-			'price', //'landlord_address', 'change',
-		])
-		.sort('createdAt');
-
-	return res.status(200).json({
-		status: 'success',
-		data: estates,
-	});
-});
-
-/*
 exports.getTopGainers = catchAsync(async (req, res, next) => {
 	req.query.limit = '10';
 	req.query.sort = 'change';
@@ -261,5 +262,23 @@ exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
 	next();
 });
 ///////////////////
+exports.getEstatesOfCC = catchAsync(async (req, res, next) => {
+	const estates = await estateDB
+		.find({
+			country_name: `${req.params.countryName}`,
+			city_name: `${req.params.cityName}`,
+		})
+		.select([
+			'estate_title',
+			'volume',
+			'price', //'landlord_address', 'change',
+		])
+		.sort('createdAt');
+
+	return res.status(200).json({
+		status: 'success',
+		data: estates,
+	});
+});
 
 */

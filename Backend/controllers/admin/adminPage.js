@@ -6,10 +6,7 @@ const AppError = require('./../../utilities/error/appError');
 const countryDB = require('../../models/country');
 const filterDB = require('../../models/filter');
 const { clearVideo, clearImage } = require('./../../utilities/clearFiles');
-const {
-	formatStr,
-	generateMint,
-} = require('./../../utilities/specialFunctions');
+const { formatStr, generateMint } = require('./../../utilities/mint');
 
 exports.getAllEstates = catchAsync(async (req, res) => {
 	const posts = await estateDB.find();

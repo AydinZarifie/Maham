@@ -9,8 +9,10 @@ const fs = require('fs');
 const cors = require('cors');
 const helmet = require('helmet');
 const hpp = require('hpp');
-const xss = require('xss');
+// const xss = require('xss');
+const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 //////////////////////////////////////////////
 const adminPage_router = require('./routes/admin/adminPage');
 const managmentPage_router = require('./routes/admin/adminManagment');
@@ -106,23 +108,37 @@ const upload = multer({
 
 //////////////////////////////////////////////
 app.use(
+	session({
+		secret: process.env.SESSION_SECRET_KEY,
+		saveUninitialized: false,
+		resave: false,
+		cookie: {
+			secure: false,
+			maxAge: 70 * 1000,
+		},
+	})
+);
+app.use(
 	cors({
 		origin: 'http://localhost:3000',
 		credentials: true,
 	})
 );
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '/uploads/static')));
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(hpp({ whitelist: ['price'] }));
+// app.use(csrf({cookie : true}));
+/* app.use((req,res,next) => {
+  req.locals.csrfToken = req.csrfToken();
+  console.log(req.locals.csrfToken);
+  next();
+}) */
 app.use(upload);
 
-// app.use('/uploads', express.static('uploads'));
-// app.use(
-// 	'uploads/static/',
-// 	express.static(path.join(__dirname, '/uploads/static'))
+// app.use(path.join(__dirname, '/public')))
 // );
 
 // app.use(

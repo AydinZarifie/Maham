@@ -2,7 +2,7 @@ const adminDB = require('../../models/admin');
 const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
-const { filterObj } = require('./../../utilities/specialFunctions');
+const { filterObj } = require('./../../utilities/mint');
 const { isEmail } = require('validator');
 
 exports.getAllAdmins = catchAsync(async (req, res, next) => {
@@ -43,7 +43,7 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.searchName = catchAsync(async (req, res, next) => {
+exports.searchAdminByName = catchAsync(async (req, res, next) => {
 	//// 1) check if : (A) body is not empty ; (B) adminName field is not a blank field
 	if (!req.body.adminName || /^\s*$/.test(req.body.adminName)) {
 		return res.status(400).json({
@@ -86,7 +86,7 @@ exports.searchName = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.searchAdmins = catchAsync(async (req, res, next) => {
+exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 	//// 1) check if the request body contains any data as filter criters
 	if (Object.keys(req.body).length == 0) {
 		return next(new AppError('please insert some criteria', 400));
@@ -159,7 +159,7 @@ exports.searchAdmins = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.currentAdmin = catchAsync(async (req, res, next) => {
+exports.getEditAdmin = catchAsync(async (req, res, next) => {
 	const { id } = req.params;
 
 	const admin = await adminDB
@@ -187,12 +187,15 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 		last_name: req.body.lastName,
 		email: req.body.email,
 		phone_number: req.body.phoneNumber,
+		country_name: req.body.country,
+		city_name: req.body.city,
+		// password: req.body.password,
 		// profile_image: req.files.images[0].path,
 	};
 
 	const updatedAdmin = await adminDB.findByIdAndUpdate(
 		// req.admin.id,
-		req.body._id,
+		req.params._id,
 		filteredFields,
 		{
 			new: true,
