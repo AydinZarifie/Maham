@@ -43,7 +43,7 @@ const countrySchema = new mongoose.Schema(
 );
 
 countrySchema.virtual('totalCities').get(function () {
-	return this.country_cities.length;
+	return this.cities.length;
 });
 
 countrySchema.virtual('totalEstates').get(function () {

@@ -31,13 +31,13 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 		.findOne({
 			country_name: req.params.countryName,
 		})
-		.select('country_cities');
+		.select('cities');
 
 	if (!country) {
 		return next(new AppError('Country does not exist', 404));
 	}
 
-	if (country.country_cities.length === 0) {
+	if (country.cities.length === 0) {
 		return res.status(204).json({
 			status: 'success',
 			message: 'the country has no city defined',
@@ -46,7 +46,7 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 
 	return res.status(200).json({
 		status: 'success',
-		data: country.country_cities,
+		data: country.cities,
 	});
 });
 
@@ -118,10 +118,10 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			// if all is ok , adds the city to cities collection of chosen country
 		}
 
-		country.country_cities.push(formatStr(req.body.cityName));
+		country.cities.push(formatStr(req.body.cityName));
 
 		// Set the 'last_mints' property
-		const cityCount = country.country_cities.length;
+		const cityCount = country.cities.length;
 		const assignedCode = cityCount.toString();
 		const propertyKey = country.country_code + assignedCode;
 

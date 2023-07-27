@@ -29,7 +29,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 exports.getCities = catchAsync(async (req, res, next) => {
 	const country = await countryDB
 		.findOne({ country_name: `${req.params.countryName}` })
-		.select(['country_cities', '-_id']);
+		.select(['cities', '-_id']);
 
 	if (!country) {
 		return next(
@@ -39,7 +39,7 @@ exports.getCities = catchAsync(async (req, res, next) => {
 			)
 		);
 	}
-	if (country.country_cities.length === 0) {
+	if (country.cities.length === 0) {
 		return next(
 			new AppError(
 				'the country has no defined cities yet ,  please add a city first ',
@@ -49,7 +49,7 @@ exports.getCities = catchAsync(async (req, res, next) => {
 	}
 	return res.status(200).json({
 		message: 'success',
-		data: country.country_cities,
+		data: country.cities,
 	});
 });
 
@@ -246,13 +246,13 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 		.select([
 			'country_code',
 			'country_name',
-			'country_cities',
+			'cities',
 			'country_estates',
 			'last_mints',
 			'available_mints',
 		]);
 
-	if (!country || !country.country_cities.includes(modifiedCityName)) {
+	if (!country || !country.cities.includes(modifiedCityName)) {
 		return next(new AppError('country or city does not exist!', 404));
 	}
 
