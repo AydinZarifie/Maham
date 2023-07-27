@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { getAuthToken } from "./auth";
 
 let baseURL = "http://localhost:5000";
@@ -21,7 +22,9 @@ let refreshToken = async () => {
   );
 
   let data = await response.json();
-  localStorage.setItem("token", data.accessToken);
+  // localStorage.setItem("token", data.accessToken);
+  Cookies.set("token", data.accessToken);
+  console.log(data.accessToken);
   return data.accessToken;
 };
 
@@ -36,7 +39,7 @@ const fetchInstance = async (url, config = {}, credentials = {}) => {
 
   if (response.status === 403) {
     authTokens = await refreshToken();
-    
+
     config["headers"] = {
       Authorization: `Bearer ${authTokens}`,
     };

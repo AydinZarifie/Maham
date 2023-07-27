@@ -1,25 +1,27 @@
 const admin = require("../../models/admin");
 const adminDB = require("../../models/admin");
 const estateDB = require("../../models/estate");
-const catchAsync = require("../../utilities/Errors/catchAsync")
+const catchAsync = require("../../utilities/Errors/catchAsync");
+const {formtStr} = require("../../utilities/Mint");
 
 
 exports.getAllAdmins = async(req,res) => {
 	console.log("hellooooo");
-    const admin = await adminDB.find().select([
-		'firstname',
-		'lastname',
-		'country_name',
-		'city_name',
-		'admin_type'
-	]).sort({firstname : 1});
+		const admin = await adminDB.find().select([
+			'firstname',
+			'lastname',
+			'country_name',
+			'city_name',
+			'admin_type'
+		]).sort({firstname : 1});
+
+	console.log(admin);
     return res.status(200).json({data:admin});
 }
 
 exports.searchAdminWithName = catchAsync(async (req, res, next) => {
 	const { name } = req.body;
 	console.log(name);
-	console.log("hello");
 	if(!name){
 		return res.status(403).json({
 			message : "input was empty"
@@ -65,6 +67,8 @@ exports.serachWithFilters = catchAsync(async (req,res,next) => {
 	
 	const {adminType , countryName , cityName} = req.body;
 
+	console.log(adminType);
+
 	if(!adminType && !countryName && !cityName){
 		return res.status(400).json({
 			message : "empty value"
@@ -74,7 +78,7 @@ exports.serachWithFilters = catchAsync(async (req,res,next) => {
 	const query = {};
 
 	if(adminType){
-		query.admin_type = adminType
+		query.admin_type = formtStr(adminType)
 	}
 	if(countryName){
 		query.country_name = countryName
@@ -82,22 +86,36 @@ exports.serachWithFilters = catchAsync(async (req,res,next) => {
 	if(cityName){
 		query.city_name = cityName;
 	}
-	const admins = await adminDB.find(query)
+	const admins = await adminDB.find(query).select([
+		'firstname',
+		'lastname',
+		'country_name',
+		'city_name',
+		'admin_type'
+	]).sort({firstname : 1});
+
+	console.log(admins);
 
 	return res.status(200).json({
-		admnin : admins,
+		data : admins,
 		message : "Success"
 	})
 
 })
 
-exports.updateAdmin = catchAsync(async (req, res, next) => {
+exports.updateOtherAdmin = catchAsync(async (req, res, next) => {
+
+	console.log("hi");
+
 	// 1) update admin document
 	const filteredFields = {
 		first_name: req.body.firstName,
 		last_name: req.body.lastName,
 		email: req.body.email,
 		phone_number: req.body.phoneNumber,
+		country_name : req.body.country,
+		city_name : req.body.city,
+		password : req.body.password,
 		// profile_image: req.files.images[0].path,
 	};
 
@@ -122,7 +140,9 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteAdmin = catchAsync(async (req, res, next) => {
-	const admin = adminDB.findByIdAndDelete(req.params.id);
+	console.log(req.params.id);
+	const admin = await adminDB.findByIdAndDelete(req.params.id);
+	console.log("hu");
 
 	if (!admin) {
 		return next(new AppError('admin with that id not found!', 404));
@@ -134,7 +154,7 @@ exports.deleteAdmin = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getEditCurrentAdmin = catchAsync(async (req, res, next) => {
+exports.getEditAdmin = catchAsync(async (req, res, next) => {
 	
 	const { id } = req.params;
 

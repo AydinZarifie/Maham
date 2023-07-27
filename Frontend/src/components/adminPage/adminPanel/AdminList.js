@@ -5,10 +5,11 @@ import { useOutletContext } from "react-router-dom";
 import AdminItem from "./AdminItem";
 
 const AdminList = () => {
-  const { admins } = useOutletContext();
+  const { admins,deleteHandler } = useOutletContext();
   return (
     <div className={styles.AdminInformation}>
-      {admins.length > 0 && admins.map((admin) => <AdminItem {...admin} />)}
+      {console.log("heh"+admins)}
+      {admins.length > 0 && admins.map((admin) => <AdminItem {...admin} deleteHandler={deleteHandler} />)}
     </div>
   );
 };

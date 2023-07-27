@@ -12,6 +12,7 @@ import Alert from "../../components/general/Alert";
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [searchedAdmins, setSearchedAdmins] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -36,15 +37,18 @@ const AdminPanel = () => {
     formData.append("adminType", type);
     formData.append("countryName", country);
     formData.append("cityName", city);
-
-    let { response , data } = await fetchInstance("/admin/panel/getAdminsWithFilter", {
-      method: "POST",
-      body: formData,
-    });
-    console.log(data);
+    let { response, data } = await fetchInstance(
+      "/admin/panel/getAdminsWithFilter",
+      {
+        method: "POST",
+        body: formData,
+      }
+    ); 
+    setAdmins(data.data);
   };
 
   const submitAddAdminHandler = async (
+    method,
     type,
     firstName,
     lastName,
@@ -53,7 +57,8 @@ const AdminPanel = () => {
     country,
     city,
     password,
-    confirmPassword
+    confirmPassword,
+    id
   ) => {
     const formData = new FormData();
     formData.append("adminType", type);
@@ -66,8 +71,14 @@ const AdminPanel = () => {
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
 
-    let { response } = await fetchInstance("/admin/auth/signup", {
-      method: "POST",
+    let url = "/admin/auth/signup";
+
+    if (method === "PUT") {
+      url = "/admin/auth/signup/" + id;
+    }
+
+    let { response } = await fetchInstance(url, {
+      method: method,
       body: formData,
     });
 
@@ -104,15 +115,31 @@ const AdminPanel = () => {
   };
 
   const nameChangeFetch = async (name) => {
-    const formData = new FormData();  
-    formData.append("name", name);
-    let { response, data } = await fetchInstance("/admin/panel/searchName", {
-      method: "POST",
-      body: formData,
-    });
-    console.log("helloo");
-    console.log(data.data);
-    setAdmins(data.data);
+    if (name.length > 0) {
+      const formData = new FormData();
+      name = name.trim();
+      formData.append("name", name);
+      let { response, data } = await fetchInstance("/admin/panel/searchName", {
+        method: "POST",
+        body: formData,
+      });
+      setSearchedAdmins(data.data);
+    }
+  };
+
+  const deleteHandler = async (id) => {
+    const proceed = window.confirm("Are you Sure?");
+    if (proceed) {
+      const url = "/admin/panel/editAdmin/" + id;
+      
+      let { response } = await fetchInstance(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        navigate("/admin/admins");
+      }
+    }
   };
 
   return (
@@ -134,7 +161,12 @@ const AdminPanel = () => {
         openHandler={openFilter}
         ref={filter}
         nameChangeFetchHandler={nameChangeFetch}
+        countries={countries}
+        cities={cities}
+        cityFetch={cityFetch}
+        searchedAdmins={searchedAdmins}
       />
+      {console.log(countries)}
       <div className={styles.AdminInfo}>
         <div className={styles.Buttons}>
           <a>
@@ -172,6 +204,7 @@ const AdminPanel = () => {
             countries,
             cityFetch,
             cities,
+            deleteHandler,
           }}
         />
       </div>

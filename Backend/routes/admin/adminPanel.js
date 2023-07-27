@@ -10,9 +10,9 @@ router.post("/panel/searchName" , adminPanelController.searchAdminWithName);
 router.post("/panel/getAdminsWithFilter" , adminPanelController.serachWithFilters);
 
 router
-    .route("/panel/getEditAdmin/:id")
-    .get(adminPanelController.getEditCurrentAdmin)  
-    .put(adminPanelController.updateAdmin)
+    .route("/panel/editAdmin/:id")
+    .get(adminPanelController.getEditAdmin)  
+    .put(adminPanelController.updateOtherAdmin)
     .delete(adminPanelController.deleteAdmin);
 
 

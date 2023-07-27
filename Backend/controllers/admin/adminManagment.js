@@ -105,7 +105,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 });
 
 /// get all cities of given country
-exports.getAllCities = catchAsync(async (req, res) => {
+exports.getAllCities = catchAsync(async (req, res,next) => {
   const country = await countryDB.findOne({
     country_name: req.params.countryName,
   });

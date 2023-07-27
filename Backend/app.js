@@ -5,6 +5,7 @@ const multer = require("multer");
 const fs = require("fs");
 const cors = require("cors");
 const helmet = require("helmet");
+const csrf = require("csurf");
 //////////////////////////////////////////////
 const adminPage_Router = require("./routes/admin/adminPage");
 const managmentPage_Router = require("./routes/admin/adminManagment");
@@ -27,6 +28,7 @@ process.on("uncaughtException", (err) => {
   console.log(err.name, err.message);
   process.exit(1);
 });
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -101,6 +103,8 @@ app.use(cors({
   credentials : true
 }))   
 
+
+
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -110,7 +114,13 @@ app.use(
   "uploads/static/",
   express.static(path.join(__dirname, "/uploads/static"))
 );
+// app.use(csrf({cookie : true}));
 
+/* app.use((req,res,next) => {
+  req.locals.csrfToken = req.csrfToken();
+  console.log(req.locals.csrfToken);
+  next();
+}) */
 app.use(upload);
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'

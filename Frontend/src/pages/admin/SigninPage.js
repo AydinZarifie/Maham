@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import image from "../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
 import fetchInstance from "../../util/fetchInstance";
+import Cookies from "js-cookie";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -148,8 +149,14 @@ const Signin = () => {
         const name = data.name;
         const type = data.type;
         localStorage.setItem("token", token);
+        Cookies.set('token',token)
         // localStorage.setItem('name',name)
         // localStorage.setItem('type',type)
+
+        // const expiration = new Date();
+        // expiration.setHours(expiration.getHours() + 1);
+        // localStorage.setItem("expiration", expiration.toISOString());
+
         navigate("/admin");
       }
       if (response.status == 405) {

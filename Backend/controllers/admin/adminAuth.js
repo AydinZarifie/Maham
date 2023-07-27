@@ -10,7 +10,7 @@ const AppError = require('../../utilities/Errors/appError');
 const {generateTokens} = require("../../utilities/token/generateToken")
 const {signAccessToken} = require("../../utilities/token/signAccessToken");
 const {verifyRefreshToken} = require("../../utilities/token/verifyRefreshToken");
-const {formStr} = require("../../utilities/Mint");
+const {formtStr} = require("../../utilities/Mint");
 const {sendEmail} = require("../../utilities/sendEmail");
 
 
@@ -47,14 +47,14 @@ exports.signUp =async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
   
     const admin = new adminDB({
-      firstname: formStr(firstName),
-      lastname: formStr(lastName),
+      firstname: formtStr(firstName),
+      lastname: formtStr(lastName),
       password: hashedPassword,
-      admin_type: formStr(adminType),
+      admin_type: formtStr(adminType),
       phone_number: phoneNumber,
       email: email,
-      country_name : formStr(country),
-      city_name : formStr(city),
+      country_name : formtStr(country),
+      city_name : formtStr(city),
     });
   
     await admin.save();

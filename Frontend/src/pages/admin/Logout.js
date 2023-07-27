@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import fetchInstance from "../../util/fetchInstance";
+import Cookies from "js-cookie";
 
 export function action() {
   const logout = async () => {
@@ -13,10 +14,11 @@ export function action() {
       { withCredentials: true }
     );
     if (response.ok) {
-      localStorage.removeItem("token");
+      // localStorage.removeItem("token");
+      Cookies.remove("token");
       return redirect("/loginAdmin");
     }
   };
   logout();
-  return;
+  return redirect("/admin");
 }

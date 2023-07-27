@@ -1,4 +1,4 @@
-exports.formatStr = (str) => {
+exports.formtStr = (str) => {
 	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
 	return formattedstr;
 };
