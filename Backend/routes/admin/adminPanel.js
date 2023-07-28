@@ -7,7 +7,7 @@ router.get("/panel/getLockEstates" , adminPanelController.getLockEstates);
 router.get("/panel/getSellPositionEstates" , adminPanelController.getSellPositionEstates);
 router.get("/panel/getAdmins" , adminPanelController.getAllAdmins);
 router.post("/panel/searchName" , adminPanelController.searchAdminWithName);
-router.post("/panel/getAdminsWithFilter" , adminPanelController.serachWithFilters);
+router.post("/panel/getAdminsWithFilter" , adminPanelController.searchWithFilters);
 
 router
     .route("/panel/editAdmin/:id")

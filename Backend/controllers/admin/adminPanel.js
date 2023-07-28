@@ -63,7 +63,7 @@ exports.searchAdminWithName = catchAsync(async (req, res, next) => {
 	});
 });	
 
-exports.serachWithFilters = catchAsync(async (req,res,next) => {	
+exports.searchWithFilters = catchAsync(async (req,res,next) => {	
 	
 	const {adminType , countryName , cityName} = req.body;
 

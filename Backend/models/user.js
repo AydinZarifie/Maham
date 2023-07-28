@@ -9,18 +9,15 @@ const userSchema = mongoose.Schema({
         type :String
     },
     email : {
-        type : String ,
+        type : String,
         unique : true,
     },
     birthDate : {
         type : String ,
     },
     phone_number : {
-        type : String ,
-        unique : true,
-    },
-    password : {
         type : String,
+        unique : true,
     },
     country : {
         type : String,
@@ -30,7 +27,7 @@ const userSchema = mongoose.Schema({
     },
     passport_id : {
         type : String,
-    }
+    },
 })
 
 module.exports = mongoose.model('User' , userSchema);

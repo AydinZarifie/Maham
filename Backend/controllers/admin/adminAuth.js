@@ -14,7 +14,7 @@ const {formtStr} = require("../../utilities/Mint");
 const {sendEmail} = require("../../utilities/sendEmail");
 
 
-exports.signUp =async (req, res, next) => {
+exports.signUp = async (req, res, next) => {
 
   try {
     const error = validationResult(req);
