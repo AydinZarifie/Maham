@@ -10,8 +10,8 @@ router
 		userAuthorizationController.sendVerificationCode
 	);
 
-router.route('/verifyCode').post(userAuthorizationController.verifyUser);
-
-router.route('/authorization').get(userAuthorizationController.createUser);
+router
+	.route('/userAuthorization')
+	.get(userAuthorizationController.authorizeUser);
 
 module.exports = router;

@@ -30,7 +30,7 @@ exports.sendVerificationCode = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.verifyUser = catchAsync(async (req, res, next) => {
+exports.authorizeUser = catchAsync(async (req, res, next) => {
 	const { verificationCode } = req.body;
 	const verificationCodeSession = req.session.verificationCode;
 
@@ -44,23 +44,17 @@ exports.verifyUser = catchAsync(async (req, res, next) => {
 		return next(new AppError('verification code is not valid', 401));
 	}
 
-	// 3) once its done successfuly with verifing user , clear the verification code
+	// 3) once its done successfuly with verifing user , clear the verification code from users session
 	req.session.destroy((err) => {
 		if (err) {
 			console.log('Failed to destroy session');
 		}
+		console.log('Session destroyed succesfully ');
 	});
 
-	return res.status(202).json({
-		status: 'success',
-		message: 'User verified successfully',
-	});
-});
-
-exports.createUser = catchAsync(async (req, res, next) => {
-	//// 2)  modify the request object >>
+	//// 4)  modify the request object >>
 	// (A): check for request object to only contain allowed fields
-	// (B): change camelCase inputs into under_score_base
+	// (B): change camelCase inputs into under_score_base >> frontEnd : camelBase & backEnd : under_score_base
 	const newObj = filterObj(req.body, [
 		'firstName',
 		'lastName',
@@ -72,6 +66,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 		'passportId',
 	]);
 
+	// 5) check if required image files provided by user >> if (false) ? send error res : merge it with user's data
 	if (!req.files.images) {
 		return next(new AppError('please provide an image', 400));
 	}
@@ -80,12 +75,13 @@ exports.createUser = catchAsync(async (req, res, next) => {
 		return el.path;
 	});
 
-	const neewObj = {
+	const finalObj = {
 		...newObj,
 		passport_image,
 	};
 
-	const user = await userDB.create(neewObj);
+	// 6) create the user
+	const user = await userDB.create(finalObj);
 
 	if (!user) {
 		return next(new AppError('an error equired during the verification', 400));
