@@ -104,7 +104,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
 	// 5) check if cookie expired
 	if (!req.session.verificationCode) {
-		return next(new AppError('cookie has expired', 402));
+		return next(new AppError('verification code has expired, try again.', 402));
 	}
 
 	// 6) validate the verificaion code
@@ -126,7 +126,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
 	req.session.destroy((err) => {
 		if (err) {
-			console.log('Failed to destroy the session');
+			console.log('Failed to destroy session');
 		}
 	});
 
