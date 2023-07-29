@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema(
 		passport_id: {
 			type: String,
 		},
+		passport_image: {
+			type: [String],
+		},
 		user_country_ref: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
