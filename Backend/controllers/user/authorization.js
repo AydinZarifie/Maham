@@ -44,16 +44,8 @@ exports.authorizeUser = catchAsync(async (req, res, next) => {
 		return next(new AppError('verification code is not valid', 401));
 	}
 
-	// 3) once its done successfuly with verifing user , clear the verification code from users session
-	req.session.destroy((err) => {
-		if (err) {
-			console.log('Failed to destroy session');
-		}
-		console.log('Session destroyed succesfully ');
-	});
-
-	//// 4)  modify the request object >>
-	// (A): check for request object to only contain allowed fields
+	//// 3)  modify the request object >>
+	/// (A): check for request object to only contain allowed fields
 	// (B): change camelCase inputs into under_score_base >> frontEnd : camelBase & backEnd : under_score_base
 	const newObj = filterObj(req.body, [
 		'firstName',
@@ -66,7 +58,7 @@ exports.authorizeUser = catchAsync(async (req, res, next) => {
 		'passportId',
 	]);
 
-	// 5) check if required image files provided by user >> if (false) ? send error res : merge it with user's data
+	// 4) check if required image files provided by user >> if (false) ? send error res : merge it with user's data
 	if (!req.files.images) {
 		return next(new AppError('please provide an image', 400));
 	}
@@ -80,12 +72,20 @@ exports.authorizeUser = catchAsync(async (req, res, next) => {
 		passport_image,
 	};
 
-	// 6) create the user
+	// 5) create the user
 	const user = await userDB.create(finalObj);
 
 	if (!user) {
 		return next(new AppError('an error equired during the verification', 400));
 	}
+
+	// 6) once its done successfuly with verifing user , clear the verification code from user's session
+	await req.session.destroy((err) => {
+		if (err) {
+			console.log('Failed to destroy session');
+		}
+		console.log('Session destroyed succesfully ');
+	});
 
 	return res.status(202).json({
 		status: 'success',
