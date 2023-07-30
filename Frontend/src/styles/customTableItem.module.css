@@ -1,0 +1,148 @@
+@media (min-width:750px){
+  .AddressDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+  }
+  .numberContainer {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.2s;
+  } 
+
+  .CopyIcon {
+    display: block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .CopyIcon2 {
+    display: block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+}
+@media (max-width:750px){
+  .AddressDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+  }
+  .numberContainer {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 8px;
+    transition: 0.2s;
+  } 
+
+  .CopyIcon {
+    display: block;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .CopyIcon2 {
+    display: block;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+}
+.numberContainer:hover {
+  color: #011f53;
+}
+.FullNumber {
+  display: block;
+  opacity: 0;
+  position: absolute;
+  margin-top: -47px;
+  width: 190px;
+  height: auto;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #fff;
+  background-color: #01013bcb;
+  transition: 0.3s;
+}
+.FullNumberP {
+  font-size: 12px;
+  text-overflow: hidden;
+  margin: 0;
+}
+.FullNumber:after,
+.FullNumber:before {
+  bottom: -30%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  rotate: 180deg;
+  position: absolute;
+  border-color: rgba(161, 103, 45, 0);
+  border-bottom-color: #01013b88;
+  border-width: 6px;
+  left: 10%;
+  margin-left: -13px;
+}
+.partialNumber {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+/* .CopyIcon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.CopyIcon2 {
+  display: block;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+} */
+.CopyIcon:hover {
+  opacity: 0.6;
+}
+.CopyBox {
+  display: block;
+  opacity: 0;
+  position: absolute;
+  margin-left: 70px;
+  margin-top: -63px;
+  font-size: 12px;
+  width: 70px;
+  height: auto;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #fff;
+  background-color: #01013bcb;
+  text-align: center;
+  transition: 0.3s;
+}
+.CopyBox:after,
+.CopyBox:before {
+  bottom: -48%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  rotate: 180deg;
+  position: absolute;
+  border-color: rgba(161, 103, 45, 0);
+  border-bottom-color: #01013b88;
+  border-width: 6px;
+  left: 57%;
+  margin-left: -13px;
+}

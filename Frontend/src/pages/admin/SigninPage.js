@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import image from "../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
-import fetchInstance from "../../util/fetchInstance";
 import Cookies from "js-cookie";
 
 const Signin = () => {
@@ -148,7 +147,7 @@ const Signin = () => {
         const token = data.token;
         const name = data.name;
         const type = data.type;
-        localStorage.setItem("token", token);
+        // localStorage.setItem("token", token);
         Cookies.set('token',token)
         // localStorage.setItem('name',name)
         // localStorage.setItem('type',type)

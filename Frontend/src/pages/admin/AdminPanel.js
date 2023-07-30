@@ -37,15 +37,13 @@ const AdminPanel = () => {
     formData.append("adminType", type);
     formData.append("countryName", country);
     formData.append("cityName", city);
-
     let { response, data } = await fetchInstance(
       "/admin/panel/getAdminsWithFilter",
       {
         method: "POST",
         body: formData,
       }
-    );
-
+    ); 
     setAdmins(data.data);
   };
 
@@ -132,7 +130,8 @@ const AdminPanel = () => {
   const deleteHandler = async (id) => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
-      const url = "/admin/estates/" + id;
+      const url = "/admin/panel/editAdmin/" + id;
+      
       let { response } = await fetchInstance(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },

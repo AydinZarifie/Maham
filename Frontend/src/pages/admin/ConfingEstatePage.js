@@ -525,8 +525,6 @@ const ConfingEstate = ({ method, estate }) => {
         return;
       }
     }
-
-    console.log("entered submit handler");
     // event.preventDefault();
 
     const formData = new FormData();
@@ -673,7 +671,6 @@ const ConfingEstate = ({ method, estate }) => {
       method: method,
       body: formData,
     });
-    console.log("finished submit");
 
     if (response.ok) {
       navigate("/admin/estates");
@@ -1747,6 +1744,7 @@ const ConfingEstate = ({ method, estate }) => {
               name="imageInput"
               multiple
               hidden
+              accept="image/*"
               className={styles.fileInput}
               onChange={imgHandler}
             />
@@ -1789,6 +1787,7 @@ const ConfingEstate = ({ method, estate }) => {
               className={styles.fileInput2}
               id="file-input2"
               multiple
+              accept="video/*"
               hidden
               onChange={vidHandler}
             />

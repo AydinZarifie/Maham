@@ -1,3 +1,474 @@
+@media (min-width: 1150px) {
+  .InfoBody {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .PictureDiv {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .DocumentDiv {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (max-width: 1150px) {
+  .InfoBody {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .PictureDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .DocumentDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-width: 560px) {
+  /*   Information div   */
+  .Information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    width: 82%;
+    min-width: 490px;
+    background: transparent;
+    justify-content: space-around;
+    border: 1px solid #d2d0d0;
+    border-radius: 10px;
+    padding: 35px 16px;
+    height: auto;
+    margin-bottom: 110px;
+    background-color: #ffffff;
+    z-index: 3;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+  .Information h2 {
+    color: #383838;
+    font-size: 22px;
+  }
+  .InfoH4 {
+    margin: 0;
+    font-weight: 300;
+    color: #383838;
+    width: 100%;
+    text-align: center;
+  }
+  .PictureDivH3 {
+    color: #383838;
+    font-weight: 600;
+    margin-left: 15px;
+  }
+  .passportAndTakeH4 {
+    color: #383838;
+    font-weight: 500;
+  }
+  .PassportAndTakeIcon {
+    width: 170px;
+    height: 170px;
+  }
+  .Pspan p {
+    color: #383838;
+    margin-top: 0;
+  }
+  .DocumentH3 {
+    color: #383838;
+    font-weight: 600;
+  }
+  .AlertDocument {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    background-color: #2761ff2c;
+    border-radius: 8px;
+    padding: 12px 0;
+    margin-top: 45px;
+  }
+  .AlertDocument p {
+    width: 80%;
+    color: #383838;
+    font-size: 14px;
+  }
+  .Alert2Document {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    background-color: #d494595e;
+    border-radius: 8px;
+    padding: 12px 0;
+    margin-top: 20px;
+  }
+  .Alert2Document p {
+    width: 80%;
+    color: #383838;
+    font-size: 14px;
+  }
+  .gallery img {
+    display: block;
+    margin: 15px 15px;
+    max-width: 100%;
+    max-height: 250px;
+    min-height: 250px;
+  }
+  .dropzone {
+    width: 99%;
+    height: 280px;
+    border: 2px dashed #333;
+    border-radius: 12px;
+    margin-top: 20px;
+    text-align: center;
+    vertical-align: middle;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
+  .dropzoneP {
+    position: relative;
+    font-size: 18px;
+    max-width: 70%;
+    margin: 0 auto;
+    top: 32%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #5e628e;
+    white-space: nowrap;
+  }
+  .dropzoneP p {
+    white-space: nowrap;
+    color: rgb(162, 162, 162);
+    margin: 0;
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .GalleryIcon {
+    width: 50px;
+    height: 50px;
+  }
+  .cleargallery {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    width: 120px;
+    padding: 10px 0;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #434343;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+  .SubmitBtn {
+    font-size: 14px;
+    margin-top: 110px;
+    min-height: 46px;
+    width: 140px;
+    margin-bottom: 0px;
+    border-radius: 6px;
+    color: #f2f2f2;
+    border: 1px solid #ef4057;
+    background: linear-gradient(0.25turn, #ef4057, #ef4077);
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+  .SubmitBtn:hover {
+    background: linear-gradient(0.55turn, #ef4057, #ef4077);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+}
+
+@media (max-width: 560px) {
+  .InfoBody {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .Information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    width: 86%;
+    /* min-width: 490px; */
+    background: transparent;
+    justify-content: space-around;
+    border: 1px solid #d2d0d0;
+    border-radius: 10px;
+    padding: 15px 16px 20px 16px;
+    height: auto;
+    margin-bottom: 80px;
+    background-color: #ffffff;
+    z-index: 3;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+  .Information h2 {
+    color: #383838;
+    font-size: 18px;
+  }
+  .InfoH4 {
+    margin: 0;
+    font-weight: 300;
+    color: #383838;
+    font-size: 10px;
+    width: 98%;
+    text-align: center;
+  }
+  .PictureDivH3 {
+    color: #383838;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .passportAndTakeH4 {
+    color: #383838;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 12px;
+    margin-bottom: 10px;
+  }
+  .PassportAndTakeIcon {
+    width: 85px;
+    height: 85px;
+  }
+  .Pspan p {
+    color: #383838;
+    margin-top: 0;
+    font-size: 12px;
+  }
+  .DocumentH3 {
+    color: #383838;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .AlertDocument {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    background-color: #2761ff2c;
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-top: 15px;
+  }
+  .AlertDocument p {
+    width: 80%;
+    color: #383838;
+    font-size: 12px;
+  }
+  .Alert2Document {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    background-color: #d494595e;
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-top: 15px;
+  }
+  .Alert2Document p {
+    width: 80%;
+    color: #383838;
+    font-size: 12px;
+  }
+  .gallery img {
+    display: block;
+    margin: 10px 10px;
+    max-width: 100%;
+    max-height: 180px;
+    min-height: 180px;
+  }
+  .dropzone {
+    width: 99%;
+    height: 200px;
+    border: 2px dashed #333;
+    border-radius: 12px;
+    margin-top: 15px;
+    text-align: center;
+    vertical-align: middle;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+  .dropzoneP {
+    position: relative;
+    font-size: 12px;
+    max-width: 70%;
+    margin: 0 auto;
+    top: 26%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #5e628e;
+    white-space: nowrap;
+  }
+  .dropzoneP p {
+    white-space: nowrap;
+    color: rgb(162, 162, 162);
+    margin: 0;
+    font-size: 10px;
+    font-weight: 300;
+  }
+  .GalleryIcon {
+    width: 40px;
+    height: 40px;
+  }
+  .cleargallery {
+    font-size: 12px;
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    width: 110px;
+    padding: 10px 0;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #434343;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+  .SubmitBtn {
+    font-size: 12px;
+    margin-top: 80px;
+    min-height: 42px;
+    width: 110px;
+    margin-bottom: 0px;
+    border-radius: 6px;
+    color: #f2f2f2;
+    border: 1px solid #ef4057;
+    background: linear-gradient(0.25turn, #ef4057, #ef4077);
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+  .SubmitBtn:hover {
+    background: linear-gradient(0.55turn, #ef4057, #ef4077);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+}
+
+/*   Information div   */
+
+.passportAndTake {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+}
+
+.IconAndInfo {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  margin-left: 5%;
+}
+
+.PassportAndTakeInfoSpan {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  padding: 0 10% 0 2%;
+}
+.Pspan {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+}
+
+.AttentionIcon {
+  width: 25px;
+  height: 25px;
+}
+
+.Attention2Icon {
+  width: 25px;
+  height: 25px;
+}
+
+.fileinput {
+  display: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.dropzone::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.dropzone {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.dropzone:hover {
+  cursor: pointer;
+}
+
+.dropzone.dragging {
+  background: #959595;
+}
+
+.gallery {
+  display: flex;
+}
+
+.cleargallery:hover {
+  background-color: #fbfbfb;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.cleargallerySpan {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.cleargalleryIcon {
+  width: 18px;
+  height: 18px;
+}
+
 html {
   font-family: "Inter", sans-serif;
   font-size: 100%;
@@ -60,14 +531,13 @@ body {
     border: none;
   }
 
-
   .radio {
     position: relative;
     top: 42px;
     cursor: pointer;
     line-height: 20px;
     font-size: 10px;
-  
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -157,7 +627,7 @@ body {
 
   /*  information div   */
   .InformationDiv {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 150px;
@@ -232,7 +702,7 @@ body {
   /*   verification div   */
 
   .VerificationDiv {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 150px;
@@ -364,7 +834,7 @@ body {
     cursor: pointer;
     line-height: 20px;
     font-size: 10px;
-  
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -452,7 +922,7 @@ body {
 
   /*  information div   */
   .InformationDiv {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
@@ -525,7 +995,7 @@ body {
   /*   verification div   */
 
   .VerificationDiv {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
@@ -1021,7 +1491,8 @@ input[type="radio"]:checked + .Circle:after {
 }
 
 .SelectOverlay2 {
-  display: none;
+  display: block;
+  top: 0;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -1069,7 +1540,8 @@ input[type="radio"]:checked + .Circle:after {
 }
 
 .SelectOverlay {
-  display: none;
+  display: block;
+  top: 0;
   width: 100%;
   height: 100%;
   position: fixed;

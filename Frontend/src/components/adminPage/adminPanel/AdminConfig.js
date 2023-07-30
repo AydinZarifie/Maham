@@ -8,15 +8,15 @@ const AdminConfig = ({ method, admin }) => {
     useOutletContext();
 
   const [data, setData] = useState({
-    type: admin ? admin.type : "",
-    firstName: admin ? admin.firstName : "",
-    lastName: admin ? admin.lastName : "",
+    type: admin ? admin.admin_type : "",
+    firstName: admin ? admin.firstname : "",
+    lastName: admin ? admin.lastname : "",
     email: admin ? admin.email : "",
-    phoneNumber: admin ? admin.phoneNumber : "",
-    country: admin ? admin.country : "",
-    city: admin ? admin.city : "",
-    password: admin ? admin.password : "",
-    confirmPassword: admin ? admin.password : "",
+    phoneNumber: admin ? admin.phone_number : "",
+    country: admin ? admin.country_name : "",
+    city: admin ? admin.city_name : "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [touched, setTouched] = useState({
@@ -53,7 +53,8 @@ const AdminConfig = ({ method, admin }) => {
   const confirmPasswordIsInvalid =
     !enteredPasswordIsValid && touched.confirmPassword;
 
-  let formIsValid = false;
+  let formIsValidForAdding = false;
+  let formIsValidForEditing = false;
 
   if (
     enteredTypeIsValid &&
@@ -66,7 +67,21 @@ const AdminConfig = ({ method, admin }) => {
     enteredPasswordIsValid &&
     enteredConfirmPasswordIsValid
   ) {
-    formIsValid = true;
+    formIsValidForAdding = true;
+  }
+
+  if (
+    enteredTypeIsValid &&
+    enteredFirstNameIsValid &&
+    enteredLastNameIsValid &&
+    enteredEmailIsValid &&
+    enteredPhoneNumberIsValid &&
+    enteredCountryIsValid &&
+    enteredCityIsValid
+    // enteredPasswordIsValid &&
+    // enteredConfirmPasswordIsValid
+  ) {
+    let formIsValidForEditing = true;
   }
 
   const blurHandler = (event) => {
@@ -96,9 +111,16 @@ const AdminConfig = ({ method, admin }) => {
       confirmPassword: true,
     });
 
-    if (!formIsValid) {
-      return;
+    if (admin) {
+      if (!formIsValidForEditing) {
+        return;
+      }
+    } else {
+      if (!formIsValidForAdding) {
+        return;
+      }
     }
+
     if (data.password !== data.confirmPassword) {
       return;
     }
@@ -114,7 +136,7 @@ const AdminConfig = ({ method, admin }) => {
       data.city,
       data.password,
       data.confirmPassword,
-      admin._id
+      admin ? admin._id : null
     );
   };
 
