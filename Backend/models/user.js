@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const countryDB = require('./country');
+const AppError = require('../utilities/error/appError');
 
 const userSchema = new mongoose.Schema(
 	{
@@ -51,6 +52,7 @@ const userSchema = new mongoose.Schema(
 
 // Refrence user to belonging country
 userSchema.pre('save', async function (next) {
+	console.log(this.country);
 	const country = await countryDB.findOne({
 		country_name: this.country,
 	});

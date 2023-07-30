@@ -2,17 +2,16 @@ const userDB = require('../../models/user');
 const sendEmail = require('../../utilities/sendEmail');
 const AppError = require('../../utilities/error/appError');
 const catchAsync = require('../../utilities/error/catchAsync');
+const { filterObj } = require('./../../utilities/mint');
 
 exports.sendVerificationCode = catchAsync(async (req, res, next) => {
 	const { email } = req.body;
 
 	if (!email) {
-		return next(new AppError('please provide an email', 400));
+		return next(new AppError('please provide a valid email', 400));
 	}
 
 	const verificationCode = Math.floor(100000 + Math.random() * 9000);
-
-	res.session.verificationCode = verificationCode;
 
 	console.log(verificationCode);
 
@@ -25,6 +24,8 @@ exports.sendVerificationCode = catchAsync(async (req, res, next) => {
 
 	await sendEmail(mailOptions);
 
+	req.session.verificationCode = verificationCode;
+
 	return res.status(202).json({
 		status: 'success',
 	});
@@ -32,6 +33,7 @@ exports.sendVerificationCode = catchAsync(async (req, res, next) => {
 
 exports.authorizeUser = catchAsync(async (req, res, next) => {
 	const { verificationCode } = req.body;
+
 	const verificationCodeSession = req.session.verificationCode;
 
 	// 1) check if verification code is expired
@@ -76,15 +78,16 @@ exports.authorizeUser = catchAsync(async (req, res, next) => {
 	const user = await userDB.create(finalObj);
 
 	if (!user) {
-		return next(new AppError('an error equired during the verification', 400));
+		return next(new AppError('an error equired during the creating user', 400));
 	}
 
 	// 6) once its done successfuly with verifing user , clear the verification code from user's session
 	await req.session.destroy((err) => {
 		if (err) {
 			console.log('Failed to destroy session');
+		} else {
+			console.log('Session destroyed succesfully ');
 		}
-		console.log('Session destroyed succesfully ');
 	});
 
 	return res.status(202).json({
