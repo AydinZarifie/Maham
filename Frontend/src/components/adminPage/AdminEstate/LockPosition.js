@@ -3,6 +3,7 @@ import styles from "../../../styles/adminEstates.module.css";
 import lockLogo from "../../../images/lock-keyhole-svgrepo-com.svg";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
+import CustomTableItem from "../../general/CustomTableItem";
 
 const LockPosition = () => {
   const { lockPositionData, fetchLockPositionData } = useOutletContext();
@@ -30,6 +31,21 @@ const LockPosition = () => {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>hjkkhahasyiasyyiayiyaysyyyk</td>
+            <td></td>
+            <td></td>
+            <td><CustomTableItem text="0X123454654663456" /></td>
+            <td><CustomTableItem text="0X123454654663456" /></td>
+
+            <td>Iran9998</td>
+            <td>tabrizoooo</td>
+            <td>1287 ETH</td>
+            <td>1.96</td>
+            <td>
+              <img src={lockLogo} className={styles.LockIcon} />
+            </td>
+          </tr>
           {lockPositionData.map((item) => (
             <tr>
               <td>{item.estate_title}</td>

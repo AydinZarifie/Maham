@@ -1,10 +1,11 @@
 import styles from "../../../styles/AdminPanel.module.css";
 import overlayStyles from "../../../styles/overlay.module.css";
 
-import { useState, React, forwardRef } from "react";
+import { useState, React, forwardRef, useRef } from "react";
 
 const AdminFilter = forwardRef((props, ref) => {
   const [searchedAdminsShown, setSearchedAdminsShown] = useState(false);
+  const filter = useRef(null);
 
   const [filterData, setFilterData] = useState({
     name: "",
@@ -34,9 +35,20 @@ const AdminFilter = forwardRef((props, ref) => {
     setFilterData((prev) => ({ ...prev, name: admin }));
   };
 
+  const toggleFilter = () => {
+    if (filter.current.style.maxHeight == "350px") {
+      filter.current.style.maxHeight = 0;
+    } else {
+      filter.current.style.maxHeight = "350px";
+    }
+  };
+
   return (
     <>
       <div className={styles.FilterDiv}>
+        <button className={styles.FilterBtn2} onClick={props.openHandler}>
+          filter
+        </button>
         <div className={styles.Filter} ref={ref}>
           <button className={styles.closeBtn} onClick={props.closeHandler}>
             &times;
@@ -55,121 +67,130 @@ const AdminFilter = forwardRef((props, ref) => {
             />
           </form>
 
-          <div className={styles.wrapper}>
-            {searchedAdminsShown && props.searchedAdmins.length > 0 && (
-              <>
-                <div
-                  className={overlayStyles.SearchOverlay}
-                  onClick={() => setSearchedAdminsShown(false)}
-                ></div>
-                <div className={styles.SearchDiv}>
-                  <ul>
-                    {props.searchedAdmins.map((admin) => (
-                      <li onClick={() => clickHandler(admin)}>
-                        <p>{admin}</p>
-                      </li>
-                    ))}
-                    {/* <li onClick={() => clickHandler("hadi")}>
+          <div className={styles.FilterBody} ref={filter}>
+            <div className={styles.wrapper}>
+              {searchedAdminsShown && props.searchedAdmins.length > 0 && (
+                <>
+                  <div
+                    className={overlayStyles.SearchOverlay}
+                    onClick={() => setSearchedAdminsShown(false)}
+                  ></div>
+                  <div className={styles.SearchDiv}>
+                    <ul>
+                      {props.searchedAdmins.map((admin) => (
+                        <li
+                          onClick={() =>
+                            clickHandler(admin.firstname + " " + admin.lastname)
+                          }
+                        >
+                          {admin.firstname} {admin.lastname}
+                        </li>
+                      ))}
+                      {/* <li onClick={() => clickHandler("hadi")}>
                       <p>hadi rasouli</p>
                     </li> */}
-                  </ul>
-                </div>
-              </>
-            )}
+                    </ul>
+                  </div>
+                </>
+              )}
 
-            <div className={styles.title}>Select Admin type</div>
-            <div className={styles.box} onChange={eventHandler}>
-              <input
-                type="radio"
-                name="type"
-                value="SuperAdmin"
-                id="option1"
-                className={styles.option1}
-              />
-              <input
-                type="radio"
-                name="type"
-                value="admin"
-                id="option2"
-                className={styles.option2}
-              />
-              <label htmlFor="option1" className={styles.option1}>
-                <div className={styles.dot}></div>
-                <div className={styles.text}>Super admin</div>
-              </label>
-              <label htmlFor="option2" className={styles.option2}>
-                <div className={styles.dot}></div>
-                <div className={styles.text}>Admin</div>
-              </label>
+              <div className={styles.title}>Select Admin type</div>
+              <div className={styles.box} onChange={eventHandler}>
+                <input
+                  type="radio"
+                  name="type"
+                  value="SuperAdmin"
+                  id="option1"
+                  className={styles.option1}
+                />
+                <input
+                  type="radio"
+                  name="type"
+                  value="admin"
+                  id="option2"
+                  className={styles.option2}
+                />
+                <label htmlFor="option1" className={styles.option1}>
+                  <div className={styles.dot}></div>
+                  <div className={styles.text}>Super admin</div>
+                </label>
+                <label htmlFor="option2" className={styles.option2}>
+                  <div className={styles.dot}></div>
+                  <div className={styles.text}>Admin</div>
+                </label>
+              </div>
             </div>
-          </div>
 
-          {/*  */}
-          <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
-            <select
-              name="country"
-              className={styles.SelectType}
-              onChange={eventHandler}
-              value={filterData.country}
-              style={{ width: "100%" }}
-            >
-              <option className={styles.SelectOption} value="">
-                Country
-              </option>
-              {props.countries.map((country) => (
-                <option
-                  key={country.country_name}
-                  className={styles.SelectOption}
-                  value={country.country_name}
-                >
-                  {country.country_name}
+            {/*  */}
+            <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
+              <select
+                name="country"
+                className={styles.SelectType}
+                onChange={eventHandler}
+                value={filterData.country}
+                style={{ width: "100%" }}
+              >
+                <option className={styles.SelectOption} value="">
+                  Country
                 </option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
-            <select
-              name="city"
-              className={styles.SelectType}
-              onChange={eventHandler}
-              value={filterData.city}
-              style={{ width: "100%" }}
-            >
-              <option className={styles.SelectOption} value="">
-                City
-              </option>
-
-              {props.cities.length > 0 &&
-                props.cities.map((city) => (
+                {props.countries.map((country) => (
                   <option
-                    key={city}
+                    key={country.country_name}
                     className={styles.SelectOption}
-                    value={city}
+                    value={country.country_name}
                   >
-                    {city}
+                    {country.country_name}
                   </option>
                 ))}
-            </select>
-          </div>
-          {/*  */}
+              </select>
+            </div>
+            <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
+              <select
+                name="city"
+                className={styles.SelectType}
+                onChange={eventHandler}
+                value={filterData.city}
+                style={{ width: "100%" }}
+              >
+                <option className={styles.SelectOption} value="">
+                  City
+                </option>
 
-          <button
-            className={styles.FilterBtn}
-            type="submit"
-            onClick={() =>
-              props.submitHandler(
-                filterData.name,
-                filterData.type,
-                filterData.country,
-                filterData.city
-              )
-            }
-          >
-            Filter
-          </button>
+                {props.cities.length > 0 &&
+                  props.cities.map((city) => (
+                    <option
+                      key={city}
+                      className={styles.SelectOption}
+                      value={city}
+                    >
+                      {city}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            {/*  */}
+
+            <button
+              className={styles.FilterBtn}
+              type="submit"
+              onClick={() =>
+                props.submitHandler(
+                  filterData.name,
+                  filterData.type,
+                  filterData.country,
+                  filterData.city
+                )
+              }
+            >
+              Filter
+            </button>
+          </div>
         </div>
-        <button className={styles.FilterBtn2} onClick={props.openHandler}>
+        {/* <button className={styles.FilterBtn2} onClick={props.openHandler}>
           filter
+        </button> */}
+        <button onClick={toggleFilter} style={{ zIndex: "99" }}>
+          open Filter
         </button>
       </div>
     </>
