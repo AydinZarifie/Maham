@@ -324,14 +324,17 @@ const Verification = () => {
             }));
             setCurrentStep(2);
           }}
+          data={data}
         />
       )}
       {currentStep == 2 && (
         <StepThree
           onSubmit={(info) => {
             setData((prev) => ({ ...prev, selectedImages: info }));
+            sendEmail();
             setCurrentStep(3);
           }}
+          data={data.selectedImages}
         />
       )}
       {currentStep == 3 && (

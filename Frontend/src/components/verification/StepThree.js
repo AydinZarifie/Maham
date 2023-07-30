@@ -10,8 +10,14 @@ import imageIcon from "../../images/image-svgrepo-com_1.svg";
 import deletetIcon from "../../images/delete-2-svgrepo-com.svg";
 
 const StepThree = (props) => {
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [previewImages, setPreviewImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState(
+    props.data
+  );
+  const [previewImages, setPreviewImages] = useState(
+    selectedImages.length > 0
+      ? selectedImages.map((file) => URL.createObjectURL(file))
+      : []
+  );
   const [dragging, setDragging] = useState(false);
   const [touched, setTouched] = useState(false);
 
@@ -70,7 +76,8 @@ const StepThree = (props) => {
   };
 
   const submitHandler = () => {
-    setTouched(true)
+    
+    setTouched(true);
     if (selectedImages.length != 2) {
       return;
     }
@@ -164,9 +171,7 @@ const StepThree = (props) => {
             />
             <label for="fileinput">
               <div
-                className={`${imageClass}  ${
-                  dragging ? styles.dragging : ""
-                }`}
+                className={`${imageClass}  ${dragging ? styles.dragging : ""}`}
                 // onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
                 onDragOver={handleDragEnter}
