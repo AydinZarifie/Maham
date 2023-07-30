@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-const userAuthorizationController = require('../../controllers/user/authorization');
+const userAuthorizationController = require('../../controllers/user/userAuthorization');
 
 router
 	.route('/sendVerificationCode')
