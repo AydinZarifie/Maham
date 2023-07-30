@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
-// const session = require('express-session');
 const cors = require('cors');
 const helmet = require('helmet');
 const hpp = require('hpp');
@@ -18,7 +17,9 @@ const adminPage_router = require('./routes/admin/adminPage');
 const managmentPage_router = require('./routes/admin/adminManagment');
 const adminAuth_router = require('./routes/admin/adminAuth');
 const adminPanel_router = require('./routes/admin/adminPanel');
-//////////////////////
+////////////
+const userAuthorization_router = require('./routes/user/authorization');
+///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
 //////////////////////////////////////////////
@@ -111,10 +112,10 @@ app.use(
 	session({
 		secret: process.env.SESSION_SECRET_KEY,
 		saveUninitialized: false,
-		resave: false,
+		resave: true,
 		cookie: {
 			secure: false,
-			maxAge: 70 * 1000,
+			maxAge: 7000 * 1000,
 		},
 	})
 );
@@ -125,7 +126,7 @@ app.use(
 	})
 );
 app.use(express.static(path.join(__dirname, '/uploads/static')));
-app.use(helmet());
+// app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -173,6 +174,8 @@ app.use(
 	adminAuth_router,
 	adminPanel_router
 );
+
+app.use('/user', userAuthorization_router);
 
 const DBlocal = process.env.LOCAL_DATABASE;
 const port = process.env.PORT;

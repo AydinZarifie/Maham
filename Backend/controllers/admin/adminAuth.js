@@ -153,7 +153,7 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 			return next(new AppError('Wrong email!', 405));
 		}
 
-		const isEqual = await bcrypt.compare(password, admin.password);
+		const isEqual = bcrypt.compare(password, admin.password);
 
 		if (!isEqual) {
 			return next(new AppError('Wrong password!', 405));
@@ -161,7 +161,7 @@ exports.verificationCode = catchAsync(async (req, res, next) => {
 
 		const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
-		res.session.verificationCode = verificationCode;
+		req.session.verificationCode = verificationCode;
 
 		console.log(verificationCode);
 
