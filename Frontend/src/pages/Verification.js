@@ -80,6 +80,13 @@ const Verification = () => {
     formData.append("phoneNumber", data.phoneNumber);
     formData.append("passportId", data.passportId);
     formData.append("code", otp);
+
+    if (data.selectedImages.length > 0) {
+      data.selectedImages.forEach((file) => {
+        formData.append("images", file);
+      });
+    }
+    
     let { response } = await fetch("url", {
       method: "post",
       body: formData,
@@ -246,7 +253,11 @@ const Verification = () => {
         />
         <label
           onClick={() => {
-            if (data.agreed && data.email.length>0 && data.selectedImages.length > 0) {
+            if (
+              data.agreed &&
+              data.email.length > 0 &&
+              data.selectedImages.length > 0
+            ) {
               setCurrentStep(3);
             }
           }}
