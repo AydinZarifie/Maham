@@ -20,17 +20,17 @@ const StepTwo = (props) => {
   let toggleTwoClass = toggleTwo ? `${styles.open2}` : "";
 
   const [data, setData] = useState({
-    gender: "",
-    firstName: "",
-    lastName: "",
-    country: "",
-    city: "",
-    yearOfBirth: "",
-    monthOfBirth: "",
-    dayOfBirth: "",
-    email: "",
-    phoneNumber: "",
-    passportId: "",
+    gender: props.data.gender,
+    firstName: props.data.firstName,
+    lastName: props.data.lastName,
+    country:props.data.country,
+    city: props.data.city,
+    yearOfBirth: props.data.yearOfBirth,
+    monthOfBirth: props.data.monthOfBirth,
+    dayOfBirth: props.data.dayOfBirth,
+    email: props.data.email,
+    phoneNumber: props.data.phoneNumber,
+    passportId: props.data.passportId,
   });
 
   const [touched, setTouched] = useState({
@@ -363,7 +363,7 @@ const StepTwo = (props) => {
         </div>
       </div>
       <button className={styles.SendCBtn} onClick={submitHandler}>
-        send code
+        Next
       </button>
     </div>
   );
