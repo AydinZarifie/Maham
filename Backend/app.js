@@ -36,7 +36,7 @@ process.on('uncaughtException', (err) => {
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		if (file.fieldname === 'images') {
-			if (req.originalUrl('/estates') && req.method == 'POST') {
+			if (req.originalUrl.endsWith('/estates')) {
 				let path = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
 
 				if (fs.existsSync(path)) {
@@ -45,12 +45,19 @@ const storage = multer.diskStorage({
 					fs.mkdirSync(path);
 					cb(null, path);
 				}
-			} else if (req.originalUrl.includes('/addFilter')) {
+			} else if (req.originalUrl.endsWith('/addFilter')) {
 				cb(null, './uploads/images/filters/');
-			} else if (req.originalUrl.includes('/addCountry')) {
+			} else if (req.originalUrl.endsWith('/addCountry')) {
 				cb(null, './uploads/images/countries/');
-			} else if (req.originalUrl.includes('/userAuthorization')) {
-				cb(null, './uploads/images/users/');
+			} else if (req.originalUrl.endsWith('/userAuthorization')) {
+				let path = `./uploads/images/users/${req.body.firstName}-${req.body.lastName}`;
+
+				if (fs.existsSync(path)) {
+					cb(null, path);
+				} else {
+					fs.mkdirSync(path);
+					cb(null, path);
+				}
 			}
 		} else if (file.fieldname == 'video') {
 			cb(null, './uploads/videos/');
