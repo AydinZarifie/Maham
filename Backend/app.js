@@ -18,7 +18,7 @@ const managmentPage_router = require('./routes/admin/adminManagment');
 const adminAuth_router = require('./routes/admin/adminAuth');
 const adminPanel_router = require('./routes/admin/adminPanel');
 ////////////
-const userAuthorization_router = require('./routes/user/authorization');
+const userAuthorization_router = require('./routes/user/userAuthorization');
 ///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
@@ -36,7 +36,7 @@ process.on('uncaughtException', (err) => {
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		if (file.fieldname === 'images') {
-			if (req.body.title) {
+			if (req.originalUrl.endsWith('/estates')) {
 				let path = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
 
 				if (fs.existsSync(path)) {
@@ -45,10 +45,19 @@ const storage = multer.diskStorage({
 					fs.mkdirSync(path);
 					cb(null, path);
 				}
-			} else if (req.body.filterName) {
+			} else if (req.originalUrl.endsWith('/addFilter')) {
 				cb(null, './uploads/images/filters/');
-			} else {
+			} else if (req.originalUrl.endsWith('/addCountry')) {
 				cb(null, './uploads/images/countries/');
+			} else if (req.originalUrl.endsWith('/userAuthorization')) {
+				let path = `./uploads/images/users/${req.body.firstName}-${req.body.lastName}`;
+
+				if (fs.existsSync(path)) {
+					cb(null, path);
+				} else {
+					fs.mkdirSync(path);
+					cb(null, path);
+				}
 			}
 		} else if (file.fieldname == 'video') {
 			cb(null, './uploads/videos/');
@@ -126,7 +135,7 @@ app.use(
 	})
 );
 app.use(express.static(path.join(__dirname, '/uploads/static')));
-// app.use(helmet());
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
