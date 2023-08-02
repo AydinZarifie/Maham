@@ -1,7 +1,6 @@
 import styles from "../../../styles/AdminPanel.module.css";
 import overlayStyles from "../../../styles/overlay.module.css";
 import arrowIcon from "../../../images/arrow-down-svgrepo-com.svg";
-import searchIcon from "../../../images/search-svgrepo-com1.svg"
 
 import { useState, React, forwardRef, useRef, useEffect } from "react";
 
@@ -10,6 +9,10 @@ const AdminFilter = forwardRef((props, ref) => {
   const filter = useRef(null);
   const [moreFilter, setMoreFilter] = useState(false);
   const searchDiv = useRef(null);
+
+  const toggleMoreFilter = () => {
+    setMoreFilter((prev) => !prev);
+  };
 
   const [filterData, setFilterData] = useState({
     name: "",
@@ -64,14 +67,22 @@ const AdminFilter = forwardRef((props, ref) => {
     searchDiv.current.style.display = "none";
   };
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Event listener to update the window width on resize
   const handleResize = () => {
+    setWindowWidth(window.innerWidth);
     if (window.innerWidth < 750) {
       searchDiv.current.style.display = "none";
+      console.log("hello");
     }
   };
 
   useEffect(() => {
+    // Add event listener when the component mounts
     window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -80,6 +91,7 @@ const AdminFilter = forwardRef((props, ref) => {
   return (
     <>
       <div className={styles.FilterDiv}>
+        {console.log(windowWidth)}
         <button className={styles.FilterBtn2} onClick={props.openHandler}>
           filter
         </button>
@@ -95,11 +107,12 @@ const AdminFilter = forwardRef((props, ref) => {
               autoComplete="off"
               value={filterData.name}
               onChange={eventHandler}
+              // onClick={() => setSearchedAdminsShown(true)}
               onClick={openSearchFilter}
               className={`${styles.searchBox} ${styles.searchBar}`}
-              placeholder="Search admin name"
+              placeholder="&#xF002; search admin name "
             />
-            <img src={searchIcon} className={styles.SearchIcon}/>
+            <div className={styles.SearchIcon}>&#xF002;</div>
           </form>
 
           <div className={styles.FilterBody} ref={filter}>
@@ -203,13 +216,18 @@ const AdminFilter = forwardRef((props, ref) => {
             />
           </button>
         </div>
-
+        {/* <button className={styles.FilterBtn2} onClick={props.openHandler}>
+          filter
+        </button> */}
+        {/*  */}
+        {/* {console.log( ref.current.style.visibility == "visible")} */}
         {/* {searchedAdminsShown && ( */}
         {/* props.searchedAdmins.length > 0 && */}
         <>
           <div className={styles.SearchDiv} ref={searchDiv}>
             <div
               className={overlayStyles.SearchOverlay}
+              // onClick={() => setSearchedAdminsShown(false)}
               onClick={closeSearchFilter}
             ></div>
             <ul>
@@ -241,6 +259,7 @@ const AdminFilter = forwardRef((props, ref) => {
           </div>
         </>
         {/* )} */}
+        {/*  */}
       </div>
     </>
   );

@@ -14,7 +14,7 @@ const LockPosition = () => {
 
   return (
     <div class={styles.Lock}>
-      <table cellpadding="0" cellspacing="0">
+      <table className={styles.GLStable} cellpadding="0" cellspacing="0">
         <thead>
           <tr>
             <th>Title</th>
@@ -31,28 +31,17 @@ const LockPosition = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>hjkkhahasyiasyyiayiyaysyyyk</td>
-            <td></td>
-            <td></td>
-            <td><CustomTableItem text="0X123454654663456" /></td>
-            <td><CustomTableItem text="0X123454654663456" /></td>
-
-            <td>Iran9998</td>
-            <td>tabrizoooo</td>
-            <td>1287 ETH</td>
-            <td>1.96</td>
-            <td>
-              <img src={lockLogo} className={styles.LockIcon} />
-            </td>
-          </tr>
           {lockPositionData.map((item) => (
             <tr>
               <td>{item.estate_title}</td>
               <td></td>
               <td></td>
-              <td>{item.contractAddress}</td>
-              <td>{item.landloreAddress}</td>
+              <td>
+                <CustomTableItem text={item.contractAddress} />
+              </td>
+              <td>
+                <CustomTableItem text={item.landloreAddress} />
+              </td>
 
               <td>{item.country_name}</td>
               <td>{item.city_name}</td>

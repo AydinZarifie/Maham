@@ -6,7 +6,9 @@
     gap: 3px;
   }
   .numberContainer {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+
     cursor: pointer;
     font-size: 12px;
     transition: 0.2s;
@@ -25,6 +27,66 @@
     height: 22px;
     cursor: pointer;
     transition: 0.3s;
+  }
+  .CopyBox {
+    display: block;
+    opacity: 0;
+    position: relative;
+    /* margin-top: -13px;  */
+    margin-left: 3%;
+    font-size: 10px;
+    width: 70px;
+    height: auto;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #01013bcb;
+    text-align: center;
+    transition: 0.3s;
+   
+  }
+  .FullNumber {
+    display: block;
+    opacity: 0;
+    position: relative;
+   /* top: -12px; */
+    width: 190px;
+    height: auto;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #01013bcb;
+    transition: 0.3s;
+  }
+  .FullNumber:after,
+.FullNumber:before {
+  bottom: -45%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  rotate: 180deg;
+  position: absolute;
+  border-color: rgba(161, 103, 45, 0);
+  border-bottom-color: #01013b88;
+  border-width: 6px;
+  left: 90%;
+}
+  .partialNumber {
+    margin-top: -19px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    overflow-x: hidden;
+  }
+  .HoverDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: -167px;
+    position: relative;
+   top: -15px;
   }
 }
 @media (max-width:750px){
@@ -55,15 +117,82 @@
     cursor: pointer;
     transition: 0.3s;
   }
+  .CopyBox {
+    display: block;
+    opacity: 0;
+    position: relative;
+    top:-10px;
+    font-size: 8px;
+    width: 55px;
+    height: auto;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #01013bcb;
+    text-align: center;
+    transition: 0.3s;
+   
+  }
+  .FullNumber {
+    display: block;
+    opacity: 0;
+    position: relative;
+   top: -13px;
+    width: 140px;
+    height: auto;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #01013bcb;
+    transition: 0.3s;
+    font-size: 8px;
+  }
+  .FullNumber:after,
+.FullNumber:before {
+  bottom: -28%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  rotate: 180deg;
+  position: absolute;
+  border-color: rgba(161, 103, 45, 0);
+  border-bottom-color: #01013b88;
+  border-width: 4px;
+  left: 90%;
+}
+  .partialNumber {
+    margin-top: -24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* gap: 10px; */
+    overflow-x: hidden;
+  }
+  .HoverDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: -145px;
+    position: relative;
+   top: -14px;
+   /* max-height: 30px; */
+  }
 }
 .numberContainer:hover {
   color: #011f53;
 }
-.FullNumber {
+
+.AddressDivLi{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+/* .FullNumber {
   display: block;
   opacity: 0;
-  position: absolute;
-  margin-top: -47px;
+  position: relative;
+ top: -12px;
   width: 190px;
   height: auto;
   padding: 5px 10px;
@@ -71,15 +200,15 @@
   color: #fff;
   background-color: #01013bcb;
   transition: 0.3s;
-}
+} */
 .FullNumberP {
   font-size: 12px;
   text-overflow: hidden;
   margin: 0;
 }
-.FullNumber:after,
+/* .FullNumber:after,
 .FullNumber:before {
-  bottom: -30%;
+  bottom: -45%;
   border: solid transparent;
   content: "";
   height: 0;
@@ -89,15 +218,15 @@
   border-color: rgba(161, 103, 45, 0);
   border-bottom-color: #01013b88;
   border-width: 6px;
-  left: 10%;
-  margin-left: -13px;
-}
-.partialNumber {
+  left: 80%;
+} */
+/* .partialNumber {
+  margin-top: -16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-}
+} */
 /* .CopyIcon {
   display: block;
   width: 22px;
@@ -115,22 +244,14 @@
 .CopyIcon:hover {
   opacity: 0.6;
 }
-.CopyBox {
-  display: block;
-  opacity: 0;
-  position: absolute;
-  margin-left: 70px;
-  margin-top: -63px;
-  font-size: 12px;
-  width: 70px;
-  height: auto;
-  padding: 5px 10px;
-  border-radius: 6px;
-  color: #fff;
-  background-color: #01013bcb;
-  text-align: center;
-  transition: 0.3s;
+.CopyDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+
 }
+
 .CopyBox:after,
 .CopyBox:before {
   bottom: -48%;
@@ -146,3 +267,13 @@
   left: 57%;
   margin-left: -13px;
 }
+
+
+/* .HoverDiv{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: -170px;
+  position: relative;
+ top: -15px;
+} */

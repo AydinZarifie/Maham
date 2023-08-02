@@ -4,12 +4,18 @@ import OTPInput from "react-otp-input";
 import { useState } from "react";
 
 import mahamLogo from "../../images/Maham2.png";
+import Alert from "../general/Alert";
+import trueLogo from "../../images/tick-svgrepo-com_1.svg";
+import { useNavigate } from "react-router-dom";
 
 const StepFour = (props) => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState(false);
 
-  const submitHandler = () => {
+  const navigate = useNavigate();
+
+  const submitHandler = (event) => {
+    event.preventDefault();
     if (otp.length == 6) {
       props.onSubmit(otp);
     } else {
@@ -19,6 +25,17 @@ const StepFour = (props) => {
 
   return (
     <div className={styles.VerificationDiv}>
+      {props.alert && (
+        <Alert
+          lineColor="#0aff0e"
+          img={trueLogo}
+          title="Success!"
+          detail="Your work has been successfully completed and your information has been saved"
+          closeHandler={() => {
+            navigate("/");
+          }}
+        />
+      )}
       <img src={mahamLogo} className={styles.Logo} />
       <h3>Enter verification code</h3>
       <span>
@@ -43,9 +60,11 @@ const StepFour = (props) => {
       </div>
 
       <a href="#"> Didn't get code ? Click to resend </a>
-      <button className={styles.VerifyBtn} onClick={submitHandler}>
-        verify
-      </button>
+      <form encType="multipart/form-data">
+        <button className={styles.VerifyBtn} onClick={submitHandler}>
+          verify
+        </button>
+      </form>
     </div>
   );
 };

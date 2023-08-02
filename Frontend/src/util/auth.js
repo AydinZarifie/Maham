@@ -13,7 +13,7 @@ export function getAuthToken() {
   // const token = localStorage.getItem("token");
   const token = Cookies.get("token");
 
-  if (!token || token == undefined || token == null) {
+  if (!token || token == "undefined" || token == "null") {
     return null;
   }
 
@@ -27,9 +27,14 @@ export function getAuthToken() {
 
 export function checkAuthLoader() {
   const token = getAuthToken();
-  if (!token || token == undefined || token == null) {
+  if (!token || token == "undefined" || token == "null") {
     return redirect("/loginAdmin");
   }
 
   return token;
+}
+
+async function fetchAuthToken() {
+  const response = await fetch("url");
+  return response.json();
 }

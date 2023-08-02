@@ -1,12 +1,14 @@
-table {
-  width: 100%;
-  table-layout: fixed;
-  min-width: 350px;
-  overflow-x: scroll;
 
-}
 
 @media (min-width: 750px) {
+
+  .GLStable {
+    width: 100%;
+    table-layout: fixed;
+    min-width: 1050px;
+    overflow-x: scroll;
+  
+  }
   .EstateImg {
     width: 100%;
     height: 100%;
@@ -21,6 +23,7 @@ table {
     background-color: #e8e8e8;
     text-align: center;
     overflow: hidden;
+    white-space: normal;
   }
   td {
     padding: 15px;
@@ -30,9 +33,7 @@ table {
     color: #0d0808;
     text-align: center;
     border-bottom: 1px solid #b9b9b9;
-    overflow-x: scroll;
- 
-    /* overflow-y: scroll; */
+  
    
   }
 
@@ -48,6 +49,13 @@ td {
 }
 }
 @media (max-width: 750px) {
+  .GLStable {
+    width: 100%;
+    table-layout: fixed;
+    min-width: 670px;
+    overflow-x: scroll;
+  
+  }
   .EstateImg {
     width: 100%;
     height: 100%;
@@ -62,6 +70,7 @@ td {
     background-color: #e8e8e8;
     text-align: center;
     overflow: hidden;
+    white-space: normal;
   }
   td {
     padding: 5px;
@@ -71,7 +80,6 @@ td {
     color: #0d0808;
     text-align: center;
     border-bottom: 1px solid #b9b9b9;
-    overflow-x: scroll;
 
   }
 
@@ -90,7 +98,19 @@ td {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  width: 100%;
+  overflow-x: scroll;
 }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .Lock::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .Lock {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 .Sell {
   display: flex;
   flex-direction: column;
