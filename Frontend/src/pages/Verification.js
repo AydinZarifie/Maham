@@ -8,6 +8,7 @@ import StepTwo from "../components/verification/StepTwo";
 import StepOne from "../components/verification/StepOne";
 
 const Verification = () => {
+  const [alert, setAlert] = useState(false);
   const [data, setData] = useState({
     agreed: false,
     gender: "",
@@ -41,7 +42,7 @@ const Verification = () => {
   const sendEmail = async () => {
     const formData = new FormData();
     formData.append("email", data.email);
-    let { response } = await fetch("url", {
+    let response = await fetch("url", {
       method: "post",
       body: formData,
     });
@@ -86,11 +87,14 @@ const Verification = () => {
         formData.append("images", file);
       });
     }
-    
-    let { response } = await fetch("url", {
+
+    let response = await fetch("urllll", {
       method: "post",
       body: formData,
     });
+    if (response.ok) {
+      setAlert(true);
+    }
   };
 
   return (
@@ -315,6 +319,7 @@ const Verification = () => {
           }}
         />
       )}
+
       {currentStep == 1 && (
         <StepTwo
           onSubmit={(info) => {
@@ -349,7 +354,7 @@ const Verification = () => {
         />
       )}
       {currentStep == 3 && (
-        <StepFour onSubmit={sendAllData} email={data.email} />
+        <StepFour onSubmit={sendAllData} email={data.email} alert={alert} />
       )}
 
       {/* <div className={styles.SuccessDiv}>

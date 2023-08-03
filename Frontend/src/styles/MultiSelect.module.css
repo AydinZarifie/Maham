@@ -1,0 +1,118 @@
+.multiSelect {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+}
+
+.selectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* padding: 4px; */
+  max-height: 75px;
+  position: relative;
+  overflow-y: scroll;
+}
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .selectedTags::-webkit-scrollbar {
+  display: none;
+ }
+ 
+ /* Hide scrollbar for IE, Edge and Firefox */
+ .selectedTags {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+ }
+
+.selectedTag {
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  padding: 4px;
+  margin: 8px;
+  border-radius: 3px;
+  
+}
+
+.removeTag {
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.toggleButton {
+  position: relative;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  color: #4b4b4b;
+ 
+  border-radius: 4px;
+  cursor: pointer;
+  border:2px solid #ccc ;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width:100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* padding:0 8px ; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  max-height: 120px;
+  overflow-y: scroll;
+  margin-top: -5px;
+}
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .dropdown::-webkit-scrollbar {
+  display: none;
+ }
+ 
+ /* Hide scrollbar for IE, Edge and Firefox */
+ .dropdown {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+ }
+
+.options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.options li {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.options li img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+/* .options li:hover{
+  background-color: #f8f8f8;
+}
+.options li:active{
+  background-color: #f1f1f1;
+} */
+.selectedOption{
+  background-color: #bbfaa6;
+}
+
+.invalid{
+  border-radius: 4px;
+  background-color: rgba(187, 47, 50, 0.377);
+ 
+}

@@ -23,11 +23,17 @@ import uploadIcon from "../../images/upload-filled-svgrepo-com.svg";
 import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
 import deleteIcon from "../../images/delete-svgrepo-com.svg";
 import fetchInstance from "../../util/fetchInstance";
+import MultiSelect from "../../components/general/MultiSelect";
 
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState([
+    { label: "filter 1", image: "url_to_filter_1_image" },
+    { label: "filter 2", image: "url_to_filter_2_image" },
+    { label: "filter 3", image: "url_to_filter_3_image" },
+    { label: "filter 4", image: "url_to_filter_4_image" },
+  ]);
   const [mintUsed, setMintUsed] = useState(false);
   const [error, setError] = useState(false);
 
@@ -60,6 +66,10 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const navigate = useNavigate();
+
+  const [selectedFilters, setSelectedFilters] = useState(
+    estate ? estate.filter : []
+  );
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
@@ -134,7 +144,7 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
-    filter: estate ? estate.filter : "",
+    // filter: estate ? estate.filter : "",
     mahamPrice: estate ? estate.maham_price : "",
     customerPrice: "",
     // estate ? estate.customerPrice : "",
@@ -315,7 +325,7 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewUrl(previewURLs);
   };
 
-  const enteredFilterIsValid = information.filter.trim() !== "";
+  const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";
   const enteredCountryNameIsValid = information.countryName.trim() !== "";
   const enteredCityNameIsValid = information.cityName.trim() !== "";
@@ -434,9 +444,9 @@ const ConfingEstate = ({ method, estate }) => {
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
-  const filterClass = filterIsInvalid
-    ? `${styles.invalid} ${styles.select} `
-    : `${styles.select} `;
+  // const filterClass = filterIsInvalid
+  //   ? `${styles.invalid} ${styles.select} `
+  //   : `${styles.select} `;
   const titleClass = titleIsInvalid
     ? `${styles.invalid} ${styles.textinput} `
     : `${styles.textinput} `;
@@ -529,7 +539,8 @@ const ConfingEstate = ({ method, estate }) => {
 
     const formData = new FormData();
 
-    formData.append("filter", information.filter);
+    // formData.append("filter", information.filter);
+    formData.append('filter',selectedFilters)
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
@@ -677,8 +688,8 @@ const ConfingEstate = ({ method, estate }) => {
     }
 
     if ((response.status = 404)) {
-      setError(true)
-      setMintUsed(false)
+      setError(true);
+      setMintUsed(false);
     }
   };
 
@@ -693,6 +704,7 @@ const ConfingEstate = ({ method, estate }) => {
       });
       if (response.ok) {
         navigate("/admin/estates");
+        
       }
     }
   };
@@ -711,17 +723,22 @@ const ConfingEstate = ({ method, estate }) => {
     const formData = new FormData();
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
-    let { response, data } = await fetchInstance(
-      "/admin/generateMint",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    let { response, data } = await fetchInstance("/admin/generateMint", {
+      method: "POST",
+      body: formData,
+    });
     if (response.ok) {
       setMintUsed(true);
       setInformation((prev) => ({ ...prev, id: data.mint }));
     }
+  };
+
+ 
+
+  const handleMultiSelectChange = (filters) => {
+    setSelectedFilters(filters);
+    console.log(selectedFilters);
+    // console.log("Selected filters:", selectedFilters[0].label);
   };
 
   return (
@@ -729,9 +746,16 @@ const ConfingEstate = ({ method, estate }) => {
       <div className={styles.EstateInfo}>
         <div
           className={styles.select2}
-          style={{ margin: "45px auto 20px auto" }}
+          style={{ margin: "45px auto 60px auto" }}
         >
-          <select
+          <MultiSelect
+            options={filters}
+            onChange={handleMultiSelectChange}
+            selectedOptions={selectedFilters}
+            invalid={filterIsInvalid}
+
+          />
+          {/* <select
             value={information.filter}
             onChange={basicEventHandler}
             name="filter"
@@ -739,13 +763,13 @@ const ConfingEstate = ({ method, estate }) => {
             onBlur={blurHandler}
           >
             <option value="">Choose an option</option>
-            {/* <option value="pool">pool</option> */}
+           
             {filters.map((option) => (
               <option key={option.filterName} value={option.filtername}>
                 {option.filterName}
               </option>
             ))}
-          </select>
+          </select> */}
         </div>
 
         <div className={styles.wrapper}>

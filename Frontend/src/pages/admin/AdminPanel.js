@@ -43,7 +43,7 @@ const AdminPanel = () => {
         method: "POST",
         body: formData,
       }
-    ); 
+    );
     setAdmins(data.data);
   };
 
@@ -131,7 +131,7 @@ const AdminPanel = () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       const url = "/admin/panel/editAdmin/" + id;
-      
+
       let { response } = await fetchInstance(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -190,9 +190,12 @@ const AdminPanel = () => {
             <button className={styles.InfoBtn}>Import admin</button>
           </NavLink>
 
-          <a>
+          <NavLink
+            className={({ isActive }) => (isActive ? styles.active : undefined)}
+            to="personal"
+          >
             <button className={styles.InfoBtn}>Personal</button>
-          </a>
+          </NavLink>
         </div>
 
         <Outlet

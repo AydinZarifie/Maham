@@ -23,7 +23,7 @@ const StepTwo = (props) => {
     gender: props.data.gender,
     firstName: props.data.firstName,
     lastName: props.data.lastName,
-    country:props.data.country,
+    country: props.data.country,
     city: props.data.city,
     yearOfBirth: props.data.yearOfBirth,
     monthOfBirth: props.data.monthOfBirth,
@@ -54,7 +54,8 @@ const StepTwo = (props) => {
   const enteredCityIsValid = data.city.trim().length != 0;
   const enteredYearOfBirthIsValid = data.yearOfBirth.trim().length == 4;
   const enteredMonthOfBirthIsValid = data.monthOfBirth.trim().length != 0;
-  const enteredDayOfBirthIsValid = data.dayOfBirth.trim().length == 1 || data.dayOfBirth.trim().length ==2;
+  const enteredDayOfBirthIsValid =
+    data.dayOfBirth.trim().length == 1 || data.dayOfBirth.trim().length == 2;
   const enteredEmailIsValid = data.email.trim().length != 0;
   const enteredPhoneNumberIsValid = data.phoneNumber.trim().length != 0;
   const enteredPassportIdIsValid = data.passportId.trim().length != 0;

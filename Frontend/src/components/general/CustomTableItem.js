@@ -43,39 +43,44 @@ const CustomTableItem = (props) => {
     <span className={styles.AddressDiv}>
       <div
         className={styles.numberContainer}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        
       >
+        <div className={styles.HoverDiv}>
         <div className={styles.FullNumber} ref={hoveredContent}>
-          <p ref={contentRef} className={styles.FullNumberP}>
+          <p
+           ref={contentRef} className={styles.FullNumberP}>
             {props.text}
           </p>
         </div>
-
-        <span className={styles.partialNumber}>0X123...345</span>
+        <div ref={hoveredCopy} className={styles.CopyBox}>
+          {copied ? "Copied!" : "Copy Address"}
+        </div>
+        </div>
+        <span className={styles.partialNumber}>
+          <p onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}>
+          0X123...345
+          </p>
+          {!copied && (
+            <img
+              src={copyIcon}
+              className={styles.CopyIcon}
+              onClick={handleCopyContent}
+              onMouseEnter={handleMouseEnterCopy}
+              onMouseLeave={handleMouseLeaveCopy}
+            />
+          )}
+          {copied && (
+            <img
+              src={trueIcon}
+              className={styles.CopyIcon2}
+              // onMouseEnter="Visible3()"
+              onMouseLeave={handleMouseLeaveCopied}
+            />
+          )}
+        </span>
       </div>
-      {!copied && (
-        <img
-          src={copyIcon}
-          className={styles.CopyIcon}
-          onClick={handleCopyContent}
-          onMouseEnter={handleMouseEnterCopy}
-          onMouseLeave={handleMouseLeaveCopy}
-        />
-      )}
-
-      {copied && (
-        <img
-          src={trueIcon}
-          className={styles.CopyIcon2}
-          // onMouseEnter="Visible3()"
-          onMouseLeave={handleMouseLeaveCopied}
-        />
-      )}
-
-      <div ref={hoveredCopy} className={styles.CopyBox}>
-        {copied ? "Copied!" : "Copy Address"}
-      </div>
+     
     </span>
   );
 };

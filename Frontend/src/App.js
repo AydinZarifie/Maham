@@ -27,6 +27,8 @@ import EditAdmin, {
   loader as adminDetailLoader,
 } from "./components/adminPage/adminPanel/EditAdmin";
 import CustomTableItem from "./components/general/CustomTableItem";
+import Personal from "./components/adminPage/adminPanel/Personal";
+import Profile from "./pages/admin/Profile";
 
 const router = createBrowserRouter([
   {
@@ -95,11 +97,19 @@ const router = createBrowserRouter([
             element: <EditAdmin />,
             loader: adminDetailLoader,
           },
+          {
+            path: "personal",
+            element: <Personal />,
+          },
         ],
       },
       {
         path: "logout",
         action: logoutAction,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
@@ -108,9 +118,9 @@ const router = createBrowserRouter([
     element: <SigninPage />,
   },
   {
-    path:"Verification" ,
-    element:<Verification />
-  }
+    path: "Verification",
+    element: <Verification />,
+  },
 ]);
 
 function App() {

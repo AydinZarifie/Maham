@@ -80,13 +80,13 @@ const ManagementPage = () => {
     });
 
     if (response.ok) {
-      showAddHandler();
+      window.location.reload(true);
     }
   };
 
   useEffect(() => {
     const fetchCountryData = async () => {
-      let { response,data } = await fetchInstance("/admin/managment");
+      let { response, data } = await fetchInstance("/admin/managment");
       setCountries(data.data);
     };
     fetchCountryData();
@@ -147,10 +147,7 @@ const ManagementPage = () => {
                       onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
-                        src={`/${option.country_logo.replace(
-                          /\\/g,
-                          "/"
-                        )}`}
+                        src={`/${option.country_logo.replace(/\\/g, "/")}`}
                         alt={option.country_name}
                       />
                       {option.country_name}

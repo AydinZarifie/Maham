@@ -130,10 +130,14 @@
   }
   .gallery img {
     display: block;
-    margin: 15px 15px;
-    max-width: 100%;
-    max-height: 250px;
-    min-height: 250px;
+    margin: 5px 3px;
+    max-height: 270px;
+    min-height: 270px;
+    width:48.9%;
+   border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    scroll-snap-align: center;
   }
   .dropzone {
     width: 99%;
@@ -189,8 +193,8 @@
   .SubmitBtn {
     font-size: 14px;
     margin-top: 110px;
-    min-height: 46px;
-    width: 140px;
+    min-height: 44px;
+    width: 130px;
     margin-bottom: 0px;
     border-radius: 6px;
     color: #f2f2f2;
@@ -221,7 +225,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 40px;
     width: 86%;
     /* min-width: 490px; */
     background: transparent;
@@ -230,7 +234,7 @@
     border-radius: 10px;
     padding: 15px 16px 20px 16px;
     height: auto;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
     background-color: #ffffff;
     z-index: 3;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -308,11 +312,16 @@
     font-size: 12px;
   }
   .gallery img {
+
     display: block;
-    margin: 10px 10px;
-    max-width: 100%;
-    max-height: 180px;
-    min-height: 180px;
+    margin: 5px 3px;
+    max-height: 190px;
+    min-height: 190px;
+    width:48.3%;
+   border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    scroll-snap-align: center;
   }
   .dropzone {
     width: 99%;
@@ -369,7 +378,7 @@
     font-size: 12px;
     margin-top: 80px;
     min-height: 42px;
-    width: 110px;
+    width: 120px;
     margin-bottom: 0px;
     border-radius: 6px;
     color: #f2f2f2;
@@ -905,8 +914,8 @@ body {
   .AlertDiv {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 40px;
+    margin-bottom: 70px;
     width: 86%;
     /* min-width: 300px; */
     background: transparent;
@@ -925,16 +934,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 40px;
     width: 86%;
-    /* min-width: 490px; */
     background: transparent;
     justify-content: space-around;
     border: 1px solid #d2d0d0;
     border-radius: 10px;
     padding: 45px 16px;
     height: auto;
-    margin-bottom: 100px;
+    margin-bottom: 60px;
     background-color: #ffffff;
     gap: 18px;
     z-index: 1;
@@ -998,7 +1006,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 40px;
     width: 86%;
     /* min-width: 490px; */
     background: transparent;
@@ -1006,7 +1014,7 @@ body {
     border-radius: 10px;
     padding: 0 16px;
     height: auto;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     justify-content: space-around;
     gap: 14px;
     background-color: #ffffff;
