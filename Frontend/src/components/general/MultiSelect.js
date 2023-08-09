@@ -47,11 +47,10 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
                       ? styles.selectedOption
                       : ""
                   }
-                  key={option.label}
+                  key={option}
                   onClick={() => handleOptionClick(option)}
                 >
-                  <img src={option.image} alt={option.label} />
-                  {option.label}
+                 {option}
                 </li>
               ))}
             </ul>
@@ -61,8 +60,8 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
 
       <div className={styles.selectedTags}>
         {selectedOptions.map((option) => (
-          <div key={option.label} className={styles.selectedTag}>
-            {option.label}
+          <div key={option} className={styles.selectedTag}>
+            {option}
             <span
               className={styles.removeTag}
               onClick={() => handleRemoveOption(option)}

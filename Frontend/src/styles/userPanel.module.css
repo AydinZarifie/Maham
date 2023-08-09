@@ -3,7 +3,7 @@
   background-color: rgb(255, 255, 255);
   height: 100%;
   overflow: auto;
-  position: fixed;
+  /* position: fixed; */
 }
 
 .MenuDiv {
@@ -109,6 +109,7 @@
 
 
 .TableMainDiv {
+  margin-top: 65px;
   margin-bottom: 100px;
 
   width: 100%;
@@ -311,7 +312,7 @@
 
 @media (min-width: 600px) {
   .HeaderDiv {
-    position: sticky;
+    position: fixed;
     top: 0px;
     height: 65px;
     width: 100%;
@@ -501,7 +502,7 @@
 }
 @media (max-width: 600px) {
   .HeaderDiv {
-    position: sticky;
+    position: fixed;
     top: 0px;
     height: 65px;
     width: 100%;

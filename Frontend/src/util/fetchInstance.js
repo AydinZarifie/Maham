@@ -29,11 +29,11 @@ let refreshToken = async () => {
 
 const fetchInstance = async (url, config = {}, credentials = {}) => {
   let authTokens = getAuthToken();
-  let csrfToken = getCsrfToken();
+  // let csrfToken = getCsrfToken();
 
   config["headers"] = {
     Authorization: `Bearer ${authTokens}`,
-    'X-CSRF-Token': csrfToken,
+    // 'X-CSRF-Token': csrfToken,
   };
 
   let { response, data } = await originalRequest(url, config, credentials);
@@ -43,7 +43,7 @@ const fetchInstance = async (url, config = {}, credentials = {}) => {
 
     config["headers"] = {
       Authorization: `Bearer ${authTokens}`,
-      'X-CSRF-Token': csrfToken,
+      // 'X-CSRF-Token': csrfToken,
     };
 
     let newResponse = await originalRequest(url, config, credentials);
