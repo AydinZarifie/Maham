@@ -20,6 +20,16 @@ export function getAuthToken() {
   return token;
 }
 
+export function getCsrfToken() {
+  const csrfToken = Cookies.get("csrfToken");
+
+  if (!csrfToken || csrfToken == "undefined" || csrfToken == "null") {
+    return null;
+  }
+
+  return csrfToken;
+}
+
 // export function tokenLoader() {
 //   const token = getAuthToken();
 //   return token;
@@ -34,7 +44,7 @@ export function checkAuthLoader() {
   return token;
 }
 
-async function fetchAuthToken() {
-  const response = await fetch("url");
-  return response.json();
-}
+// async function fetchAuthToken() {
+//   const response = await fetch("url");
+//   return response.json();
+// }
