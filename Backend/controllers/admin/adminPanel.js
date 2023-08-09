@@ -44,7 +44,7 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.searchAdminByName = catchAsync(async (req, res, next) => {
-	//// 1) check if : (A) body is not empty ; (B) adminName field is not a blank field
+	//// 1) check that : (A) body is not empty ; (B) adminName field is not a blank field
 	if (!req.body.adminName || /^\s*$/.test(req.body.adminName)) {
 		return res.status(400).json({
 			message: 'search criteria cannot be blank',
