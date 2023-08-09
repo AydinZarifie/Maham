@@ -1,9 +1,3 @@
-exports.formatStr = (str) => {
-	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
-	// "  UniTed stateS   of AmerICA "   >>   "united states of america"
-	return formattedstr;
-};
-
 exports.assignCode = (len, num) => {
 	if (len > num.toString.length) {
 		newNum = String(num).padStart(len, '0');
@@ -46,6 +40,13 @@ exports.generateMint = (country, modifiedCityName) => {
 	return (mint = countryCode + cityCode + estateCode);
 };
 
+exports.formatStr = (str) => {
+	formattedstr = str.trim().toLowerCase().replace(/\s+/g, ' ');
+	// "  UniTed stateS   of AmerICA "   >>   "united states of america"
+	return formattedstr;
+};
+
+// changes the case of the words from camelCase to under_score_saperated
 exports.changeCase = (camelCaseStr) => {
 	let underScoreCaseStr = camelCaseStr.replace(
 		/[A-Z]/g,
@@ -54,6 +55,7 @@ exports.changeCase = (camelCaseStr) => {
 	return underScoreCaseStr;
 };
 
+// takes an object as input , and creates a new object by filtering the unwanted fields
 exports.filterObj = (obj, allowedFields) => {
 	const newObj = {};
 	Object.keys(obj).forEach((el) => {

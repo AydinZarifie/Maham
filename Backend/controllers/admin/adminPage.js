@@ -460,8 +460,8 @@ exports.postFilter = catchAsync(async (req, res, next) => {
 	}
 
 	const filter = new filterDB({
-		filterName: filterName,
-		filterImageUrl: imageUrl,
+		filter_name: filterName,
+		filter_imageUrl: imageUrl,
 	});
 
 	await filter.save();

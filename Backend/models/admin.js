@@ -118,6 +118,7 @@ adminSchema.pre(
 	}
 );
 
+// refrencing the admin to its country
 adminSchema.post('save', async function (doc, next) {
 	const refCountry = await countryDB.findById(doc.admin_country_ref);
 	if (!refCountry) {

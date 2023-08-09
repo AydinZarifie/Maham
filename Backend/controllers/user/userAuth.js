@@ -1,19 +1,18 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator');
-/////////////////////////////////////////////////////////////////
-const adminDB = require('../../models/admin');
-//////////////////////////// generateToken
+const userDB = require('../../models/user');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
+const { formatStr } = require('../../utilities/mint.js');
 const sendEmail = require('./../../utilities/sendEmail');
 const generateToken = require('./../../utilities/token/generateToken');
 const verifyRefreshToken = require('./../../utilities/token/verifyRefreshToken');
 const signAccessToken = require('./../../utilities/token/signAccessToken');
-const { formatStr } = require('../../utilities/mint.js');
-//////////////////////////////////////////////////////////////////
+/////////////////////////
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+///////////////////////////////////////////////////////
 
-exports.signupAdmin = catchAsync(async (req, res, next) => {
+exports.signupUser = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
@@ -28,8 +27,8 @@ exports.signupAdmin = catchAsync(async (req, res, next) => {
 		lastName,
 		password,
 		email,
+		birthDate,
 		confirmPassword,
-		adminType,
 		phoneNumber,
 		country,
 		city,
@@ -43,33 +42,32 @@ exports.signupAdmin = catchAsync(async (req, res, next) => {
 
 	const hashedPassword = await bcrypt.hash(password, 12);
 
-	const admin = new adminDB({
+	const user = new userDB({
 		first_name: formatStr(firstName),
 		last_name: formatStr(lastName),
 		password: hashedPassword,
-		admin_type: formatStr(adminType),
+		birth_date: birthDate,
 		phone_number: phoneNumber,
-		email: formatStr(email),
-		admin_country: formatStr(country),
-		admin_city: formatStr(city),
+		email: email,
+		country: formatStr(country),
+		city: formatStr(city),
 	});
 
-	await admin.save();
+	await user.save();
 
 	return res.status(202).json({
 		status: 'success',
 		message: 'signed up successfully',
 	});
-	// catch (error) {}
 });
 
-exports.loginAdmin = catchAsync(async (req, res, next) => {
+exports.loginUser = catchAsync(async (req, res, next) => {
 	// 1) validate the request body
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
-		return res.status(405).json({
-			message: 'Error 405',
+		return res.status(422).json({
+			message: 'Error 422',
 		});
 	}
 
@@ -81,15 +79,15 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		return next(new AppError('please provide email and password', 400));
 	}
 
-	// 3) check if user exists
-	const admin = await adminDB.findOne({ email }).select('+password');
+	// 3) check if user exists && password is correct
+	const user = await userDB.findOne({ email }).select('+password');
 
-	if (!admin) {
-		return next(new AppError('admin not found', 405));
+	if (!user) {
+		return next(new AppError('user not found', 405));
 	}
 
 	// 4) check if password is correct
-	const isEqual = bcrypt.compare(password, admin.password);
+	const isEqual = bcrypt.compare(password, user.password);
 	if (!isEqual) {
 		return next(
 			new AppError('email or password is incorrect ', 405) //not authorized
@@ -98,7 +96,7 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 
 	// 5) check if cookie expired
 	if (!req.session.verificationCode) {
-		return next(new AppError('verification code has expired, try again.', 402));
+		return next(new AppError('cookie has expired', 402));
 	}
 
 	// 6) validate the verificaion code
@@ -106,8 +104,8 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		return next(new AppError('verification code is not valid', 401));
 	}
 
-	// 7) refresh and access token
-	const { accessToken, refreshToken } = await generateToken(admin);
+	// 7) refrech and access token
+	const { accessToken, refreshToken } = await generateToken(user);
 
 	res.cookie('jwt', refreshToken, {
 		httpOnly: true,
@@ -116,22 +114,35 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		maxAge: 7 * 60 * 60 * 1000, // 7 Hours
 	});
 
-	// **** putting the token within cookie and then destroying the whole SESSION ? why.
-
 	req.session.destroy((err) => {
 		if (err) {
 			console.log('Failed to destroy session');
 		}
 	});
 
+	///////////////////////////////////////////////////////////////
+
 	return res.status(202).json({
 		status: 'success',
 		token: accessToken,
-		adminId: admin._id,
+		userId: user._id,
 	});
 });
 
-exports.logoutAdmin = catchAsync(async (req, res, next) => {
+exports.deleteUser = catchAsync(async (req, res, next) => {
+	const user = await userDB.findByIdAndDelete(req.params.id);
+
+	if (!user) {
+		return next(new AppError('user with that ID not found!', 404));
+	}
+
+	return res.status(204).json({
+		status: 'success',
+		message: 'user deleted successfully',
+	});
+});
+
+exports.logoutUser = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 
 	if (!cookie?.jwt) {
@@ -150,7 +161,7 @@ exports.logoutAdmin = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.adminVerificationCode = catchAsync(async (req, res, next) => {
+exports.userVerificationCode = catchAsync(async (req, res, next) => {
 	try {
 		const error = validationResult(req);
 		if (!error.isEmpty()) {
@@ -161,12 +172,12 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 		}
 		const { email, password } = req.body;
 
-		const admin = await adminDB.findOne({ email }).select('+password');
-		if (!admin) {
+		const user = await userDB.findOne({ email }).select('+password');
+		if (!user) {
 			return next(new AppError('Wrong email!', 405));
 		}
 
-		const isEqual = bcrypt.compare(password, admin.password);
+		const isEqual = bcrypt.compare(password, user.password);
 
 		if (!isEqual) {
 			return next(new AppError('Wrong password!', 405));
@@ -196,7 +207,7 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 	}
 });
 
-exports.adminRefreshToken = catchAsync(async (req, res, next) => {
+exports.userRefreshToken = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 	if (!cookie?.jwt) {
 		return next(new AppError('cookieis is empty!', 403));
@@ -212,12 +223,13 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 
 	console.log(decode);
 
-	const admin = await adminDB.findOne({ email: decode.email });
-	if (!admin) {
+	const user = await userDB.findOne({ email: decode.email });
+
+	if (!user) {
 		return next(new AppError('Unauthorized', 401));
 	}
 
-	const accessToken = await signAccessToken(admin);
+	const accessToken = await signAccessToken(user);
 
 	return res.status(201).json(accessToken);
 });

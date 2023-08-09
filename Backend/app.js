@@ -9,7 +9,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const hpp = require('hpp');
 // const xss = require('xss');
-const csrf = require('csurf');
+const csrf = require('csrf');
+const tokens = new csrf();
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 //////////////////////////////////////////////
@@ -19,6 +20,8 @@ const adminAuth_router = require('./routes/admin/adminAuth');
 const adminPanel_router = require('./routes/admin/adminPanel');
 ////////////
 const userAuthorization_router = require('./routes/user/userAuthorization');
+const userAuthentication_router = require('./routes/user/userAuthentication');
+const userPanel_router = require('./routes/user/userpanel');
 ///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
@@ -116,6 +119,34 @@ const upload = multer({
 	},
 ]);
 
+// 1) generate token once , till the cookie expires
+const csrfProtect = (req, res, next) => {
+	const secret = req.cookies['csrf-token'];
+
+	if (!secret) {
+		// if it is first-time visit, generate a new secret
+		tokens.secret((err, newSecret) => {
+			if (err)
+				return next(
+					new AppError(
+						'an error aquired on creating CSRF token , please try again.',
+						400
+					)
+				);
+			res.cookie('csrf-token', newSecret, {
+				// httpOnly: true,
+				// secure: true,
+				// sameSite: 'none',
+				maxAge: 5 * 60 * 60 * 1000, // 5 Hours
+			});
+		});
+	} else if (!tokens.verify(secret, req.body._csrf)) {
+		// CSRF token mismatch >> possible attack
+		return next(new AppError('CSRF verification failed', 403));
+	}
+	next();
+};
+
 //////////////////////////////////////////////
 app.use(
 	session({
@@ -134,35 +165,17 @@ app.use(
 		credentials: true,
 	})
 );
+
 app.use(express.static(path.join(__dirname, '/uploads/static')));
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(hpp({ whitelist: ['price'] }));
-// app.use(csrf({cookie : true}));
-/* app.use((req,res,next) => {
-  req.locals.csrfToken = req.csrfToken();
-  console.log(req.locals.csrfToken);
-  next();
-}) */
+
 app.use(upload);
 
-// app.use(path.join(__dirname, '/public')))
-// );
-
-// app.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET_KEY,
-// 		saveUninitialized: false,
-// 		resave: true,
-// 		cookie: {
-// 			maxAge: 1000 * 10 * 60,
-// 			sameSite: 'lax',
-// 			secure: false,
-// 		},
-// 	})
-// );
+// app.use(path.join(__dirname, '/public'))
 
 // app.use((req, res, next) => {
 // 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -176,15 +189,22 @@ app.use(upload);
 // });
 // app.use(cors({ credentials: true, origin: true }));
 
+app.use('/admin', adminAuth_router);
+
 app.use(
 	'/admin',
+	csrfProtect,
 	adminPage_router,
 	managmentPage_router,
-	adminAuth_router,
 	adminPanel_router
 );
 
-app.use('/user', userAuthorization_router);
+app.use(
+	'/user',
+	userAuthorization_router,
+	userAuthentication_router,
+	userPanel_router
+);
 
 const DBlocal = process.env.LOCAL_DATABASE;
 const port = process.env.PORT;
