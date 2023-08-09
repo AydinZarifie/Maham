@@ -8,13 +8,13 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
-    type: "",
-    firstName: "",
-    lastName: "",
+    admin_type: "",
+    firstname: "",
+    lastname: "",
     email: "",
-    phoneNumber: "",
-    country: "",
-    city: "",
+    phone_number: "",
+    country_name: "",
+    city_name: "",
     currentPassword: "",
     password: "",
     confirmPassword: "",
@@ -22,8 +22,8 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      let { response, data } = await fetchInstance("url");
-      setData(data);
+      let { response, data } = await fetchInstance("/admin/auth/profile");
+      setData({ ...data.admin, password: "", confirmPassword: "" });
     };
     fetchUserData();
   }, []);
@@ -36,7 +36,6 @@ const Profile = () => {
   const [formIsValid, setFormIsValid] = useState(true);
 
   const submit = async (event) => {
-
     event.preventDefault();
     if (data.password !== data.confirmPassword) {
       setFormIsValid(false);
@@ -71,7 +70,7 @@ const Profile = () => {
             name="type"
             className={styles.SelectType}
             onChange={eventHandler}
-            value={data.type}
+            value={data.admin_type}
             disabled={true}
           >
             <option className={styles.SelectOption} value="">
@@ -95,7 +94,7 @@ const Profile = () => {
               id="firstName"
               required
               onChange={eventHandler}
-              value={data.firstName}
+              value={data.firstname}
               disabled={true}
             />
             <label className={styles.InputLabel} htmlFor="firstName">
@@ -118,7 +117,7 @@ const Profile = () => {
               id="lastName"
               required
               onChange={eventHandler}
-              value={data.lastName}
+              value={data.lastname}
               disabled={true}
             />
             <label className={styles.InputLabel} htmlFor="lastName">
@@ -193,7 +192,7 @@ const Profile = () => {
               id="phoneNumber"
               required
               onChange={eventHandler}
-              value={data.phoneNumber}
+              value={data.phone_number}
               disabled={true}
             />
             <label className={styles.InputLabel} htmlFor="phoneNumber">
@@ -234,7 +233,7 @@ const Profile = () => {
               name="country"
               id="country"
               onChange={eventHandler}
-              value={data.country}
+              value={data.country_name}
               required
               disabled={true}
             />
@@ -291,7 +290,7 @@ const Profile = () => {
               name="city"
               id="city"
               onChange={eventHandler}
-              value={data.city}
+              value={data.city_name}
               required
               disabled={true}
             />

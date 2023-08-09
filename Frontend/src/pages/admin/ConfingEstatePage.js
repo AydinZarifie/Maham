@@ -28,12 +28,7 @@ import MultiSelect from "../../components/general/MultiSelect";
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [filters, setFilters] = useState([
-    { label: "filter 1", image: "url_to_filter_1_image" },
-    { label: "filter 2", image: "url_to_filter_2_image" },
-    { label: "filter 3", image: "url_to_filter_3_image" },
-    { label: "filter 4", image: "url_to_filter_4_image" },
-  ]);
+  const [filters, setFilters] = useState([]);
   const [mintUsed, setMintUsed] = useState(false);
   const [error, setError] = useState(false);
 

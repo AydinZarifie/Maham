@@ -147,11 +147,11 @@ const Signin = () => {
         const token = data.token;
         const name = data.name;
         const type = data.type;
-        const csrf=data.csrfToken;
+        // const csrf=data.csrfToken;
         Cookies.set('token',token)
         localStorage.setItem('name',name)
         localStorage.setItem('type',type)
-        Cookies.set('csrfToken',csrf)
+        // Cookies.set('csrfToken',csrf)
         
         // const expiration = new Date();
         // expiration.setHours(expiration.getHours() + 1);

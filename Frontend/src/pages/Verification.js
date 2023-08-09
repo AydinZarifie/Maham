@@ -42,10 +42,12 @@ const Verification = () => {
   const sendEmail = async () => {
     const formData = new FormData();
     formData.append("email", data.email);
-    let response = await fetch("url", {
+    let response = await fetch("http://localhost:5000/user/sendVerificationCode", {
       method: "post",
       body: formData,
-    });
+      credentials : 'include',
+      mode : "cors"
+    },{withCredentials: true });
   };
 
   const months = [
@@ -80,7 +82,7 @@ const Verification = () => {
     formData.append("email", data.email);
     formData.append("phoneNumber", data.phoneNumber);
     formData.append("passportId", data.passportId);
-    formData.append("code", otp);
+    formData.append("verificationCode", otp);
 
     if (data.selectedImages.length > 0) {
       data.selectedImages.forEach((file) => {
@@ -88,10 +90,12 @@ const Verification = () => {
       });
     }
 
-    let response = await fetch("urllll", {
-      method: "post",
+    let response = await fetch("http://localhost:5000/user/userAuthorization", {
+      method: "POST",
+      mode : 'cors',
+      credentials : 'include',
       body: formData,
-    });
+    },{withCredentials : true});
     if (response.ok) {
       setAlert(true);
     }
