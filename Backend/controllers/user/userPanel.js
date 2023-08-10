@@ -27,7 +27,45 @@ exports.getMyAssets = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.searchAssets = catchAsync(async (req, res, next) => {
+exports.searchEstateByName = catchAsync(async (req, res, next) => {
+	//// 1) check that : (A) body is not empty ; (B) estateTitle field is not a blank field
+	if (!req.body.estateTitle || /^\s*$/.test(req.body.estateTitle)) {
+		return res.status(400).json({
+			message: 'search criteria cannot be blank',
+		});
+	}
+
+	//// 2) get the given input from body and convert it to a reqular expression
+	const { estateTitle } = req.body;
+	const wordToInclude = new RegExp(estateTitle, 'ig');
+
+	//// 3) search for estates with given criteria
+	const estates = await estateDB
+		.find({ estate_title: wordToInclude })
+		.select({
+			estate_title: 1,
+			country_name: 1,
+			city_name: 1,
+			maham_price: 1,
+			_id: 0,
+		})
+		.sort('estate_title');
+
+	if (estates.length === 0) {
+		return res.status(204).json({
+			status: 'success',
+			message: 'nothing matches',
+		});
+	}
+
+	res.status(200).json({
+		status: 'success',
+		results: estates.length,
+		data: estates,
+	});
+});
+
+exports.searchEstateByFilter = catchAsync(async (req, res, next) => {
 	//// 1) check if the request body contains any data as filter criters
 	if (Object.keys(req.body).length == 0) {
 		return next(new AppError('please insert some criteria', 400));
@@ -90,7 +128,7 @@ exports.searchAssets = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.buyEstate = catchAsync(async (req, res, next) => {
+exports.OnBuyEstate = catchAsync(async (req, res, next) => {
 	const { estateId, userId, userWallet } = req.body;
 
 	const newEstate = await estateDB.findOneAndUpdate(
