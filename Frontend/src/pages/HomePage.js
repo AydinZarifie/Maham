@@ -62,7 +62,6 @@ const HomePage = () => {
 
   return (
     <>
-    {console.log(document.cookie)}
       <Navbar
         searchShown={searchShown}
         searchCloseHandler={toggleSearchShown}

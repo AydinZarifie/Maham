@@ -12,7 +12,7 @@ const SellPosition = () => {
 
   return (
     <div class={styles.Sell}>
-      <table cellpadding="0" cellspacing="0">
+      <table className={styles.GLStable}  cellpadding="0" cellspacing="0">
         <thead>
           <tr>
             <th>Title</th>

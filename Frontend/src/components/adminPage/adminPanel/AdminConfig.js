@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const AdminConfig = ({ method, admin }) => {
-  const { error, submitAddAdminHandler, countries, cityFetch, cities } =
-    useOutletContext();
+  console.log("hiiiiii");
+  const { error, submitAddAdminHandler, countries, cityFetch, cities } = useOutletContext();
 
   const [data, setData] = useState({
     type: admin ? admin.admin_type : "",
@@ -15,10 +15,9 @@ const AdminConfig = ({ method, admin }) => {
     phoneNumber: admin ? admin.phone_number : "",
     country: admin ? admin.country_name : "",
     city: admin ? admin.city_name : "",
-    password: admin ? admin.password : "",
+    password: "",
+    confirmPassword: "",
   });
-
-
   const [touched, setTouched] = useState({
     type: false,
     firstName: false,
@@ -30,7 +29,7 @@ const AdminConfig = ({ method, admin }) => {
     password: false,
     confirmPassword: false,
   });
-  
+
   const enteredTypeIsValid = data.type.trim() !== "";
   const enteredFirstNameIsValid = data.firstName.trim() !== "";
   const enteredLastNameIsValid = data.lastName.trim() !== "";
@@ -39,19 +38,22 @@ const AdminConfig = ({ method, admin }) => {
   const enteredCountryIsValid = data.country.trim() !== "";
   const enteredCityIsValid = data.city.trim() !== "";
   const enteredPasswordIsValid = data.password.trim() !== "";
+  const enteredConfirmPasswordIsValid = data.confirmPassword.trim() !== "";
 
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const firstNameIsInvalid = !enteredFirstNameIsValid && touched.firstName;
   const lastNameIsInvalid = !enteredLastNameIsValid && touched.lastName;
   const emailIsInvalid = !enteredEmailIsValid && touched.email;
-  const phoneNumberIsInvalid =!enteredPhoneNumberIsValid && touched.phoneNumber;
+  const phoneNumberIsInvalid =
+    !enteredPhoneNumberIsValid && touched.phoneNumber;
   const countryIsInvalid = !enteredCountryIsValid && touched.country;
   const cityIsInvalid = !enteredCityIsValid && touched.city;
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
   const confirmPasswordIsInvalid =
     !enteredPasswordIsValid && touched.confirmPassword;
 
-  let formIsValid = false;
+  let formIsValidForAdding = false;
+  let formIsValidForEditing = false;
 
   if (
     enteredTypeIsValid &&
@@ -61,9 +63,24 @@ const AdminConfig = ({ method, admin }) => {
     enteredPhoneNumberIsValid &&
     enteredCountryIsValid &&
     enteredCityIsValid &&
-    enteredPasswordIsValid
+    enteredPasswordIsValid &&
+    enteredConfirmPasswordIsValid
   ) {
-    formIsValid = true;
+    formIsValidForAdding = true;
+  }
+
+  if (
+    enteredTypeIsValid &&
+    enteredFirstNameIsValid &&
+    enteredLastNameIsValid &&
+    enteredEmailIsValid &&
+    enteredPhoneNumberIsValid &&
+    enteredCountryIsValid &&
+    enteredCityIsValid
+    // enteredPasswordIsValid &&
+    // enteredConfirmPasswordIsValid
+  ) {
+    let formIsValidForEditing = true;
   }
 
   const blurHandler = (event) => {
@@ -93,9 +110,16 @@ const AdminConfig = ({ method, admin }) => {
       confirmPassword: true,
     });
 
-    if (!formIsValid) {
-      return;
+    if (admin) {
+      if (!formIsValidForEditing) {
+        return;
+      }
+    } else {
+      if (!formIsValidForAdding) {
+        return;
+      }
     }
+
     if (data.password !== data.confirmPassword) {
       return;
     }
@@ -111,7 +135,7 @@ const AdminConfig = ({ method, admin }) => {
       data.city,
       data.password,
       data.confirmPassword,
-      admin ? admin._id:null
+      admin ? admin._id : null
     );
   };
 
@@ -152,7 +176,6 @@ const AdminConfig = ({ method, admin }) => {
   return (
     <form method={method}>
       <div className={styles.mainDiv}>
-        {console.log(data)}
         {error && <p className={styles.error}>{error}</p>}
         <div className={styles.SelectDiv}>
           <select

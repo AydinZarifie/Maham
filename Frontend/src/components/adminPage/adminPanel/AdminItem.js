@@ -49,6 +49,7 @@ const AdminItem = (props) => {
             />
           </g>
         </svg>
+        {console.log(props)}
         <h5>{props.firstname + " " + props.lastname}</h5>
       </div>
       <h5>{props.admin_type}</h5>

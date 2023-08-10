@@ -564,8 +564,9 @@ select {
   width: 45%;
   height: 3em;
   border-radius: 0.25em;
-  overflow: hidden;
-  margin: 30px auto 60px auto ;
+  /* overflow: hidden; */
+  margin: 90px auto 80px auto ;
+
 }
 
 /***   ***/

@@ -8,8 +8,24 @@ const AdminList = () => {
   const { admins,deleteHandler } = useOutletContext();
   return (
     <div className={styles.AdminInformation}>
-      {console.log("heh"+admins)}
       {admins.length > 0 && admins.map((admin) => <AdminItem {...admin} deleteHandler={deleteHandler} />)}
+      {/*  */}
+      {/* <AdminItem firstname="ali" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
+      <AdminItem firstname="kmk" deleteHandler={deleteHandler} /> */}
+      {/*  */}
     </div>
   );
 };

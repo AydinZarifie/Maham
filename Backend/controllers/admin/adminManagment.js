@@ -1,18 +1,70 @@
-const countryDB = require("../../models/country");
-const catchAsync = require("../../utilities/Errors/catchAsync");
-const estateDB = require("../../models/estate");
-const AppError = require('../../utilities/Errors/appError');
-const {formatStr,assignCode} = require('./../../utilities/Mint');
+const countryDB = require('../../models/country');
+const estateDB = require('../../models/estate');
+const catchAsync = require('./../../utilities/error/catchAsync');
+const AppError = require('./../../utilities/error/appError');
+// const APIFeatures = require('./../../utilities/APIFeatures');
+const { formatStr } = require('./../../utilities/mint');
+///////////////////////////////////////////////////
 
-exports.getAllCountries = catchAsync(async (req, res) => {
-  const countries = await countryDB.find();
-  res.status(200).json({
-    data: countries,
-    message: "Successfully",
-  });
+exports.getAllCountries = catchAsync(async (req, res, next) => {
+	const countries = await countryDB.find();
+	if (countries.length === 0) {
+		return res.status(204).json({
+			status: 'success',
+			message: 'there is no countries please create one first',
+		});
+	}
+
+	return res.status(200).json({
+		message: 'success',
+		data: countries,
+	});
 });
 
-// age yebar country ro add konim , va dafe dige hamun country ro entexab konim ke shahri behesh ezafe konim , lazeme bazam country name vared konim ? age nakonim be megdar jadid (ke null hast) update mishe ya gabli mimune ?
+/// get all cities of given country
+exports.getAllCities = catchAsync(async (req, res, next) => {
+	if (!req.params.countryName) {
+		return next(new AppError('please select a country ', 404));
+	}
+
+	const country = await countryDB
+		.findOne({
+			country_name: req.params.countryName,
+		})
+		.select('cities');
+
+	if (!country) {
+		return next(new AppError('Country does not exist', 404));
+	}
+
+	if (country.cities.length === 0) {
+		return res.status(204).json({
+			status: 'success',
+			message: 'the country has no city defined',
+		});
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: country.cities,
+	});
+});
+
+exports.getAllEstates = catchAsync(async (req, res, next) => {
+	const estates = await estateDB.find().select('-__V');
+
+	if (estates.length === 0) {
+		return res.status(204).json({
+			message: ' no estate exists in the DB',
+		});
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: estates,
+	});
+});
+
 exports.postAddCountry = catchAsync(async (req, res, next) => {
 	countryName = formatStr(req.body.countryName);
 	countryLogo = req.files.images[0].path;
@@ -27,18 +79,11 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 	let countryCode;
 	try {
 		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
-		console.log(totalCountries);
-
 		totalCountries++;
-
-		if (totalCountries < 10) {
-			countryCode = String(totalCountries).padStart(2, '0');
-		} else {
-			countryCode = totalCountries.toString();
-		}
+		countryCode = totalCountries.toString();
 	} catch (err) {
 		console.error(err);
-		return next(new AppError('error on assigning countryCode', 400));
+		return next(new AppError('error aquired on assigning countryCode', 400));
 	}
 
 	const newCountry = new countryDB({
@@ -77,14 +122,14 @@ exports.addCity = catchAsync(async (req, res, next) => {
 
 		// Set the 'last_mints' property
 		const cityCount = country.cities.length;
-		const assignedCode = assignCode(2, cityCount);
+		const assignedCode = cityCount.toString();
 		const propertyKey = country.country_code + assignedCode;
 
 		let obj;
 		if (!country.last_mints[propertyKey]) {
 			obj = {
 				...country.last_mints,
-				[propertyKey]: 10000,
+				[propertyKey]: 0,
 			};
 		}
 
@@ -92,6 +137,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 		console.log(country.last_mints);
 
 		await country.save();
+
 		// send response
 		return res.status(200).json({
 			status: 'success',
@@ -104,34 +150,21 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
-/// get all cities of given country
-exports.getAllCities = catchAsync(async (req, res,next) => {
-  const country = await countryDB.findOne({
-    country_name: req.params.countryName,
-  });
-  if (!country) {
-    return next(new AppError("country not found", 404));
-  } else {
-    console.log(country.cities);
-    return res.status(200).json({
-      data: country.cities,
-      message: "Successfully",
-    });
-  }
+exports.getEstates = catchAsync(async (req, res, next) => {
+	const estates = await estateDB
+		.find({
+			country_name: `${req.params.countryName}`,
+			city_name: `${req.params.cityName}`,
+		})
+		.select([
+			'estate_title',
+			'volume',
+			'price', //'landlord_address', 'change',
+		])
+		.sort('createdAt');
+
+	return res.status(200).json({
+		status: 'success',
+		data: estates,
+	});
 });
-
-exports.getEstates = catchAsync(async (req, res) => {
-  const countryName = req.params.countryName;
-  const cityName = req.params.cityName;
-
-  const estates = await estateDB
-    .find({ country_name: countryName, city_name: cityName })
-    .select({});
-
-  return res.status(202).json({
-    data: estates,
-    message: "Successfully",
-  });
-});
-
-//No testing

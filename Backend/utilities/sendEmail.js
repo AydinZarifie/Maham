@@ -243,7 +243,7 @@ const sendEmail = async (options) => {
 		                              valign="top"
 		                              class="m_-5146143764419861847list-title"
 		                            >
-		                              Login Platform:
+		                              login Platform:
 		                            </td>
 		                            <td
 		                              valign="top"
@@ -257,7 +257,7 @@ const sendEmail = async (options) => {
 		                              valign="top"
 		                              class="m_-5146143764419861847list-title"
 		                            >
-		                              Login Time:
+		                              login Time:
 		                            </td>
 		                            <td
 		                              valign="top"
@@ -309,4 +309,4 @@ const sendEmail = async (options) => {
 	transporter.sendMail(mailOptions);
 };
 
-module.exports = {sendEmail};
+module.exports = sendEmail;

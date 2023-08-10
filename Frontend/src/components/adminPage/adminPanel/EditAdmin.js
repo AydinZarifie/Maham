@@ -8,9 +8,9 @@ const EditAdmin = () => {
 };
 
 export async function loader({ request, params }) {
-    const id = params.adminId;
-    let { response,data } = await fetchInstance("/admin/panel/editAdmin/" + id);
-    return data.data;
-  }
+  const id = params.adminId;
+  let { response, data } = await fetchInstance("/admin/panel/editAdmin/" + id);
+  return data.data;
+}
 
 export default EditAdmin;

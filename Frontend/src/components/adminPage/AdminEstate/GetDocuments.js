@@ -11,7 +11,7 @@ const GetDocuments = () => {
 
   return (
     <div className={styles.getDocument}>
-      <table cellPadding="0" cellSpacing="0">
+      <table className={styles.GLStable} cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
             <th>Title</th>

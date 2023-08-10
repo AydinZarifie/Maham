@@ -5,23 +5,24 @@ const multer = require("multer");
 const fs = require("fs");
 const cors = require("cors");
 const helmet = require("helmet");
-const csrf = require("csurf");
+
 //////////////////////////////////////////////
-const adminPage_Router = require("./routes/admin/adminPage");
+const adminPage_Router = require("./routes/admin/adminPage")
 const managmentPage_Router = require("./routes/admin/adminManagment");
 const adminAuth_Router = require("./routes/admin/adminAuth");
 const adminPanel_Router = require("./routes/admin/adminPanel");
-const userAuthorization_Router = require("./routes/user/authorization");
+const userAuthorization_Router = require("./routes/user/userAuthorization");
 //////////////////////////////////////////////
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const globalErrorHandler = require("./controllers/globalErrorHandler");
-const AppError = require("./utilities/Errors/appError");
+const AppError = require("./utilities/error/appError");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
 dotenv.config({ path: "./config.env" });
+
 const app = express();
 // ERROR HANDLING
 process.on("uncaughtException", (err) => {
@@ -85,7 +86,7 @@ const upload = multer({
   }
 ]);
 
-app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(globalErrorHandler);
 app.use(session({
   secret : process.env.SESSION_SECRET_KEY,
@@ -96,15 +97,13 @@ app.use(session({
     maxAge : 70 * 1000
   }
 }))
-app.use(cookieParser());
 
+app.use(cookieParser());
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(cors({
   origin : "http://localhost:3000",
   credentials : true
 }))   
-
-
 
 app.use(express.json());
 

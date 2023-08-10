@@ -91,7 +91,7 @@ right: 60px;
   transform: translateY(1px);
   background-color: #ebebeb;
 } */
-.PAndLBttons svg ,img{
+.PAndLBttons img{
   width: 18px;
 }
 
@@ -393,7 +393,7 @@ right: 60px;
     top: -7px;
   }
 }
-@media (max-width: 540px) {
+/* @media (max-width: 540px) {
   .column1 {
     margin-top: 21px;
   }
@@ -404,7 +404,7 @@ right: 60px;
     position: relative;
     top: -10px;
   }
-}
+} */
 
 
 @media (min-width: 490px){
@@ -446,6 +446,13 @@ right: 60px;
     
   }
 
+  @media (max-width: 490px){
+    .dropdown {
+      position: relative;
+    right: 60px;
+      
+    }
+  }
   /* .h3AdminName {
     margin: 0;
     margin-bottom: 8px;
@@ -456,12 +463,13 @@ right: 60px;
     font-size: 1rem;
   } */
 }
-@media (max-width: 510px){
+@media (max-width: 593px){
   .column2 {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 80%;
+    justify-content: space-between;
+    width: 90%;
   }
   .Buttons {
     order: 2;
@@ -469,18 +477,18 @@ right: 60px;
     display: none;
   }
 }
-@media (min-width: 470px){
+@media (min-width: 490px){
 .h3AdminName {
   margin: 0;
   margin-bottom: 8px;
-  margin-right: 15px;
-  width: 170px;
+  margin-right: 25px;
+  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   font-size: 1rem;
 }
 }
-@media (max-width: 470px) {
+@media (max-width: 490px) {
   .header {
     border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
@@ -492,17 +500,10 @@ right: 60px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 80%;
+    justify-content: space-around;
+    width:90%;
   }
-  /* .Buttons {
-    order: 2;
-    gap: 10px;
-    display: none;
-  } */
 
-  /* .h3AdminName {
-    font-size: 0.8rem;
-  } */
   .h6AdminInformations {
     font-size: 0.6rem;
   }
@@ -604,12 +605,7 @@ right: 60px;
     background: #ede9e9;
   }
 
-  .dropdown {
-    position: relative;
-  /* right: 60px; */
-  /* right: 5px; */
-    
-  }
+  
 
   .h3AdminName {
     margin: 0;
@@ -639,19 +635,8 @@ right: 60px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
   }
-
-  /* .h3AdminName {
-    margin: 0;
-    margin-bottom: 8px;
-    margin-right: 15px;
-    width: 170px;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 1rem;
-  } */
-
 
 }
 

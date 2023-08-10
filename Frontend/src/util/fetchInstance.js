@@ -24,7 +24,6 @@ let refreshToken = async () => {
   let data = await response.json();
   // localStorage.setItem("token", data.accessToken);
   Cookies.set("token", data.accessToken);
-  console.log(data.accessToken);
   return data.accessToken;
 };
 

@@ -22,10 +22,13 @@ import Estates from "./components/adminPage/AdminEstate/Estates";
 import { action as logoutAction } from "./pages/admin/Logout";
 
 import { checkAuthLoader } from "./util/auth";
-import New from "./pages/New";
+import Verification from "./pages/Verification";
 import EditAdmin, {
   loader as adminDetailLoader,
 } from "./components/adminPage/adminPanel/EditAdmin";
+import CustomTableItem from "./components/general/CustomTableItem";
+import Personal from "./components/adminPage/adminPanel/Personal";
+import Profile from "./pages/admin/Profile";
 
 const router = createBrowserRouter([
   {
@@ -94,11 +97,19 @@ const router = createBrowserRouter([
             element: <EditAdmin />,
             loader: adminDetailLoader,
           },
+          {
+            path: "personal",
+            element: <Personal />,
+          },
         ],
       },
       {
         path: "logout",
         action: logoutAction,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
@@ -106,11 +117,14 @@ const router = createBrowserRouter([
     path: "loginAdmin",
     element: <SigninPage />,
   },
+  {
+    path: "Verification",
+    element: <Verification />,
+  },
 ]);
 
 function App() {
   return <RouterProvider router={router} />;
-  // return <New />;
 }
 
 export default App;
