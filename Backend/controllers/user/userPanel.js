@@ -128,7 +128,7 @@ exports.searchEstateByFilter = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.OnBuyEstate = catchAsync(async (req, res, next) => {
+exports.onBuyEstate = catchAsync(async (req, res, next) => {
 	const { estateId, userId, userWallet } = req.body;
 
 	const newEstate = await estateDB.findOneAndUpdate(
