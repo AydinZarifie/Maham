@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const countryDB = require('./country');
-const AppError = require('../utilities/error/appError');
 
 const userSchema = new mongoose.Schema(
-	{
+{
 		first_name: {
 			type: String,
 		},
@@ -55,22 +53,4 @@ const userSchema = new mongoose.Schema(
 		toObject: { virtuals: true },
 	}
 );
-
-// Refrence user to belonging country
-userSchema.pre('save', async function (next) {
-	console.log(this.country);
-	const country = await countryDB.findOne({
-		country_name: this.country,
-	});
-
-	if (!country) {
-		return next(
-			new AppError('country is not defined , please create country first', 400)
-		);
-	}
-
-	this.country_ref = country._id;
-	next();
-});
-
 module.exports = mongoose.model('User', userSchema);

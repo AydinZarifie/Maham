@@ -135,10 +135,22 @@ exports.logoutAdmin = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 
 	if (!cookie?.jwt) {
-		return next(new AppError('cookie does not exists!', 204));
+		return next(
+			new AppError('not logged in yet , cookie does not exists!', 204)
+		);
 	}
 
 	await res.clearCookie('jwt', {
+		httpOnly: true,
+		secure: true,
+		sameSite: 'None',
+	});
+	await res.clearCookie('csrf-token', {
+		httpOnly: true,
+		secure: true,
+		sameSite: 'None',
+	});
+	await res.clearCookie('secret', {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'None',
@@ -172,7 +184,7 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 			return next(new AppError('Wrong password!', 405));
 		}
 
-		const verificationCode = Math.floor(100000 + Math.random() * 9000);
+		const verificationCode = Math.floor(100000 + Math.random() * 900000);
 
 		req.session.verificationCode = verificationCode;
 
@@ -185,7 +197,7 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 			verificationCode,
 		};
 
-		await sendEmail(mailOptions);
+		// await sendEmail(mailOptions);
 
 		return res.status(201).json({
 			status: 'success',
@@ -220,4 +232,17 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 	const accessToken = await signAccessToken(admin);
 
 	return res.status(201).json(accessToken);
+});
+
+exports.editAdminProfileInfo = catchAsync(async (req, res) => {
+	const admin = await adminDB.findOne({ email: req.email });
+
+	if (!admin) {
+		return next(new AppError('Admin does not exist', 200));
+	}
+
+	return res.status(200).json({
+		message: 'Success',
+		admin: admin,
+	});
 });

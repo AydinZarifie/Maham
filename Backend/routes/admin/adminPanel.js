@@ -18,6 +18,9 @@ router
 	.route('/panel/editAdmin/:id')
 	.get(adminPanelController.getEditAdmin)
 	.put(adminPanelController.updateAdmin)
-	.delete(adminPanelController.deleteAdmin);
+	.delete(
+		adminPanelController.restrictTo('superAdmin'),
+		adminPanelController.deleteAdmin
+	);
 
 module.exports = router;

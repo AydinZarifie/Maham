@@ -10,12 +10,15 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 // const xss = require('xss');
 const csrf = require('csrf');
-const tokens = new csrf();
+const Tokens = new csrf({
+	saltLength: 10,
+	secretLength: 18,
+});
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 //////////////////////////////////////////////
 const adminPage_router = require('./routes/admin/adminPage');
-const managmentPage_router = require('./routes/admin/adminManagment');
+const adminManagmentPage_router = require('./routes/admin/adminManagment');
 const adminAuth_router = require('./routes/admin/adminAuth');
 const adminPanel_router = require('./routes/admin/adminPanel');
 ////////////
@@ -25,6 +28,7 @@ const userPanel_router = require('./routes/user/userpanel');
 ///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
+const { constrainedMemory } = require('process');
 //////////////////////////////////////////////
 dotenv.config({ path: './config.env' });
 const app = express();
@@ -40,26 +44,26 @@ const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		if (file.fieldname === 'images') {
 			if (req.originalUrl.endsWith('/estates')) {
-				let path = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
+				const estateImagePath = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
 
-				if (fs.existsSync(path)) {
-					cb(null, path);
+				if (fs.existsSync(estateImagePath)) {
+					cb(null, estateImagePath);
 				} else {
-					fs.mkdirSync(path);
-					cb(null, path);
+					fs.mkdirSync(estateImagePath);
+					cb(null, estateImagePath);
 				}
 			} else if (req.originalUrl.endsWith('/addFilter')) {
 				cb(null, './uploads/images/filters/');
 			} else if (req.originalUrl.endsWith('/addCountry')) {
 				cb(null, './uploads/images/countries/');
 			} else if (req.originalUrl.endsWith('/userAuthorization')) {
-				let path = `./uploads/images/users/${req.body.firstName}-${req.body.lastName}`;
+				const userImagePath = `./uploads/images/users/${req.body.firstName}-${req.body.lastName}`;
 
-				if (fs.existsSync(path)) {
-					cb(null, path);
+				if (fs.existsSync(userImagePath)) {
+					cb(null, userImagePath);
 				} else {
-					fs.mkdirSync(path);
-					cb(null, path);
+					fs.mkdirSync(userImagePath);
+					cb(null, userImagePath);
 				}
 			}
 		} else if (file.fieldname == 'video') {
@@ -89,7 +93,7 @@ function checkFileType(file, cb) {
 		) {
 			cb(null, true);
 		} else {
-			cb(new Error('video type not supported!'), false);
+			cb(new Error('video type not supported !'), false);
 		}
 	} else if (file.fieldname === 'images') {
 		if (
@@ -120,12 +124,16 @@ const upload = multer({
 ]);
 
 // 1) generate token once , till the cookie expires
-const csrfProtect = (req, res, next) => {
-	const secret = req.cookies['csrf-token'];
+const csrfProtection = (req, res, next) => {
+	if (!req.cookies['jwt']) {
+		return next(new AppError('you are not logged in!', 400));
+	}
 
-	if (!secret) {
-		// if it is first-time visit, generate a new secret
-		tokens.secret((err, newSecret) => {
+	const userToken = req.cookies['csrf-token'];
+
+	if (!userToken) {
+		// first time visit >> create the token
+		Tokens.secret((err, newSecret) => {
 			if (err)
 				return next(
 					new AppError(
@@ -133,21 +141,29 @@ const csrfProtect = (req, res, next) => {
 						400
 					)
 				);
-			res.cookie('csrf-token', newSecret, {
+			res.cookie('csrf-token', Tokens.create(newSecret), {
 				// httpOnly: true,
 				// secure: true,
 				// sameSite: 'none',
 				maxAge: 5 * 60 * 60 * 1000, // 5 Hours
 			});
+			res.cookie('secret', newSecret, {
+				maxAge: 5 * 60 * 60 * 1000, // 5 Hours
+			});
 		});
-	} else if (!tokens.verify(secret, req.body._csrf)) {
-		// CSRF token mismatch >> possible attack
-		return next(new AppError('CSRF verification failed', 403));
+	} else {
+		if (!Tokens.verify(req.cookies['secret'], req.cookies['csrf-token'])) {
+			// CSRF token mismatch >> possible attack
+			return next(new AppError('CSRF verification failed', 403));
+		}
 	}
 	next();
 };
 
-//////////////////////////////////////////////
+/////////////////////////////////////
+//////////// MIDDLEWARES ////////////
+/////////////////////////////////////
+
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET_KEY,
@@ -159,6 +175,7 @@ app.use(
 		},
 	})
 );
+
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
@@ -166,8 +183,8 @@ app.use(
 	})
 );
 
-app.use(express.static(path.join(__dirname, '/uploads/static')));
-app.use(helmet());
+app.use(express.static(path.join(__dirname, 'uploads/static')));
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -190,12 +207,22 @@ app.use(upload);
 // app.use(cors({ credentials: true, origin: true }));
 
 app.use('/admin', adminAuth_router);
-
+app.use('/admin', (req, res, next) => {
+	if (
+		req.method === 'POST' ||
+		req.method === 'DELETE' ||
+		req.method === 'PUT' ||
+		req.method === 'PATCH'
+	) {
+		csrfProtection(req, res, next);
+	} else {
+		next();
+	}
+});
 app.use(
 	'/admin',
-	csrfProtect,
 	adminPage_router,
-	managmentPage_router,
+	adminManagmentPage_router,
 	adminPanel_router
 );
 
