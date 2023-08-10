@@ -244,3 +244,16 @@ exports.getSellPositionEstates = catchAsync(async (req, res, next) => {
 	const estate = await estateDB.find({ sell_position: true });
 	return res.status(200).json({ data: estate });
 });
+
+// restricts the specific actions to specific types
+exports.restrictTo = (...types) => {
+	// types is a array
+	return (req, res, next) => {
+		if (!types.includes(req.admin.type)) {
+			return next(
+				new AppError('you do not have premission to perform this actions', 403) // forbidden
+			);
+		}
+		next();
+	};
+};

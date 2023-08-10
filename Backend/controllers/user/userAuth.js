@@ -1,4 +1,5 @@
 const userDB = require('../../models/user');
+////////////////////////////////////////////////////////////
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 const { formatStr } = require('../../utilities/mint.js');
@@ -10,7 +11,7 @@ const signAccessToken = require('./../../utilities/token/signAccessToken');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
 exports.signupUser = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);

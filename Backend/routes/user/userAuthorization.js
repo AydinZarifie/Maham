@@ -12,6 +12,6 @@ router
 
 router
 	.route('/userAuthorization')
-	.get(userAuthorizationController.authorizeUser);
+	.post(userAuthorizationController.authorizeUser);
 
 module.exports = router;
