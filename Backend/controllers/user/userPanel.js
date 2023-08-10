@@ -27,7 +27,7 @@ exports.getMyAssets = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.searchEstateByName = catchAsync(async (req, res, next) => {
+exports.searchEstateByTitle = catchAsync(async (req, res, next) => {
 	//// 1) check that : (A) body is not empty ; (B) estateTitle field is not a blank field
 	if (!req.body.estateTitle || /^\s*$/.test(req.body.estateTitle)) {
 		return res.status(400).json({
