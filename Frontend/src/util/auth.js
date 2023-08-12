@@ -36,25 +36,30 @@ export function getCsrfToken() {
 // }
 
 export function checkAuthLoader() {
-  // const valid = fetchAuthToken();
-  // if (!valid) {
-  //   return redirect("/loginAdmin");
-  // }
-  const token = getAuthToken();
-  if (!token || token == "undefined" || token == "null") {
+  const valid = fetchAuthToken();
+  if (valid == 200) {
+    const token = getAuthToken();
+
+    if (!token || token == "undefined" || token == "null") {
+      return redirect("/loginAdmin");
+    }
+
+    return token;
+  } else {
+    console.log(1);
     return redirect("/loginAdmin");
   }
-
-  return token;
 }
 
-// async function fetchAuthToken() {
-//   const token = getAuthToken();
-//   const formData = new FormData();
-//   formData.append("token", token);
-//   const response = await fetch("url", {
-//     method: "POST",
-//     body: formData,
-//   });
-//   return response.json();
-// }
+async function fetchAuthToken() {
+  const token = getAuthToken();
+  const formData = new FormData();
+  formData.append("token", token);
+  const response = await fetch("http://localhost:5000/admin/verifyToken", {
+    method: "POST",
+    body: formData,
+  });
+
+  // const response  = await response.json();
+  return response.status;
+}

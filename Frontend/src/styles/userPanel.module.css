@@ -267,7 +267,7 @@
 
 .TotalDiv2 {
   width: 100%;
-  display: none;
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
