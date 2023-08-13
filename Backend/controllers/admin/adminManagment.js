@@ -18,6 +18,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		message: 'success',
 		data: countries,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -47,6 +48,7 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: country.cities,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -62,6 +64,7 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -166,5 +169,56 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
+		csrfToken: req.csrfToken(),
+	});
+});
+
+exports.lockEstate = catchAsync(async (req, res, next) => {
+	// 1) get information that is gonna change, from request's body
+	const filteredFields = {
+		lock_position: true,
+	};
+
+	// 2) update Estate document
+	const updatedEstate = await estateDB.findByIdAndUpdate(
+		req.body.estateId,
+		filteredFields,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+
+	if (!updatedEstate) {
+		return next(new AppError('Estate with that ID does not exist', 404));
+	}
+
+	return res.status(200).json({
+		message: 'Successfully Locked',
+	});
+});
+
+exports.cancelLockPosition = catchAsync(async (req, res, next) => {
+	// 1) get information that is gonna change, from request's body
+	const filteredFields = {
+		lock_position: false,
+	};
+
+	// 2) update Estate document
+	const updatedEstate = await estateDB.findByIdAndUpdate(
+		req.body.estateId,
+		filteredFields,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+
+	if (!updatedEstate) {
+		return next(new AppError('Estate with that ID does not exist', 404));
+	}
+
+	return res.status(200).json({
+		message: 'Successfully canceled LOCK position',
 	});
 });

@@ -24,7 +24,7 @@ const adminPanel_router = require('./routes/admin/adminPanel');
 ////////////
 const userAuthorization_router = require('./routes/user/userAuthorization');
 const userAuthentication_router = require('./routes/user/userAuthentication');
-const userPanel_router = require('./routes/user/userpanel');
+const userPanel_router = require('./routes/user/userPanel');
 ///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
@@ -123,43 +123,6 @@ const upload = multer({
 	},
 ]);
 
-// 1) generate token once , till the cookie expires
-const csrfProtection = (req, res, next) => {
-	if (!req.cookies['jwt']) {
-		return next(new AppError('you are not logged in!', 400));
-	}
-
-	const userToken = req.cookies['csrf-token'];
-
-	if (!userToken) {
-		// first time visit >> create the token
-		Tokens.secret((err, newSecret) => {
-			if (err)
-				return next(
-					new AppError(
-						'an error aquired on creating CSRF token , please try again.',
-						400
-					)
-				);
-			res.cookie('csrf-token', Tokens.create(newSecret), {
-				// httpOnly: true,
-				// secure: true,
-				// sameSite: 'none',
-				maxAge: 5 * 60 * 60 * 1000, // 5 Hours
-			});
-			res.cookie('secret', newSecret, {
-				maxAge: 5 * 60 * 60 * 1000, // 5 Hours
-			});
-		});
-	} else {
-		if (!Tokens.verify(req.cookies['secret'], req.cookies['csrf-token'])) {
-			// CSRF token mismatch >> possible attack
-			return next(new AppError('CSRF verification failed', 403));
-		}
-	}
-	next();
-};
-
 /////////////////////////////////////
 //////////// MIDDLEWARES ////////////
 /////////////////////////////////////
@@ -207,18 +170,7 @@ app.use(upload);
 // app.use(cors({ credentials: true, origin: true }));
 
 app.use('/admin', adminAuth_router);
-app.use('/admin', (req, res, next) => {
-	if (
-		req.method === 'POST' ||
-		req.method === 'DELETE' ||
-		req.method === 'PUT' ||
-		req.method === 'PATCH'
-	) {
-		csrfProtection(req, res, next);
-	} else {
-		next();
-	}
-});
+
 app.use(
 	'/admin',
 	adminPage_router,

@@ -234,7 +234,7 @@ const estateSchema = new mongoose.Schema(
 			set: (a) => (a === '' ? undefined : a),
 		},
 		///
-		state_description: {
+		estate_description: {
 			type: String,
 			set: (a) => (a === '' ? undefined : a),
 		},
@@ -258,7 +258,7 @@ const estateSchema = new mongoose.Schema(
 			type: Array,
 		},
 		//store blockchain data///
-		landlor_address: {
+		landlord_address: {
 			type: String,
 		},
 		contract_address: {
@@ -269,19 +269,27 @@ const estateSchema = new mongoose.Schema(
 		},
 		sell_position: {
 			type: Boolean,
+			default: false,
 		},
 		lock_position: {
 			type: Boolean,
+			default: false,
 		},
 		getDocument: {
 			type: Boolean,
 		},
-		filter: {
-			type: String,
+		country_ref: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Country',
 		},
-		//////////////////////////
+		filter_ref: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Filter',
+			},
+		],
 
-		//import createdBy///////
+		////import  createdBy////
 		/////////////////////////
 
 		estate_rooms: [estateRoomsSchema],

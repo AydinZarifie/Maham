@@ -28,4 +28,11 @@ router
 	.route('/managment/getEstates/:countryName/:cityName')
 	.get(verifyToken, managementController.getEstates);
 
+router.patch('/managment/lock', managementController.lockEstate);
+
+router.patch(
+	'/managment/cancelLockPosition',
+	managementController.cancelLockPosition
+);
+
 module.exports = router;

@@ -72,7 +72,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 			message: 'Error 405',
 		});
 	}
-
 	const { password, email, verificationCode } = req.body;
 	const verificationCodeSession = req.session.verificationCode;
 
@@ -105,7 +104,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 	if (verificationCode !== verificationCodeSession.toString()) {
 		return next(new AppError('verification code is not valid', 401));
 	}
-
 	// 7) refresh and access token
 	const { accessToken, refreshToken } = await generateToken(admin);
 
@@ -118,7 +116,7 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 
 	// **** putting the token within cookie and then destroying the whole SESSION ? why.
 
-	req.session.destroy((err) => {
+	await req.session.destroy((err) => {
 		if (err) {
 			console.log('Failed to destroy session');
 		}
@@ -197,7 +195,7 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 			verificationCode,
 		};
 
-		// await sendEmail(mailOptions);
+		await sendEmail(mailOptions);
 
 		return res.status(201).json({
 			status: 'success',
@@ -246,3 +244,27 @@ exports.editAdminProfileInfo = catchAsync(async (req, res) => {
 		admin: admin,
 	});
 });
+
+exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
+	try {
+		const accessToken = req.body.token;
+
+		if (!accessToken) {
+			return res.status(200).json({
+				message: 'accessToken was empty',
+			});
+		}
+
+		const decode = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+		if (!decode.email || !decode.roles) {
+			return res.status(401).json(false);
+		} else {
+			return res.status(200).json(true);
+		}
+	} catch (error) {
+		res.status(400).json({
+			message: 'not valid token',
+		});
+	}
+};

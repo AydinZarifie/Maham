@@ -12,7 +12,7 @@ exports.getMyAssets = catchAsync(async (req, res, next) => {
 
 	console.log(user);
 
-	if (!user || user.length === 0) {
+	if (!user) {
 		return next(new AppError('there is no user weith that ID', 204));
 	}
 
@@ -28,7 +28,9 @@ exports.getMyAssets = catchAsync(async (req, res, next) => {
 });
 
 exports.searchEstateByTitle = catchAsync(async (req, res, next) => {
-	//// 1) check that : (A) body is not empty ; (B) estateTitle field is not a blank field
+	//// 1) check that :
+	// (A) body is not empty >> contains the estateTitle field
+	// (B) estateTitle field is not a blank field >> "" or " " or "  " & ...
 	if (!req.body.estateTitle || /^\s*$/.test(req.body.estateTitle)) {
 		return res.status(400).json({
 			message: 'search criteria cannot be blank',
@@ -154,5 +156,77 @@ exports.onBuyEstate = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		message: "User's assets and estate's landLord address successfully updated",
+	});
+});
+
+exports.getEstateSellInfo = catchAsync(async (req, res, next) => {
+	const estate = await estateDB
+		.findOne({ _id: req.body.estateId })
+		.select([
+			'country_name',
+			'city_name',
+			'mint_id',
+			'sell_price',
+			'estate_title',
+		]);
+
+	if (!estate) {
+		return next(new AppError('there is no such a country', 400));
+	}
+
+	return res.status(200).json({
+		message: 'success',
+		data: estate,
+	});
+});
+
+exports.onSellPosition = catchAsync(async (req, res, next) => {
+	// 1) get information that is gonna change, from request's body
+	const filteredFields = {
+		sell_position: true,
+		customer_price: req.body.price,
+	};
+
+	// 2) update Estate document
+	const updatedEstate = await estateDB.findByIdAndUpdate(
+		req.body.estateId,
+		filteredFields,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+
+	if (!updatedEstate) {
+		return next(new AppError('Estate with that ID does not exist', 404));
+	}
+
+	return res.status(200).json({
+		message: 'Successfully updated',
+	});
+});
+
+exports.cancelSellPosition = catchAsync(async (req, res, next) => {
+	// 1) get information that is gonna change, from request's body
+	const filteredFields = {
+		sell_position: false,
+	};
+
+	// 2) update Estate document
+	const updatedEstate = await estateDB.findByIdAndUpdate(
+		req.body.estateId,
+		filteredFields,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+
+	if (!updatedEstate) {
+		return next(new AppError('Estate with that ID does not exist', 404));
+	}
+
+	return res.status(200).json({
+		message: 'Successfully canceled SELL position',
 	});
 });

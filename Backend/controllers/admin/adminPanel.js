@@ -25,6 +25,7 @@ exports.getAllAdmins = catchAsync(async (req, res, next) => {
 		status: 'success',
 		results: admins.length,
 		data: admins,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -40,6 +41,7 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: admin,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -156,6 +158,7 @@ exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 		status: 'success',
 		results: admins.length,
 		data: admins,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -173,6 +176,7 @@ exports.getEditAdmin = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: admin,
+		csrfToken: req.csrfToken(),
 	});
 });
 
@@ -237,12 +241,18 @@ exports.getLockEstates = catchAsync(async (req, res, next) => {
 		return next(new AppError('There is no locked estate!', 404));
 	}
 
-	return res.status(200).json({ status: 'success', data: lockedEstates });
+	return res
+		.status(200)
+		.json({
+			status: 'success',
+			data: lockedEstates,
+			csrfToken: req.csrfToken(),
+		});
 });
 
 exports.getSellPositionEstates = catchAsync(async (req, res, next) => {
 	const estate = await estateDB.find({ sell_position: true });
-	return res.status(200).json({ data: estate });
+	return res.status(200).json({ data: estate, csrfToken: req.csrfToken() });
 });
 
 // restricts the specific actions to specific types
