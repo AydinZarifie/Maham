@@ -54,14 +54,36 @@ exports.getCities = catchAsync(async (req, res, next) => {
 });
 
 exports.createEstate = catchAsync(async (req, res, next) => {
-	// refrencing the estate to its country instance in countryDB
+	///////// refrencing the estate to its country instance in countryDB
 	const country = await countryDB.findOne({
 		country_name: `${req.body.countryName}`,
 	});
 	if (!country) {
 		return next(new AppError('please create country first', 404));
 	}
-	const Id = country.id;
+	const countryId = country.id;
+
+	////////////////////////////////////////
+
+	///////// Reference the estate to its filters instance in filterDB
+	const filterNames = req.body.filterName; // Assuming it's an array of filter names
+
+	// Query the filterDB to find the filters with the given names
+	const filters = await filterDB
+		.find({ filter_name: { $in: filterNames } })
+		.select('_id');
+
+	// Check if any filters were found
+	if (!filters || filters.length === 0) {
+		return next(
+			new AppError('There are no filters matching the provided names', 404)
+		);
+	}
+
+	// Extract the IDs of the filters
+	const filterIds = filters.map((filter) => filter._id);
+
+	////////////////////////////////////////
 
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
@@ -71,25 +93,24 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		main_street: req.body.streetName,
 		building_number: req.body.plate,
 		floor_number: req.body.numberOfFloor,
-		location: req.body.location.toLowerCase(),
-		state_description: req.body.description,
+		location: req.body.location,
+		estate_description: req.body.description,
 		estate_type: req.body.type,
 		customer_price: req.body.customerPrice,
 		maham_price: req.body.mahamPrice,
 		filter_name: req.body.filter,
 		mintId: req.body.mintId,
 		unit_number: req.body.numberOfUnit,
-		imageUrl: req.files.images.map((el) => {
-			return el.path;
-		}),
-		introduction_video: req.files.video.map((el) => {
-			return el.path;
-		}),
-		// minor_street : req.body. ,
+		// imageUrl: req.files.images.map((el) => {
+		// 	return el.path;
+		// }),
+		// introduction_video: req.files.video.map((el) => {
+		// 	return el.path;
+		// }),
 
+		// minor_street : req.body. ,
 		// postal_code : req.body. ,
 		// estate_view : req.body. ,
-
 		///////////////////////////////////////////////////////////// getRooms :
 		bedroom: req.body.checkBedroom,
 		bedroom_count: req.body.numberBedroom,
@@ -143,8 +164,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 
 	const estate = new estateDB({
 		///////////////////////////////////////////////////////////// setState :
-		// stateId : ,
-		estate_country_ref: Id,
+		filter_ref: filterIds,
+		country_ref: countryId,
 		estate_title: inputs.estate_title,
 		city_name: inputs.city_name,
 		country_name: inputs.country_name,
@@ -152,11 +173,11 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		building_number: inputs.building_number,
 		floor_number: inputs.floor_number,
 		location: inputs.location,
-		state_description: inputs.state_description,
+		estate_description: inputs.estate_description,
 		estate_type: inputs.estate_type,
-		imageUrl: inputs.imageUrl,
-		introduction_video: inputs.introduction_video,
-		customer_price: inputs.customer_Price,
+		// imageUrl: inputs.imageUrl,
+		// introduction_video: inputs.introduction_video,
+		customer_price: inputs.customer_price,
 		maham_price: inputs.maham_price,
 		filter: inputs.filter_name,
 		mint_id: inputs.mintId,
@@ -286,7 +307,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		unitNumber: req.body.numberOfUnit,
 		floor_number: req.body.numberOfFloor,
 		location: req.body.location,
-		state_description: req.body.description,
+		estate_description: req.body.description,
 		estate_type: req.body.type,
 		maham_price: req.body.mahamPrice,
 		filter_name: req.body.filter,
@@ -366,7 +387,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		(estate.building_number = inputs.building_number),
 		(estate.floor_number = inputs.floor_number),
 		(estate.location = inputs.location),
-		(estate.state_description = inputs.state_description),
+		(estate.estate_description = inputs.estate_description),
 		(estate.estate_type = inputs.estate_type),
 		(estate.customer_price = inputs.customerPrice),
 		(estate.maham_price = inputs.maham_price),
@@ -451,17 +472,18 @@ exports.getEditEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.postFilter = catchAsync(async (req, res, next) => {
-	const filterName = req.body.filterName;
-	const imageUrl = req.files.images[0].path;
+	const { filterName } = req.body;
+	// const imageUrl = req.files.images[0].path;
 
-	if (!filterName || !imageUrl) {
-		return next(new AppError('filtername or image was empty', 403));
-		// res.status(403).json({ message: 'filtername or image was empty' });
-	}
+	// if (!filterName || !imageUrl) {
+	// 	return next(new AppError('filtername or image was empty', 403));
+	// 	// res.status(403).json({ message: 'filtername or image was empty' });
+	// }
+	console.log(filterName);
 
 	const filter = new filterDB({
 		filter_name: filterName,
-		filter_imageUrl: imageUrl,
+		// filter_imageUrl: imageUrl,
 	});
 
 	await filter.save();
@@ -474,9 +496,13 @@ exports.postFilter = catchAsync(async (req, res, next) => {
 
 exports.getAllFilters = catchAsync(async (req, res, next) => {
 	const filters = await filterDB.find();
-	// if (filters.length === 0) {
-	// 	return next(new AppError('there is no filter', 200));
-	// }
+
+	if (filters.length === 0) {
+		return res.status(204).json({
+			message: 'there is no Filter',
+		});
+	}
+
 	return res.status(200).json({
 		status: 'success',
 		data: filters,
@@ -484,10 +510,10 @@ exports.getAllFilters = catchAsync(async (req, res, next) => {
 });
 
 exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
-	const filter = await filterDB.find().select('filterName');
+	const filter = await filterDB.find().select('filter_name');
 
 	if (!filter) {
-		return next(new AppError('no such a filter', 200));
+		return next(new AppError('there is no Filter', 200));
 	}
 
 	return res.status(200).json({
