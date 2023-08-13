@@ -35,8 +35,8 @@ export function getCsrfToken() {
 //   return token;
 // }
 
-export function checkAuthLoader() {
-  const valid = fetchAuthToken();
+export async function checkAuthLoader() {
+  const valid = await fetchAuthToken();
   if (valid == 200) {
     const token = getAuthToken();
 
@@ -46,7 +46,6 @@ export function checkAuthLoader() {
 
     return token;
   } else {
-    console.log(1);
     return redirect("/loginAdmin");
   }
 }
