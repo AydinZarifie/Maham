@@ -1,0 +1,1061 @@
+.Main {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  height: 100%;
+  overflow: auto;
+  /* position: fixed; */
+}
+
+.MenuDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  height: 42px;
+  background-color: rgb(0, 60, 117);
+}
+
+.MenuButtonsDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 15px;
+  gap: 6px;
+}
+
+.tab:before,
+.tab:after {
+  content: "";
+  position: absolute;
+
+  height: 10px;
+  width: 20px;
+
+  bottom: 0;
+}
+.tab:after {
+  right: -20px;
+
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  -webkit-box-shadow: -10px 0 0 0 #ffffff;
+  box-shadow: -10px 0 0 0 #ffffff;
+}
+
+.tab:before {
+  left: -20px;
+
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  -webkit-box-shadow: 10px 0 0 0 #ffffff;
+  box-shadow: 10px 0 0 0 #ffffff;
+}
+
+.tab2:hover {
+  background: rgb(0, 49, 95);
+}
+.tab2:before,
+.tab2:after {
+  content: "";
+  position: absolute;
+
+  height: 10px;
+  width: 20px;
+
+  bottom: 0;
+}
+.tab2:after {
+  left: -20px;
+  top: 0.3px;
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  -webkit-box-shadow: -10px 0 0 0 transparent;
+  box-shadow: -10px 0 0 0 transparent;
+  rotate: 180deg;
+  /* transition: 0.3s; */
+}
+
+.tab2:before {
+  right: -20px;
+  top: 0.3px;
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  -webkit-box-shadow: 10px 0 0 0 transparent;
+  box-shadow: 10px 0 0 0 transparent;
+  rotate: 180deg;
+  /* transition: 0.3s; */
+  z-index: 10;
+}
+.tab2:hover::after {
+  box-shadow: -10px 0 0 0 rgb(0, 49, 95);
+}
+
+.tab2:hover::before {
+  box-shadow: 10px 0 0 0 rgb(0, 49, 95);
+}
+
+.questionMarkCircle:hover {
+  transform: scale(1.03);
+}
+
+
+.TableMainDiv {
+  margin-top: 65px;
+  margin-bottom: 100px;
+
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.TableDiv {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
+  scrollbar-width: none;
+  display: flex;
+}
+.TableDiv::-webkit-scrollbar {
+  height: 13px;
+  width: 0;
+  background-color: #fff;
+}
+
+.TableDiv::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: rgb(228, 228, 228);
+  border-radius: 10px;
+}
+.TableDiv::-webkit-scrollbar-thumb:hover {
+  background: rgb(213, 213, 213);
+}
+
+.InfoTable {
+  width: 100%;
+  text-align: center;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+.InfoTable th {
+  background-color: #fafafa;
+  padding: 14px 10px;
+  color: rgb(62, 62, 62);
+  border-bottom: 2px solid #dbdada;
+  font-size: 14px;
+  min-width: 110px;
+  position: sticky;
+  top: 0px;
+}
+
+.InfoTable td {
+  color: rgb(83, 83, 83);
+  font-size: 14px;
+  padding: 12px;
+}
+.InfoTable tbody tr {
+  border-bottom: 1px solid #dadada;
+  background-color: rgb(255, 255, 255);
+}
+
+.InfoTable tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.TotalDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ffffff;
+  border: 1px solid #dbdada;
+  border-radius: 0 0 10px 10px;
+}
+
+.TotalHr {
+  background-color: #4f4f4f;
+  border: none;
+  width: 2px;
+  height: 30px;
+  margin: 0;
+}
+
+.TableDiv2 {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
+  scrollbar-width: none;
+  /* display: none; */
+}
+
+.TableDiv2::-webkit-scrollbar {
+  height: 13px;
+  width: 0;
+  background-color: #fff;
+}
+
+.TableDiv2::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: rgb(228, 228, 228);
+  border-radius: 10px;
+}
+.TableDiv2::-webkit-scrollbar-thumb:hover {
+  background: rgb(213, 213, 213);
+}
+
+.InfoTable2 {
+  width: 100%;
+  text-align: center;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+.InfoTable2 th {
+  background-color: #fafafa;
+  padding: 14px 10px;
+  color: rgb(62, 62, 62);
+  border-bottom: 2px solid #dbdada;
+  font-size: 14px;
+  min-width: 110px;
+  position: sticky;
+  top: 0px;
+}
+
+.InfoTable2 td {
+  color: rgb(83, 83, 83);
+  font-size: 14px;
+  padding: 12px;
+}
+.InfoTable2 tbody tr {
+  border-bottom: 1px solid #dadada;
+  background-color: rgb(255, 255, 255);
+}
+
+.InfoTable2 tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.BenefitGreenP {
+  margin: 0;
+  color: #00cf15;
+}
+.BenefitRedP {
+  margin: 0;
+  color: #ff1717;
+}
+
+.TotalDiv2 {
+  width: 100%;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ffffff;
+  border: 1px solid #dbdada;
+  border-radius: 0 0 10px 10px;
+}
+
+/*  */
+
+@media (min-width: 760px) {
+  .EthPrice {
+    width: 120px;
+    height: 38px;
+    background-color: #ffffff;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .EthIcn {
+    width: 26px;
+    height: 26px;
+  }
+  .EthPriceh5 {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #5f5f5f;
+    max-width: 80px;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 760px) {
+  .EthPrice {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .HeaderDiv {
+    position: fixed;
+    top: 0px;
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #fff;
+    z-index: 6;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .Row1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-left: 40px;
+    max-height: 65px;
+  }
+
+  .openSideNav {
+    font-size: 1.7rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .NameAndAddress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .UserName {
+    min-width: 130px;
+    max-width: 270px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    font-weight: 500;
+    color: #383838;
+    font-size: 18px;
+  }
+
+  .shortAddress {
+    white-space: nowrap;
+    font-weight: 400;
+    color: #383838;
+    cursor: pointer;
+    border-radius: 70px;
+    padding: 10.5px;
+    border: 1px solid rgb(209, 213, 219);
+    font-size: 14px;
+  }
+  .longAddress {
+    display: none;
+    position: fixed;
+    top: 70px;
+    z-index: 4;
+    opacity: 0;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #002949;
+    font-weight: 400;
+    color: #fff;
+    max-width: 155px;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    margin-left: -82px;
+    margin-top: -11px;
+    max-height: 54px;
+    min-height: 34px;
+  }
+  .longAddress:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #002949;
+    position: absolute;
+
+    margin-left: 125px;
+    margin-top: -17px;
+    rotate: 270deg;
+  }
+
+  .Row2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-right: 45px;
+  }
+
+  /*  */
+  .tab {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 130px;
+    padding: 12px 15px;
+    height: 17px;
+
+    position: relative;
+    top: 1px;
+    background: #ffffff;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  }
+
+  .tab2 {
+    text-decoration: none;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 130px;
+    padding: 12px 15px;
+    height: 17px;
+
+    font-weight: 300;
+    color: #efefef;
+    position: relative;
+    top: -0.5px;
+    background: transparent;
+
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+  }
+  .questionMarkCircle {
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 130px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #fffefe;
+  }
+
+ 
+
+  .TotalDiv h3 {
+    color: #3e3e3e;
+  }
+
+  .TotalH3 {
+    color: #3e3e3e;
+  }
+  .BenefitH3 {
+    color: #00cf15;
+  }
+}
+@media (max-width: 600px) {
+  .HeaderDiv {
+    position: fixed;
+    top: 0px;
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #fff;
+    z-index: 6;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .Row1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-left: 15px;
+    max-height: 65px;
+    justify-content: space-between;
+    width: 90%;
+  }
+  .openSideNav {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .NameAndAddress {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 3px;
+    margin-top: 10px;
+  }
+
+  .UserName {
+    min-width: 130px;
+    max-width: 210px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    font-weight: 500;
+    color: #383838;
+    margin: 0;
+    padding: 0 7px;
+
+    font-size: 14px;
+  }
+
+  .shortAddress {
+    white-space: nowrap;
+    font-weight: 400;
+    color: #383838;
+    cursor: pointer;
+    border-radius: 70px;
+    font-size: 12px;
+    margin: 0;
+    transition: 0.3s;
+    padding: 2px 7px;
+  }
+  .shortAddress:hover {
+    background-color: #2121211f;
+  }
+  .longAddress {
+    display: none;
+    position: fixed;
+    top: 75px;
+    z-index: 4;
+    opacity: 0;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #002949;
+    font-weight: 400;
+    color: #fff;
+    max-width: 140px;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    margin-left: -36px;
+    margin-top: -10px;
+    max-height: 54px;
+    min-height: 30px;
+    font-size: 12px;
+  }
+  .longAddress:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #002949;
+    position: absolute;
+
+    margin-left: 68px;
+    margin-top: -17px;
+    rotate: 270deg;
+  }
+
+  .Row2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-right: 25px;
+  }
+
+  /*  */
+  .tab {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 12px;
+    width: 110px;
+    padding: 12px 15px;
+    height: 17px;
+
+    position: relative;
+    top: 1px;
+    background: #ffffff;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  }
+  .tab2 {
+    text-decoration: none;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 12px;
+    width: 110px;
+    padding: 12px 15px;
+    height: 17px;
+
+    font-weight: 300;
+    color: #efefef;
+    position: relative;
+    top: -0.5px;
+    background: transparent;
+
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+  }
+  .questionMarkCircle {
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 110px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #ffffff;
+  }
+
+ 
+
+  .TotalDiv h3 {
+    color: #3e3e3e;
+    font-size: 0.95rem;
+  }
+
+  .TotalH3 {
+    color: #3e3e3e;
+    font-size: 0.95rem;
+  }
+  .BenefitH3 {
+    color: #00cf15;
+    font-size: 0.95rem;
+  }
+}
+
+.openSideNav:hover {
+  transform: scale(1.04);
+}
+
+.FirstPart {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.UserName strong {
+  color: #555555;
+  font-weight: 300;
+}
+.addressDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.questionMark {
+  width: 33px;
+  height: 33px;
+  border-radius: 10%;
+  border: 1px solid #ffbb33;
+  text-align: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: 0.3s;
+
+  background-color: #ffffff;
+}
+.questionMark:hover {
+  background-color: #ffbb332a;
+}
+.questionMark p {
+  margin: 3px 0 0 0;
+  color: #ffbb33;
+}
+
+.sideNav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0px;
+  height: 100%;
+  background-color: #121212;
+  z-index: 8;
+  transition: 0.4s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+}
+.sideNavOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  background-color: #ffffff78;
+  backdrop-filter: blur(2px);
+}
+
+.closeSideNav {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #cfcfcf;
+  transition: 0.3s;
+}
+.closeSideNav:hover {
+  color: #f3f3f3;
+}
+.LogoDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  width: 85%;
+}
+.LogoDiv h1 {
+  font-size: 2.6rem;
+  color: #eaeaea;
+  font-weight: 200;
+}
+.Logo {
+  width: 22px;
+}
+.MenuItemDiv {
+  width: 90%;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.MenuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 45px;
+  color: #f4f4f4;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+  white-space: nowrap;
+  background-color: #121212;
+  box-shadow: rgba(255, 255, 255, 0.167) 0px 1px 2px 0px;
+  font-size: 14px;
+  z-index: 1;
+}
+.InsideMenuItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+.MenuIcons {
+  width: 25px;
+  height: 25px;
+  opacity: 0.7;
+}
+.MenuItem:hover {
+  background-color: #9f9f9f1a;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.ManagementAssets {
+  background-color: #121212;
+}
+.ManagementAssets:hover {
+  background-color: #4141411a;
+}
+.ManagementAssetsItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 10px; */
+  max-height: 0px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.ManagementAssetsItems {
+  text-decoration: none;
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.ManagementAssetsItems:hover {
+  background-color: #9f9f9f1a;
+}
+.ManagementAssetsItems2 {
+  text-decoration: none;
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  overflow: hidden;
+  /* margin-top: -20px; */
+}
+
+.ManagementAssetsItems2:hover {
+  background-color: #9f9f9f1a;
+}
+
+.Reports {
+  background-color: #121212;
+}
+.Reports:hover {
+  background-color: #4141411a;
+}
+.ReportsItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 10px; */
+  max-height: 0px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.ReportsItems {
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.ReportsItems:hover {
+  background-color: #9f9f9f1a;
+}
+.ReportsItems2 {
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  overflow: hidden;
+  /* margin-top: -20px; */
+}
+
+.ReportsItems2:hover {
+  background-color: #9f9f9f1a;
+}
+
+.questionMarkMenu {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: absolute;
+  right: 22px;
+  z-index: 2;
+  margin-top: -36px;
+  opacity: 1;
+}
+.questionMarkMenu:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenu p {
+  margin: 2px 0 0 0;
+  color: #ffffff;
+}
+
+
+.questionMarkMenuLittle {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  /* top: -31px; */
+  right: 30px;
+  z-index: 3;
+  opacity: 1;
+}
+.questionMarkMenuLittle:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenuLittle p {
+  margin: 0px 0 0 0;
+  color: #ffffff;
+}
+.managementAssets2{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-left: 30px;
+}
+
+/*  */
+
+.ChartsDiv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 70px;
+  margin-bottom: 80px;
+}
+
+@media (min-width: 830px) {
+  .PieDiv {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 40px 0;
+  }
+  .PieChart {
+    width: 40%;
+    height: 40%;
+    min-width: 390px;
+    margin: 0 auto;
+  }
+
+  .BarDiv {
+    margin: 50px 0;
+    padding: 0 30px;
+  }
+}
+@media (max-width: 830px) {
+  .PieDiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .PieChart {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .BarDiv {
+    margin: 40px 0;
+    /* padding: 0 30px; */
+  }
+}

@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 
 const path = require("path");
@@ -7,7 +8,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 
 //////////////////////////////////////////////
-const adminPage_Router = require("./routes/admin/adminPage")
+const adminPage_Router = require("./routes/admin/adminPage");
 const managmentPage_Router = require("./routes/admin/adminManagment");
 const adminAuth_Router = require("./routes/admin/adminAuth");
 const adminPanel_Router = require("./routes/admin/adminPanel");
@@ -18,12 +19,13 @@ const mongoose = require("mongoose");
 const globalErrorHandler = require("./controllers/globalErrorHandler");
 const AppError = require("./utilities/error/appError");
 const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const csrf = require("csurf");
 
 dotenv.config({ path: "./config.env" });
 
 const app = express();
+
 // ERROR HANDLING
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! Shutting down...");
@@ -31,31 +33,24 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (file.fieldname === "images") {
-      if(req.body.title){
-
+      if (req.body.title) {
         let path = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
-    
-        if(fs.existsSync(path)){
-            cb(null,path)
+
+        if (fs.existsSync(path)) {
+          cb(null, path);
+        } else {
+          fs.mkdirSync(path);
+          cb(null, path);
         }
-        else{
-            fs.mkdirSync(path);
-            cb(null, path);
-        }
-      }
-     else if(req.body.filterName){
+      } else if (req.body.filterName) {
         cb(null, "./uploads/images/filters/");
+      } else if (req.body.countryName && !req.body.title) {
+        cb(null, "./uploads/images/countries/");
       }
-     else if(req.body.countryName && !req.body.title){
-        cb(null,"./uploads/images/countries/")
-      }
-  } 
-    
-    else if (file.fieldname == "video") {
+    } else if (file.fieldname == "video") {
       cb(null, "./uploads/videos/");
     }
   },
@@ -82,53 +77,61 @@ const upload = multer({
     name: "video",
   },
   {
-    name :"logo"
-  }
+    name: "logo",
+  },
 ]);
 
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(globalErrorHandler);
-app.use(session({
-  secret : process.env.SESSION_SECRET_KEY,
-  saveUninitialized: false,
-  resave : false,
-  cookie : {
-    secure : false,
-    maxAge : 70 * 1000
-  }
-}))
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET_KEY,
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      secure: false,
+      maxAge: 70 * 1000,
+    },
+  })
+);
 app.use(cookieParser());
 //2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
-app.use(cors({
-  origin : "http://localhost:3000",
-  credentials : true
-}))   
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
-app.use(express.static('public')) 
+app.use(express.static("public"));
 app.use(
   "uploads/static/",
   express.static(path.join(__dirname, "/uploads/static"))
 );
-// app.use(csrf({cookie : true}));
 
-/* app.use((req,res,next) => {
-  req.locals.csrfToken = req.csrfToken();
-  console.log(req.locals.csrfToken);
-  next();
-}) */
+
+
 app.use(upload);
 
+
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
-app.use("/admin" , adminAuth_Router);
-app.use("/admin" , adminPage_Router);
-app.use("/admin", managmentPage_Router);
-app.use("/admin" , adminPanel_Router);
-app.use("/user" , userAuthorization_Router);
+
+app.use(
+  "/admin",
+  adminAuth_Router,
+)
+
+app.use(
+  "/admin",
+  adminPage_Router,
+  managmentPage_Router,
+  adminPanel_Router
+);
+app.use("/user", userAuthorization_Router);
 
 mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {
   console.log(`DB connection sucessful`);
@@ -149,3 +152,5 @@ process.on("unhandledRejection", (err) => {
   console.log("UNHANDLED REJECTION!");
   console.log(err.name, err.message);
 });
+
+

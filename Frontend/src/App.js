@@ -29,6 +29,10 @@ import EditAdmin, {
 import CustomTableItem from "./components/general/CustomTableItem";
 import Personal from "./components/adminPage/adminPanel/Personal";
 import Profile from "./pages/admin/Profile";
+import UserPanel from "./pages/UserPanel";
+import ManagementAssets from "./components/userPanel/ManagementAssets";
+import Assets from "./components/userPanel/managementAssets/Assets";
+import Transactions from "./components/userPanel/managementAssets/Transactions";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +124,20 @@ const router = createBrowserRouter([
   {
     path: "Verification",
     element: <Verification />,
+  },
+  {
+    path: "userPanel",
+    element: <UserPanel />,
+    children: [
+      {
+        path: "",
+        element: <ManagementAssets />,
+        children: [
+          { index: true, element: <Assets /> },
+          { path: "transactions", element: <Transactions /> },
+        ],
+      },
+    ],
   },
 ]);
 

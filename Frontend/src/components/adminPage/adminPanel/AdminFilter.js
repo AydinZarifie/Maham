@@ -1,12 +1,11 @@
 import styles from "../../../styles/AdminPanel.module.css";
 import overlayStyles from "../../../styles/overlay.module.css";
 import arrowIcon from "../../../images/arrow-down-svgrepo-com.svg";
-import searchIcon from "../../../images/search-svgrepo-com1.svg"
+import searchIcon from "../../../images/search-svgrepo-com1.svg";
 
 import { useState, React, forwardRef, useRef, useEffect } from "react";
 
 const AdminFilter = forwardRef((props, ref) => {
-  const [searchedAdminsShown, setSearchedAdminsShown] = useState(false);
   const filter = useRef(null);
   const [moreFilter, setMoreFilter] = useState(false);
   const searchDiv = useRef(null);
@@ -35,7 +34,8 @@ const AdminFilter = forwardRef((props, ref) => {
   };
 
   const clickHandler = (admin) => {
-    setSearchedAdminsShown(false);
+    // setSearchedAdminsShown(false);
+    closeSearchFilter();
     setFilterData((prev) => ({ ...prev, name: admin }));
   };
 
@@ -99,7 +99,7 @@ const AdminFilter = forwardRef((props, ref) => {
               className={`${styles.searchBox} ${styles.searchBar}`}
               placeholder="Search admin name"
             />
-            <img src={searchIcon} className={styles.SearchIcon}/>
+            <img src={searchIcon} className={styles.SearchIcon} />
           </form>
 
           <div className={styles.FilterBody} ref={filter}>
@@ -204,14 +204,12 @@ const AdminFilter = forwardRef((props, ref) => {
           </button>
         </div>
 
-        {/* {searchedAdminsShown && ( */}
-        {/* props.searchedAdmins.length > 0 && */}
-        <>
-          <div className={styles.SearchDiv} ref={searchDiv}>
-            <div
-              className={overlayStyles.SearchOverlay}
-              onClick={closeSearchFilter}
-            ></div>
+        <div className={styles.SearchDiv} ref={searchDiv}>
+          <div
+            className={overlayStyles.SearchOverlay}
+            onClick={closeSearchFilter}
+          ></div>
+          {props.searchedAdmins.length > 0 && (
             <ul>
               {props.searchedAdmins.map((admin) => (
                 <li
@@ -222,25 +220,9 @@ const AdminFilter = forwardRef((props, ref) => {
                   {admin.firstname} {admin.lastname}
                 </li>
               ))}
-              <li onClick={() => clickHandler("hadi")}>
-                <p>hadi rasouli</p>
-              </li>{" "}
-              <li onClick={() => clickHandler("hadi")}>
-                <p>hadi rasouli</p>
-              </li>{" "}
-              <li onClick={() => clickHandler("hadi")}>
-                <p>hadi rasouli</p>
-              </li>{" "}
-              <li onClick={() => clickHandler("hadi")}>
-                <p>hadi rasouli</p>
-              </li>{" "}
-              <li onClick={() => clickHandler("hadi")}>
-                <p>hadi rasouli</p>
-              </li>
             </ul>
-          </div>
-        </>
-        {/* )} */}
+          )}
+        </div>
       </div>
     </>
   );

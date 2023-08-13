@@ -20,14 +20,31 @@ export function getAuthToken() {
   return token;
 }
 
+export function getCsrfToken() {
+  const csrfToken = Cookies.get("csrfToken");
+
+  if (!csrfToken || csrfToken == "undefined" || csrfToken == "null") {
+    return null;
+  }
+
+  return csrfToken;
+}
+
 // export function tokenLoader() {
 //   const token = getAuthToken();
 //   return token;
 // }
 
 export function checkAuthLoader() {
+  const valid = fetchAuthToken();
   const token = getAuthToken();
+  
   if (!token || token == "undefined" || token == "null") {
+    return redirect("/loginAdmin");
+  }
+
+  if (!valid) {
+    console.log(1);
     return redirect("/loginAdmin");
   }
 
@@ -35,6 +52,14 @@ export function checkAuthLoader() {
 }
 
 async function fetchAuthToken() {
-  const response = await fetch("url");
-  return response.json();
+  const token = getAuthToken();
+  const formData = new FormData();
+  formData.append("token", token);
+  const response = await fetch("http://localhost:5000/admin/verifyToken", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data  = await response.json();
+  return data;
 }

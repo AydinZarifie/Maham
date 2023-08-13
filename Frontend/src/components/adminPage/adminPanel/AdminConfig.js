@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const AdminConfig = ({ method, admin }) => {
-  console.log("hiiiiii");
-  const { error, submitAddAdminHandler, countries, cityFetch, cities } = useOutletContext();
+  const { error, submitAddAdminHandler, countries, cityFetch, cities } =
+    useOutletContext();
 
   const [data, setData] = useState({
     type: admin ? admin.admin_type : "",
@@ -18,6 +18,7 @@ const AdminConfig = ({ method, admin }) => {
     password: "",
     confirmPassword: "",
   });
+
   const [touched, setTouched] = useState({
     type: false,
     firstName: false,
@@ -38,7 +39,7 @@ const AdminConfig = ({ method, admin }) => {
   const enteredCountryIsValid = data.country.trim() !== "";
   const enteredCityIsValid = data.city.trim() !== "";
   const enteredPasswordIsValid = data.password.trim() !== "";
-  const enteredConfirmPasswordIsValid = data.confirmPassword.trim() !== "";
+  const enteredConfirmPasswordIsValid = data.confirmPassword.trim() !== "" && data.password==data.confirmPassword ;
 
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const firstNameIsInvalid = !enteredFirstNameIsValid && touched.firstName;
@@ -50,7 +51,7 @@ const AdminConfig = ({ method, admin }) => {
   const cityIsInvalid = !enteredCityIsValid && touched.city;
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
   const confirmPasswordIsInvalid =
-    !enteredPasswordIsValid && touched.confirmPassword;
+    !enteredConfirmPasswordIsValid && touched.confirmPassword ;
 
   let formIsValidForAdding = false;
   let formIsValidForEditing = false;
@@ -80,7 +81,7 @@ const AdminConfig = ({ method, admin }) => {
     // enteredPasswordIsValid &&
     // enteredConfirmPasswordIsValid
   ) {
-    let formIsValidForEditing = true;
+     formIsValidForEditing = true;
   }
 
   const blurHandler = (event) => {
@@ -121,6 +122,7 @@ const AdminConfig = ({ method, admin }) => {
     }
 
     if (data.password !== data.confirmPassword) {
+      // setData((prev)=>({...prev,confirmPassword:''}))
       return;
     }
 
@@ -459,7 +461,7 @@ const AdminConfig = ({ method, admin }) => {
         </div>
         <div className={styles.signUpDiv}>
           <button className={styles.SubmitBtn} onClick={submit}>
-            Sign up
+            Submit
           </button>
         </div>
       </div>

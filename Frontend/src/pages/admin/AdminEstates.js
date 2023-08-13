@@ -12,7 +12,7 @@ import ProfileModal from "../../components/adminPage/AdminEstate/ProfileModal";
 import ConfirmationModal from "../../components/adminPage/AdminEstate/ConfirmationModal";
 import fetchInstance from "../../util/fetchInstance";
 
-  export default function Estates() {
+export default function Estates() {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState([]);
   const [lockPositionData, setLockPositionData] = useState([]);

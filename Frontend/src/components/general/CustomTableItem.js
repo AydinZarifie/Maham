@@ -39,27 +39,27 @@ const CustomTableItem = (props) => {
     }, 500);
   };
 
+  const shortText =
+    props.text.slice(0, 5) +
+    "..." +
+    props.text.slice(props.text.length - 3, props.text.length);
+
   return (
     <span className={styles.AddressDiv}>
-      <div
-        className={styles.numberContainer}
-        
-      >
+      <div className={styles.numberContainer}>
         <div className={styles.HoverDiv}>
-        <div className={styles.FullNumber} ref={hoveredContent}>
-          <p
-           ref={contentRef} className={styles.FullNumberP}>
-            {props.text}
-          </p>
-        </div>
-        <div ref={hoveredCopy} className={styles.CopyBox}>
-          {copied ? "Copied!" : "Copy Address"}
-        </div>
+          <div className={styles.FullNumber} ref={hoveredContent}>
+            <p ref={contentRef} className={styles.FullNumberP}>
+              {props.text}
+            </p>
+          </div>
+          <div ref={hoveredCopy} className={styles.CopyBox}>
+            {copied ? "Copied!" : "Copy Address"}
+          </div>
         </div>
         <span className={styles.partialNumber}>
-          <p onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
-          0X123...345
+          <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            {shortText}
           </p>
           {!copied && (
             <img
@@ -80,7 +80,6 @@ const CustomTableItem = (props) => {
           )}
         </span>
       </div>
-     
     </span>
   );
 };

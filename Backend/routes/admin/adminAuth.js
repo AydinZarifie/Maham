@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const  router = express.Router();
 const { body } = require('express-validator');
 const adminAuthController = require('../../controllers/admin/adminAuth');
 const verifyToken = require('../../middleware/verifyToken');
@@ -24,5 +24,9 @@ router
 router
 	.route("/auth/profile")
 	.get(verifyToken,adminAuthController.editAdminProfileInfo);
+
+router
+	.route("/verifyToken")
+	.post(adminAuthController.verifyAdminAccessTokenProtectedRoute);
 
 module.exports = router;

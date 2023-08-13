@@ -18,6 +18,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		message: 'success',
 		data: countries,
+		csrfToken : req.csrfToken()
 	});
 });
 
@@ -47,6 +48,8 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: country.cities,
+		csrfToken : req.csrfToken()
+
 	});
 });
 
@@ -62,6 +65,8 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
+		csrfToken : req.csrfToken()
+
 	});
 });
 
@@ -166,5 +171,6 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
+		csrfToken : req.csrfToken()
 	});
 });

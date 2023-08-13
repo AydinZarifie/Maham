@@ -43,15 +43,14 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
               {options.map((option) => (
                 <li
                   className={
-                    selectedOptions.includes(option.filterName)
+                    selectedOptions.includes(option)
                       ? styles.selectedOption
                       : ""
                   }
-                  key={option.filterName}
+                  key={option}
                   onClick={() => handleOptionClick(option)}
                 >
-
-                 {option.filterName}
+                 {option}
                 </li>
               ))}
             </ul>
@@ -61,8 +60,8 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
 
       <div className={styles.selectedTags}>
         {selectedOptions.map((option) => (
-          <div key={option.filterName} className={styles.selectedTag}>
-            {option.filterName}
+          <div key={option} className={styles.selectedTag}>
+            {option}
             <span
               className={styles.removeTag}
               onClick={() => handleRemoveOption(option)}
