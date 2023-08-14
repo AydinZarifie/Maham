@@ -1,7 +1,7 @@
 import styles from "../../styles/userPanel.module.css";
 
 import ethIcon from "../../images/ethereum-svgrepo-com.svg";
-import logoImg from "../../images/Maham2.png"
+import logoImg from "../../images/Maham2.png";
 import { useRef } from "react";
 
 const Header = (props) => {
@@ -40,8 +40,8 @@ const Header = (props) => {
       <div className={styles.Row1}>
         <div className={styles.FirstPart}>
           <div className={styles.LogoDivOutside}>
-          <img src={logoImg} className={styles.LogoImg}/>
-        </div>
+            <img src={logoImg} className={styles.LogoImg} />
+          </div>
           <div className={styles.openSideNav} onClick={props.openNavHandler}>
             &#9776;
           </div>
@@ -62,6 +62,9 @@ const Header = (props) => {
                 0x61945678912345678912345678912345678912
               </p>
             </div>
+            {/* <div className={styles.addressDiv}>
+              <h4 className={styles.shortAddress2}>Connect Wallet</h4>
+            </div> */}
           </div>
         </div>
 
@@ -70,9 +73,9 @@ const Header = (props) => {
           <h5 className={styles.EthPriceh5}>9876$</h5>
         </div>
         <div className={styles.Question}>
-        <div className={styles.questionMark} onClick={props.toggleTutorial}>
-          <p>?</p>
-            </div>
+          <div className={styles.questionMark} onClick={props.toggleTutorial}>
+            <p>?</p>
+          </div>
           <div className={styles.questionMark2}>
             <p>!</p>
           </div>

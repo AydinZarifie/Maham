@@ -1,3 +1,45 @@
+.invalid {
+  border: 1px solid #ff2c2c;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+  color: #484848;
+  transition: 0.3s;
+  outline: none;
+}
+
+.invalidForSelect{
+  appearance: none;
+  background: rgba(239, 239, 239, 0);
+  width: 130px;
+  height: 42px;
+  border: 1px solid #ff2c2c;
+  border-radius: 4px;
+  color: #484848;
+  z-index: 100;
+  cursor: pointer;
+  outline: none;
+  padding: 0 10px;
+  position: relative;
+}
+
+.invalidForSelect2{
+  appearance: none;
+  background: rgba(239, 239, 239, 0);
+  width: 100%;
+  height: 42px;
+  border: 1px solid #ff2c2c;
+  border-radius: 4px;
+  color: #626262;
+  z-index: 100;
+  cursor: pointer;
+  outline: none;
+  padding: 0 10px;
+  position: relative;
+}
+
 @media (min-width: 1150px) {
   .InfoBody {
     width: 100%;
@@ -133,8 +175,8 @@
     margin: 5px 3px;
     max-height: 270px;
     min-height: 270px;
-    width:48.9%;
-   border-radius: 4px;
+    width: 48.9%;
+    border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
     scroll-snap-align: center;
@@ -312,13 +354,12 @@
     font-size: 12px;
   }
   .gallery img {
-
     display: block;
     margin: 5px 3px;
     max-height: 190px;
     min-height: 190px;
-    width:48.3%;
-   border-radius: 4px;
+    width: 48.3%;
+    border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
     scroll-snap-align: center;

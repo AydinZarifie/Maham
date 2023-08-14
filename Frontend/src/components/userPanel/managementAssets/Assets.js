@@ -144,7 +144,7 @@ const Assets = () => {
               <th>City</th>
               <th>P/M</th>
               <th>Buy Price</th>
-              <th>Sell Price</th>
+              <th>Sell Position</th>
               <th>Lock Position</th>
             </tr>
           </thead>
@@ -155,7 +155,7 @@ const Assets = () => {
               <td>California</td>
               <td>0.89</td>
               <td>304800 ETH</td>
-              <td>h258900 ETH</td>
+              <td>True</td>
               <td>False</td>
             </tr>
           </tbody>

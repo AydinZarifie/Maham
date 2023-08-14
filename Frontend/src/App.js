@@ -1,9 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import DetailPage, {
-  loader as estateDetailLoader,
-  loader,
-} from "./pages/DetailPage";
+import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
 import AdminPage from "./pages/admin/AdminPage";
 import Dashboard from "./components/adminPage/Dashboard";
 import AdminEstates from "./pages/admin/AdminEstates";
@@ -20,13 +17,11 @@ import SellPosition from "./components/adminPage/AdminEstate/SellPosition";
 import GetDocuments from "./components/adminPage/AdminEstate/GetDocuments";
 import Estates from "./components/adminPage/AdminEstate/Estates";
 import { action as logoutAction } from "./pages/admin/Logout";
-
 import { checkAuthLoader } from "./util/auth";
 import Verification from "./pages/Verification";
 import EditAdmin, {
   loader as adminDetailLoader,
 } from "./components/adminPage/adminPanel/EditAdmin";
-import CustomTableItem from "./components/general/CustomTableItem";
 import Personal from "./components/adminPage/adminPanel/Personal";
 import Profile from "./pages/admin/Profile";
 import UserPanel from "./pages/UserPanel";

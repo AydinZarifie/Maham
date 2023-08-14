@@ -61,16 +61,16 @@ const StepTwo = (props) => {
   const enteredPassportIdIsValid = data.passportId.trim().length != 0;
 
   const genderIsInvalid = !enteredGenderIsValid && touched.gender;
-  const firstNameIsInvalid = !enteredGenderIsValid && touched.gender;
-  const lastNameIsInvalid = !enteredGenderIsValid && touched.gender;
-  const countryIsInvalid = !enteredGenderIsValid && touched.gender;
-  const cityIsInvalid = !enteredGenderIsValid && touched.gender;
-  const yearOfBirthIsInvalid = !enteredGenderIsValid && touched.gender;
-  const monthOfBirthIsInvalid = !enteredGenderIsValid && touched.gender;
-  const dayOfBirthIsInvalid = !enteredGenderIsValid && touched.gender;
-  const emailIsInvalid = !enteredGenderIsValid && touched.gender;
-  const phoneNumberIsInvalid = !enteredGenderIsValid && touched.gender;
-  const passportIdIsInvalid = !enteredGenderIsValid && touched.gender;
+  const firstNameIsInvalid = !enteredFirstNameIsValid && touched.gender;
+  const lastNameIsInvalid = !enteredLastNameIsValid && touched.gender;
+  const countryIsInvalid = !enteredCountryIsValid && touched.gender;
+  const cityIsInvalid = !enteredCityIsValid && touched.gender;
+  const yearOfBirthIsInvalid = !enteredYearOfBirthIsValid && touched.gender;
+  const monthOfBirthIsInvalid = !enteredMonthOfBirthIsValid && touched.gender;
+  const dayOfBirthIsInvalid = !enteredDayOfBirthIsValid && touched.gender;
+  const emailIsInvalid = !enteredEmailIsValid && touched.gender;
+  const phoneNumberIsInvalid = !enteredPhoneNumberIsValid && touched.gender;
+  const passportIdIsInvalid = !enteredPassportIdIsValid && touched.gender;
 
   let formIsvalid = false;
 
@@ -91,37 +91,35 @@ const StepTwo = (props) => {
   }
 
   const genderClass = genderIsInvalid
-    ? `${styles.invalid} ${styles.mySelect} `
+    ? `${styles.invalidForSelect}  `
     : `${styles.mySelect} `;
   const firstNameClass = firstNameIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const lastNameClass = lastNameIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const countryClass = countryIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
-  const cityClass = cityIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
-    : `${styles.inputs} `;
+  const cityClass = cityIsInvalid ? `${styles.invalid}  ` : `${styles.inputs} `;
   const monthOfBirthClass = monthOfBirthIsInvalid
-    ? `${styles.invalid} ${styles.mySelect2} `
+    ? `${styles.invalidForSelect2}  `
     : `${styles.mySelect2} `;
   const dayOfBirthClass = dayOfBirthIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const yearOfBirthClass = yearOfBirthIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const emailClass = emailIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const phoneNumberClass = phoneNumberIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const passportIdClass = passportIdIsInvalid
-    ? `${styles.invalid} ${styles.inputs} `
+    ? `${styles.invalid} `
     : `${styles.inputs} `;
 
   const eventHandler = (event) => {
@@ -205,9 +203,15 @@ const StepTwo = (props) => {
             value={data.firstName}
             onChange={eventHandler}
             className={firstNameClass}
+            // style={firstNameIsInvalid ? {border:"1px solid #ff2c2c"}:{}}
           />
           <label className={styles.label} htmlFor="fname">
-            <div className={styles.text}>First Name</div>
+            <div
+              className={styles.text}
+              //  style={firstNameIsInvalid ? {color:"red"}:{}}
+            >
+              First Name
+            </div>
           </label>
         </div>
 
@@ -286,7 +290,7 @@ const StepTwo = (props) => {
             </select>
           </div>
         </div>
-
+        
         <div className={styles.inputContainer3}>
           <input
             type="number"
