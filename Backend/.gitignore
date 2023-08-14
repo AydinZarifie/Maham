@@ -1,3 +1,5 @@
 /node_modules
 *.jpg
 /controllers/user/userProfile.js
+/userPanel.js
+/userProfile.js

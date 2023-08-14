@@ -241,18 +241,23 @@ exports.getLockEstates = catchAsync(async (req, res, next) => {
 		return next(new AppError('There is no locked estate!', 404));
 	}
 
-	return res
-		.status(200)
-		.json({
-			status: 'success',
-			data: lockedEstates,
-			csrfToken: req.csrfToken(),
-		});
+	return res.status(200).json({
+		status: 'success',
+		data: lockedEstates,
+		csrfToken: req.csrfToken(),
+	});
 });
 
 exports.getSellPositionEstates = catchAsync(async (req, res, next) => {
-	const estate = await estateDB.find({ sell_position: true });
-	return res.status(200).json({ data: estate, csrfToken: req.csrfToken() });
+	const estates = await estateDB.find({ sell_position: true });
+
+	if (!estates || estates.length === 0) {
+		return res
+			.status(404)
+			.json({ message: 'there is no in-sell-position Estate' });
+	}
+
+	return res.status(200).json({ data: estates, csrfToken: req.csrfToken() });
 });
 
 // restricts the specific actions to specific types

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const countryDB = require('./country');
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema
@@ -278,16 +279,13 @@ const estateSchema = new mongoose.Schema(
 		getDocument: {
 			type: Boolean,
 		},
+		estate_filters: {
+			type: [String],
+		},
 		country_ref: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Country',
 		},
-		filter_ref: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Filter',
-			},
-		],
 
 		////import  createdBy////
 		/////////////////////////
@@ -297,7 +295,38 @@ const estateSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
-
 // update The users assets array when a but operation gets performed //
+
+// refrences the estate to its country model & updates last_mints object of country document
+estateSchema.pre('save', async function (next) {
+	// gonna be COMPLETED for editing estates
+	// if (!this.isNew) {return next()}
+
+	const country = await countryDB.findOne({
+		country_name: this.country_name,
+	});
+
+	if (!country) {
+		return next(
+			new AppError('country is not defined , please create country first', 400)
+		);
+	}
+
+	const startsWith =
+		country.country_code +
+		(country.cities.indexOf(this.city_name) + 1).toString();
+
+	const estateNum = this.mint_id.slice(startsWith.length, this.mint_id.length);
+	const obj = {
+		...country.last_mints,
+		[startsWith]: `${estateNum}`,
+	};
+
+	country.last_mints = obj;
+	country.country_estates.push(this._id);
+	await country.save();
+
+	next();
+});
 
 module.exports = mongoose.model('real_estates', estateSchema);

@@ -131,11 +131,23 @@ exports.searchEstateByFilter = catchAsync(async (req, res, next) => {
 });
 
 exports.onBuyEstate = catchAsync(async (req, res, next) => {
-	const { estateId, userId, userWallet } = req.body;
+	const { estateId, sellerId, buyerId, buyerWallet } = req.body;
 
+	// 1) delete the estateId from sellers assets
+	const updatedSeller = await userDB.findOneAndUpdate(
+		{ _id: sellerId },
+		{ $pull: { assets: estateId } }, // to modify only that field
+		{ new: true }
+	);
+
+	if (!updatedSeller) {
+		return next(new AppError('Seller not found', 404));
+	}
+
+	// 2) find the estate that is being sold , update its landlord field >> buyer is new ladnlord
 	const newEstate = await estateDB.findOneAndUpdate(
 		{ _id: estateId },
-		{ $set: { landLord_address: userWallet } }, // to modify only that field
+		{ $set: { landLord_address: buyerWallet } }, // to modify only that field
 		{ new: true }
 	);
 
@@ -143,14 +155,15 @@ exports.onBuyEstate = catchAsync(async (req, res, next) => {
 		return next(new AppError('Estate not found', 404));
 	}
 
-	const newUser = await userDB.findOneAndUpdate(
-		{ _id: userId },
+	// 3) add the estateId to buyer's assets
+	const updatedBuyer = await userDB.findOneAndUpdate(
+		{ _id: buyerId },
 		{ $push: { assets: estateId } }, // to modify only that field
 		{ new: true }
 	);
 
-	if (!newUser) {
-		return next(new AppError('User not found', 404));
+	if (!updatedBuyer) {
+		return next(new AppError('Buyer not found', 404));
 	}
 
 	return res.status(200).json({
