@@ -145,13 +145,14 @@ const Signin = () => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        const name = data.name;
-        const type = data.type;
+        const firstName = data.adminData.firstName;
+        console.log(firstName);
         const csrf=data.csrfToken;
         console.log(csrf);
         Cookies.set('token',token)
-        localStorage.setItem('name',name)
-        localStorage.setItem('type',type)
+        localStorage.setItem('name',firstName)
+        console.log(firstName);
+       // localStorage.setItem('type',type)
         Cookies.set('csrfToken',csrf)
         
         // const expiration = new Date();

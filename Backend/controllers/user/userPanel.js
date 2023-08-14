@@ -26,3 +26,4 @@ exports.getMyAssets = catchAsync(async (req, res, next) => {
 		data: user.assets,
 	});
 });
+

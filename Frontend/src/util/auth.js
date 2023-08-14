@@ -35,20 +35,19 @@ export function getCsrfToken() {
 //   return token;
 // }
 
-export function checkAuthLoader() {
-  const valid = fetchAuthToken();
-  const token = getAuthToken();
-  
-  if (!token || token == "undefined" || token == "null") {
+export async function checkAuthLoader() {
+  const valid = await fetchAuthToken();
+  if (valid == 200) {
+    const token = getAuthToken();
+
+    if (!token || token == "undefined" || token == "null") {
+      return redirect("/loginAdmin");
+    }
+
+    return token;
+  } else {
     return redirect("/loginAdmin");
   }
-
-  if (!valid) {
-    console.log(1);
-    return redirect("/loginAdmin");
-  }
-
-  return token;
 }
 
 async function fetchAuthToken() {
@@ -60,6 +59,6 @@ async function fetchAuthToken() {
     body: formData,
   });
 
-  const data  = await response.json();
-  return data;
+  // const response  = await response.json();
+  return response.status;
 }
