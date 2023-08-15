@@ -12,6 +12,7 @@ exports.generateMint = (country, modifiedCityName) => {
 	const countryCode = country.country_code;
 	let cityCode;
 	let estateCode;
+	let mint;
 
 	// assign city code
 	const cityIndex = country.cities.indexOf(modifiedCityName) + 1;
@@ -26,18 +27,21 @@ exports.generateMint = (country, modifiedCityName) => {
 		estateNum = parseInt(country.last_mints[countryCode + cityCode]) + 1;
 		console.log(estateNum);
 		estateCode = estateNum.toString();
+		mint = countryCode + cityCode + estateCode;
 	} else {
 		for (let i = 0; i < country.available_mints.length; i++) {
 			if (pattern.test(country.available_mints[i])) {
 				// If a match is found, print the element and stop searching
-				estateCode = country.available_mints.splice(i, 1)[0];
+				// estateCode = country.available_mints.splice(i, 1)[0];
+				estateCode = country.available_mints[i];
+				mint = estateCode;
 				break;
 			}
 		}
 	}
 
-	// generating the mint
-	return (mint = countryCode + cityCode + estateCode);
+	// return the generated mint
+	return mint;
 };
 
 exports.formatStr = (str) => {

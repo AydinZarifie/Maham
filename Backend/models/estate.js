@@ -299,11 +299,9 @@ const estateSchema = new mongoose.Schema(
 );
 
 estateSchema.pre('save', async function (next) {
-	// if document is not NEW or if it is , then if the country_name field is NOT MODIFIED >> do NOTHING
-	if (!this.isNew || !this.isModified('country_name')) {
+	if (!this.isNew) {
 		return next();
 	}
-	console.log('2');
 
 	const country = await countryDB.findOne({
 		country_name: this.country_name,
@@ -315,34 +313,60 @@ estateSchema.pre('save', async function (next) {
 		);
 	}
 
-	const countryId = country._id;
-	console.log(countryId);
-	if (this.isNew) {
-		const startsWith =
-			country.country_code +
-			(country.cities.indexOf(this.city_name) + 1).toString();
+	const startsWith =
+		country.country_code +
+		(country.cities.indexOf(this.city_name) + 1).toString();
 
-		const estateNum = this.mint_id.slice(
-			startsWith.length,
-			this.mint_id.length
-		);
+	const estateNum = this.mint_id.slice(startsWith.length, this.mint_id.length);
+
+	if (country.available_mints.includes(startsWith + estateNum)) {
+		country.available_mints.splice(
+			country.available_mints.indexOf(startsWith + estateNum),
+			1
+		)[0];
+	} else {
 		const obj = {
 			...country.last_mints,
 			[startsWith]: `${estateNum}`,
 		};
 
-		// 1) update the lastMint object of the country >> YES in NEW
+		// 1) update the lastMint object of the country >> just if document is NEW
 		country.last_mints = obj;
+	}
 
-		// 2) Put countryId >> inside estate's country_ref >> YES in NEW & EDIT : in EDIT ONLY if (this.isModified(country_name))
+	await country.save();
+
+	next();
+});
+
+estateSchema.pre('save', async function (next) {
+	// if document is not NEW or if it is , then if the country_name field is NOT MODIFIED >> do NOTHING
+	if (!this.isNew || !this.isModified('country_name')) {
+		return next();
+	}
+
+	const country = await countryDB.findOne({
+		country_name: this.country_name,
+	});
+
+	if (!country) {
+		return next(
+			new AppError('country does not exist ,please create country first', 404)
+		);
+	}
+	const countryId = country._id;
+
+	if (this.isNew) {
+		// the document is being created and NEW
+
 		this.country_ref = countryId;
 
-		// 3) Put estateId >> inside country's estates array >> YES in NEW
+		// 3) Put estateId >> inside country's estates array >> just if document is NEW
 		country.country_estates.push(this._id);
 
 		await country.save();
 	} else if (this.isModified('country_name')) {
-		// 2) Put countryId >> inside estate's country_ref >> YES in NEW & EDIT : ONLY if (this.isModified(country_name))
+		// document is being EDITED
 		this.country_ref = countryId;
 		await country.save();
 	}

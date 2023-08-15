@@ -25,6 +25,7 @@ const adminPanel_router = require('./routes/admin/adminPanel');
 const userAuthorization_router = require('./routes/user/userAuthorization');
 const userAuthentication_router = require('./routes/user/userAuthentication');
 const userPanel_router = require('./routes/user/userPanel');
+// const userProfile_router = require('./routes/user/userProfile');
 ///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
@@ -169,10 +170,9 @@ app.use(upload);
 // });
 // app.use(cors({ credentials: true, origin: true }));
 
-app.use('/admin', adminAuth_router);
-
 app.use(
 	'/admin',
+	adminAuth_router,
 	adminPage_router,
 	adminManagmentPage_router,
 	adminPanel_router
@@ -182,7 +182,8 @@ app.use(
 	'/user',
 	userAuthorization_router,
 	userAuthentication_router,
-	userPanel_router
+	userPanel_router,
+	userProfile_router
 );
 
 const DBlocal = process.env.LOCAL_DATABASE;
