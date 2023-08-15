@@ -2,6 +2,7 @@ const adminDB = require('../../models/admin');
 const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
+const bcrypt = require('bcryptjs');
 const { filterObj } = require('./../../utilities/mint');
 const { isEmail } = require('validator');
 
