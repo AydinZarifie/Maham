@@ -186,23 +186,7 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 	// 	return next(new AppError('wrong email format', 401));
 	// }
 
-	const newPassword = req.body.password;
-	if (req.body.confirmPassword) {
-		const confirmNewPassword = req.body.confirmPassword;
-
-		// 4) check if new password and its confirmation is equal
-		if (newPassword !== confirmPassword) {
-			return next(
-				new AppError('password and password confirmation does not match', 401)
-			);
-		}
-	}
-
-	// 5) hash the new password
-	const hashedPassword = await bcrypt.hash(newPassword, 12);
-
-	// 1) update admin document
-	const filteredFields = {
+	let filteredFields = {
 		first_name: req.body.firstName,
 		last_name: req.body.lastName,
 		email: req.body.email,
@@ -213,6 +197,26 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 
 		// profile_image: req.files.images[0].path,
 	};
+
+	if (req.body.confirmPassword && req.body.password) {
+		const newPassword = req.body.password;
+
+		const confirmNewPassword = req.body.confirmPassword;
+
+		// check if new password and its confirmation is equal
+		if (newPassword !== confirmNewPassword) {
+			return next(
+				new AppError('password and password confirmation does not match', 401)
+			);
+		}
+		// hash the new password
+		const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+		filteredFields = {
+			...filteredFields,
+			password: hashedPassword,
+		};
+	}
 
 	const updatedAdmin = await adminDB.findByIdAndUpdate(
 		// req.admin.id,
