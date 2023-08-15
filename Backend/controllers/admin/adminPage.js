@@ -62,31 +62,12 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		return next(new AppError('please create country first', 404));
 	}
 	const countryId = country.id;
-
-	////////////////////////////////////////
-
-	///////// Reference the estate to its filters instance in filterDB
-	const filterNames = req.body.filterName; // Assuming it's an array of filter names
-
-	// Query the filterDB to find the filters with the given names
-	const filters = await filterDB
-		.find({ filter_name: { $in: filterNames } })
-		.select('_id');
-
-	// Check if any filters were found
-	if (!filters || filters.length === 0) {
-		return next(
-			new AppError('There are no filters matching the provided names', 404)
-		);
-	}
-
-	// Extract the IDs of the filters
-	const filterIds = filters.map((filter) => filter._id);
-
 	////////////////////////////////////////
 
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
+
+		estateFilter: req.body.filters,
 		estate_title: formatStr(req.body.title),
 		city_name: req.body.cityName,
 		country_name: req.body.countryName,
@@ -164,7 +145,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 
 	const estate = new estateDB({
 		///////////////////////////////////////////////////////////// setState :
-		filter_ref: filterIds,
+		estate_filters: inputs.estateFilter,
 		country_ref: countryId,
 		estate_title: inputs.estate_title,
 		city_name: inputs.city_name,
@@ -295,9 +276,14 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 exports.updateEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
 
+	req.body.filters.forEach((filter) => {
+		return estate_filters.push(filter);
+	});
+
 	const estate = await estateDB.findById(estateId);
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
+		estate_filters: estate.estate_filters.concat(req.body.filters),
 		estate_title: req.body.title,
 		city_name: req.body.cityName,
 		country_name: req.body.countryName,
@@ -310,7 +296,6 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		estate_description: req.body.description,
 		estate_type: req.body.type,
 		maham_price: req.body.mahamPrice,
-		filter_name: req.body.filter,
 		mintId: req.body.mintId,
 
 		// introduction_video: req.files.video.map((el) => {
@@ -379,7 +364,9 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 	///////////////////////////////////////////////////////////// setState :
 	// stateId : ,
 	(estate.estate_title = inputs.estate_title),
-		(estate.unit_number = inputs.unitNumber),
+		(estate.estate_filters = inputs.estate_filters)(
+			(estate.unit_number = inputs.unitNumber)
+		),
 		(estate.city_name = inputs.city_name),
 		(estate.country_name = inputs.country_name),
 		(estate.main_street = inputs.main_street),

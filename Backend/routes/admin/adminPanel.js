@@ -8,11 +8,8 @@ router.get(
 	adminPanelController.getSellPositionEstates
 );
 router.get('/panel/getAdmins', adminPanelController.getAllAdmins);
-router.post('/panel/searchName', adminPanelController.searchAdminByName);
-router.post(
-	'/panel/getAdminsWithFilter',
-	adminPanelController.searchAdminByFilter
-);
+router.post('/panel/search/name', adminPanelController.searchAdminByName);
+router.post('/panel/search/filter', adminPanelController.searchAdminByFilter);
 
 router
 	.route('/panel/editAdmin/:id')

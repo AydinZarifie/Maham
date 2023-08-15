@@ -83,6 +83,14 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 	// 3) check if user exists
 	const admin = await adminDB.findOne({ email }).select('+password');
 
+	const adminInfo = {
+		adminType: admin.admin_type,
+		firstName: admin.first_name,
+		lastName: admin.last_name,
+	};
+
+	console.log(adminInfo);
+
 	if (!admin) {
 		return next(new AppError('admin not found', 405));
 	}
@@ -95,8 +103,9 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		);
 	}
 
+	console.log(verificationCode);
 	// 5) check if cookie expired
-	if (!req.session.verificationCode) {
+	if (!verificationCodeSession) {
 		return next(new AppError('verification code has expired, try again.', 402));
 	}
 
@@ -126,6 +135,7 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		status: 'success',
 		token: accessToken,
 		adminId: admin._id,
+		adminData: adminInfo,
 	});
 });
 
@@ -182,7 +192,7 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 			return next(new AppError('Wrong password!', 405));
 		}
 
-		const verificationCode = Math.floor(100000 + Math.random() * 900000);
+		const verificationCode = Math.floor(100000 + Math.random() * 9000);
 
 		req.session.verificationCode = verificationCode;
 
@@ -249,8 +259,10 @@ exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
 	try {
 		const accessToken = req.body.token;
 
+		console.log(accessToken);
+
 		if (!accessToken) {
-			return res.status(200).json({
+			return res.status(401).json({
 				message: 'accessToken was empty',
 			});
 		}

@@ -14,16 +14,16 @@ exports.generateMint = (country, modifiedCityName) => {
 	let estateCode;
 
 	// assign city code
-	const cityIndex = country.country_cities.indexOf(modifiedCityName) + 1;
+	const cityIndex = country.cities.indexOf(modifiedCityName) + 1;
 	cityCode = cityIndex.toString();
 
 	// assining the estate Code
 	// let availableMints = country.available_mints;
 	const startsWith = countryCode + cityCode;
-
 	const pattern = new RegExp(`^${startsWith}`, 'i');
+
 	if (country.available_mints.length === 0) {
-		estateNum = country.last_mints[countryCode + cityCode] + 1;
+		estateNum = parseInt(country.last_mints[countryCode + cityCode]) + 1;
 		console.log(estateNum);
 		estateCode = estateNum.toString();
 	} else {
