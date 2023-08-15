@@ -2,6 +2,7 @@ const adminDB = require('../../models/admin');
 const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
+const bcrypt = require('bcryptjs');
 const { filterObj } = require('./../../utilities/mint');
 const { isEmail } = require('validator');
 
@@ -185,6 +186,21 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 	// 	return next(new AppError('wrong email format', 401));
 	// }
 
+	const newPassword = req.body.password;
+	if (req.body.confirmPassword) {
+		const confirmNewPassword = req.body.confirmPassword;
+
+		// 4) check if new password and its confirmation is equal
+		if (newPassword !== confirmPassword) {
+			return next(
+				new AppError('password and password confirmation does not match', 401)
+			);
+		}
+	}
+
+	// 5) hash the new password
+	const hashedPassword = await bcrypt.hash(newPassword, 12);
+
 	// 1) update admin document
 	const filteredFields = {
 		first_name: req.body.firstName,
@@ -193,7 +209,8 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 		phone_number: req.body.phoneNumber,
 		country_name: req.body.country,
 		city_name: req.body.city,
-		// password: req.body.password,
+		password: hashedPassword,
+
 		// profile_image: req.files.images[0].path,
 	};
 

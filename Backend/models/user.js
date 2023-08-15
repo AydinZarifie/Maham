@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
-{
+	{
 		first_name: {
 			type: String,
 		},
@@ -38,13 +38,6 @@ const userSchema = new mongoose.Schema(
 			{
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'real_estates',
-			},
-		],
-		user_country_ref: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Country',
-				required: [true, 'user must belong to a country'],
 			},
 		],
 	},

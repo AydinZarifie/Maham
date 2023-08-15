@@ -2,4 +2,4 @@
 *.jpg
 /controllers/user/userProfile.js
 /userPanel.js
-/userProfile.js
+routes/user/userProfile.js
