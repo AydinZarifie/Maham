@@ -54,16 +54,6 @@ exports.getCities = catchAsync(async (req, res, next) => {
 });
 
 exports.createEstate = catchAsync(async (req, res, next) => {
-	///////// refrencing the estate to its country instance in countryDB
-	const country = await countryDB.findOne({
-		country_name: `${req.body.countryName}`,
-	});
-	if (!country) {
-		return next(new AppError('please create country first', 404));
-	}
-	const countryId = country.id;
-	////////////////////////////////////////
-
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
 
@@ -146,7 +136,6 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	const estate = new estateDB({
 		///////////////////////////////////////////////////////////// setState :
 		estate_filters: inputs.estateFilter,
-		country_ref: countryId,
 		estate_title: inputs.estate_title,
 		city_name: inputs.city_name,
 		country_name: inputs.country_name,
