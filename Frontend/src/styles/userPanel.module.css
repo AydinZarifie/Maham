@@ -200,10 +200,13 @@
 }
 
 .TableDiv2 {
+  position: absolute;
+  top: 110px;
   width: 100%;
   height: auto;
-  min-height: 550px;
-  max-height: 550px;
+  height: 78%;
+  /* min-height: 570px;
+  max-height: 570px; */
   overflow-y: scroll;
   overflow-x: scroll;
   scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
@@ -272,6 +275,8 @@
 .TotalDiv2 {
   width: 100%;
   display: flex;
+  position: fixed;
+  bottom: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
@@ -293,15 +298,15 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 2px;
   }
   .EthIcn {
     width: 26px;
     height: 26px;
   }
   .EthPriceh5 {
-    font-weight: 500;
-    font-size: 1rem;
+    font-weight: 400;
+    font-size: .9rem;
     color: #ffffff;
     max-width: 80px;
     overflow-x: hidden;
@@ -374,6 +379,23 @@
     min-width: 100px;
     text-align: center;
   }
+
+  .shortAddress2 {
+    white-space: nowrap;
+    font-weight: 400;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 70px;
+    padding: 10.5px;
+    border: 1px solid rgb(209, 213, 219);
+    font-size: 14px;
+    min-width: 100px;
+    text-align: center;
+    transition: .3s;
+  }
+  .shortAddress2:hover{
+    background-color: #52627c;
+  }
   .longAddress {
     display: none;
     position: fixed;
@@ -385,7 +407,7 @@
     background-color: #002949;
     font-weight: 400;
     color: #fff;
-    max-width: 155px;
+    max-width: 157px;
     border-radius: 8px;
     padding: 5px 10px;
     font-size: 13px;
@@ -590,6 +612,21 @@
   .shortAddress:hover {
     background-color: #2121211f;
   }
+
+  .shortAddress2 {
+    white-space: nowrap;
+    font-weight: 400;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 70px;
+    font-size: 12px;
+    margin: 0;
+    transition: 0.3s;
+    padding: 2px 7px;
+  }
+  .shortAddress2:hover {
+    background-color: #2121211f;
+  }
   .longAddress {
     display: none;
     position: fixed;
@@ -601,10 +638,10 @@
     background-color: #002949;
     font-weight: 400;
     color: #fff;
-    max-width: 140px;
+    max-width: 145px;
     border-radius: 8px;
     padding: 5px 10px;
-    font-size: 13px;
+    font-size: 12px;
     margin-left: -36px;
     margin-top: -10px;
     max-height: 54px;
@@ -753,6 +790,7 @@
   display: flex;
   flex-direction: column;
 }
+
 
 .questionMark {
   width: 33px;

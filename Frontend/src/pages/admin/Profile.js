@@ -9,8 +9,8 @@ const Profile = () => {
 
   const [data, setData] = useState({
     admin_type: "",
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     email: "",
     phone_number: "",
     country_name: "",
@@ -19,6 +19,8 @@ const Profile = () => {
     password: "",
     confirmPassword: "",
   });
+        
+  console.log(data.admin_type);        
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -76,11 +78,11 @@ const Profile = () => {
             <option className={styles.SelectOption} value="">
               Type
             </option>
-            <option className={styles.SelectOption} value="superAdmin">
-              Super Admin
+            <option className={styles.SelectOption} value="superadmin">
+              superadmin
             </option>
             <option className={styles.SelectOption} value="admin">
-              Admin
+              admin
             </option>
           </select>
         </div>
@@ -94,7 +96,7 @@ const Profile = () => {
               id="firstName"
               required
               onChange={eventHandler}
-              value={data.firstname}
+              value={data.first_name}
               disabled={true}
             />
             <label className={styles.InputLabel} htmlFor="firstName">
@@ -117,7 +119,7 @@ const Profile = () => {
               id="lastName"
               required
               onChange={eventHandler}
-              value={data.lastname}
+              value={data.last_name}
               disabled={true}
             />
             <label className={styles.InputLabel} htmlFor="lastName">

@@ -77,6 +77,33 @@ const AdminFilter = forwardRef((props, ref) => {
     };
   }, []);
 
+  const adminType = useRef();
+  const nationality = useRef();
+  const arrow1 = useRef();
+  const arrow2 = useRef();
+
+  const toggleAdminType = () => {
+    if (adminType.current.style.maxHeight == "105px") {
+      adminType.current.style.maxHeight = "0px";
+      arrow1.current.style.rotate = "0deg";
+    } else {
+      adminType.current.style.maxHeight = "105px";
+      arrow1.current.style.rotate = "180deg";
+    }
+  };
+
+  const toggleNationality = () => {
+    if (nationality.current.style.maxHeight == "85px") {
+      nationality.current.style.maxHeight = "0px";
+      arrow2.current.style.rotate = "0deg";
+      // nationality.style.backgroundColor = "";
+    } else {
+      nationality.current.style.maxHeight = "85px";
+      arrow2.current.style.rotate = "180deg";
+      // nationality.style.backgroundColor = "#4141411a";
+    }
+  };
+
   return (
     <>
       <div className={styles.FilterDiv}>
@@ -103,8 +130,16 @@ const AdminFilter = forwardRef((props, ref) => {
           </form>
 
           <div className={styles.FilterBody} ref={filter}>
-            <div className={styles.wrapper}>
-              <div className={styles.title}>Select Admin type</div>
+            <div className={styles.Selection} onClick={toggleAdminType}>
+              Admin Type
+              <img
+                src={arrowIcon}
+                className={styles.LittleArrowIcon}
+                ref={arrow1}
+              />
+            </div>
+            <div className={styles.wrapper} ref={adminType}>
+              {/* <div className={styles.title}>Select Admin type</div> */}
               <div className={styles.box} onChange={eventHandler}>
                 <input
                   type="radio"
@@ -132,55 +167,65 @@ const AdminFilter = forwardRef((props, ref) => {
             </div>
 
             {/*  */}
-            <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
-              <select
-                name="country"
-                className={styles.SelectType}
-                onChange={eventHandler}
-                value={filterData.country}
-                style={{ width: "100%" }}
-              >
-                <option className={styles.SelectOption} value="">
-                  Country
-                </option>
-                {props.countries.map((country) => (
-                  <option
-                    key={country.country_name}
-                    className={styles.SelectOption}
-                    value={country.country_name}
-                  >
-                    {country.country_name}
-                  </option>
-                ))}
-              </select>
+            <div className={styles.Selection2} onClick={toggleNationality}>
+              nationality
+              <img
+                src={arrowIcon}
+                className={styles.LittleArrowIcon}
+                ref={arrow2}
+              />
             </div>
-            <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
-              <select
-                name="city"
-                className={styles.SelectType}
-                onChange={eventHandler}
-                value={filterData.city}
-                style={{ width: "100%" }}
-              >
-                <option className={styles.SelectOption} value="">
-                  City
-                </option>
-
-                {props.cities.length > 0 &&
-                  props.cities.map((city) => (
+            <div className={styles.nationality} ref={nationality}>
+              <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
+                <select
+                  name="country"
+                  className={styles.SelectType}
+                  onChange={eventHandler}
+                  value={filterData.country}
+                  style={{ width: "100%" }}
+                >
+                  <option className={styles.SelectOption} value="">
+                    Country
+                  </option>
+                  {props.countries.map((country) => (
                     <option
-                      key={city}
+                      key={country.country_name}
                       className={styles.SelectOption}
-                      value={city}
+                      value={country.country_name}
                     >
-                      {city}
+                      {country.country_name}
                     </option>
                   ))}
-              </select>
+                </select>
+              </div>
+              <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
+                <select
+                  name="city"
+                  className={styles.SelectType}
+                  onChange={eventHandler}
+                  value={filterData.city}
+                  style={{ width: "100%" }}
+                >
+                  <option className={styles.SelectOption} value="">
+                    City
+                  </option>
+
+                  {props.cities.length > 0 &&
+                    props.cities.map((city) => (
+                      <option
+                        key={city}
+                        className={styles.SelectOption}
+                        value={city}
+                      >
+                        {city}
+                      </option>
+                    ))}
+                </select>
+              </div>
             </div>
             {/*  */}
 
-            <button
+            {/* <button
               className={styles.FilterBtn}
               type="submit"
               onClick={() =>
@@ -193,7 +238,7 @@ const AdminFilter = forwardRef((props, ref) => {
               }
             >
               Filter
-            </button>
+            </button> */}
           </div>
           <button className={styles.openFilterBtn} onClick={toggleFilter}>
             <img

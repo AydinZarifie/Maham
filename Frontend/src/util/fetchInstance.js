@@ -35,7 +35,7 @@ const fetchInstance = async (url, config = {}, credentials = {}) => {
 
   config["headers"] = {
     Authorization: `Bearer ${authTokens}`,
-    'X-CSRF-Token': csrfToken,
+    // 'X-CSRF-Token': csrfToken,
   };
 
   let { response, data } = await originalRequest(url, config, credentials);

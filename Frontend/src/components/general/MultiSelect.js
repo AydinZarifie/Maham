@@ -17,7 +17,7 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
       onChange([...selectedOptions, option]);
     }
   };
-
+  
   const handleRemoveOption = (option) => {
     onChange(selectedOptions.filter((item) => item !== option));
   };
@@ -48,8 +48,10 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
                       : ""
                   }
                   key={option}
+    
                   onClick={() => handleOptionClick(option)}
                 >
+                 {console.log(option)}
                  {option}
                 </li>
               ))}
@@ -59,8 +61,10 @@ const MultiSelect = ({ options, onChange, selectedOptions,invalid }) => {
       )}
 
       <div className={styles.selectedTags}>
+        {console.log(selectedOptions)}
         {selectedOptions.map((option) => (
           <div key={option} className={styles.selectedTag}>
+            {console.log(option)}
             {option}
             <span
               className={styles.removeTag}

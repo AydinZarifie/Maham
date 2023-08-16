@@ -6,8 +6,9 @@ const Personal = () => {
   const [data, setData] = useState();
   useEffect(() => {
     const fetchData = async () => {
-      let { response, data } = await fetchInstance("/admin/auth/personal");
-      setData(data);
+      console.log("hiiii");
+      let { response, data } = await fetchInstance("/admin/auth/profile");
+      setData(data.admin);
     };
     fetchData();
   }, []);

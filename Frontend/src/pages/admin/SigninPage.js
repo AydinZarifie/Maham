@@ -145,16 +145,17 @@ const Signin = () => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        const firstName = data.adminData.firstName;
-        console.log(firstName);
-        const csrf=data.csrfToken;
+        const firstname = data.adminData.firstName;
+        const lastname = data.adminData.lastName;
+        const type = data.adminData.adminType;
+        const csrf = data.csrfToken;
         console.log(csrf);
-        Cookies.set('token',token)
-        localStorage.setItem('name',firstName)
-        console.log(firstName);
-       // localStorage.setItem('type',type)
-        Cookies.set('csrfToken',csrf)
-        
+        Cookies.set("token", token);
+        localStorage.setItem("firstname", firstname);
+        localStorage.setItem("lastname", lastname);
+        localStorage.setItem("type", type);
+        Cookies.set("csrfToken", csrf);
+
         // const expiration = new Date();
         // expiration.setHours(expiration.getHours() + 1);
         // localStorage.setItem("expiration", expiration.toISOString());

@@ -43,11 +43,12 @@ const ManagementPage = () => {
     setSelectedCityOption(option);
     setCityMenuShown(false);
 
+    
+    console.log("/admin/managment/getEstates/" +selectedCountryOption.country_name+"/" +option);
+ 
     let { response, data } = await fetchInstance(
-      "/admin/managment/getEstates/" +
-        option +
-        "/" +
-        selectedCountryOption.country_name
+      "/admin/managment/getEstates/" +selectedCountryOption.country_name+"/" +option
+       
     );
 
     setSearchedEstates(data.data);
@@ -114,7 +115,7 @@ const ManagementPage = () => {
               {selectedCountryOption ? (
                 <div className={styles.menuResult}>
                   <img
-                    src={`/${selectedCountryOption.country_logo.replace(
+                    src={`http://localhost:5000/${selectedCountryOption.country_logo.replace(
                       /\\/g,
                       "/"
                     )}`}
@@ -147,7 +148,7 @@ const ManagementPage = () => {
                       onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
-                        src={`/${option.country_logo.replace(/\\/g, "/")}`}
+                        src={`http://localhost:5000/${option.country_logo.replace(/\\/g, "/")}`}
                         alt={option.country_name}
                       />
                       {option.country_name}

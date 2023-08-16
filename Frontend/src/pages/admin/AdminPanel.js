@@ -96,6 +96,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       let { response, data } = await fetchInstance("/admin/panel/getAdmins");
+      console.log(data);
       setAdmins(data.data);
     };
     fetchAdmins();

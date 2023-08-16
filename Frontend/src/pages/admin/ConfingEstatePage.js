@@ -65,7 +65,6 @@ const ConfingEstate = ({ method, estate }) => {
   const [selectedFilters, setSelectedFilters] = useState(
     estate ? estate.filter : []
   );
-
   const [selectedImages, setSelectedImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
 
@@ -535,7 +534,16 @@ const ConfingEstate = ({ method, estate }) => {
     const formData = new FormData();
 
     // formData.append("filter", information.filter);
-    formData.append('filter',selectedFilters)
+
+    console.log(selectedFilters);
+    for (var i = 0; i < selectedFilters.length; i++) {
+      formData.append("filter", selectedFilters[i]);
+    }
+
+    console.log(information);
+
+    formData.append("mintId" , information.id);
+    formData.append("customerPrice" , information.customerPrice);
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
@@ -699,7 +707,6 @@ const ConfingEstate = ({ method, estate }) => {
       });
       if (response.ok) {
         navigate("/admin/estates");
-        
       }
     }
   };
@@ -724,16 +731,13 @@ const ConfingEstate = ({ method, estate }) => {
     });
     if (response.ok) {
       setMintUsed(true);
-      setInformation((prev) => ({ ...prev, id: data.mint }));
+      setInformation((prev) => ({ ...prev, id: data.data }));
+      console.log(data.data);
     }
   };
 
- 
-
   const handleMultiSelectChange = (filters) => {
     setSelectedFilters(filters);
-    console.log(selectedFilters);
-    // console.log("Selected filters:", selectedFilters[0].label);
   };
 
   return (
@@ -748,7 +752,6 @@ const ConfingEstate = ({ method, estate }) => {
             onChange={handleMultiSelectChange}
             selectedOptions={selectedFilters}
             invalid={filterIsInvalid}
-
           />
           {/* <select
             value={information.filter}
