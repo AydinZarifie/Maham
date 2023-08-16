@@ -233,9 +233,9 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 });
 
 exports.editAdminProfileInfo = catchAsync(async (req,res) => {
-	
+	console.log("hii");
 	const admin = await adminDB.findOne({email : req.email});
-	
+	console.log(admin);
 	return res.status(200).json({
 		message : "Success",
 		admin : admin

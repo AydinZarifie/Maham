@@ -54,14 +54,17 @@ exports.getCities = catchAsync(async (req, res, next) => {
 });
 
 exports.createEstate = catchAsync(async (req, res, next) => {
+	
 	// refrencing the estate to its country instance in countryDB
 	const country = await countryDB.findOne({
-		country_name: `${req.body.countryName}`,
+		country_name: `${req.body.countryName}`,	
 	});
 	if (!country) {
 		return next(new AppError('please create country first', 404));
 	}
 	const Id = country.id;
+
+	console.log("customerPrice : " + req.body.customerPrice);
 
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
@@ -76,7 +79,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_type: req.body.type,
 		customer_price: req.body.customerPrice,
 		maham_price: req.body.mahamPrice,
-		filter_name: req.body.filter,
+		filter: req.body.filter,
 		mintId: req.body.mintId,
 		unit_number: req.body.numberOfUnit,
 		imageUrl: req.files.images.map((el) => {
@@ -156,9 +159,9 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		estate_type: inputs.estate_type,
 		imageUrl: inputs.imageUrl,
 		introduction_video: inputs.introduction_video,
-		customer_price: inputs.customer_Price,
+		customer_price: inputs.customer_price,
 		maham_price: inputs.maham_price,
-		filter: inputs.filter_name,
+		filter: inputs.filter,
 		mint_id: inputs.mintId,
 		unit_number: inputs.unit_number,
 		// minor_street: inputs.minor_street,
@@ -240,6 +243,8 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 	const modifiedCountryName = formatStr(req.body.countryName);
 	const modifiedCityName = formatStr(req.body.cityName);
 
+	console.log("hi");
+
 	// 2) find the country
 	const country = await countryDB
 		.findOne({ country_name: modifiedCountryName })
@@ -258,6 +263,7 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 
 	// 3) generate the Mint based on given country and city
 	const mint = generateMint(country, modifiedCityName);
+	console.log("fuck");
 	console.log(mint);
 
 	// 4) save the modified country to database
@@ -444,6 +450,7 @@ exports.getEditEstate = catchAsync(async (req, res, next) => {
 		return next(new AppError('please provide estate id', 400));
 	}
 	const estate = await estateDB.findById(estateId);
+	console.log(estate);
 	if (!estate) {
 		return next(new AppError('estate wth that ID does not exists', 404));
 	}
@@ -476,6 +483,7 @@ exports.postFilter = catchAsync(async (req, res, next) => {
 
 exports.getAllFilters = catchAsync(async (req, res, next) => {
 	const filters = await filterDB.find();
+
 	// if (filters.length === 0) {
 	// 	return next(new AppError('there is no filter', 200));
 	// }
@@ -488,13 +496,19 @@ exports.getAllFilters = catchAsync(async (req, res, next) => {
 exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
 	const filter = await filterDB.find().select('filterName');
 
+	const filters = filter.map((el) => {
+		return el.filterName;
+	})
+
+	console.log(filters);
+
 	if (!filter) {
 		return next(new AppError('no such a filter', 200));
 	}
 
 	return res.status(200).json({
 		status: 'success',
-		data: filter,
+		data: filters,
 	});
 });
 

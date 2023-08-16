@@ -17,8 +17,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 
 	return res.status(200).json({
 		message: 'success',
-		data: countries,
-		csrfToken : req.csrfToken()
+		data: countries
 	});
 });
 /// get all cities of given country
@@ -46,14 +45,14 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 
 	return res.status(200).json({
 		status: 'success',
-		data: country.cities,
-		csrfToken : req.csrfToken()
-
+		data: country.cities
 	});
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
 	const estates = await estateDB.find().select('-__V');
+
+	console.log(estates);
 
 	if (estates.length === 0) {
 		return res.status(204).json({
@@ -64,7 +63,6 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
-		csrfToken : req.csrfToken()
 
 	});
 });
@@ -155,22 +153,18 @@ exports.addCity = catchAsync(async (req, res, next) => {
 });
 
 exports.getEstates = catchAsync(async (req, res, next) => {
+	
 	const estates = await estateDB
 		.find({
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
 		})
-		.select([
-			'estate_title',
-			'volume',
-			'price', //'landlord_address', 'change',
-		])
 		.sort('createdAt');
 
+	console.log(estates);
 	return res.status(200).json({
 		status: 'success',
-		data: estates,
-		csrfToken : req.csrfToken()
+		data: estates
 	});
 });
 

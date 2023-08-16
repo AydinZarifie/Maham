@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const countryDB = require("./country");
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema
@@ -277,7 +278,7 @@ const estateSchema = new mongoose.Schema(
 			type: Boolean,
 		},
 		filter: {
-			type: String,
+			type: Array,
 		},
 		//////////////////////////
 
@@ -290,6 +291,84 @@ const estateSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+// refrences the estate to its country model & updates last_mints object of country document
+estateSchema.pre('save', async function (next) {
+	// if document is not NEW or if it is , then if the country_name field is NOT MODIFIED >> do NOTHING
+	if (!this.isNew || !this.isModified('country_name')) {
+		return next();
+	}
+	console.log('2');
+
+	const country = await countryDB.findOne({
+		country_name: this.country_name,
+	});
+
+	if (!country) {
+		return next(
+			new AppError('country does not exist ,please create country first', 404)
+		);
+	}
+
+	const countryId = country._id;
+	console.log(countryId);
+	if (this.isNew) {
+		const startsWith =
+			country.country_code +
+			(country.cities.indexOf(this.city_name) + 1).toString();
+
+		const estateNum = this.mint_id.slice(
+			startsWith.length,
+			this.mint_id.length
+		);
+		const obj = {
+			...country.last_mints,
+			[startsWith]: `${estateNum}`,
+		};
+
+		// 1) update the lastMint object of the country >> YES in NEW
+		country.last_mints = obj;
+
+		// 2) Put countryId >> inside estate's country_ref >> YES in NEW & EDIT : in EDIT ONLY if (this.isModified(country_name))
+		this.country_ref = countryId;
+
+		// 3) Put estateId >> inside country's estates array >> YES in NEW
+		country.country_estates.push(this._id);
+
+		await country.save();
+	} else if (this.isModified('country_name')) {
+		// 2) Put countryId >> inside estate's country_ref >> YES in NEW & EDIT : ONLY if (this.isModified(country_name))
+		this.country_ref = countryId;
+		await country.save();
+	}
+	next();
+});
+
+estateSchema.pre(
+	'deleteOne',
+	{ document: true, query: false },
+	async function (next) {
+		const deletedEstateId = this._id;
+		const deletedMint = this.mint_id;
+
+		const country = await countryDB.findOne({
+			country_name: this.country_name,
+		});
+
+		if (!country) {
+			return next(new AppError('country does not exist', 404));
+		}
+
+		country.country_estates.splice(
+			country.country_estates.indexOf(deletedEstateId),	
+		);
+
+		country.available_mints.push(deletedMint);
+
+		await country.save({ runValidators: false });
+
+		next();
+	}
+);
 // update The users assets array when a but operation gets performed //
 
 module.exports = mongoose.model('real_estates', estateSchema);

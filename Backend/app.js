@@ -20,7 +20,6 @@ const globalErrorHandler = require("./controllers/globalErrorHandler");
 const AppError = require("./utilities/error/appError");
 const dotenv = require("dotenv");
 const session = require("express-session");
-const csrf = require("csurf");
 
 dotenv.config({ path: "./config.env" });
 
