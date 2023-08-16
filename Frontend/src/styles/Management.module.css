@@ -1,3 +1,23 @@
+
+.errorDiv{
+  position: absolute;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.errorDiv p{
+  color: #ff0005;
+  margin: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+.ErrorIcon{
+  width: 18px;
+  height: 18px;
+}
 /***   LayOut   ***/
 /* .Tables{
     display: flex;

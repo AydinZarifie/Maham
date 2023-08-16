@@ -1,3 +1,11 @@
+.FilterHr{
+  width: 95%;
+  height: 1px;
+  border: none;
+  background-color: #a4a4a4;
+  position: relative; 
+  top: 12px;
+}
 .Selection {
   min-width: 72%;
   height: 20px;
@@ -81,14 +89,12 @@
 .FilterBody {
   /* position: absolute; */
   width: 100%;
-  max-height: 0px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  margin-top: 35px;
-  margin-bottom: 60px;
-  padding-bottom: 20px;
+  margin-bottom: 10px;
   transition: max-height 0.3s ease-in-out;
   position: relative;
   top: 25px;
@@ -124,9 +130,13 @@
   z-index: 10;
 }
 .SearchDiv li {
-  height: 53px;
+  height: 43px;
   cursor: pointer;
   border-bottom: 1px solid #dadada;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: .3s;
 }
 
 .SearchDiv li:hover {
@@ -475,7 +485,7 @@
     position: sticky;
     top: 30px;
     margin-top: -65px;
-    overflow-y: hidden;
+    /* overflow: hidden; */
   }
   .filterEstate {
     min-width: 300px;
@@ -507,6 +517,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+    
   }
 
   .closeBtn {
@@ -680,9 +691,9 @@
 
   .SearchDiv {
     display: none;
-    position: sticky;
-    top: 105px;
-    margin-top: -44px;
+    position: absolute;
+    top: 241px;
+    margin-top: -169px;
     width: 80%;
     min-height: 0px;
     max-height: 240px;
@@ -726,7 +737,7 @@
     position: fixed;
     background-color: #fafafa;
     z-index: 999;
-    overflow-y: hidden;
+    /* overflow: hidden; */
   }
   .filterEstate {
     width: 90%;
@@ -928,9 +939,8 @@
     display: none;
     position: fixed;
     top: 240px;
-    margin-top: -44px;
+    margin-top: -47px;
     width: 75%;
-    margin-left: 11%;
     min-height: 0px;
     max-height: 240px;
     background: #ffffff;

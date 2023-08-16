@@ -1,3 +1,56 @@
+.InputLabel{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  /* justify-content: end; */
+  /* min-height: 280px; */
+  
+  
+}
+.ErrorDiv {
+  position: relative;
+  margin-top: -45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.ErrorDiv p {
+  text-align: center;
+  color: #f50000;
+  font-size: 13px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+
+.BtnAndError{
+  display: flex;
+  flex-direction: row;
+  /* align-items: end; */
+  /* justify-content: end; */
+}
+/* .ErrorDivStep3 {
+  position: absolute;
+  margin-top: 310px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+ 
+} */
+.ErrorDivStep3 p {
+  text-align: center;
+  color: #f50000;
+  font-size: 13px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.ErrorIcon {
+  width: 20px;
+  height: 20px;
+}
+
 .invalid {
   border: 1px solid #ff2c2c;
   height: 40px;
@@ -10,7 +63,16 @@
   outline: none;
 }
 
-.invalidForSelect{
+.invalid:focus + .label .text,
+:not(input[value=""]) + .label .text {
+  font-size: 12px;
+  transform: translate(0, -125%);
+  background-color: white;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.invalidForSelect {
   appearance: none;
   background: rgba(239, 239, 239, 0);
   width: 130px;
@@ -25,7 +87,7 @@
   position: relative;
 }
 
-.invalidForSelect2{
+.invalidForSelect2 {
   appearance: none;
   background: rgba(239, 239, 239, 0);
   width: 100%;
@@ -221,9 +283,11 @@
     display: block;
     margin: 0 auto;
     position: absolute;
+
     width: 120px;
     padding: 10px 0;
     margin-top: 10px;
+    margin-left: 5px;
     border: none;
     border-radius: 6px;
     background-color: transparent;
@@ -251,6 +315,16 @@
     background: linear-gradient(0.55turn, #ef4057, #ef4077);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
+  .ErrorDivStep3 {
+    position: absolute;
+    margin-top: 310px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+   
   }
 }
 
@@ -407,6 +481,7 @@
     width: 110px;
     padding: 10px 0;
     margin-top: 10px;
+    margin-left: 5px;
     border: none;
     border-radius: 6px;
     background-color: transparent;
@@ -434,6 +509,16 @@
     background: linear-gradient(0.55turn, #ef4057, #ef4077);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
+  .ErrorDivStep3 {
+    position: absolute;
+    margin-top: 225px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+   
   }
 }
 
@@ -1386,21 +1471,17 @@ input[type="radio"]:checked + .Circle:after {
   padding: 12px;
   color: #484848;
   transition: 0.3s;
+  font-size: 14px;
 }
 
 .label {
   position: absolute;
   top: 0;
   bottom: 0;
-  /* left: 16px; */
-  left: 7%;
+  left: 12px;
   display: flex;
   align-items: center;
   pointer-events: none;
-}
-
-.inputs {
-  font-size: 14px;
 }
 
 .label .text {
@@ -1507,13 +1588,14 @@ input[type="radio"]:checked + .Circle:after {
   height: 42px;
   border: 1px solid rgb(198, 196, 196);
   border-radius: 4px;
-  color: #626262;
+  color: #6c6c6c;
   z-index: 100;
   cursor: pointer;
   outline: none;
   padding: 0 10px;
   position: relative;
 }
+
 .selectWrapper2 {
   position: relative;
   display: inline-block;
@@ -1556,7 +1638,7 @@ input[type="radio"]:checked + .Circle:after {
   height: 42px;
   border: 1px solid rgb(198, 196, 196);
   border-radius: 4px;
-  color: #626262;
+  color: #6c6c6c;
   z-index: 100;
   cursor: pointer;
   outline: none;
@@ -1569,6 +1651,9 @@ input[type="radio"]:checked + .Circle:after {
 }
 .selectHeader {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .selectHeader .arrow {
   position: absolute;

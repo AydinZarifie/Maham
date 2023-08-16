@@ -17,17 +17,17 @@ const LockPosition = () => {
       <table className={styles.GLStable} cellpadding="0" cellspacing="0">
         <thead>
           <tr>
-            <th>Title</th>
-            <th></th>
-            <th></th>
-            <th>Contract address</th>
-            <th>Landlore address</th>
+            <th className={styles.Th}>Title</th>
+            <th className={styles.Th}></th>
+            <th className={styles.Th}></th>
+            <th className={styles.ThEsp}>Contract address</th>
+            <th className={styles.ThEsp}>Landlore address</th>
 
-            <th>Country</th>
-            <th>City</th>
-            <th>Price</th>
-            <th>P/M</th>
-            <th>Lock position</th>
+            <th className={styles.Th}>Country</th>
+            <th className={styles.Th}>City</th>
+            <th className={styles.Th}>Price</th>
+            <th className={styles.Th}>P/M</th>
+            <th className={styles.Th}>Lock position</th>
           </tr>
         </thead>
         <tbody>
@@ -52,6 +52,25 @@ const LockPosition = () => {
               </td>
             </tr>
           ))}
+            <tr>
+              <td className={styles.Td}>beach home in ohaio 9877</td>
+              <td className={styles.Td}></td>
+              <td className={styles.Td}></td>
+              <td className={styles.TdEsp}>
+                <CustomTableItem text="86966696969908696669696990989676" />
+              </td>
+              <td className={styles.TdEsp}>
+                <CustomTableItem text="86966696969908696669696990989676" />
+              </td>
+
+              <td className={styles.Td}>united state</td>
+              <td className={styles.Td}>los angeles</td>
+              <td className={styles.Td}>89800808 ETH</td>
+              <td className={styles.Td}>1.96</td>
+              <td className={styles.Td}>
+                <img src={lockLogo} className={styles.LockIcon} />
+              </td>
+            </tr>
         </tbody>
       </table>
     </div>

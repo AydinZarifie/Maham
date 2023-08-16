@@ -3,6 +3,7 @@ import styles from "../../styles/Add_Estate.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import trueLogo from "../../images/tick-svgrepo-com_1.svg";
 import balconyIcon from "../../images/balcony-svgrepo-com.svg";
 import bathroomIcon from "../../images/bathroom-svgrepo-com.svg";
 import bbqIcon from "../../images/bbq-svgrepo-com.svg";
@@ -24,13 +25,15 @@ import wifiIcon from "../../images/wifi-medium-svgrepo-com.svg";
 import deleteIcon from "../../images/delete-svgrepo-com.svg";
 import fetchInstance from "../../util/fetchInstance";
 import MultiSelect from "../../components/general/MultiSelect";
+import Alert from "../../components/general/Alert";
 
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(["kojojoj", "hiiihhi"]);
   const [mintUsed, setMintUsed] = useState(false);
   const [error, setError] = useState(false);
+  const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   useEffect(() => {
     const fetchCountryData = async () => {
@@ -65,7 +68,6 @@ const ConfingEstate = ({ method, estate }) => {
   const [selectedFilters, setSelectedFilters] = useState(
     estate ? estate.filter : []
   );
-
   const [selectedImages, setSelectedImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
 
@@ -331,7 +333,7 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredLocationIsValid = information.location.trim() !== "";
   const enteredTypeIsValid = information.type.trim() !== "";
   const enteredDescriptionIsValid = information.description.trim() !== "";
-  const enteredMahamPriceIsValid = information.mahamPrice.trim() !== "";
+  const enteredMahamPriceIsValid = information.mahamPrice.toString().trim() !== "";
   const enteredCustomerPriceIsValid = information.customerPrice.trim() !== "";
   const enteredImageIsValid = selectedImages.length > 0;
   const enteredVideoIsValid = selectedVideo.length > 0;
@@ -534,8 +536,12 @@ const ConfingEstate = ({ method, estate }) => {
 
     const formData = new FormData();
 
-    // formData.append("filter", information.filter);
-    formData.append('filter',selectedFilters)
+    for (var i = 0; i < selectedFilters.length; i++) {
+      formData.append("filter", selectedFilters[i]);
+    }
+
+    formData.append("mintId", information.id);
+    // formData.append("customerPrice", information.customerPrice);
     formData.append("title", information.title);
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
@@ -548,7 +554,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("mahamPrice", information.mahamPrice);
     formData.append("type", information.type);
 
-    if (estate) {
+    if (!estate) {
       formData.append("customerPrice", information.customerPrice);
     }
 
@@ -698,8 +704,7 @@ const ConfingEstate = ({ method, estate }) => {
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        navigate("/admin/estates");
-        
+        setDeleteConfirmed(true);
       }
     }
   };
@@ -724,33 +729,36 @@ const ConfingEstate = ({ method, estate }) => {
     });
     if (response.ok) {
       setMintUsed(true);
-      setInformation((prev) => ({ ...prev, id: data.mint }));
+      setInformation((prev) => ({ ...prev, id: data.data }));
     }
   };
 
- 
-
   const handleMultiSelectChange = (filters) => {
     setSelectedFilters(filters);
-    console.log(selectedFilters);
-    // console.log("Selected filters:", selectedFilters[0].label);
   };
 
   return (
     <form method={method} encType="multipart/form-data">
-      <div className={styles.EstateInfo}>
-        <div
-          className={styles.select2}
-          style={{ margin: "45px auto 60px auto" }}
-        >
-          <MultiSelect
-            options={filters}
-            onChange={handleMultiSelectChange}
-            selectedOptions={selectedFilters}
-            invalid={filterIsInvalid}
+      {deleteConfirmed && (
+        <Alert
+          lineColor="#0aff0e"
+          img={trueLogo}
+          title="Success!"
+          detail="Estate has been successfully deleted"
+          closeHandler={() => {
+            navigate("/admin/estates");
+          }}
+        />
+      )}
 
-          />
-          {/* <select
+      <div className={styles.EstateInfo}>
+        <MultiSelect
+          options={filters}
+          onChange={handleMultiSelectChange}
+          selectedOptions={selectedFilters}
+          invalid={filterIsInvalid}
+        />
+        {/* <select
             value={information.filter}
             onChange={basicEventHandler}
             name="filter"
@@ -765,7 +773,6 @@ const ConfingEstate = ({ method, estate }) => {
               </option>
             ))}
           </select> */}
-        </div>
 
         <div className={styles.wrapper}>
           <div className={styles.inputData}>

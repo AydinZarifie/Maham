@@ -1,0 +1,2398 @@
+
+.LineChart{
+  width:83%;
+  position: absolute;
+  top: 75px;
+  margin-left: 42px;
+}
+
+
+
+@media (min-width: 600px) {
+  .HeaderDiv {
+    position: fixed;
+    top: 0px;
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #5e6e88;
+    z-index: 6;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .Row1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-left: 40px;
+    max-height: 65px;
+  }
+
+  .openSideNav {
+    font-size: 1.7rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 12px;
+    color: #ffffff;
+  }
+  .NameAndAddress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .UserName {
+    min-width: 130px;
+    max-width: 245px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 18px;
+  }
+
+  .shortAddress {
+    white-space: nowrap;
+    font-weight: 400;
+    color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 70px;
+    padding: 10.5px;
+    border: 1px solid rgb(255, 255, 255);
+    font-size: 14px;
+    background-color: #5e6e88;
+  }
+  .longAddress {
+    display: none;
+    position: fixed;
+    top: 70px;
+    z-index: 4;
+    opacity: 0;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #002949;
+    font-weight: 400;
+    color: #fff;
+    max-width: 155px;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    margin-left: -82px;
+    margin-top: -11px;
+    max-height: 54px;
+    min-height: 34px;
+  }
+  .longAddress:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #002949;
+    position: absolute;
+
+    margin-left: 125px;
+    margin-top: -17px;
+    rotate: 270deg;
+  }
+
+  .Row2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-right: 45px;
+  }
+
+  .questionMark2 {
+    width: 33px;
+    height: 33px;
+    border-radius: 10%;
+    border: 1px solid #ffbb33;
+    text-align: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: 0.3s;
+
+    background-color: #5e6e88;
+  }
+}
+
+@media (max-width: 600px) {
+  .HeaderDiv {
+    position: fixed;
+    top: 0px;
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #5e6e88;
+    z-index: 6;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .Row1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-left: 15px;
+    max-height: 65px;
+    justify-content: space-between;
+    width: 90%;
+  }
+  .openSideNav {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 24px;
+    color: #ffffff;
+  }
+
+  .NameAndAddress {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 3px;
+    margin-top: 10px;
+  }
+
+  .UserName {
+    min-width: 130px;
+    max-width: 210px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0;
+    padding: 0 7px;
+
+    font-size: 14px;
+  }
+
+  .shortAddress {
+    white-space: nowrap;
+    font-weight: 400;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 70px;
+    font-size: 12px;
+    margin: 0;
+    transition: 0.3s;
+    padding: 2px 7px;
+  }
+  .shortAddress:hover {
+    background-color: #2121211f;
+  }
+  .longAddress {
+    display: none;
+    position: fixed;
+    top: 75px;
+    z-index: 4;
+    opacity: 0;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #002949;
+    font-weight: 400;
+    color: #fff;
+    max-width: 140px;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    margin-left: -36px;
+    margin-top: -10px;
+    max-height: 54px;
+    min-height: 30px;
+    font-size: 12px;
+  }
+  .longAddress:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #002949;
+    position: absolute;
+
+    margin-left: 68px;
+    margin-top: -17px;
+    rotate: 270deg;
+  }
+  .Row2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-right: 25px;
+  }
+  .questionMark2 {
+    display: none;
+  }
+}
+
+@media (min-width: 760px) {
+  .EthPrice {
+    width: 120px;
+    height: 38px;
+    background-color: #5e6e88;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .EthIcn {
+    width: 26px;
+    height: 26px;
+  }
+  .EthPriceh5 {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #ffffff;
+    max-width: 80px;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 760px) {
+  .EthPrice {
+    display: none;
+  }
+}
+
+.openSideNav:hover {
+  transform: scale(1.04);
+}
+
+.FirstPart1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.UserName strong {
+  color: #ffffff;
+  font-weight: 300;
+}
+.addressDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.questionMark {
+  width: 33px;
+  height: 33px;
+  border-radius: 10%;
+  border: 1px solid #ffbb33;
+  text-align: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: 0.3s;
+
+  background-color: #5e6e88;
+}
+.questionMark:hover {
+  background-color: #ffbb332a;
+}
+.questionMark p {
+  margin: 3px 0 0 0;
+  color: #ffbb33;
+}
+
+.questionMark2:hover {
+  background-color: #ffbb332a;
+}
+.questionMark2 p {
+  margin: 3px 0 0 0;
+  color: #ffbb33;
+}
+
+.sideNav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0px;
+  height: 100%;
+  background-color: #121212;
+  z-index: 8;
+  transition: 0.4s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+}
+.sideNavOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  background-color: #ffffff78;
+  backdrop-filter: blur(2px);
+}
+
+.closeSideNav {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #cfcfcf;
+  transition: 0.3s;
+}
+.closeSideNav:hover {
+  color: #f3f3f3;
+}
+.LogoDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  width: 85%;
+}
+.LogoDiv h1 {
+  font-size: 2.6rem;
+  color: #eaeaea;
+  font-weight: 200;
+}
+.Logo {
+  width: 22px;
+}
+.MenuItemDiv {
+  width: 90%;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.MenuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 45px;
+  color: #f4f4f4;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+  white-space: nowrap;
+  background-color: #121212;
+  box-shadow: rgba(255, 255, 255, 0.167) 0px 1px 2px 0px;
+  font-size: 14px;
+  z-index: 1;
+}
+.InsideMenuItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+.MenuIcons {
+  width: 25px;
+  height: 25px;
+  opacity: 0.7;
+}
+.MenuItem:hover {
+  background-color: #9f9f9f1a;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.ManagementAssets {
+  background-color: #121212;
+}
+.ManagementAssets:hover {
+  background-color: #4141411a;
+}
+.ManagementAssetsItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 10px; */
+  max-height: 0px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.ManagementAssetsItems {
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.ManagementAssetsItems:hover {
+  background-color: #9f9f9f1a;
+}
+.ManagementAssetsItems2 {
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  overflow: hidden;
+  margin-top: -20px;
+}
+
+.ManagementAssetsItems2:hover {
+  background-color: #9f9f9f1a;
+}
+
+.Reports {
+  background-color: #121212;
+}
+.Reports:hover {
+  background-color: #4141411a;
+}
+.ReportsItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 10px; */
+  max-height: 0px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.ReportsItems {
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.ReportsItems:hover {
+  background-color: #9f9f9f1a;
+}
+.ReportsItems2 {
+  width: 80%;
+  color: #f4f4f4;
+  min-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  overflow: hidden;
+  margin-top: -20px;
+}
+
+.ReportsItems2:hover {
+  background-color: #9f9f9f1a;
+}
+
+.questionMarkMenu {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: absolute;
+  right: 22px;
+  z-index: 2;
+  margin-top: -36px;
+  opacity: 0;
+}
+.questionMarkMenu:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenu p {
+  margin: 2px 0 0 0;
+  color: #ffffff;
+}
+.questionMarkMenu2 {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: absolute;
+  right: 22px;
+  z-index: 2;
+  margin-top: -36px;
+  opacity: 0;
+}
+.questionMarkMenu2:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenu2 p {
+  margin: 2px 0 0 0;
+  color: #ffffff;
+}
+
+.emt {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.questionMarkMenuAssets {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  top: -31px;
+  right: -90px;
+  z-index: 3;
+  opacity: 0;
+}
+.questionMarkMenuAssets:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenuAssets p {
+  margin: 0px 0 0 0;
+  color: #ffffff;
+}
+
+.questionMarkMenuTransaction {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  top: -31px;
+  right: -90px;
+  z-index: 3;
+  opacity: 0;
+}
+.questionMarkMenuTransaction:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenuTransaction p {
+  margin: 0px 0 0 0;
+  color: #ffffff;
+}
+
+.questionMarkMenuLockState {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  top: -31px;
+  right: -90px;
+  z-index: 3;
+  opacity: 0;
+}
+.questionMarkMenuLockState:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenuLockState p {
+  margin: 0px 0 0 0;
+  color: #ffffff;
+}
+
+.questionMarkMenuGetDocument {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 1px solid #ffbb33;
+  background-color: #ffbb33;
+  text-align: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  top: -31px;
+  right: -90px;
+  z-index: 3;
+  opacity: 0;
+}
+.questionMarkMenuGetDocument:hover {
+  background-color: #ffb41f;
+}
+.questionMarkMenuGetDocument p {
+  margin: 0px 0 0 0;
+  color: #ffffff;
+}
+
+@media (min-width: 600px) {
+  .LogoDivOutside {
+    width: 42px;
+    background-color: #48576e;
+    margin-left: -40px;
+    position: absolute;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+  .LogoImg {
+    width: 25px;
+    margin-top: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .LogoDivOutside {
+    width: 42px;
+    background-color: #48576e;
+    margin-left: -20px;
+    position: absolute;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+  .LogoImg {
+    width: 22px;
+    margin-top: 17px;
+    margin-left: 4px;
+  }
+}
+
+.Question {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.Row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tab:before,
+.tab:after {
+  content: "";
+  position: absolute;
+
+  height: 10px;
+  width: 20px;
+
+  bottom: 0;
+}
+.tab:after {
+  right: -20px;
+
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  /* -webkit-box-shadow: -10px 0 0 0 #ffffff; */
+  box-shadow: -10px 0 0 0 #ffffff;
+}
+
+.tab:before {
+  left: -20px;
+
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  /* -webkit-box-shadow: 10px 0 0 0 #ffffff; */
+  box-shadow: 10px 0 0 0 #ffffff;
+}
+
+.tab2:hover {
+  background: #48576e;
+}
+.tab2:before,
+.tab2:after {
+  content: "";
+  position: absolute;
+
+  height: 10px;
+  width: 20px;
+
+  bottom: 0;
+}
+.tab2:after {
+  left: -20px;
+  top: 0.3px;
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  -webkit-box-shadow: -10px 0 0 0 transparent;
+  box-shadow: -10px 0 0 0 transparent;
+  rotate: 180deg;
+}
+
+.tab2:before {
+  right: -20px;
+  top: 0.3px;
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  -webkit-box-shadow: 10px 0 0 0 transparent;
+  box-shadow: 10px 0 0 0 transparent;
+  rotate: 180deg;
+  z-index: 10;
+}
+.tab2:hover::after {
+  box-shadow: -10px 0 0 0 #48576e;
+}
+
+.tab2:hover::before {
+  box-shadow: 10px 0 0 0 #48576e;
+}
+
+.assetsInfo:hover {
+  transform: scale(1.03);
+}
+.transactionInfo:hover {
+  transform: scale(1.03);
+}
+
+.resizableY {
+  display: flex;
+  /* flex-direction: column;
+  height: 100vh; */
+  overflow: auto;
+}
+
+.resizableY {
+  flex-direction: column;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.resizerY {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  padding: 4px;
+}
+.resizerY {
+  cursor: row-resize;
+  flex-direction: column;
+}
+
+.resizerY::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  bottom: 0;
+  margin-left: 47px;
+  background: #000;
+  background: radial-gradient(circle at 100% 0, transparent 20px, #e1e5e8 21px);
+}
+.resizerY::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin-left: -46px;
+  bottom: 0;
+  background: #000;
+  background: radial-gradient(circle at 0 0, transparent 20px, #e1e5e8 21px);
+}
+.Circle {
+  width: 32px;
+  height: 16px;
+  position: relative;
+  top: 4px;
+  background: #e1e5e8;
+  border-radius: 15px 15px 0 0;
+  text-align: center;
+  color: #121212;
+}
+
+.div1,
+.div2 {
+  overflow: hidden;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.div1::-webkit-scrollbar,
+.div2::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.SearchOpenDiv {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@media (min-width: 920px) {
+  .PriceDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    width: 38%;
+  }
+  .FirstPart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 57%;
+  }
+  .SelectDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    order: 1;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .selection {
+    display: flex;
+    align-items: center;
+    appearance: none;
+    background: rgba(239, 239, 239, 0);
+    width: 110px;
+    height: 40px;
+    border: 1px solid rgb(198, 196, 196);
+    border-radius: 4px;
+    color: #626262;
+    z-index: 100;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+
+    font-size: 13px;
+    padding: 0 10px;
+    margin: 0 -1px;
+  }
+  .options {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    width: 100%;
+    overflow-x: hidden;
+    max-height: 160px;
+    overflow-y: scroll;
+  }
+
+  .dropdown2 {
+    position: relative;
+    display: inline-block;
+  }
+
+  .selection2 {
+    display: flex;
+    align-items: center;
+    appearance: none;
+    background: rgba(239, 239, 239, 0);
+    width: 110px;
+    height: 40px;
+    border: 1px solid rgb(198, 196, 196);
+    border-radius: 4px;
+    color: #626262;
+    z-index: 100;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    font-size: 13px;
+    padding: 0 10px;
+    margin: 0 -1px;
+  }
+  .options2 {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    width: 100%;
+    overflow-x: hidden;
+    max-height: 160px;
+    overflow-y: scroll;
+  }
+
+  .searchContainer {
+    width: 100%;
+    display: block;
+    margin: 20px auto;
+    order: 2;
+  }
+  .searchBox {
+    margin: 0 auto;
+    width: 100%;
+    min-width: 180px;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 0.85rem;
+    border: 1px solid rgb(198, 196, 196);
+    outline: none;
+    border-radius: 4px;
+    color: black;
+  }
+}
+
+@media (max-width: 920px) {
+  .PriceDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 48%;
+    margin-top: -28px;
+  }
+  .FirstPart {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 50%;
+  }
+  .SelectDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: -15px;
+    margin-left: 3px;
+    order: 2;
+    padding-bottom: 10px;
+    width: 100%;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .selection {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    appearance: none;
+    background: rgba(239, 239, 239, 0);
+    width: 98%;
+    height: 38px;
+    border: 1px solid rgb(198, 196, 196);
+    border-radius: 4px;
+    color: #626262;
+    z-index: 100;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+
+    font-size: 13px;
+  }
+  .options {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    width: 98%;
+    overflow-x: hidden;
+    max-height: 160px;
+    overflow-y: scroll;
+  }
+
+  .dropdown2 {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .selection2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    appearance: none;
+    background: rgba(239, 239, 239, 0);
+    width: 98%;
+    height: 38px;
+    border: 1px solid rgb(198, 196, 196);
+    border-radius: 4px;
+    color: #626262;
+    z-index: 100;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    font-size: 13px;
+  }
+
+  .options2 {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    width: 98%;
+    overflow-x: hidden;
+    max-height: 160px;
+    overflow-y: scroll;
+  }
+  .searchContainer {
+    width: 98%;
+    display: block;
+    margin: 20px auto;
+    order: 1;
+  }
+  .searchBox {
+    margin: 0 auto;
+    width: 100%;
+
+    min-width: 220px;
+    height: 35px;
+    font-size: 0.85rem;
+    border: 1px solid rgb(198, 196, 196);
+    outline: none;
+    border-radius: 4px;
+    color: black;
+  }
+}
+
+@media (min-width: 600px) {
+  .div1 {
+    flex: 66.66%;
+    margin-left: 42px;
+    overflow-y: scroll;
+    background-color: #ffffff;
+    margin-top: 65px;
+  }
+  .div2 {
+    flex: 33.33%;
+    min-height: 38px;
+    margin-left: 42px;
+    overflow-y: scroll;
+  }
+  .LeftHeader {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 42px;
+    height: 100%;
+    background-color: #5e6e88;
+    z-index: 6;
+  }
+  .MenuButtonsDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 15px;
+    gap: 6px;
+    rotate: -90deg;
+    margin-top: 300px;
+    margin-left: 0px;
+  }
+  .tab {
+    color: #232323;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 130px;
+    padding: 12px 15px;
+    height: 17px;
+
+    position: relative;
+    top: 1px;
+    background: #ffffff;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  }
+
+  .tab2 {
+    text-decoration: none;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 130px;
+    padding: 12px 15px;
+    height: 17px;
+
+    font-weight: 300;
+    color: #ffffff;
+    position: relative;
+    top: -0.5px;
+    background: transparent;
+
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+  }
+
+  .assetsInfo {
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 130px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #fffefe;
+    /* display: none; */
+  }
+
+  .transactionInfo {
+    cursor: pointer;
+    z-index: 5;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 130px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #ffffff;
+    /* display: none; */
+  }
+  .assetsInfo2 {
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 130px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #fffefe;
+    /* display: none; */
+  }
+
+  .transactionInfo2 {
+    cursor: pointer;
+    z-index: 5;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 130px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #ffffff;
+    /* display: none; */
+  }
+
+  .Header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0px 15px;
+    border-bottom: 1px solid rgb(198, 196, 196);
+    min-height: 70px;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 3;
+  }
+
+  .PriceLittleDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 5px;
+  }
+
+  .PriceLittleDiv2 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    gap: 6px;
+  }
+  .PriceInfoH5 {
+    white-space: nowrap;
+    font-weight: 300;
+    margin: 0;
+    color: #626262;
+    font-size: 12px;
+  }
+  .PriceH5 {
+    white-space: nowrap;
+    margin: 0;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .PercentH5 {
+    color: #ff1f1f;
+    font-size: 12px;
+    margin: 0;
+  }
+  .PercentIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /*  */
+
+  .Bottomtab {
+    color: #303030;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 130px;
+    padding: 12px 15px;
+    height: 17px;
+
+    position: relative;
+    top: 1px;
+    background: #ffffff;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    box-shadow: rgba(255, 255, 255, 0.15) 0px 5px 15px 0px;
+  }
+
+  .Bottomtab2 {
+    text-decoration: none;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 130px;
+    padding: 12px 15px;
+    height: 17px;
+
+    font-weight: 300;
+    color: #2e2e2e;
+    position: relative;
+    top: -0.5px;
+    background: transparent;
+
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+  }
+  /*  */
+}
+@media (max-width: 600px) {
+  .div1 {
+    flex: 66.66%;
+    margin-left: 37px;
+    overflow-y: scroll;
+    margin-top: 65px;
+  }
+  .div2 {
+    flex: 33.33%;
+    min-height: 38px;
+    margin-left: 37px;
+    overflow-y: scroll;
+  }
+  .LeftHeader {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 37px;
+    height: 100%;
+    background-color: #5e6e88;
+    z-index: 6;
+  }
+  .MenuButtonsDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 15px;
+    gap: 6px;
+    rotate: -90deg;
+    margin-top: 260px;
+    margin-left: 0px;
+  }
+  .tab {
+    color: #232323;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 110px;
+    padding: 9px 15px;
+    height: 17px;
+
+    position: relative;
+    top: 1px;
+    background: #ffffff;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  }
+
+  .tab2 {
+    text-decoration: none;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    width: 110px;
+    padding: 9px 15px;
+    height: 17px;
+
+    font-weight: 300;
+    color: #ffffff;
+    position: relative;
+    top: -0.5px;
+    background: transparent;
+
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+  }
+
+  .assetsInfo {
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 110px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #fffefe;
+    /* display: none; */
+  }
+
+  .transactionInfo {
+    cursor: pointer;
+    z-index: 5;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 110px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #ffffff;
+    /* display: none; */
+  }
+
+  .assetsInfo2 {
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 110px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #fffefe;
+    /* display: none; */
+  }
+
+  .transactionInfo2 {
+    cursor: pointer;
+    z-index: 5;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 110px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ffbb33;
+    background-color: #ffbb33;
+    text-align: center;
+    transition: 0.3s;
+    opacity: 1;
+    color: #ffffff;
+    /* display: none; */
+  }
+
+  .Header {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0px 15px;
+    border-bottom: 1px solid rgb(198, 196, 196);
+    min-height: 70px;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 3;
+  }
+
+  .FirstPart {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+  }
+
+  .PriceDiv {
+    display: none;
+  }
+
+  .PriceLittleDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 5px;
+  }
+
+  .PriceLittleDiv2 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 6px;
+  }
+  .PriceInfoH5 {
+    white-space: nowrap;
+    font-weight: 300;
+    margin: 0;
+    color: #626262;
+    font-size: 12px;
+  }
+  .PriceH5 {
+    white-space: nowrap;
+    margin: 0;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .PercentH5 {
+    color: #ff1f1f;
+    font-size: 12px;
+    margin: 0;
+  }
+  .PercentIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /*  */
+  .Bottomtab {
+    color: #303030;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 12px;
+    width: 110px;
+    padding: 12px 15px;
+    height: 17px;
+
+    position: relative;
+    top: 1px;
+    background: #ffffff;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    box-shadow: rgba(255, 255, 255, 0.15) 0px 5px 15px 0px;
+  }
+
+  .Bottomtab2 {
+    text-decoration: none;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+    font-size: 12px;
+    width: 110px;
+    padding: 12px 15px;
+    height: 17px;
+
+    font-weight: 300;
+    color: #2e2e2e;
+    position: relative;
+    top: -0.5px;
+    background: transparent;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+  }
+  /*  */
+}
+
+.selectedOption {
+  min-width: 100px;
+  max-width: 180px;
+}
+.ArrowIcon1 {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.options::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.options {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.options li {
+  cursor: pointer;
+  width: 100%;
+  min-height: 22px;
+  font-size: 13px;
+  padding-top: 6px;
+  padding-left: 10px;
+  border-bottom: 1px solid #e3e3e3;
+  transition: 0.3s;
+  color: #383838;
+  background-color: #fefefe;
+}
+.options li:last-child {
+  border: none;
+}
+.options li:hover {
+  background-color: #f0f0f0;
+}
+.options.visible {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.selectedOption2 {
+  min-width: 100px;
+  max-width: 180px;
+}
+.ArrowIcon2 {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.options2::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.options2 {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.options2 li {
+  cursor: pointer;
+  width: 100%;
+  min-height: 22px;
+  font-size: 13px;
+  padding-top: 6px;
+  padding-left: 10px;
+  border-bottom: 1px solid #e3e3e3;
+  transition: 0.3s;
+  color: #383838;
+  background-color: #fefefe;
+}
+.options2 li:last-child {
+  border: none;
+}
+.options2 li:hover {
+  background-color: #f0f0f0;
+}
+.options2.visible2 {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.searchBox:focus {
+  border: 1px solid #686868;
+  transition: 0.35s ease;
+  color: #686868;
+}
+.searchBox:focus::-webkit-input-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+.searchBox:focus::-moz-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+.searchBox:focus:-ms-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+
+.SearchOpenDiv {
+  min-height: 100px;
+  display: none;
+  position: absolute;
+  width: 30%;
+  max-height: 240px;
+  overflow-y: scroll;
+  background-color: #ffffff;
+  z-index: 101;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.SearchOpenDiv::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.SearchOpenDiv {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.SearchOpenDivHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  background-color: #f0f0f0;
+  position: sticky;
+  top: 0;
+}
+.SearchOpenDivHead h5 {
+  margin: 0;
+  color: #222222;
+  font-weight: 500;
+  width: 30%;
+  min-width: 60px;
+  text-align: center;
+}
+.SearchOpenDivItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-bottom: 1px solid #e5e5e5;
+}
+.SearchOpenDivItem:hover {
+  background-color: #f7f7f7;
+}
+.SearchOpenDivItem h5 {
+  margin: 0;
+  color: #2d2d2d;
+  font-weight: 400;
+  width: 30%;
+  min-width: 60px;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.PriceHR {
+  min-width: 1px;
+  margin: 0;
+  height: 30px;
+  background-color: #686868;
+  border: none;
+  z-index: 3;
+}
+
+.PercentDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.PMDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.HeaderBottomDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  height: 42px;
+  background-color: #e1e5e8;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.MenuButtonsDiv2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 15px;
+  gap: 6px;
+}
+
+.Bottomtab:before,
+.Bottomtab:after {
+  content: "";
+  position: absolute;
+
+  height: 10px;
+  width: 20px;
+
+  bottom: 0;
+}
+.Bottomtab:after {
+  right: -20px;
+
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  -webkit-box-shadow: -10px 0 0 0 #ffffff;
+  box-shadow: -10px 0 0 0 #ffffff;
+}
+
+.Bottomtab:before {
+  left: -20px;
+
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  -webkit-box-shadow: 10px 0 0 0 #ffffff;
+  box-shadow: 10px 0 0 0 #ffffff;
+}
+
+.Bottomtab2:hover {
+  background: #c5c5c5;
+}
+.Bottomtab2:before,
+.Bottomtab2:after {
+  content: "";
+  position: absolute;
+
+  height: 10px;
+  width: 20px;
+
+  bottom: 0;
+}
+.Bottomtab2:after {
+  left: -20px;
+  top: 0.3px;
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  -webkit-box-shadow: -10px 0 0 0 transparent;
+  box-shadow: -10px 0 0 0 transparent;
+  rotate: 180deg;
+  /* transition: .3s; */
+}
+
+.Bottomtab2:before {
+  right: -20px;
+  top: 0.3px;
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  -webkit-box-shadow: 10px 0 0 0 transparent;
+  box-shadow: 10px 0 0 0 transparent;
+  rotate: 180deg;
+  /* transition: .3s; */
+  z-index: 10;
+}
+.Bottomtab2:hover::after {
+  box-shadow: -10px 0 0 0 #c5c5c5;
+}
+
+.Bottomtab2:hover::before {
+  box-shadow: 10px 0 0 0 #c5c5c5;
+}
+
+.SellOverlay {
+  /* display: none; */
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #0000004e;
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+.SellDiv {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 38%;
+  min-width: 310px;
+  background-color: #ffffff;
+  position: fixed;
+  top: 10%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border-radius: 10px;
+  z-index: 9999;
+}
+.closeSellDiv {
+  position: absolute;
+  right: 14px;
+  top: 3px;
+  font-size: 24px;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 300;
+}
+.closeSellDiv:hover {
+  opacity: 1;
+}
+
+@media (min-width: 1100px) {
+  .InputsDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 90%;
+    margin-top: 40px;
+  }
+  .InputsDiv2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 90%;
+    margin-top: 15px;
+  }
+}
+@media (max-width: 1100px) {
+  .InputsDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 83%;
+    margin-top: 40px;
+  }
+  .InputsDiv2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 83%;
+    margin-top: 15px;
+  }
+}
+.SellInput {
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #d4d4d4;
+  padding: 10px 10px;
+  cursor: no-drop;
+  width: 100%;
+  color: #353535;
+}
+.SellInput2 {
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #d4d4d4;
+  padding: 10px 10px;
+  width: 100%;
+  color: #353535;
+}
+.SellInput2:focus {
+  border: 1px solid #7c7c7c;
+  transition: 0.35s ease;
+  color: #353535;
+}
+.SellInput2:focus::-webkit-input-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+.SellInput2:focus::-moz-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+.SellInput2:focus:-ms-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+
+.SellBtn {
+  margin-top: 15px;
+  width: 105px;
+  height: 37px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  background: linear-gradient(0.55turn, #5e6e88, #5c6c93);
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.SellBtn:hover {
+  background: linear-gradient(0.55turn, #5e6e88, #5e6e98);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.TableDiv {
+  margin: 15px 0;
+  width: 95%;
+  margin-left: 2.5%;
+  height: auto;
+  max-height: 75%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
+  scrollbar-width: none;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.TableDiv::-webkit-scrollbar {
+  height: 13px;
+  width: 0;
+  background-color: #fff;
+}
+
+.TableDiv::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: rgb(228, 228, 228);
+  border-radius: 10px;
+}
+.TableDiv::-webkit-scrollbar-thumb:hover {
+  background: rgb(213, 213, 213);
+}
+
+.InfoTable {
+  width: 100%;
+  text-align: center;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+.InfoTable th {
+  background-color: #fafafa;
+  padding: 14px 10px;
+  color: rgb(62, 62, 62);
+  border-bottom: 2px solid #dbdada;
+  font-size: 14px;
+  min-width: 110px;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+}
+
+.InfoTable td {
+  color: rgb(83, 83, 83);
+  font-size: 14px;
+  padding: 12px;
+}
+.InfoTable tbody tr {
+  border-bottom: 1px solid #dadada;
+  background-color: rgb(255, 255, 255);
+}
+
+.InfoTable tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.ActionDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  max-height: 18px;
+}
+.ActionsIcon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.ActionsIcon:hover {
+  transform: scale(1.03);
+  opacity: 1;
+}
+
+.TableDiv2 {
+  margin: 15px 0;
+  width: 95%;
+  margin-left: 2.5%;
+  height: auto;
+  max-height: 85%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
+  scrollbar-width: none;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.TableDiv2::-webkit-scrollbar {
+  height: 13px;
+  width: 0;
+  background-color: #fff;
+}
+
+.TableDiv2::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: rgb(228, 228, 228);
+  border-radius: 10px;
+}
+.TableDiv2::-webkit-scrollbar-thumb:hover {
+  background: rgb(213, 213, 213);
+}
+
+.InfoTable2 {
+  width: 100%;
+  text-align: center;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+.InfoTable2 th {
+  background-color: #fafafa;
+  padding: 14px 10px;
+  color: rgb(62, 62, 62);
+  border-bottom: 2px solid #dbdada;
+  font-size: 14px;
+  min-width: 110px;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+}
+
+.InfoTable2 td {
+  color: rgb(83, 83, 83);
+  font-size: 14px;
+  padding: 12px;
+}
+.InfoTable2 tbody tr {
+  border-bottom: 1px solid #dadada;
+  background-color: rgb(255, 255, 255);
+}
+
+.InfoTable2 tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.EditBtn {
+  border: none;
+  border-radius: 4px;
+  width: 55px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #f7f7f7;
+  background-color: #0072c9df;
+  height: 30px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  font-size: 13px;
+}
+.DeleteBtn {
+  border: none;
+  border-radius: 4px;
+  width: 55px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #f7f7f7;
+  background-color: #d80404da;
+  height: 30px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  font-size: 13px;
+}
+
+.ActionsIcon2 {
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+.ActionsIcon2:hover {
+  transform: scale(1.03);
+}
+
+.TableDiv3 {
+  margin: 15px 0;
+  width: 95%;
+  margin-left: 2.5%;
+  height: auto;
+  max-height: 85%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
+  scrollbar-width: none;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.TableDiv3::-webkit-scrollbar {
+  height: 13px;
+  width: 0;
+  background-color: #fff;
+}
+
+.TableDiv3::-webkit-scrollbar-thumb {
+  height: 5px;
+  border: 4px solid #fff;
+  background: rgb(228, 228, 228);
+  border-radius: 10px;
+}
+.TableDiv3::-webkit-scrollbar-thumb:hover {
+  background: rgb(213, 213, 213);
+}
+
+.InfoTable3 {
+  width: 100%;
+  text-align: center;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+.InfoTable3 th {
+  background-color: #fafafa;
+  padding: 14px 10px;
+  color: rgb(62, 62, 62);
+  border-bottom: 2px solid #dbdada;
+  font-size: 14px;
+  min-width: 110px;
+  position: sticky;
+  top: 0px;
+
+  z-index: 2;
+}
+
+.InfoTable3 td {
+  color: rgb(83, 83, 83);
+  font-size: 14px;
+  padding: 12px;
+}
+.InfoTable3 tbody tr {
+  border-bottom: 1px solid #dadada;
+  background-color: rgb(255, 255, 255);
+}
+
+.InfoTable3 tbody tr:hover {
+  background-color: #f9f9f9;
+}

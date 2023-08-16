@@ -66,12 +66,16 @@ const Navigation = forwardRef(
             </div>
 
             <div>
-              <div className={styles.MenuItem}>
+              <Link
+                className={styles.MenuItem}
+                onClick={closeNavHandler}
+                to="watchlist"
+              >
                 <div className={styles.InsideMenuItem}>
                   <img src={eyeIcon} className={styles.MenuIcons} />
                   Watch lists
                 </div>
-              </div>
+              </Link>
               {tutorial && (
                 <div className={styles.questionMarkMenu}>
                   <p>?</p>

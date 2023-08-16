@@ -3,6 +3,7 @@ import styles from "../../styles/verification.module.css";
 import { useState } from "react";
 
 import arrowDownIcon from "../../images/arrow-down-svgrepo-com.svg";
+import warningIcon from "../../images/warning-attention-red-svgrepo-com.svg"
 
 const StepTwo = (props) => {
   const [toggleOne, setToggleOne] = useState(false);
@@ -177,6 +178,15 @@ const StepTwo = (props) => {
         className={`${styles.selectHeader} ${toggleOneClass}`}
         onClick={toggleOneToggle}
       >
+        {/*  */}
+        {/* <div className={styles.ErrorDiv}>
+          <img
+            src={warningIcon}
+            className={styles.ErrorIcon}
+          />
+          <p>Email or phone number already exist</p>
+        </div> */}
+        {/*  */}
         <div className={styles.selectWrapper}>
           <span className={styles.arrow}>
             <img src={arrowDownIcon} className={styles.ArrowIcon} />
@@ -290,7 +300,7 @@ const StepTwo = (props) => {
             </select>
           </div>
         </div>
-        
+
         <div className={styles.inputContainer3}>
           <input
             type="number"

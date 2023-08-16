@@ -145,11 +145,10 @@ const Signin = () => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        const firstname = data.firstname;
-        const lastname = data.lastname;
-        const type = data.type;
+        const firstname = data.adminData.firstName;
+        const lastname = data.adminData.lastName;
+        const type = data.adminData.adminType;
         const csrf = data.csrfToken;
-        console.log(csrf);
         Cookies.set("token", token);
         localStorage.setItem("firstname", firstname);
         localStorage.setItem("lastname", lastname);
