@@ -136,15 +136,14 @@ export default function AdminNavbar() {
         <div className={styles.Names}>
           <div className={styles.AdminName}>
             <h3 className={styles.h3AdminName}>
-              {/* Mahdi Mehraz */}
-              {localStorage.getItem("firstname")}{" "}
-              {localStorage.getItem("lastname")}
+              Mahdi Mehraz
+              {/* {localStorage.getItem('name')} */}
             </h3>
           </div>
           <div className={styles.AdminInformations}>
             <h6 className={styles.h6AdminInformations}>
-              {/* SuperViser */}
-              {localStorage.getItem("type")}
+              SuperViser
+              {/* {localStorage.getItem("type")} */}
             </h6>
           </div>
         </div>
@@ -167,11 +166,7 @@ export default function AdminNavbar() {
               ></div>
               <ul className={styles.options}>
                 <li>
-                  <Link
-                    to="/admin/profile"
-                    style={{ width: "100%", textDecoration: "none" }}
-                    onClick={toggleDropdown}
-                  >
+                  <Link to="/admin/profile" style={{ width: "100%",textDecoration:'none' }} onClick={toggleDropdown}>
                     <button className={styles.PAndLBttons}>
                       <img src={profileIcon} />
                       Profile

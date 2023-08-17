@@ -21,6 +21,8 @@ const ManagementPage = () => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const [error, setError] = useState(false);
+
   const toggleCountryMenu = () => {
     setCountryMenuShown((prev) => !prev);
   };
@@ -45,9 +47,9 @@ const ManagementPage = () => {
 
     let { response, data } = await fetchInstance(
       "/admin/managment/getEstates/" +
-        option +
+        selectedCountryOption.country_name +
         "/" +
-        selectedCountryOption.country_name
+        option
     );
 
     setSearchedEstates(data.data);
@@ -79,6 +81,20 @@ const ManagementPage = () => {
       body: formData,
     });
 
+    if (response.ok) {
+      window.location.reload(true);
+    }
+    if (response.status == 400) {
+      setError("City already exists");
+    } else if (response.status == 401) {
+      setError("Country already exists");
+    }
+  };
+
+  const LockEstate = async (id) => {
+    let { response } = await fetchInstance("url" + id, {
+      method: "POST",
+    });
     if (response.ok) {
       window.location.reload(true);
     }
@@ -114,7 +130,7 @@ const ManagementPage = () => {
               {selectedCountryOption ? (
                 <div className={styles.menuResult}>
                   <img
-                    src={`/${selectedCountryOption.country_logo.replace(
+                    src={`http://localhost:5000/${selectedCountryOption.country_logo.replace(
                       /\\/g,
                       "/"
                     )}`}
@@ -147,7 +163,10 @@ const ManagementPage = () => {
                       onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
-                        src={`/${option.country_logo.replace(/\\/g, "/")}`}
+                        src={`http://localhost:5000/${option.country_logo.replace(
+                          /\\/g,
+                          "/"
+                        )}`}
                         alt={option.country_name}
                       />
                       {option.country_name}
@@ -157,7 +176,6 @@ const ManagementPage = () => {
               </>
             )}
           </div>
-
           {/* <button
             className={styles.CountrySelect}
             onClick={toggleCountryMenu}
@@ -251,9 +269,10 @@ const ManagementPage = () => {
           submitHandler={submitHandler}
           closeHandler={showAddHandler}
           countries={countries}
+          error={error}
         />
       )}
-      <EstateTable estates={searchedEstates} />
+      <EstateTable estates={searchedEstates} lockEstate={LockEstate} />
     </>
   );
 };

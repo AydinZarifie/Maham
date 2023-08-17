@@ -30,13 +30,31 @@ const AdminPanel = () => {
     overlay.current.style.visibility = "visible";
   };
 
-  //search
-  const submitFilterHandler = async (name, type, country, city) => {
+  const submitNameFilterHandler = async (name) => {
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("adminType", type);
-    formData.append("countryName", country);
-    formData.append("cityName", city);
+    let { response, data } = await fetchInstance(
+      "/admin/panel/getAdminsWithFilter",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    setAdmins(data.data);
+  };
+
+  const submitGeneralFilterHandler = async (type, country, city) => {
+    const formData = new FormData();
+    if (type) {
+      formData.append("adminType", type);
+    }
+    if (country) {
+      formData.append("countryName", country);
+    }
+    if (city) {
+      formData.append("cityName", city);
+    }
+
     let { response, data } = await fetchInstance(
       "/admin/panel/getAdminsWithFilter",
       {
@@ -156,7 +174,8 @@ const AdminPanel = () => {
         />
       )}
       <AdminFilter
-        submitHandler={submitFilterHandler}
+        submitNameHandler={submitNameFilterHandler}
+        submitGeneralHandler={submitGeneralFilterHandler}
         closeHandler={closeFilter}
         openHandler={openFilter}
         ref={filter}

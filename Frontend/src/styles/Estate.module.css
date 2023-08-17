@@ -1,12 +1,29 @@
+.errorDiv {
+  position: absolute;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.errorDiv p {
+  color: #ff0005;
+  margin: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+.ErrorIcon {
+  width: 18px;
+  height: 18px;
+}
 
-.FandAButtons{
+.FandAButtons {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
 }
-
-
 
 /***  LayOut  ***/
 .column1 {
@@ -39,15 +56,15 @@
 }
 .CountryFilterAndAdder {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   background-color: #fff;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
-  gap:2%;
+  gap: 2%;
   height: 90px;
   /* padding:0 20px; */
   position: sticky;
-  top:-1px;
+  top: -1px;
   z-index: 98;
 }
 .EditAndDelete {
@@ -160,15 +177,15 @@
     color: #333;
     white-space: nowrap;
     /* transition: width 0.2s ease-in-out; */
-    transition: .3s;
+    transition: 0.3s;
     box-shadow: rgba(60, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 2px 0px;
+      rgba(60, 64, 67, 0.15) 0px 1px 2px 0px;
   }
   .iconBtn:hover {
     background-color: #eaeaea;
     transform: translateY(1px);
-  box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
-  rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
+    box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
   }
   /***    ***/
 }
@@ -191,15 +208,15 @@
     font-size: 12px;
     color: #333;
     white-space: nowrap;
-    transition: .3s;
+    transition: 0.3s;
     box-shadow: rgba(60, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 2px 0px;
+      rgba(60, 64, 67, 0.15) 0px 1px 2px 0px;
   }
   .iconBtn:hover {
     background-color: #eaeaea;
     transform: translateY(1px);
-  box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
-  rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
+    box-shadow: rgba(60, 0, 0, 0) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 1px 1px;
   }
 
   /***    ***/
@@ -412,7 +429,7 @@
   height: 80px;
   z-index: 9999;
   overflow-y: hidden;
-  scrollbar-width:none;
+  scrollbar-width: none;
   scrollbar-color: transparent;
   scroll-behavior: smooth;
   z-index: 0;
@@ -432,18 +449,17 @@
   display: none;
   height: 5px;
   border: 1px solid #fff;
-  background:transparent;
+  background: transparent;
   border-radius: 15px;
 }
 .scrollbar {
   width: 100%;
   white-space: nowrap;
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   gap: 3em;
   margin-top: 13px;
 }
-
 
 .CountryTag {
   text-align: center;
@@ -474,7 +490,7 @@
   max-height: 4%;
   min-height: 40px;
   border-radius: 100%;
-  font-size: 1.8rem; 
+  font-size: 1.8rem;
 }
 .slideRight:hover {
   cursor: pointer;

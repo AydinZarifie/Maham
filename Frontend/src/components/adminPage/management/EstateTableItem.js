@@ -27,7 +27,7 @@ const EstateTableItem = (props) => {
     <>
       <tr>
         <td>{props.estate_title}</td>
-        <td>{props.price}</td>
+        <td>{props.customer_price}</td>
         <td style={className24}>{props.change24}</td>
         <td style={className7}>{props.change7}</td>
         <td>{props.volume}</td>
@@ -36,7 +36,7 @@ const EstateTableItem = (props) => {
         <td>{props.sell_position.toString()}</td>
         <td>{props.lock_position.toString()}</td>
         <td>
-          <button>
+          <button onClick={()=>props.lockEstate(props._id)}>
             <img src={lockIcon} />
           </button>
         </td>

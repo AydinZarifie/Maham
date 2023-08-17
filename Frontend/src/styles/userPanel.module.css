@@ -1,3 +1,14 @@
+.NoExistDiv {
+  position: absolute;
+  z-index: 2;
+  width: 25%;
+  min-width: 290px;
+  margin-top: 220px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
 .Main {
   width: 100%;
   background-color: rgb(255, 255, 255);
@@ -107,7 +118,6 @@
   transform: scale(1.03);
 }
 
-
 .TableMainDiv {
   margin-top: 65px;
   margin-bottom: 100px;
@@ -121,6 +131,8 @@
 }
 
 .TableDiv {
+  flex-direction: column;
+  /* align-items: center; */
   width: 100%;
   height: auto;
   min-height: 470px;
@@ -130,7 +142,7 @@
   overflow-x: scroll;
   scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
   scrollbar-width: none;
-  /* display: flex; */
+  display: flex;
 }
 .TableDiv::-webkit-scrollbar {
   height: 13px;
@@ -200,19 +212,21 @@
 }
 
 .TableDiv2 {
-  position: absolute;
-  top: 110px;
+  flex-direction: column;
+  /* align-items: center; */
   width: 100%;
   height: auto;
-  height: 78%;
-  /* min-height: 570px;
-  max-height: 570px; */
+  /* min-height: 550px;
+  max-height: 550px; */
+  position: absolute;
+  margin-top: 42px;
+  height: 76%;
   overflow-y: scroll;
   overflow-x: scroll;
   scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
   scrollbar-width: none;
   background-color: #e1e5e8;
-  /* display: none; */
+  display: flex;
 }
 
 .TableDiv2::-webkit-scrollbar {
@@ -298,15 +312,15 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 6px;
   }
   .EthIcn {
     width: 26px;
     height: 26px;
   }
   .EthPriceh5 {
-    font-weight: 400;
-    font-size: .9rem;
+    font-weight: 500;
+    font-size: 1rem;
     color: #ffffff;
     max-width: 80px;
     overflow-x: hidden;
@@ -348,7 +362,7 @@
     cursor: pointer;
     transition: 0.3s;
     margin-left: 12px;
-      color: #ffffff;
+    color: #ffffff;
   }
   .NameAndAddress {
     display: flex;
@@ -378,23 +392,6 @@
     font-size: 14px;
     min-width: 100px;
     text-align: center;
-  }
-
-  .shortAddress2 {
-    white-space: nowrap;
-    font-weight: 400;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 70px;
-    padding: 10.5px;
-    border: 1px solid rgb(209, 213, 219);
-    font-size: 14px;
-    min-width: 100px;
-    text-align: center;
-    transition: .3s;
-  }
-  .shortAddress2:hover{
-    background-color: #52627c;
   }
   .longAddress {
     display: none;
@@ -455,7 +452,7 @@
     width: 130px;
     padding: 12px 15px;
     height: 17px;
-   color: #1c1c1c;
+    color: #1c1c1c;
     position: relative;
     top: 1px;
     background: #ffffff;
@@ -488,7 +485,7 @@
     height: 17px;
 
     font-weight: 300;
-    color:#2e2e2e;
+    color: #2e2e2e;
     position: relative;
     top: -0.5px;
     background: transparent;
@@ -517,8 +514,6 @@
     color: #fffefe;
   }
 
- 
-
   .TotalDiv h3 {
     color: #3e3e3e;
   }
@@ -530,8 +525,6 @@
     color: #00cf15;
   }
 
-
-
   .questionMark2 {
     width: 33px;
     height: 33px;
@@ -541,7 +534,7 @@
     font-size: 1.4rem;
     cursor: pointer;
     transition: 0.3s;
-  
+
     background-color: #5e6e88;
   }
 }
@@ -574,7 +567,7 @@
     cursor: pointer;
     transition: 0.3s;
     margin-left: 24px;
-      color: #ffffff;
+    color: #ffffff;
   }
 
   .NameAndAddress {
@@ -610,21 +603,6 @@
     padding: 2px 7px;
   }
   .shortAddress:hover {
-    background-color: #2121211f;
-  }
-
-  .shortAddress2 {
-    white-space: nowrap;
-    font-weight: 400;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 70px;
-    font-size: 12px;
-    margin: 0;
-    transition: 0.3s;
-    padding: 2px 7px;
-  }
-  .shortAddress2:hover {
     background-color: #2121211f;
   }
   .longAddress {
@@ -687,7 +665,7 @@
     width: 110px;
     padding: 12px 15px;
     height: 17px;
-    color:#1c1c1c;
+    color: #1c1c1c;
     position: relative;
     top: 1px;
     background: #ffffff;
@@ -719,7 +697,7 @@
     height: 17px;
 
     font-weight: 300;
-    color:#2e2e2e;
+    color: #2e2e2e;
     position: relative;
     top: -0.5px;
     background: transparent;
@@ -748,8 +726,6 @@
     color: #ffffff;
   }
 
- 
-
   .TotalDiv h3 {
     color: #3e3e3e;
     font-size: 0.95rem;
@@ -764,10 +740,8 @@
     font-size: 0.95rem;
   }
 
-
-
   .questionMark2 {
-   display: none;
+    display: none;
   }
 }
 
@@ -791,7 +765,6 @@
   flex-direction: column;
 }
 
-
 .questionMark {
   width: 33px;
   height: 33px;
@@ -802,7 +775,6 @@
   cursor: pointer;
   transition: 0.3s;
   background-color: #5e6e88;
-
 }
 .questionMark:hover {
   background-color: #ffbb332a;
@@ -812,8 +784,6 @@
   color: #ffbb33;
 }
 
-
-
 .questionMark2:hover {
   background-color: #ffbb332a;
 }
@@ -822,20 +792,17 @@
   color: #ffbb33;
 }
 
-.Question{
+.Question {
   display: flex;
   flex-direction: row;
   gap: 12px;
 }
 
-
-@media (min-width:600px){
-
-
-  .LogoDivOutside{
+@media (min-width: 600px) {
+  .LogoDivOutside {
     width: 42px;
-    background-color:  #48576e;
-    margin-left: -40px; 
+    background-color: #48576e;
+    margin-left: -40px;
     position: absolute;
     height: 100%;
     display: flex;
@@ -843,35 +810,29 @@
     align-items: center;
     justify-content: start;
   }
-  .LogoImg{
+  .LogoImg {
     width: 25px;
     margin-top: 12px;
-  
   }
 }
-@media (max-width:600px){
-  
-
-.LogoDivOutside{
-  width: 42px;
-  background-color: #48576e;
-  margin-left: -20px; 
-  position: absolute;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
+@media (max-width: 600px) {
+  .LogoDivOutside {
+    width: 42px;
+    background-color: #48576e;
+    margin-left: -20px;
+    position: absolute;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+  .LogoImg {
+    width: 22px;
+    margin-top: 17px;
+    margin-left: 4px;
+  }
 }
-.LogoImg{
-  width: 22px;
-  margin-top: 17px;
-  margin-left: 4px;
-
-}
-}
-
-
 
 .sideNav {
   position: fixed;
@@ -936,6 +897,7 @@
   gap: 5px;
 }
 .MenuItem {
+  text-decoration: none;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1111,7 +1073,6 @@
   color: #ffffff;
 }
 
-
 .questionMarkMenuLittle {
   width: 23px;
   height: 23px;
@@ -1135,7 +1096,7 @@
   margin: 0px 0 0 0;
   color: #ffffff;
 }
-.managementAssets2{
+.managementAssets2 {
   display: flex;
   flex-direction: row;
   align-items: center;

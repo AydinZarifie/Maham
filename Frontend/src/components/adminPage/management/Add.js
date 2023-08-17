@@ -1,4 +1,5 @@
 import styles from "../../../styles/Management.module.css";
+import warningIcon from "../../../images/warning-attention-red-svgrepo-com.svg";
 
 import { useState } from "react";
 
@@ -32,6 +33,14 @@ const Add = (props) => {
         <div className={styles.closeBtn} onClick={props.closeHandler}>
           &times;
         </div>
+
+        {props.error && (
+          <div className={styles.errorDiv}>
+            <img className={styles.ErrorIcon} src={warningIcon} alt="warning" />
+            <p>{props.error}</p>
+          </div>
+        )}
+
         <div className={styles.wrapper2}>
           <select
             className={styles.CountrySelect2}

@@ -14,24 +14,24 @@ const GetDocuments = () => {
       <table className={styles.GLStable} cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>MintId</th>
-            <th></th>
-            <th>Country</th>
-            <th>City</th>
-            <th>Profile</th>
-            <th></th>
-            <th></th>
+            <th className={styles.Th}>Title</th>
+            <th className={styles.Th}>MintId</th>
+            <th className={styles.Th}></th>
+            <th className={styles.Th}>Country</th>
+            <th className={styles.Th}>City</th>
+            <th className={styles.Th}>Profile</th>
+            <th className={styles.Th}></th>
+            <th className={styles.Th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>hello world</td>
-            <td>909977</td>
-            <td></td>
-            <td>Iran</td>
-            <td>Tabriz</td>
-            <td>
+            <td className={styles.Td}>hello world</td>
+            <td className={styles.Td}>909977</td>
+            <td className={styles.Td}></td>
+            <td className={styles.Td}>Iran</td>
+            <td className={styles.Td}>Tabriz</td>
+            <td className={styles.Td}>
               <button
                 className={styles.DocumentBtn}
                 onClick={toggleShowProfile}
@@ -39,7 +39,7 @@ const GetDocuments = () => {
                 <img src={ProfileLogo} className={styles.DocumentIcon} />
               </button>
             </td>
-            <td>
+            <td className={styles.Td}>
               <button
                 className={styles.DocumentBtn}
                 onClick={toggleConfirmationMessage}
@@ -47,7 +47,7 @@ const GetDocuments = () => {
                 <img src={TrueLogo} className={styles.DocumentIcon} />
               </button>
             </td>
-            <td>
+            <td className={styles.Td}>
               <button className={styles.DocumentBtn}>
                 <img src={FalseLogo} className={styles.DocumentIcon} />
               </button>

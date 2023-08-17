@@ -23,7 +23,7 @@ const EstateTable = (props) => {
           </thead>
           <tbody>
             {props.estates.map((item) => (
-              <EstateTableItem {...item} />
+              <EstateTableItem {...item} lockEstate={props.lockEstate} />
             ))}
           </tbody>
         </table>

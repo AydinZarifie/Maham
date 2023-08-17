@@ -232,7 +232,7 @@ right: 60px;
   }
   /***    ***/
 }
-@media (min-width: 760px) {
+@media (min-width: 790px) {
   .hrPurchase {
     background-color: #111;
     height: 70px;
@@ -305,7 +305,7 @@ right: 60px;
     margin-top: 0px;
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 790px) {
   .Header {
     height: 104.8px;
   }

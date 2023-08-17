@@ -38,7 +38,7 @@ const Navbar = (props) => {
           <input
             type="text"
             className={`${styles.searchBox} ${styles.searchBar}`}
-            placeholder="What can I help you with today?"
+            placeholder="Search"
             onChange={eventHandler}
             value={searchPhrase}
           />

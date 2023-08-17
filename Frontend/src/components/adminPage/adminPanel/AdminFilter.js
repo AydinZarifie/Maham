@@ -7,7 +7,6 @@ import { useState, React, forwardRef, useRef, useEffect } from "react";
 
 const AdminFilter = forwardRef((props, ref) => {
   const filter = useRef(null);
-  const [moreFilter, setMoreFilter] = useState(false);
   const searchDiv = useRef(null);
 
   const [filterData, setFilterData] = useState({
@@ -27,33 +26,31 @@ const AdminFilter = forwardRef((props, ref) => {
       debounceTimer = setTimeout(() => {
         props.nameChangeFetchHandler(value);
       }, 500);
-    }
-    if (name == "country") {
+    } else if (name == "country") {
       props.cityFetch(value);
+      props.submitGeneralHandler(
+        filterData.type ? filterData.type : null,
+        value,
+        filterData.city ? filterData.type : null
+      );
+    } else if (name == "city") {
+      props.submitGeneralHandler(
+        filterData.type ? filterData.type : null,
+        filterData.country ? filterData.country : null,
+        value
+      );
+    } else if (name == "type") {
+      props.submitGeneralHandler(
+        value,
+        filterData.country ? filterData.country : null,
+        filterData.city ? filterData.city : null
+      );
     }
   };
 
   const clickHandler = (admin) => {
-    // setSearchedAdminsShown(false);
     closeSearchFilter();
     setFilterData((prev) => ({ ...prev, name: admin }));
-  };
-
-  const toggleFilter = () => {
-    if (filter.current.style.maxHeight == "350px") {
-      filter.current.style.maxHeight = 0;
-      filter.current.style.top = "40px";
-      searchDiv.current.style.marginTop = "-44px";
-      searchDiv.current.style.top = "240px";
-      setMoreFilter(false);
-    } else {
-      filter.current.style.maxHeight = "350px";
-      filter.current.style.top = "0px";
-      setMoreFilter(true);
-
-      searchDiv.current.style.marginTop = "-395px";
-      searchDiv.current.style.top = "590px";
-    }
   };
 
   const openSearchFilter = () => {
@@ -96,11 +93,9 @@ const AdminFilter = forwardRef((props, ref) => {
     if (nationality.current.style.maxHeight == "85px") {
       nationality.current.style.maxHeight = "0px";
       arrow2.current.style.rotate = "0deg";
-      // nationality.style.backgroundColor = "";
     } else {
       nationality.current.style.maxHeight = "85px";
       arrow2.current.style.rotate = "180deg";
-      // nationality.style.backgroundColor = "#4141411a";
     }
   };
 
@@ -115,6 +110,28 @@ const AdminFilter = forwardRef((props, ref) => {
             &times;
           </button>
 
+          <div className={styles.SearchDiv} ref={searchDiv}>
+            <div
+              className={overlayStyles.SearchOverlay}
+              onClick={closeSearchFilter}
+            ></div>
+            {props.searchedAdmins.length > 0 && (
+              <ul>
+                {props.searchedAdmins.map((admin) => (
+                  <li
+                    onClick={() =>
+                      clickHandler(admin.first_name + " " + admin.last_name)
+                    }
+                  >
+                    <p>
+                      {admin.first_name} {admin.last_name}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
           <form className={styles.searchContainer}>
             <input
               type="text"
@@ -126,9 +143,14 @@ const AdminFilter = forwardRef((props, ref) => {
               className={`${styles.searchBox} ${styles.searchBar}`}
               placeholder="Search admin name"
             />
-            <img src={searchIcon} className={styles.SearchIcon} />
+            <img
+              src={searchIcon}
+              className={styles.SearchIcon}
+              onClick={() => props.submitNameHandler(filterData.name)}
+            />
           </form>
 
+          <hr className={styles.FilterHr}></hr>
           <div className={styles.FilterBody} ref={filter}>
             <div className={styles.Selection} onClick={toggleAdminType}>
               Admin Type
@@ -140,12 +162,14 @@ const AdminFilter = forwardRef((props, ref) => {
             </div>
             <div className={styles.wrapper} ref={adminType}>
               {/* <div className={styles.title}>Select Admin type</div> */}
-              <div className={styles.box} onChange={eventHandler}>
+              <div className={styles.box}>
                 <input
                   type="radio"
                   name="type"
-                  value="SuperAdmin"
+                  value="superAdmin"
                   id="option1"
+                  onChange={eventHandler}
+                  checked={filterData.type === "superAdmin"}
                   className={styles.option1}
                 />
                 <input
@@ -153,6 +177,8 @@ const AdminFilter = forwardRef((props, ref) => {
                   name="type"
                   value="admin"
                   id="option2"
+                  onChange={eventHandler}
+                  checked={filterData.type === "admin"}
                   className={styles.option2}
                 />
                 <label htmlFor="option1" className={styles.option1}>
@@ -166,7 +192,6 @@ const AdminFilter = forwardRef((props, ref) => {
               </div>
             </div>
 
-            {/*  */}
             <div className={styles.Selection2} onClick={toggleNationality}>
               nationality
               <img
@@ -187,6 +212,11 @@ const AdminFilter = forwardRef((props, ref) => {
                   <option className={styles.SelectOption} value="">
                     Country
                   </option>
+
+                  <option className={styles.SelectOption} value="jkfdsl">
+                    fsdaf
+                  </option>
+
                   {props.countries.map((country) => (
                     <option
                       key={country.country_name}
@@ -210,6 +240,9 @@ const AdminFilter = forwardRef((props, ref) => {
                     City
                   </option>
 
+                  <option className={styles.SelectOption} value="hello">
+                    helo
+                  </option>
                   {props.cities.length > 0 &&
                     props.cities.map((city) => (
                       <option
@@ -223,50 +256,7 @@ const AdminFilter = forwardRef((props, ref) => {
                 </select>
               </div>
             </div>
-            {/*  */}
-
-            {/* <button
-              className={styles.FilterBtn}
-              type="submit"
-              onClick={() =>
-                props.submitHandler(
-                  filterData.name,
-                  filterData.type,
-                  filterData.country,
-                  filterData.city
-                )
-              }
-            >
-              Filter
-            </button> */}
           </div>
-          <button className={styles.openFilterBtn} onClick={toggleFilter}>
-            <img
-              src={arrowIcon}
-              className={styles.ArrowIcon}
-              style={{ rotate: moreFilter ? "180deg" : "" }}
-            />
-          </button>
-        </div>
-
-        <div className={styles.SearchDiv} ref={searchDiv}>
-          <div
-            className={overlayStyles.SearchOverlay}
-            onClick={closeSearchFilter}
-          ></div>
-          {props.searchedAdmins.length > 0 && (
-            <ul>
-              {props.searchedAdmins.map((admin) => (
-                <li
-                  onClick={() =>
-                    clickHandler(admin.firstname + " " + admin.lastname)
-                  }
-                >
-                  {admin.firstname} {admin.lastname}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
       </div>
     </>

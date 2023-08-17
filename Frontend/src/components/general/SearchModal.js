@@ -31,7 +31,7 @@ const SearchModal = (props) => {
             <input
               type="text"
               className={`${styles.searchBox} ${styles.searchBar}`}
-              placeholder="What can I help you with today?"
+              placeholder="Search"
               value={searchPhrase}
               onChange={eventHandler}
             />

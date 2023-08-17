@@ -6,24 +6,21 @@ import validPassportIcon from "../../images/IMG_0008.PNG";
 import validPassportWithPersonIcon from "../../images/IMG_0010.PNG";
 import attentionIcon from "../../images/attention-circle-svgrepo-com.svg";
 import warningIcon from "../../images/warning-attention-svgrepo-com.svg";
+import redWarningIcon from "../../images/warning-attention-red-svgrepo-com.svg";
 import imageIcon from "../../images/image-svgrepo-com_1.svg";
 import deletetIcon from "../../images/delete-2-svgrepo-com.svg";
 
 const StepThree = (props) => {
-  const [selectedImages, setSelectedImages] = useState(
-    props.data
-  );
+  const [error, setError] = useState(false);
+  const [selectedImages, setSelectedImages] = useState(props.data);
   const [previewImages, setPreviewImages] = useState(
     selectedImages.length > 0
       ? selectedImages.map((file) => URL.createObjectURL(file))
       : []
   );
   const [dragging, setDragging] = useState(false);
-  const [touched, setTouched] = useState(false);
 
   const enteredImageIsValid = selectedImages.length == 2;
-
-  const imageIsInvalid = !enteredImageIsValid && touched;
 
   const imgHandler = (event) => {
     event.preventDefault();
@@ -76,17 +73,12 @@ const StepThree = (props) => {
   };
 
   const submitHandler = () => {
-    
-    setTouched(true);
     if (selectedImages.length != 2) {
+      setError(true);
       return;
     }
     props.onSubmit(selectedImages);
   };
-
-  const imageClass = imageIsInvalid
-    ? `${styles.invalid} ${styles.dropzone} `
-    : `${styles.dropzone} `;
 
   return (
     <div className={styles.Information}>
@@ -169,9 +161,11 @@ const StepThree = (props) => {
               multiple
               onChange={imgHandler}
             />
-            <label for="fileinput">
+            <label className={styles.InputLabel} for="fileinput">
               <div
-                className={`${imageClass}  ${dragging ? styles.dragging : ""}`}
+                className={`${styles.dropzone}  ${
+                  dragging ? styles.dragging : ""
+                }`}
                 // onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
                 onDragOver={handleDragEnter}
@@ -191,6 +185,14 @@ const StepThree = (props) => {
                   ))}
                 </div>
               </div>
+              {/*  */}
+              {error && (
+                <div className={styles.ErrorDivStep3}>
+                  <img src={redWarningIcon} className={styles.ErrorIcon} />
+                  <p>Please upload 2 images</p>
+                </div>
+              )}
+              {/*  */}
             </label>
             {selectedImages.length > 0 && (
               <button

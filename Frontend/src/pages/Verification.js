@@ -27,17 +27,17 @@ const Verification = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleNext = () => {
-    if (currentStep < 3) {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
+  // const handleNext = () => {
+  //   if (currentStep < 3) {
+  //     setCurrentStep((prev) => prev + 1);
+  //   }
+  // };
 
-  const handlePrev = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
+  // const handlePrev = () => {
+  //   if (currentStep > 0) {
+  //     setCurrentStep((prev) => prev - 1);
+  //   }
+  // };
 
   const sendEmail = async () => {
     const formData = new FormData();

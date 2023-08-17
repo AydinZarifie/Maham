@@ -9,8 +9,8 @@ const AdminConfig = ({ method, admin }) => {
 
   const [data, setData] = useState({
     type: admin ? admin.admin_type : "",
-    firstName: admin ? admin.firstname : "",
-    lastName: admin ? admin.lastname : "",
+    firstName: admin ? admin.first_name : "",
+    lastName: admin ? admin.last_name : "",
     email: admin ? admin.email : "",
     phoneNumber: admin ? admin.phone_number : "",
     country: admin ? admin.country_name : "",
@@ -39,8 +39,8 @@ const AdminConfig = ({ method, admin }) => {
   const enteredCountryIsValid = data.country.trim() !== "";
   const enteredCityIsValid = data.city.trim() !== "";
   const enteredPasswordIsValid = data.password.trim() !== "";
-  const enteredConfirmPasswordIsValid = data.confirmPassword.trim() !== "" && data.password==data.confirmPassword ;
-
+  const enteredConfirmPasswordIsValid =
+    data.confirmPassword.trim() !== "" && data.password == data.confirmPassword;
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const firstNameIsInvalid = !enteredFirstNameIsValid && touched.firstName;
   const lastNameIsInvalid = !enteredLastNameIsValid && touched.lastName;
@@ -51,7 +51,7 @@ const AdminConfig = ({ method, admin }) => {
   const cityIsInvalid = !enteredCityIsValid && touched.city;
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
   const confirmPasswordIsInvalid =
-    !enteredConfirmPasswordIsValid && touched.confirmPassword ;
+    !enteredConfirmPasswordIsValid && touched.confirmPassword;
 
   let formIsValidForAdding = false;
   let formIsValidForEditing = false;
@@ -81,7 +81,7 @@ const AdminConfig = ({ method, admin }) => {
     // enteredPasswordIsValid &&
     // enteredConfirmPasswordIsValid
   ) {
-     formIsValidForEditing = true;
+    formIsValidForEditing = true;
   }
 
   const blurHandler = (event) => {
@@ -190,11 +190,11 @@ const AdminConfig = ({ method, admin }) => {
             <option className={styles.SelectOption} value="">
               Type
             </option>
-            <option className={styles.SelectOption} value="superAdmin">
-              Super Admin
+            <option className={styles.SelectOption} value="superadmin">
+              superadmin
             </option>
             <option className={styles.SelectOption} value="admin">
-              Admin
+              admin
             </option>
           </select>
         </div>

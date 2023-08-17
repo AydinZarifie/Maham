@@ -28,6 +28,11 @@ import UserPanel from "./pages/UserPanel";
 import ManagementAssets from "./components/userPanel/ManagementAssets";
 import Assets from "./components/userPanel/managementAssets/Assets";
 import Transactions from "./components/userPanel/managementAssets/Transactions";
+import ClassicWatchlist from "./pages/userPanel/watchlist/ClassicWatchlist";
+import ChartWatchlist from "./pages/userPanel/watchlist/ChartWatchlist";
+import Watchlist from "./pages/Watchlist";
+import ActiveOrders from "./pages/userPanel/watchlist/ActiveOrders";
+import DailyDeals from "./pages/userPanel/watchlist/DailyDeals";
 
 const router = createBrowserRouter([
   {
@@ -130,6 +135,21 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Assets /> },
           { path: "transactions", element: <Transactions /> },
+        ],
+      },
+      {
+        path: "watchlist",
+        element: <Watchlist />,
+        children: [
+          {
+            path: "",
+            element: <ClassicWatchlist />,
+            children: [
+              { index: true, element: <ActiveOrders /> },
+              { path: "dailyDeals", element: <DailyDeals /> },
+            ],
+          },
+          { path: "chart", element: <ChartWatchlist /> },
         ],
       },
     ],

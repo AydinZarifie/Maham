@@ -6,14 +6,11 @@ import overlayStyle from "../../styles/overlay.module.css";
 import MultiRangeSlider from "../multiRangeSlider/MultiRangeSlider";
 
 const FilterModal = (props) => {
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-
   const [data, setData] = useState({
     country: "",
     city: "",
     firstValue: 0,
-    secondValue: 1,
+    secondValue: 1000,
   });
 
   const eventHandler = (event) => {
@@ -23,24 +20,24 @@ const FilterModal = (props) => {
       [name]: value,
     }));
     if (name == "country") {
-      cityFetch(value);
+      props.cityFetch(value);
     }
   };
 
-  useEffect(() => {
-    const fetchCountryData = async () => {
-      const data = await fetch("url");
-      const json = await data.json();
-      setCountries(json.data);
-    };
-    fetchCountryData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCountryData = async () => {
+  //     const data = await fetch("url");
+  //     const json = await data.json();
+  //     setCountries(json.data);
+  //   };
+  //   fetchCountryData();
+  // }, []);
 
-  const cityFetch = async (name) => {
-    const response = await fetch("url" + name);
-    const json = await response.json();
-    setCities(json.data);
-  };
+  // const cityFetch = async (name) => {
+  //   const response = await fetch("url" + name);
+  //   const json = await response.json();
+  //   setCities(json.data);
+  // };
 
   return (
     <>
@@ -59,11 +56,7 @@ const FilterModal = (props) => {
               className={styles.CountrySelect}
             >
               <option value="">choose a country</option>
-              <option value="IRI">IRI</option>
-              <option value="USA">USA</option>
-              <option value="UAE">UAE</option>
-              <option value="GER">GER</option>
-              {countries.map((option) => (
+              {props.countries.map((option) => (
                 <option key={option.country_name} value={option.country_name}>
                   {option.country_name}
                 </option>
@@ -79,9 +72,7 @@ const FilterModal = (props) => {
               className={styles.CountrySelect}
             >
               <option value="">City</option>
-              <option value="Tabriz">Tabriz</option>
-              <option value="Esfahan">Esfahan</option>
-              {cities.map((option) => (
+              {props.cities.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
