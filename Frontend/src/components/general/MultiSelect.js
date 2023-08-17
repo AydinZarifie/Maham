@@ -30,7 +30,7 @@ const MultiSelect = ({ options, onChange, selectedOptions, invalid }) => {
   return (
     <div className={styles.multiSelect}>
       <div className={styles.MultiSelectBody}>
-        <div className={styles.selectedTags}>
+        <div className={styles.selectedTags} style={selectedOptions.length > 0 ? {border:'1px solid #ff990a ',borderRight:'none'}:{}}>
           {selectedOptions.length === 0 && "Select filter"}
           {selectedOptions.length >0 && selectedOptions.map((option) => (
             <div key={option} className={styles.selectedTag}>
@@ -44,7 +44,7 @@ const MultiSelect = ({ options, onChange, selectedOptions, invalid }) => {
             </div>
           ))}
         </div>
-        <button type="button" className={buttonClass} onClick={toggleDropdown}>
+        <button type="button" className={buttonClass} style={selectedOptions.length > 0 ? {border:'1px solid #ff990a ',borderLeft:'none'}:{}} onClick={toggleDropdown}>
           <img src={arrowDownIcon} className={styles.ArrowIcon} />
         </button>
       </div>
@@ -67,7 +67,7 @@ const MultiSelect = ({ options, onChange, selectedOptions, invalid }) => {
                   onClick={() => handleOptionClick(option)}
                 >
                   {option}
-                  <div className={styles.square}>
+                  <div className={styles.square} style={selectedOptions.includes(option) ? {}:{backgroundColor:'transparent'}}>
                     {selectedOptions.includes(option) ? (
                       <img
                         src={orangeTickIcon}

@@ -29,21 +29,21 @@ const PhoneMenu = () => {
             <img src={homeLogo} className={styles.sidenavItemsIcn} />
             Home
           </span>
-          <hr />
+          <hr className={styles.phoneMenuHr}/>
         </a>
         <a href="#">
           <span className={styles.sidenavItems}>
             <img src={creditLogo} className={styles.sidenavItemsIcn} />
             Bank
           </span>
-          <hr />
+          <hr className={styles.phoneMenuHr}/>
         </a>
         <a href="#">
           <span className={styles.sidenavItems}>
             <img src={aboutLogo} className={styles.sidenavItemsIcn} />
             About us
           </span>
-          <hr />
+          <hr className={styles.phoneMenuHr}/>
         </a>
         <button className={styles.ConnectWalletBtn2}>Connect Wallet</button>
       </div>

@@ -56,7 +56,7 @@ const AdminItem = (props) => {
       <h5>{props.city_name}</h5>
 
       <div className={styles.profileChildDiv}>
-        <Link to={`${props._id}`}>
+        <Link to={`edit/${props._id}`}>
           <button className={styles.EandDBtn}>
             <img src={editLogo} className={styles.ProfileIcon} />
           </button>

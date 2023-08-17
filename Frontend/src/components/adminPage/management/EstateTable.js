@@ -1,5 +1,8 @@
 import styles from "../../../styles/Management.module.css";
 
+import lockIcon from "../../../images/SVGRepo_iconCarrier (3).svg";
+import unlockIcon from "../../../images/unlock-svgrepo-com.svg";
+
 import EstateTableItem from "./EstateTableItem";
 
 const EstateTable = (props) => {

@@ -136,14 +136,12 @@ export default function AdminNavbar() {
         <div className={styles.Names}>
           <div className={styles.AdminName}>
             <h3 className={styles.h3AdminName}>
-              Mahdi Mehraz
-              {/* {localStorage.getItem('name')} */}
+              {localStorage.getItem('firstname')} {localStorage.getItem('lastname')}
             </h3>
           </div>
           <div className={styles.AdminInformations}>
             <h6 className={styles.h6AdminInformations}>
-              SuperViser
-              {/* {localStorage.getItem("type")} */}
+              {localStorage.getItem("type")}
             </h6>
           </div>
         </div>

@@ -86,8 +86,8 @@ export default function Estates() {
 
   const submitFilterSearch = async (country, city, lowPrice, highPrice) => {
     const formData = new FormData();
-    formData.append("country", country);
-    formData.append("city", city);
+    formData.append("countryName", country);
+    formData.append("cityName", city);
     formData.append("price", lowPrice);
     formData.append("price", highPrice);
     let { response, data } = await fetchInstance("url", {
@@ -95,6 +95,7 @@ export default function Estates() {
       body: formData,
     });
     setData(data);
+    setFilterShown(false);
   };
 
   const getSmsForDocument = async (code) => {
@@ -162,7 +163,11 @@ export default function Estates() {
         )}
       </div>
 
-      <FilterWithAdder filters={filters} submitHandler={submitFilterHandler} error={error} />
+      <FilterWithAdder
+        filters={filters}
+        submitHandler={submitFilterHandler}
+        error={error}
+      />
       {/* <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div> */}
       <div
         className={styles.Main}

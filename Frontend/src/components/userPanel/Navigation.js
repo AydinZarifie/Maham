@@ -69,7 +69,7 @@ const Navigation = forwardRef(
               <Link
                 className={styles.MenuItem}
                 onClick={closeNavHandler}
-                to="watchlist"
+                to="watchlist/classic"
               >
                 <div className={styles.InsideMenuItem}>
                   <img src={eyeIcon} className={styles.MenuIcons} />

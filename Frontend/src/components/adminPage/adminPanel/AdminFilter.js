@@ -128,8 +128,17 @@ const AdminFilter = forwardRef((props, ref) => {
                     </p>
                   </li>
                 ))}
+                  {/* <li
+                    onClick={() =>
+                      clickHandler('uiguigh' + " " + 'ohhohohohj')
+                    }
+                  >
+                    <p>
+                      nnknknnlnlnlnlnln
+                    </p>
+                  </li> */}
               </ul>
-            )}
+              )}
           </div>
 
           <form className={styles.searchContainer}>
@@ -150,7 +159,11 @@ const AdminFilter = forwardRef((props, ref) => {
             />
           </form>
 
-          <hr className={styles.FilterHr}></hr>
+          <hr className={styles.FilterHr}/>
+          <div className={styles.FilterTitleDiv}>
+          <p className={styles.filterTitle}>Filter</p>
+          <p className={styles.DeleteFilter} onClick={()=>window.location.reload(true)}>Delete filter</p>
+          </div>
           <div className={styles.FilterBody} ref={filter}>
             <div className={styles.Selection} onClick={toggleAdminType}>
               Admin Type
@@ -213,10 +226,6 @@ const AdminFilter = forwardRef((props, ref) => {
                     Country
                   </option>
 
-                  <option className={styles.SelectOption} value="jkfdsl">
-                    fsdaf
-                  </option>
-
                   {props.countries.map((country) => (
                     <option
                       key={country.country_name}
@@ -240,9 +249,6 @@ const AdminFilter = forwardRef((props, ref) => {
                     City
                   </option>
 
-                  <option className={styles.SelectOption} value="hello">
-                    helo
-                  </option>
                   {props.cities.length > 0 &&
                     props.cities.map((city) => (
                       <option

@@ -22,7 +22,6 @@ import Verification from "./pages/Verification";
 import EditAdmin, {
   loader as adminDetailLoader,
 } from "./components/adminPage/adminPanel/EditAdmin";
-import Personal from "./components/adminPage/adminPanel/Personal";
 import Profile from "./pages/admin/Profile";
 import UserPanel from "./pages/UserPanel";
 import ManagementAssets from "./components/userPanel/ManagementAssets";
@@ -97,14 +96,14 @@ const router = createBrowserRouter([
             element: <AddAdmin />,
           },
           {
-            path: ":adminId",
+            path: "edit/:adminId",
             element: <EditAdmin />,
             loader: adminDetailLoader,
           },
-          {
-            path: "personal",
-            element: <Personal />,
-          },
+          // {
+          //   path: "personal",
+          //   element: <Personal />,
+          // },
         ],
       },
       {
@@ -142,14 +141,14 @@ const router = createBrowserRouter([
         element: <Watchlist />,
         children: [
           {
-            path: "",
+            path: "classic",
             element: <ClassicWatchlist />,
             children: [
               { index: true, element: <ActiveOrders /> },
               { path: "dailyDeals", element: <DailyDeals /> },
             ],
           },
-          { path: "chart", element: <ChartWatchlist /> },
+          { path: "", element: <ChartWatchlist /> },
         ],
       },
     ],

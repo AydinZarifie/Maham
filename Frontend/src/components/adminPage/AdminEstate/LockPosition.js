@@ -20,8 +20,8 @@ const LockPosition = () => {
             <th className={styles.Th}>Title</th>
             <th className={styles.Th}></th>
             <th className={styles.Th}></th>
-            <th className={styles.ThEsp}>Contract address</th>
-            <th className={styles.ThEsp}>Landlore address</th>
+            <th className={styles.Th}>Contract address</th>
+            <th className={styles.Th}>Landlore address</th>
 
             <th className={styles.Th}>Country</th>
             <th className={styles.Th}>City</th>
@@ -33,33 +33,34 @@ const LockPosition = () => {
         <tbody>
           {lockPositionData.map((item) => (
             <tr>
-              <td>{item.estate_title}</td>
-              <td></td>
-              <td></td>
-              <td>
+              <td className={styles.Td}>{item.estate_title}</td>
+              <td className={styles.Td}></td>
+              <td className={styles.Td}></td>
+              <td className={styles.Td}>
+                className={styles.Td}
                 <CustomTableItem text={item.contractAddress} />
               </td>
-              <td>
+              <td className={styles.Td}>
                 <CustomTableItem text={item.landloreAddress} />
               </td>
 
-              <td>{item.country_name}</td>
-              <td>{item.city_name}</td>
-              <td>{item.maham_price} ETH</td>
-              <td>1.96</td>
-              <td>
+              <td className={styles.Td}>{item.country_name}</td>
+              <td className={styles.Td}>{item.city_name}</td>
+              <td className={styles.Td}>{item.maham_price} ETH</td>
+              <td className={styles.Td}>1.96</td>
+              <td className={styles.Td}>
                 <img src={lockLogo} className={styles.LockIcon} />
               </td>
             </tr>
           ))}
-            <tr>
+          {/* <tr>
               <td className={styles.Td}>beach home in ohaio 9877</td>
               <td className={styles.Td}></td>
               <td className={styles.Td}></td>
-              <td className={styles.TdEsp}>
+              <td className={styles.Td}>
                 <CustomTableItem text="86966696969908696669696990989676" />
               </td>
-              <td className={styles.TdEsp}>
+              <td className={styles.Td}>
                 <CustomTableItem text="86966696969908696669696990989676" />
               </td>
 
@@ -70,7 +71,7 @@ const LockPosition = () => {
               <td className={styles.Td}>
                 <img src={lockLogo} className={styles.LockIcon} />
               </td>
-            </tr>
+            </tr> */}
         </tbody>
       </table>
     </div>

@@ -2,12 +2,13 @@
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #ff990a;
   position: absolute;
   right: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #ff990a;
 }
 .OrangeTick{
   width: 27px;
@@ -116,7 +117,7 @@
   flex-direction: column;
   max-height: 120px;
   overflow-y: scroll;
-  margin-top: -5px;
+
 }
  /* Hide scrollbar for Chrome, Safari and Opera */
  .dropdown::-webkit-scrollbar {
@@ -132,6 +133,7 @@
 .options {
   list-style: none;
   margin: 0;
+
   padding: 0;
 }
 

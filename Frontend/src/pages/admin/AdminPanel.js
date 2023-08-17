@@ -54,6 +54,10 @@ const AdminPanel = () => {
     if (city) {
       formData.append("cityName", city);
     }
+    
+    console.log(formData.get("adminType"));
+    console.log(formData.get("countryName"));
+    console.log(formData.get("cityName"));
 
     let { response, data } = await fetchInstance(
       "/admin/panel/getAdminsWithFilter",
@@ -211,7 +215,8 @@ const AdminPanel = () => {
 
           <NavLink
             className={({ isActive }) => (isActive ? styles.active : undefined)}
-            to="personal"
+            to="edit"
+            onClick={(event) => event.preventDefault()}
           >
             <button className={styles.InfoBtn}>Personal</button>
           </NavLink>
