@@ -36,8 +36,7 @@ export function getCsrfToken() {
 // }
 
 export async function checkAuthLoader() {
-  const valid = 200;
-  // await fetchAuthToken();
+  const valid =   await fetchAuthToken();
   if (valid == 200) {
     const token = getAuthToken();
 

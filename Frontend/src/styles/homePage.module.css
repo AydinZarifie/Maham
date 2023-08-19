@@ -1,3 +1,8 @@
+
+.phoneMenuHr{
+  color: #cbcbcb;
+}
+
 .menuLittle {
   display: flex;
   flex-direction: row;
@@ -34,9 +39,10 @@
 
 .modalContentInAdmin {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   background-color: #fafafa;
-  margin: auto;
+  /* margin: auto; */
   border: 1px solid rgb(230, 230, 230);
   min-width: 300px;
   width: 100%;
@@ -132,7 +138,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 3px;
   }
   .EthIcn {
     width: 27px;
@@ -214,8 +220,6 @@
 
   /*  side menu  */
   .OpenNav {
-    font-size: 33px;
-    cursor: pointer;
     display: none;
   }
 
@@ -321,11 +325,10 @@
   .Filter {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    max-width: 68%;
-    padding: 0 1%;
-    /* margin-left: 5%; */
+    max-width: 72%;
+   
     max-height: 80px;
   }
   .FilterandSearch {
@@ -373,6 +376,7 @@
     font-weight: 500;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     font-size: 0.8em;
+    min-width: 50px;
   }
   .underline2:hover a {
     color: #7b7b7b;
@@ -443,19 +447,21 @@
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.25rem;
-    padding: 0.25rem 1.3rem;
+    padding: 0.20rem 1.35rem;
     text-align: center;
     text-decoration: none #4c4c4e solid;
     text-decoration-thickness: auto;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    transition: .2s;
   }
 
   .FilterandSearchBtn:hover {
-    background-color: rgb(249, 250, 251);
+    background-color: rgb(251, 251, 251);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
   }
 
   .FilterandSearchBtn:focus {
@@ -526,6 +532,7 @@
     display: block;
     transition: 0.3s;
     margin-right: 15px;
+    opacity: .7;
   }
   .OpenNav:hover {
     transform: scale(1.06);
@@ -556,7 +563,7 @@
     color: #000000;
   }
   .closebtn {
-    margin-top: 10px;
+    margin-top: -12px;
   }
 
   /*  name and logo  */
@@ -647,6 +654,7 @@
     font-weight: 500;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     font-size: 0.6em;
+    min-width: 40px;
   }
   .underline2:hover a {
     color: #7b7b7b;
@@ -677,15 +685,17 @@
     left: 0;
     width: 100%;
     background-color: white;
-    padding: 20px 0 20px 0;
+    padding: 45px 0 20px 0;
     transition: transform 0.3s ease;
     transform: translateY(100%);
     border-radius: 10px 10px 0 0;
     display: flex;
     flex-direction: column;
+ 
   }
   .bottomMenu a:hover {
     color: #888;
+    opacity: .8;
   }
   .bottomMenu.open {
     transform: translateY(0);
@@ -695,6 +705,7 @@
     width: 25px;
     height: 25px;
     padding-right: 5px 5px;
+    opacity: .7;
   }
   .sidenavItems {
     display: flex;
@@ -702,12 +713,18 @@
     align-items: flex-end;
     font-size: 1rem;
     gap: 10px;
+    color: #404040;
+    transition: .3s;
   }
+ 
   .bottomMenu .closebtn {
-    position: relative;
-    right: -80%;
+    position: absolute;
+    /* right: -80%; */
+    top: 10px;
+    right: -10px;
     font-size: 32px;
     cursor: pointer;
+    opacity: .7;
   }
   .modal3 {
     position: fixed;
@@ -759,38 +776,9 @@
 
   /*   Filter and Search btn   */
   .FilterandSearchBtn {
-    background-color: #ffffff;
-    border: 1px solid rgb(209, 213, 219);
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    color: #111827;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    padding: 0.25rem 1.3rem;
-    text-align: center;
-    text-decoration: none #4c4c4e solid;
-    text-decoration-thickness: auto;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
     display: none;
   }
 
-  .FilterandSearchBtn:hover {
-    background-color: rgb(249, 250, 251);
-  }
-
-  .FilterandSearchBtn:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  .FilterandSearchBtn:focus-visible {
-    box-shadow: none;
-  }
 
   /*  search and filter in mobile  */
   .inputContainer {
@@ -1127,6 +1115,7 @@
   width: 27px;
   height: 27px;
   margin-top: 4px;
+  opacity: .8;
 }
 
 /*   Search Input    */
@@ -1139,7 +1128,7 @@
   border: 1px solid #d0cfce;
   border-radius: 50%;
   cursor: pointer;
-
+  transition: .3s;
   /* height: 40%; */
 }
 .inputContainer button:hover {
@@ -1208,7 +1197,6 @@
   position: fixed;
   top: 100px;
   background-color: #fefefe;
-  margin: auto;
   border: 1px solid #888;
   min-width: 320px;
   width: 25%;
@@ -1216,23 +1204,24 @@
   border: 1px solid #717171;
   border-radius: 8px;
   order: 2;
+ padding: 45px 0 30px 0;
 }
 
 .close {
-  color: #aaa;
-  float: right;
+ opacity:.6 ;
+  /* float: right; */
   font-size: 28px;
   font-weight: normal;
   cursor: pointer;
   order: 1;
-  width: 12%;
   transition: 0.2s;
-  height: 10%;
-  margin-top: 10px;
+  position: absolute;
+  right: 10px;
+  top: 0;
 }
 .close:hover,
 .close:focus {
-  color: black;
+opacity: 1;
   text-decoration: none;
   cursor: pointer;
 }
@@ -1264,44 +1253,46 @@
   order: 2;
 }
 .close2 {
-  color: #aaa;
-  float: right;
+  opacity: .6;
+  /* float: right; */
   font-size: 28px;
   font-weight: normal;
   cursor: pointer;
-  padding: 12px;
+  /* padding: 12px; */
   order: 1;
   transition: 0.2s;
-  height: 2%;
+  /* height: 2%; */
+  position: absolute;
+  right: 10px;
 }
 .close2:hover,
 .close2:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+ opacity: .8;
+ text-decoration: none;
 }
 
 /*   Filter Div   */
 .FilterDiv {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
   width: 100%;
-  margin: 60px 30px 60px 0px;
+
 }
 .customSelect {
   position: relative;
   font-family: Arial;
-  width: 200px;
+  width: 88%;
   z-index: 99999;
 }
 .CountrySelect {
   border: 1px solid rgb(209, 213, 219);
-  width: 270px;
+  width: 100%;
   background-color: #fefefe;
   border-radius: 7px;
   padding: 10px;
+  transition: .3s;
 }
 .CountrySelect:hover {
   background-color: #e9eaed;
@@ -1316,7 +1307,7 @@
   border: 1px solid rgb(209, 213, 219);
   border-radius: 0.5rem;
   box-sizing: border-box;
-  color: #444444;
+  color: #5b5b5b;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;
@@ -1329,12 +1320,16 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  margin-left: 55px;
+
   margin-top: 20px;
+  transition: .3s;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
 .SubmitBtn:hover {
   background-color: rgb(249, 250, 251);
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  color: #3c3c3c;
 }
 
 .SubmitBtn:focus {

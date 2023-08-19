@@ -1,3 +1,35 @@
+.filterTitle{
+  /* position: absolute;
+  top: 66px;
+  left: 40px;
+  background-color: #fafafa;
+  padding: 0 12px; */
+  color: #3b3b3b;
+  background-color: #fafafa;
+  padding: 0 10px;
+  font-size: 18px;
+}
+.DeleteFilter{
+  font-size: 12px;
+  color: #ff1a1a;
+  background-color: #fafafa;
+  padding: 0 10px;
+  cursor: pointer;
+}
+/* .FilterTitleDiv{
+  margin-left: -20px;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  position: absolute;
+  top: 90px;
+  left: 40px;
+  background-color: transparent;
+  padding: 0 12px;
+} */
 .FilterHr{
   width: 95%;
   height: 1px;
@@ -45,6 +77,7 @@
   gap: 4px;
   position: relative;
   top: -30px;
+
 }
 .LittleArrowIcon{
   width: 18px;
@@ -56,10 +89,20 @@
 .SearchIcon {
   position: relative;
   width: 27px;
-  height: 27px;
-  right: 37px;
+  height: 25px;
+  right: 34px;
   z-index: 99;
   cursor: pointer;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+  border-radius:10px;
+  background-color: #f3f3f3;
+  transition: .3s;
+  opacity: .7;
+}
+.SearchIcon:hover{
+  background-color: #eeeeee;
+  opacity: .9;
 }
 
 .openFilterBtn {
@@ -89,15 +132,16 @@
 .FilterBody {
   /* position: absolute; */
   width: 100%;
-  min-height: 100px;
+  min-height: 145px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
   transition: max-height 0.3s ease-in-out;
   position: relative;
-  top: 25px;
+  top: 65px;
+  /* padding-bottom: 30px; */
 }
 /* .SearchDiv {
   position: sticky;
@@ -693,8 +737,8 @@
     display: none;
     position: absolute;
     top: 241px;
-    margin-top: -169px;
-    width: 80%;
+    margin-top: -174px;
+    width: 72%;
     min-height: 0px;
     max-height: 240px;
     background: #ffffff;
@@ -702,6 +746,20 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+  .FilterTitleDiv{
+    margin-left: -20px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    top: 90px;
+    left: 40px;
+    background-color: transparent;
+    padding: 0 12px;
   }
 }
 @media (max-width: 750px) {
@@ -737,6 +795,7 @@
     position: fixed;
     background-color: #fafafa;
     z-index: 999;
+    
     /* overflow: hidden; */
   }
   .filterEstate {
@@ -939,8 +998,8 @@
     display: none;
     position: fixed;
     top: 240px;
-    margin-top: -47px;
-    width: 75%;
+    margin-top: -53px;
+    width: 70%;
     min-height: 0px;
     max-height: 240px;
     background: #ffffff;
@@ -948,6 +1007,20 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+  .FilterTitleDiv{
+    margin-left: 0px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    top: 120px;
+    left: 40px;
+    background-color: transparent;
+    padding: 0 12px;
   }
 }
 
@@ -989,7 +1062,8 @@
   position: relative;
   left: 12px;
   width: 100%;
-  height: 50px;
+  margin-left: 20px;
+  height: 43px;
   padding: 0 8px;
   font-size: 0.85rem;
   border: 1px solid #d0cfce;

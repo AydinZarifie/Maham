@@ -1,5 +1,24 @@
+.unlockIcon{
+  width:22px;
+  
+}
 
-.errorDiv{
+.lockAndUnlockButton{
+  width: 35px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #dadada;
+  border-radius: 6px;
+  transition: .3s;
+  opacity: .8;
+}
+.lockAndUnlockButton:hover{
+  background-color: #e5e5e5;
+  opacity: 1;
+}
+
+.errorDiv {
   position: absolute;
   width: 90%;
   display: flex;
@@ -8,46 +27,17 @@
   justify-content: center;
   gap: 8px;
 }
-.errorDiv p{
+.errorDiv p {
   color: #ff0005;
   margin: 0;
   font-weight: 500;
   font-size: 12px;
 }
-.ErrorIcon{
+.ErrorIcon {
   width: 18px;
   height: 18px;
 }
-/***   LayOut   ***/
-/* .Tables{
-    display: flex;
-    flex-direction: row;
-    justify-content:center;
-    gap: 3%;
-}
 
-
-.Tables12{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    gap: 3%;
- 
-}
-.Tables3AndName{
-    width: 40%;
-}
-
-
-
-.Tables1AndName{
-    width: 50%;
-}
-.Tables2AndName{
-    width: 50%;
-} */
-
-/***    ***/
 .dropdown {
   position: relative;
   /* width: 400px; */

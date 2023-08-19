@@ -10,7 +10,7 @@ const FilterModal = (props) => {
     country: "",
     city: "",
     firstValue: 0,
-    secondValue: 1000,
+    secondValue: 999999,
   });
 
   const eventHandler = (event) => {
@@ -82,7 +82,7 @@ const FilterModal = (props) => {
 
           <MultiRangeSlider
             min={0}
-            max={1000}
+            max={999999}
             onChange={({ min, max }) =>
               // console.log(`min = ${min}, max = ${max}`)
               setData((prev) => ({
@@ -98,6 +98,9 @@ const FilterModal = (props) => {
               className={styles.SubmitBtn}
               role="button"
               onClick={() => {
+                if (data.country === "" || data.city === "") {
+                  return;
+                }
                 props.onSubmit(
                   data.country,
                   data.city,

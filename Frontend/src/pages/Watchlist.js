@@ -13,9 +13,8 @@ const Watchlist = () => {
               className={({ isActive }) =>
                 isActive ? styles.tab : styles.tab2
               }
-              to="chart"
-              // end
-              
+              to=""
+              end
             >
               Chart
             </NavLink>
@@ -26,17 +25,15 @@ const Watchlist = () => {
               className={({ isActive }) =>
                 isActive ? styles.tab : styles.tab2
               }
-              to=""
-              end
+              to="classic"
             >
               Classic
             </NavLink>
-            {tutorial && (  <div className={styles.transactionInfo}>?</div>)}
-          
+            {tutorial && <div className={styles.transactionInfo}>?</div>}
           </div>
         </div>
       </div>
-      <Outlet context={{tutorial}} />
+      <Outlet context={{ tutorial }} />
     </div>
   );
 };

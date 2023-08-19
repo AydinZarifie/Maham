@@ -92,11 +92,25 @@ const ManagementPage = () => {
   };
 
   const LockEstate = async (id) => {
+    let url = "url";
     let { response } = await fetchInstance("url" + id, {
       method: "POST",
     });
-    if (response.ok) {
-      window.location.reload(true);
+    if (response) {
+      //add code here
+      url = "";
+    } else {
+      url = "";
+    }
+    let { res } = await fetchInstance(url + id, {
+      method: "POST",
+    });
+    if (res.ok) {
+      let index = searchedEstates.findIndex((item) => item._id == id);
+      setSearchedEstates((prev) => [
+        ...prev,
+        (prev[index].lock_position = !prev[index].lock_position),
+      ]);
     }
   };
 
