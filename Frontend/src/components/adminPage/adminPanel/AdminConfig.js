@@ -143,7 +143,7 @@ const AdminConfig = ({ method, admin }) => {
 
   useEffect(() => {
     if (admin) {
-      cityFetch(admin.country);
+      cityFetch(admin.country_name);
     }
   }, []);
 

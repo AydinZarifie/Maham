@@ -59,7 +59,7 @@ const Filters = (props) => {
       >
         <div className={styles.menuBig}>
           {props.filters.map((filter) => {
-            return <FilterItem key={filter.filterName} name={filter.filterName} img={filter.filterImageUrl} />;
+            return <FilterItem key={filter.filterName} name={filter.filterName} img={filter.filterImageUrl} onClick={props.onClick} />;
           })}
           {/* {data.map((item) => {
             return (

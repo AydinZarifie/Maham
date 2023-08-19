@@ -33,7 +33,7 @@ export default function FilterWithAdder(props) {
 
   return (
     <div className={styles.CountryFilterAndAdder}>
-      <Filters filters={props.filters} admin={true} />
+      <Filters filters={props.filters} admin={true} onClick={props.onClick} />
       <div className={styles.FandAButtons}>
         <Link to="new">
           <button className={styles.iconBtn}>Add estate</button>

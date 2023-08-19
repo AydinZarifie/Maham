@@ -1,13 +1,13 @@
 import styles from "../../../styles/Management.module.css";
 
-import data from "../../../dummyData/countryInformationData";
+// import data from "../../../dummyData/countryInformationData";
 
 import globeIcon from "../../../images/earth-svgrepo-com (1) 1.svg";
 import flagIcon from "../../../images/emoji-flags-svgrepo-com 2.svg";
 
 import CountryInformationItem from "./CountryInformationItem";
 
-const CountryInformations = () => {
+const CountryInformations = (props) => {
   return (
     <div className={styles.Tables3AndName}>
       <span className={styles.CountryInformationSpan}>
@@ -28,7 +28,7 @@ const CountryInformations = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {props.data.map((item) => (
               <CountryInformationItem key={item.id} {...item} />
             ))}
           </tbody>
