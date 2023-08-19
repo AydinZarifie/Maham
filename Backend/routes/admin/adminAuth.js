@@ -23,10 +23,12 @@ router
 
 router
 	.route("/auth/profile")
-	.get(verifyToken,adminAuthController.editAdminProfileInfo);
+	.get(verifyToken,adminAuthController.getEditAdminProfileInfo)
+	.put(verifyToken , adminAuthController.editAdminProfileInfo)
 
 router
 	.route("/verifyToken")
 	.post(adminAuthController.verifyAdminAccessTokenProtectedRoute);
+
 
 module.exports = router;

@@ -18,16 +18,14 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		message: 'success',
 		data: countries,
-		csrfToken: req.csrfToken(),
 	});
 });
-
 /// get all cities of given country
 exports.getAllCities = catchAsync(async (req, res, next) => {
 	if (!req.params.countryName) {
 		return next(new AppError('please select a country ', 404));
 	}
-
+	console.log('hii');
 	const country = await countryDB
 		.findOne({
 			country_name: req.params.countryName,
@@ -48,12 +46,13 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: country.cities,
-		csrfToken: req.csrfToken(),
 	});
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
 	const estates = await estateDB.find().select('-__V');
+
+	console.log(estates);
 
 	if (estates.length === 0) {
 		return res.status(204).json({
@@ -64,43 +63,46 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
-		csrfToken: req.csrfToken(),
 	});
 });
 
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	countryName = formatStr(req.body.countryName);
-	countryLogo = req.files.images[0].path;
-
-	if (!req.body.countryName) {
-		return next(new AppError('no country name provided', 400));
-	}
-	if (!req.files.images) {
-		return next(new AppError('no country logo provided', 400));
-	}
-
-	let countryCode;
 	try {
-		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
-		totalCountries++;
-		countryCode = totalCountries.toString();
-	} catch (err) {
-		console.error(err);
-		return next(new AppError('error aquired on assigning countryCode', 400));
+		countryName = formatStr(req.body.countryName);
+		countryLogo = req.files.images[0].path;
+
+		if (!req.body.countryName) {
+			return next(new AppError('no country name provided', 400));
+		}
+		if (!req.files.images) {
+			return next(new AppError('no country logo provided', 400));
+		}
+
+		let countryCode;
+		try {
+			let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
+			totalCountries++;
+			countryCode = totalCountries.toString();
+		} catch (err) {
+			console.error(err);
+			return next(new AppError('error aquired on assigning countryCode', 400));
+		}
+
+		const newCountry = new countryDB({
+			country_name: countryName,
+			country_logo: countryLogo,
+			country_code: countryCode,
+		});
+		// await assignCountryCode(countryName);
+		await newCountry.save();
+		return res.status(201).json({
+			status: 'success',
+		});
+	} catch (error) {
+		return res.status(401).json({
+			message: 'country already exist',
+		});
 	}
-
-	const newCountry = new countryDB({
-		country_name: countryName,
-		country_logo: countryLogo,
-		country_code: countryCode,
-	});
-
-	// await assignCountryCode(countryName);
-	await newCountry.save();
-
-	return res.status(201).json({
-		status: 'success',
-	});
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
@@ -119,6 +121,15 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			return next(new AppError('plesae insert city', 400));
 
 			// if all is ok , adds the city to cities collection of chosen country
+		}
+
+		const cityExist = country.cities.includes(formatStr(req.body.cityName));
+		console.log(cityExist);
+
+		if (cityExist) {
+			return res.status(400).json({
+				message: 'City already exist',
+			});
 		}
 
 		country.cities.push(formatStr(req.body.cityName));
@@ -159,66 +170,67 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
 		})
-		.select([
-			'estate_title',
-			'volume',
-			'price', //'landlord_address', 'change',
-		])
 		.sort('createdAt');
 
+	console.log(estates);
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
-		csrfToken: req.csrfToken(),
 	});
 });
 
-exports.lockEstate = catchAsync(async (req, res, next) => {
-	// 1) get information that is gonna change, from request's body
-	const filteredFields = {
-		lock_position: true,
-	};
+exports.lockUnLockEstate = catchAsync(async (req, res, next) => {
+	const estate = await estateDB.findById(req.params.id);
 
-	// 2) update Estate document
-	const updatedEstate = await estateDB.findByIdAndUpdate(
-		req.body.estateId,
-		filteredFields,
-		{
-			new: true,
-			runValidators: true,
-		}
-	);
-
-	if (!updatedEstate) {
-		return next(new AppError('Estate with that ID does not exist', 404));
+	if (!estate) {
+		return next(new AppError('estate not found', 401));
 	}
 
+	let lockPosition = estate.lock_position;
+	if (lockPosition == false) {
+		lockPosition = true;
+	} else {
+		lockPosition = false;
+	}
+	estate.lock_position = lockPosition;
+	await estate.save();
+
 	return res.status(200).json({
-		message: 'Successfully Locked',
+		message: 'Success',
 	});
 });
 
-exports.cancelLockPosition = catchAsync(async (req, res, next) => {
-	// 1) get information that is gonna change, from request's body
-	const filteredFields = {
-		lock_position: false,
-	};
+exports.getCountriesInfo = catchAsync(async (req, res, next) => {
+	const countriesInfo = await countryDB
+		.find()
+		.select(['country_logo', 'country_name', 'country_estates'])
+		.populate({
+			path: 'country_estates',
+			select: 'volume',
+		});
 
-	// 2) update Estate document
-	const updatedEstate = await estateDB.findByIdAndUpdate(
-		req.body.estateId,
-		filteredFields,
-		{
-			new: true,
-			runValidators: true,
-		}
-	);
-
-	if (!updatedEstate) {
-		return next(new AppError('Estate with that ID does not exist', 404));
+	if (countriesInfo.length === 0) {
+		return next('no such countries found', 404);
 	}
 
+	const countriesData = countriesInfo.map((country) => {
+		const sumVolume = country.country_estates.reduce((total, estate) => {
+			return total + estate.volume;
+		}, 0);
+
+		const totalEstates = country.country_estates.length;
+
+		return {
+			country_logo: country.country_logo,
+			country_name: country.country_name,
+			sumVolume,
+			totalEstates,
+		};
+	});
+
 	return res.status(200).json({
-		message: 'Successfully canceled LOCK position',
+		status: 'success',
+		data: countriesData,
+		// data: { countriesInfo, sumVolume, totalEstates },
 	});
 });

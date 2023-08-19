@@ -229,11 +229,19 @@ const estateSchema = new mongoose.Schema(
 			set: (a) => (a === '' ? undefined : a),
 		},
 		customer_price: {
-			type: String,
+			type: Number,
 			set: (a) => (a === '' ? undefined : a),
 		},
 		maham_price: {
+			type: Number,
+			set: (a) => (a === '' ? undefined : a),
+		},
+		nesbat: {
 			type: String,
+		},
+		volume: {
+			type: Number,
+			default: 0,
 			set: (a) => (a === '' ? undefined : a),
 		},
 		///
@@ -269,6 +277,7 @@ const estateSchema = new mongoose.Schema(
 		},
 		mint_id: {
 			type: String,
+			unique: true,
 		},
 		sell_position: {
 			type: Boolean,
@@ -281,7 +290,7 @@ const estateSchema = new mongoose.Schema(
 		getDocument: {
 			type: Boolean,
 		},
-		estate_filters: {
+		filter: {
 			type: [String],
 		},
 		country_ref: {
@@ -289,7 +298,7 @@ const estateSchema = new mongoose.Schema(
 			ref: 'Country',
 		},
 
-		////import  createdBy////
+		//import createdBy///////
 		/////////////////////////
 
 		estate_rooms: [estateRoomsSchema],
@@ -311,6 +320,10 @@ estateSchema.pre('save', async function (next) {
 		return next(
 			new AppError('country does not exist ,please create country first', 404)
 		);
+	}
+
+	if (!country.cities.includes(this.city_name)) {
+		return next(new AppError('city does not exist', 404));
 	}
 
 	const startsWith =
@@ -373,6 +386,13 @@ estateSchema.pre('save', async function (next) {
 	next();
 });
 
+estateSchema.pre('save', function (next) {
+	this.nesbat = (
+		parseFloat(this.customer_price) / parseFloat(this.maham_price)
+	).toFixed(2);
+	next();
+});
+
 // Add mintId of the delted estate >> into country's available mints
 estateSchema.pre(
 	'deleteOne',
@@ -401,5 +421,6 @@ estateSchema.pre(
 		next();
 	}
 );
+// update The users assets array when a but operation gets performed //
 
 module.exports = mongoose.model('real_estates', estateSchema);
