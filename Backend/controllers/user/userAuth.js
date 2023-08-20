@@ -1,5 +1,5 @@
 const userDB = require('../../models/user');
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 const { formatStr } = require('../../utilities/mint.js');
@@ -11,7 +11,7 @@ const signAccessToken = require('./../../utilities/token/signAccessToken');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 exports.signupUser = catchAsync(async (req, res, next) => {
 	const error = validationResult(req);
@@ -31,8 +31,6 @@ exports.signupUser = catchAsync(async (req, res, next) => {
 		birthDate,
 		confirmPassword,
 		phoneNumber,
-		country,
-		city,
 	} = req.body;
 
 	if (password !== confirmPassword) {
@@ -50,8 +48,6 @@ exports.signupUser = catchAsync(async (req, res, next) => {
 		birth_date: birthDate,
 		phone_number: phoneNumber,
 		email: email,
-		country: formatStr(country),
-		city: formatStr(city),
 	});
 
 	await user.save();
@@ -211,7 +207,7 @@ exports.userVerificationCode = catchAsync(async (req, res, next) => {
 exports.userRefreshToken = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 	if (!cookie?.jwt) {
-		return next(new AppError('cookieis is empty!', 403));
+		return next(new AppError('cookie is empty!', 403));
 	}
 
 	const refreshToken = cookie.jwt;

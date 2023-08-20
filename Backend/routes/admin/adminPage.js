@@ -34,6 +34,13 @@ router
 	.get(verifyToken, adminPage_Controller.getAddEstateFilters);
 
 // /getFilters or /estates/getFilters
-router.route('/getFilters').get(adminPage_Controller.getAllFilters);
+router
+	  .route('/getFilters')
+	  .get(verifyToken,adminPage_Controller.getAllFilters);
+
+router
+	.route("/searchEstateByFilter")
+	.post(adminPage_Controller.searchEstateByFilter);
+
 
 module.exports = router;

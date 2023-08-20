@@ -22,7 +22,6 @@ const countrySchema = new mongoose.Schema(
 		last_mints: {
 			type: Object,
 			default: {},
-			unique: true,
 		},
 		country_estates: [
 			{

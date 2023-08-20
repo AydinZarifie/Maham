@@ -13,55 +13,58 @@ const signAccessToken = require('./../../utilities/token/signAccessToken');
 const { formatStr } = require('../../utilities/mint.js');
 //////////////////////////////////////////////////////////////////
 
-exports.signupAdmin = catchAsync(async (req, res, next) => {
-	const error = validationResult(req);
-	if (!error.isEmpty()) {
-		console.log(error.array());
-		return res.status(422).json({
-			message: 'Error 422',
+exports.signupAdmin = async (req, res, next) => {
+	try {
+		const error = validationResult(req);
+		if (!error.isEmpty()) {
+			console.log(error.array());
+			return res.status(422).json({
+				message: 'Error 422',
+			});
+		}
+		// getting information from request body
+		const {
+			firstName,
+			lastName,
+			password,
+			email,
+			confirmPassword,
+			adminType,
+			phoneNumber,
+			country,
+			city,
+		} = req.body;
+
+		if (password !== confirmPassword) {
+			return next(
+				new AppError('password and password confirmation does not match', 401)
+			);
+		}
+		const hashedPassword = await bcrypt.hash(password, 12);
+		const admin = new adminDB({
+			first_name: formatStr(firstName),
+			last_name: formatStr(lastName),
+			password: hashedPassword,
+			admin_type: formatStr(adminType),
+			phone_number: phoneNumber,
+			email: formatStr(email),
+			country_name: formatStr(country),
+			city_name: formatStr(city),
+			full_name: 'hadirasouli',
+		});
+		await admin.save();
+
+		return res.status(202).json({
+			status: 'success',
+			message: 'signed up successfully',
+		});
+	} catch (error) {
+		console.log(error.message);
+		return res.status(401).json({
+			message: 'email or phone number already exist',
 		});
 	}
-
-	// getting information from request body
-	const {
-		firstName,
-		lastName,
-		password,
-		email,
-		confirmPassword,
-		adminType,
-		phoneNumber,
-		country,
-		city,
-	} = req.body;
-
-	if (password !== confirmPassword) {
-		return next(
-			new AppError('password and password confirmation does not match', 401)
-		);
-	}
-
-	const hashedPassword = await bcrypt.hash(password, 12);
-
-	const admin = new adminDB({
-		first_name: formatStr(firstName),
-		last_name: formatStr(lastName),
-		password: hashedPassword,
-		admin_type: formatStr(adminType),
-		phone_number: phoneNumber,
-		email: formatStr(email),
-		admin_country: formatStr(country),
-		admin_city: formatStr(city),
-	});
-
-	await admin.save();
-
-	return res.status(202).json({
-		status: 'success',
-		message: 'signed up successfully',
-	});
-	// catch (error) {}
-});
+};
 
 exports.loginAdmin = catchAsync(async (req, res, next) => {
 	// 1) validate the request body
@@ -69,7 +72,7 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 	if (!error.isEmpty()) {
 		console.log(error.array());
 		return res.status(405).json({
-			message: 'Error 405',
+			message: `${error.errors[0].msg} in ${error.errors[0].path}`,
 		});
 	}
 	const { password, email, verificationCode } = req.body;
@@ -130,7 +133,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 			console.log('Failed to destroy session');
 		}
 	});
-
 	return res.status(202).json({
 		status: 'success',
 		token: accessToken,
@@ -143,22 +145,10 @@ exports.logoutAdmin = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 
 	if (!cookie?.jwt) {
-		return next(
-			new AppError('not logged in yet , cookie does not exists!', 204)
-		);
+		return next(new AppError('cookie does not exists!', 204));
 	}
 
 	await res.clearCookie('jwt', {
-		httpOnly: true,
-		secure: true,
-		sameSite: 'None',
-	});
-	await res.clearCookie('csrf-token', {
-		httpOnly: true,
-		secure: true,
-		sameSite: 'None',
-	});
-	await res.clearCookie('secret', {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'None',
@@ -176,7 +166,7 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 		if (!error.isEmpty()) {
 			console.log(error.array());
 			return res.status(405).json({
-				message: 'Error 405',
+				message: `${error.errors[0].msg} in ${error.errors[0].path}`,
 			});
 		}
 		const { email, password } = req.body;
@@ -242,24 +232,43 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 	return res.status(201).json(accessToken);
 });
 
-exports.editAdminProfileInfo = catchAsync(async (req, res) => {
+exports.getEditAdminProfileInfo = catchAsync(async (req, res) => {
 	const admin = await adminDB.findOne({ email: req.email });
-
-	if (!admin) {
-		return next(new AppError('Admin does not exist', 200));
-	}
-
+	console.log(admin);
 	return res.status(200).json({
 		message: 'Success',
 		admin: admin,
 	});
 });
 
+exports.editAdminProfileInfo = catchAsync(async (req, res, next) => {
+	const password = req.body.password;
+	const confirmPassword = req.body.confirmPassword;
+
+	if (password !== confirmPassword && (!password || !confirmPassword)) {
+		return next(new AppError('password and confirm password not equal!', 401));
+	}
+
+	const admin = await adminDB.findById(req._id);
+
+	if (!admin) {
+		return next(new AppError('admin not found!', 401));
+	}
+
+	const hashedPassword = await bcrypt.hash(password, 12);
+	console.log(hashedPassword);
+
+	admin.password = hashedPassword;
+	await admin.save();
+
+	return res.status(200).json({
+		message: 'Success',
+	});
+});
+
 exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
 	try {
 		const accessToken = req.body.token;
-
-		console.log(accessToken);
 
 		if (!accessToken) {
 			return res.status(401).json({

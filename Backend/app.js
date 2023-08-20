@@ -9,11 +9,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const hpp = require('hpp');
 // const xss = require('xss');
-const csrf = require('csrf');
-const Tokens = new csrf({
-	saltLength: 10,
-	secretLength: 18,
-});
+
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 //////////////////////////////////////////////
@@ -29,7 +25,6 @@ const userPanel_router = require('./routes/user/userPanel');
 ///////////////////////
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
-const { constrainedMemory } = require('process');
 //////////////////////////////////////////////
 dotenv.config({ path: './config.env' });
 const app = express();
@@ -158,18 +153,6 @@ app.use(upload);
 
 // app.use(path.join(__dirname, '/public'))
 
-// app.use((req, res, next) => {
-// 	res.setHeader('Access-Control-Allow-Origin', '*');
-// 	res.setHeader(
-// 		'Access-Control-Allow-Methods',
-// 		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-// 	);
-// 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-// 	res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
-// 	next();
-// });
-// app.use(cors({ credentials: true, origin: true }));
-
 app.use(
 	'/admin',
 	adminAuth_router,
@@ -182,8 +165,8 @@ app.use(
 	'/user',
 	userAuthorization_router,
 	userAuthentication_router,
-	userPanel_router,
-	userProfile_router
+	userPanel_router
+	// userProfile_router
 );
 
 const DBlocal = process.env.LOCAL_DATABASE;

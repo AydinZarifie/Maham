@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 // mongoose.set('debug', true);
-const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const AppError = require('../utilities/error/appError');
 const countryDB = require('./country');
@@ -36,10 +35,10 @@ const adminSchema = new mongoose.Schema(
 		profile_image: {
 			type: String,
 		},
-		admin_country: {
+		country_name: {
 			type: String,
 		},
-		admin_city: {
+		city_name: {
 			type: String,
 		},
 		admin_country_ref: [
@@ -80,7 +79,7 @@ adminSchema.pre('save', function (next) {
 
 adminSchema.pre('save', async function (next) {
 	const country = await countryDB.findOne({
-		country_name: this.admin_country,
+		country_name: this.country_name,
 	});
 
 	if (!country) {
@@ -129,40 +128,5 @@ adminSchema.post('save', async function (doc, next) {
 	refCountry.country_admins.push(doc.id);
 	await refCountry.save();
 });
-
-adminSchema.methods.correctPassword = async function (
-	candidatePassword,
-	userPassword
-) {
-	return await bcrypt.compare(candidatePassword, userPassword);
-};
-
-adminSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
-	if (this.passwordChangedAt) {
-		const changedTimestamp = parseInt(
-			this.passwordChangedAt.getTime() - 1000,
-			10
-		);
-		return JWTTimestamp < changedTimestamp;
-	}
-
-	// false if not changed password
-	return false;
-};
-
-adminSchema.methods.createPasswordResetToken = function () {
-	const resetToken = crypto.randomBytes(32).toString('hex');
-
-	this.passwordResetToken = crypto
-		.createHash('sha256')
-		.update(resetToken)
-		.digest('hex');
-
-	console.log({ resetToken }, this.passwordResetToken);
-
-	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-
-	return resetToken;
-};
 
 module.exports = mongoose.model('Admin', adminSchema);

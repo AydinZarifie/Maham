@@ -25,7 +25,6 @@ exports.generateMint = (country, modifiedCityName) => {
 
 	if (country.available_mints.length === 0) {
 		estateNum = parseInt(country.last_mints[countryCode + cityCode]) + 1;
-		console.log(estateNum);
 		estateCode = estateNum.toString();
 		mint = countryCode + cityCode + estateCode;
 	} else {

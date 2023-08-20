@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const filterSchema = new mongoose.Schema({
-	filter_name: {
+	filterName: {
 		type: String,
-		// required: true,
-		// unique: true,
+		required: true,
+		unique: true,
 	},
-	filter_imageUrl: {
+	filterImageUrl: {
 		type: String,
-		// required: true,
-		// unique: true,
+		required: true,
+		unique: true,
 	},
 });
 

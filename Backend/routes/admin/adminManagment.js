@@ -10,7 +10,7 @@ router
 
 router
 	.route('/managment/getCities/:countryName')
-	.get(verifyToken, managementController.getAllCities);
+	.get(managementController.getAllCities);
 
 router
 	.route('/managment/getEstates')
@@ -28,11 +28,12 @@ router
 	.route('/managment/getEstates/:countryName/:cityName')
 	.get(verifyToken, managementController.getEstates);
 
-router.patch('/managment/lock', managementController.lockEstate);
+router
+	.route('/managment/lockUnLockEstate/:id')
+	.post(managementController.lockUnLockEstate);
 
-router.patch(
-	'/managment/cancelLockPosition',
-	managementController.cancelLockPosition
-);
+router
+	.route('/managment/countriesInfo')
+	.get(managementController.getCountriesInfo);
 
 module.exports = router;
