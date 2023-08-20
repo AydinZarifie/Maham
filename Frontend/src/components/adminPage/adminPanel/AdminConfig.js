@@ -99,23 +99,33 @@ const AdminConfig = ({ method, admin }) => {
 
   const submit = (event) => {
     event.preventDefault();
-    setTouched({
-      type: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      phoneNumber: true,
-      country: true,
-      city: true,
-      password: true,
-      confirmPassword: true,
-    });
 
     if (admin) {
+      setTouched((prev) => ({
+        ...prev,
+        type: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phoneNumber: true,
+        country: true,
+        city: true,
+      }));
       if (!formIsValidForEditing) {
         return;
       }
     } else {
+      setTouched({
+        type: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phoneNumber: true,
+        country: true,
+        city: true,
+        password: true,
+        confirmPassword: true,
+      });
       if (!formIsValidForAdding) {
         return;
       }
@@ -395,7 +405,6 @@ const AdminConfig = ({ method, admin }) => {
               type="password"
               name="password"
               id="password"
-              required
               onChange={eventHandler}
               value={data.password}
               onBlur={blurHandler}
@@ -431,7 +440,6 @@ const AdminConfig = ({ method, admin }) => {
               type="password"
               name="confirmPassword"
               id="confirmPassword"
-              required
               onChange={eventHandler}
               value={data.confirmPassword}
               onBlur={blurHandler}

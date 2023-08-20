@@ -34,7 +34,7 @@ const AdminPanel = () => {
     const formData = new FormData();
     formData.append("name", name);
     let { response, data } = await fetchInstance(
-      "/admin/panel/getAdminsWithFilter",
+      "/admin/panel/getAdmin",
       {
         method: "POST",
         body: formData,
@@ -98,7 +98,7 @@ const AdminPanel = () => {
     let url = "/admin/auth/signup";
 
     if (method === "PUT") {
-      url = "/admin/auth/signup/" + id;
+      url = "/admin/panel/editAdmin/" + id;
     }
 
     let { response } = await fetchInstance(url, {
@@ -115,7 +115,7 @@ const AdminPanel = () => {
       navigate("/admin/admins");
     }
     if (response.status == 401) {
-      setError("Email already exists");
+      setError("Email or phone number already exists");
     }
   };
 

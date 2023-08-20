@@ -504,6 +504,7 @@
     margin: 20px;
     padding: 10px;
     overflow-x: scroll;
+    min-height: 490px;
   }
   .AdminInfo::-webkit-scrollbar {
     display: none;
@@ -772,6 +773,7 @@
     padding: 10px;
     overflow-x: scroll;
     margin: 20px;
+    min-height: 490px;
   }
   .AdminInfo::-webkit-scrollbar {
     display: none;

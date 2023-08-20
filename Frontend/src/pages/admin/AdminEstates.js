@@ -15,7 +15,18 @@ import fetchInstance from "../../util/fetchInstance";
 export default function Estates() {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState([]);
-  const [lockPositionData, setLockPositionData] = useState([]);
+  const [lockPositionData, setLockPositionData] = useState([
+    // {
+    //   estate_title: "beach",
+    //   contract_address:
+    //     "5328146972387409258164058720693481765923487610285471908237460198254",
+    //   landlor_address:
+    //     "5328146972387409258164058720693481765923487610285471908237460198254",
+    //   country_name: "iran",
+    //   city_name: "tabriz",
+    //   maham_price: "23",
+    // },
+  ]);
   const [sellPositionData, setSellPositionData] = useState([]);
   const [showProfile, setShowProfile] = useState(false);
   const [filterShown, setFilterShown] = useState(false);
@@ -29,7 +40,9 @@ export default function Estates() {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
-    const response = await fetch("url" + name);
+    const response = await fetch(
+      "http://localhost:5000/admin/managment/getCities/" + name
+    );
     const json = await response.json();
     setCities(json.data);
   };
@@ -60,7 +73,7 @@ export default function Estates() {
     fetchFilterData();
 
     const fetchCountries = async () => {
-      let { response, data } = await fetchInstance("url");
+      let { response, data } = await fetchInstance("/admin/managment");
       setCountries(data.data);
     };
     fetchCountries();
@@ -90,10 +103,13 @@ export default function Estates() {
     formData.append("cityName", city);
     formData.append("price", lowPrice);
     formData.append("price", highPrice);
-    let { response, data } = await fetchInstance("url", {
-      method: "POST",
-      body: formData,
-    });
+    let { response, data } = await fetchInstance(
+      "/admin/searchEstateByFilter",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     setData(data.estate);
     setFilterShown(false);
   };
@@ -149,12 +165,15 @@ export default function Estates() {
   const submitFilter = async (filterName) => {
     const formData = new FormData();
     formData.append("filterName", filterName);
-    let { response, data } = await fetchInstance("url", {
-      method: "POST",
-      body: formData,
-    });
-    if(response.ok){
-      setData(data)
+    let { response, data } = await fetchInstance(
+      "/admin/searchEstateByFilterName",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    if (response.ok) {
+      setData(data.data);
     }
   };
 

@@ -5,11 +5,14 @@
     align-items: center;
     justify-content: center;
     gap: 3px;
+    /* margin-top: 2px; */
+    position: relative;
+    top: 3px;
   }
   .numberContainer {
     display: flex;
     flex-direction: column;
-
+     
     cursor: pointer;
     font-size: 14px;
     transition: 0.2s;
@@ -17,23 +20,25 @@
 
   .CopyIcon {
     display: block;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     transition: 0.3s;
   }
   .CopyIcon2 {
     display: block;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     transition: 0.3s;
   }
   .CopyBox {
     display: block;
-    opacity: 0;
-    position: relative;
-    /* margin-top: -13px;  */
+  
+    position: absolute;
+    right: -34.5px;
+    top: -17px;
+    /* margin-top: 23px;  */
     margin-left: 3%;
     font-size: 10px;
     width: 70px;
@@ -44,13 +49,16 @@
     background-color: #01013bcb;
     text-align: center;
     transition: 0.3s;
+    z-index: 5;
    
   }
   .FullNumber {
     display: block;
-    opacity: 0;
-    position: relative;
-     top: -10px;
+  
+   margin-left: -20px;
+    position: absolute;
+    left: 0px;
+     top: -41px;
     width: 190px;
     height: auto;
     padding: 5px 10px;
@@ -58,10 +66,12 @@
     color: #fff;
     background-color: #01013bcb;
     transition: 0.3s;
+    z-index: 5;
+
   }
   .FullNumber:after,
 .FullNumber:before {
-  bottom: -28%;
+  bottom: -20%;
   border: solid transparent;
   content: "";
   height: 0;
@@ -73,6 +83,12 @@
   border-width: 6px;
   left: 90%;
 }
+.FullNumberP {
+  font-size: 11px;
+  text-overflow: hidden;
+  margin: 0;
+  word-break: break-all;
+}
   .partialNumber {
     margin-top: -39px;
     display: flex;
@@ -81,12 +97,14 @@
     justify-content: center;
     gap: 10px;
     overflow-x: hidden;
+    position: relative;
+    top: 15px;
     
   }
   .HoverDiv{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: end;
     margin-left: -123px;
     position: relative;
    top: -25px;
@@ -99,6 +117,8 @@
     align-items: center;
     justify-content: center;
     gap: 2px;
+    margin-top: 22px;
+    position: relative;
   }
   .numberContainer {
     display: inline-block;
@@ -123,9 +143,10 @@
   }
   .CopyBox {
     display: block;
-    opacity: 0;
-    position: relative;
-    top:8px;
+ 
+    position: absolute;
+    top:-10px;
+    right: -35px;
     font-size: 8px;
     width: 55px;
     height: auto;
@@ -135,13 +156,13 @@
     background-color: #01013bcb;
     text-align: center;
     transition: 0.3s;
-   
+    z-index: 5;
   }
   .FullNumber {
     display: block;
-    opacity: 0;
-    position: relative;
-   /* top: -13px; */
+    position: absolute;
+   top: -36px;
+   left: -10px;
     width: 140px;
     height: auto;
     padding: 5px 10px;
@@ -150,10 +171,11 @@
     background-color: #01013bcb;
     transition: 0.3s;
     font-size: 8px;
+    z-index: 5;
   }
   .FullNumber:after,
 .FullNumber:before {
-  bottom: -20%;
+  bottom: -17%;
   border: solid transparent;
   content: "";
   height: 0;
@@ -164,6 +186,13 @@
   border-bottom-color: #01013b88;
   border-width: 4px;
   left: 90%;
+  
+}
+.FullNumberP {
+  font-size: 10px;
+  text-overflow: hidden;
+  margin: 0;
+  word-break: break-all;
 }
   .partialNumber {
     margin-top: -36px;
@@ -173,11 +202,13 @@
     justify-content: center;
     /* gap: 10px; */
     overflow-x: hidden;
+    position: relative;
+    top: 8px;
   }
   .HoverDiv{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: end;
     margin-left: -100px;
     position: relative;
    top: -34px;
@@ -206,12 +237,12 @@
   background-color: #01013bcb;
   transition: 0.3s;
 } */
-.FullNumberP {
+/* .FullNumberP {
   font-size: 12px;
   text-overflow: hidden;
   margin: 0;
   word-break: break-all;
-}
+} */
 /* .FullNumber:after,
 .FullNumber:before {
   bottom: -45%;
@@ -260,7 +291,7 @@
 
 .CopyBox:after,
 .CopyBox:before {
-  bottom: -52%;
+  bottom: -50%;
   border: solid transparent;
   content: "";
   height: 0;

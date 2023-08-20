@@ -8,12 +8,19 @@ import editIcon from "../../../images/edit-svgrepo-com2.svg";
 import deleteIcon from "../../../images/delete-2-svgrepo-com2.svg";
 
 import { useEffect, useRef, useState } from "react";
-import { NavLink, Outlet, useOutletContext } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import SearchComponent from "../../../components/userPanel/watchList/SearchComponent";
 import SellPanel from "../../../components/userPanel/watchList/SellPanel";
 
 const ClassicWatchlist = () => {
   const { tutorial } = useOutletContext();
+
+  const navigate = useNavigate();
 
   const size = 65;
 
@@ -221,7 +228,11 @@ const ClassicWatchlist = () => {
                 <tr>
                   <td>
                     <div className={styles.ActionDiv}>
-                      <img src={chartIcon} className={styles.ActionsIcon} />
+                      <img
+                        src={chartIcon}
+                        className={styles.ActionsIcon}
+                        onClick={() => navigate("/userpanel/watchlist")}
+                      />
                       <img src={buyIcon} className={styles.ActionsIcon} />
                     </div>
                   </td>
@@ -236,7 +247,11 @@ const ClassicWatchlist = () => {
                 <tr>
                   <td>
                     <div className={styles.ActionDiv}>
-                      <img src={chartIcon} className={styles.ActionsIcon} />
+                      <img
+                        src={chartIcon}
+                        className={styles.ActionsIcon}
+                        onClick={() => navigate("/userpanel/watchlist")}
+                      />
                       <img
                         src={sellIcon}
                         className={styles.ActionsIcon}

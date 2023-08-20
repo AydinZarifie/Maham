@@ -25,6 +25,8 @@
   align-items: center;
   height: 42px;
   background-color: #e1e5e8;
+
+
 }
 
 .MenuButtonsDiv {
@@ -217,14 +219,14 @@
   height: auto;
   position: absolute;
   margin-top: 42px;
-  height: 75%;
+  height: 85.5%;
   overflow-y: scroll;
   overflow-x: scroll;
   scrollbar-color: rgb(228, 228, 228) rgb(255, 255, 255);
   scrollbar-width: none;
   background-color: #e1e5e8;
   display: flex;
-  padding-bottom: 30px;
+
 }
 
 .TableDiv2::-webkit-scrollbar {
@@ -274,6 +276,13 @@
 
 .InfoTable2 tbody tr:hover {
   background-color: #f9f9f9;
+}
+
+.InfoTable2 tbody tr:nth-last-child(2) {
+  opacity: 0;
+}
+.InfoTable2 tbody tr:last-child {
+  opacity: 0;
 }
 
 .BenefitGreenP {

@@ -6,34 +6,39 @@ import { useRef, useState } from "react";
 
 const CustomTableItem = (props) => {
   const [copied, setCopied] = useState(false);
-  const contentRef = useRef(null);
-  const hoveredContent = useRef(null);
-  const hoveredCopy = useRef(null);
+  const [hoveredContent, setHoveredContent] = useState(false);
+  const [hoveredCopy, setHoveredCopy] = useState(false);
+  // const hoveredContent = useRef(null);
+  // const hoveredCopy = useRef(null);
 
   const handleCopyContent = () => {
-    const contentToCopy = contentRef.current.textContent;
-    navigator.clipboard.writeText(contentToCopy);
+    navigator.clipboard.writeText(props.text);
     setCopied(true);
   };
 
   const handleMouseEnter = () => {
-    hoveredContent.current.style.opacity = "1";
+    // hoveredContent.current.style.opacity = "1";
+    setHoveredContent(true);
   };
 
   const handleMouseLeave = () => {
-    hoveredContent.current.style.opacity = "0";
+    // hoveredContent.current.style.opacity = "0";
+    setHoveredContent(false);
   };
 
   const handleMouseEnterCopy = () => {
-    hoveredCopy.current.style.opacity = "1";
+    // hoveredCopy.current.style.opacity = "1";
+    setHoveredCopy(true);
   };
 
   const handleMouseLeaveCopy = () => {
-    hoveredCopy.current.style.opacity = "0";
+    // hoveredCopy.current.style.opacity = "0";
+    setHoveredCopy(false);
   };
 
   const handleMouseLeaveCopied = () => {
-    hoveredCopy.current.style.opacity = "0";
+    // hoveredCopy.current.style.opacity = "0";
+    setHoveredCopy(false);
     const timeoutId = setTimeout(function () {
       setCopied(false);
     }, 500);
@@ -48,14 +53,17 @@ const CustomTableItem = (props) => {
     <span className={styles.AddressDiv}>
       <div className={styles.numberContainer}>
         <div className={styles.HoverDiv}>
-          <div className={styles.FullNumber} ref={hoveredContent}>
-            <p ref={contentRef} className={styles.FullNumberP}>
-              {props.text}
-            </p>
-          </div>
-          <div ref={hoveredCopy} className={styles.CopyBox}>
-            {copied ? "Copied!" : "Copy Address"}
-          </div>
+          {hoveredContent && (
+            <div className={styles.FullNumber}>
+              <p className={styles.FullNumberP}>{props.text}</p>
+            </div>
+          )}
+
+          {hoveredCopy && (
+            <div className={styles.CopyBox}>
+              {copied ? "Copied!" : "Copy Address"}
+            </div>
+          )}
         </div>
         <span className={styles.partialNumber}>
           <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -74,7 +82,6 @@ const CustomTableItem = (props) => {
             <img
               src={trueIcon}
               className={styles.CopyIcon2}
-              // onMouseEnter="Visible3()"
               onMouseLeave={handleMouseLeaveCopied}
             />
           )}
