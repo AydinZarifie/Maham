@@ -61,6 +61,9 @@ const ConfingEstate = ({ method, estate }) => {
       "/admin/estate/getCities/" + name
     );
     setCities(data.data);
+    if (!estate) {
+      idManipulataionHandler();
+    }
   };
 
   const navigate = useNavigate();
@@ -333,7 +336,8 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredLocationIsValid = information.location.trim() !== "";
   const enteredTypeIsValid = information.type.trim() !== "";
   const enteredDescriptionIsValid = information.description.trim() !== "";
-  const enteredMahamPriceIsValid = information.mahamPrice.toString().trim() !== "";
+  const enteredMahamPriceIsValid =
+    information.mahamPrice.toString().trim() !== "";
   const enteredCustomerPriceIsValid = information.customerPrice.trim() !== "";
   const enteredImageIsValid = selectedImages.length > 0;
   const enteredVideoIsValid = selectedVideo.length > 0;
@@ -716,10 +720,6 @@ const ConfingEstate = ({ method, estate }) => {
       countryName: true,
     }));
 
-    if (!(enteredCountryNameIsValid && enteredCityNameIsValid)) {
-      return;
-    }
-
     const formData = new FormData();
     formData.append("cityName", information.cityName);
     formData.append("countryName", information.countryName);
@@ -728,7 +728,6 @@ const ConfingEstate = ({ method, estate }) => {
       body: formData,
     });
     if (response.ok) {
-      setMintUsed(true);
       setInformation((prev) => ({ ...prev, id: data.data }));
     }
   };
@@ -941,14 +940,6 @@ const ConfingEstate = ({ method, estate }) => {
                   {/* <label className={styles.label}>Id</label> */}
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={idManipulataionHandler}
-                disabled={mintUsed}
-                className={styles.MintBtn}
-              >
-                {estate ? "Burn" : "Mint"}
-              </button>
             </div>
             <div className={styles.IdAndMint}>
               <div className={styles.wrapper4}>

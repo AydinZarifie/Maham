@@ -9,7 +9,7 @@ import { forwardRef, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Navigation = forwardRef(
-  ({ navRef, navOverlayRef, closeNavHandler, tutorial }, ref) => {
+  ({ navRef, navOverlayRef, closeNavHandler, tutorial,openProfile }, ref) => {
     const managementAssets = useRef();
     const reports = useRef();
     const arrow1 = useRef();
@@ -51,7 +51,7 @@ const Navigation = forwardRef(
           </div>
           <div className={styles.MenuItemDiv}>
             <div>
-              <div className={styles.MenuItem}>
+              <div className={styles.MenuItem} onClick={openProfile}>
                 <div className={styles.InsideMenuItem}>
                   <img src={profileIcon} className={styles.MenuIcons} />
                   Profile
@@ -60,7 +60,7 @@ const Navigation = forwardRef(
 
               {tutorial && (
                 <div className={styles.questionMarkMenu}>
-                  <p>?</p>{" "}
+                  <p>?</p>
                 </div>
               )}
             </div>

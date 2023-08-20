@@ -2,7 +2,7 @@ import styles from "../../styles/AdminPanel.module.css";
 import homePageStyles from "../../styles/homePage.module.css";
 
 import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Form, NavLink, Outlet } from "react-router-dom";
 
 import filterIcon from "../../images/filter-alt-2-svgrepo-com (4).svg";
 
@@ -94,7 +94,7 @@ export default function Estates() {
       method: "POST",
       body: formData,
     });
-    setData(data);
+    setData(data.estate);
     setFilterShown(false);
   };
 
@@ -146,6 +146,18 @@ export default function Estates() {
     setSellPositionData(data.data);
   };
 
+  const submitFilter = async (filterName) => {
+    const formData = new FormData();
+    formData.append("filterName", filterName);
+    let { response, data } = await fetchInstance("url", {
+      method: "POST",
+      body: formData,
+    });
+    if(response.ok){
+      setData(data)
+    }
+  };
+
   return (
     <>
       <div
@@ -167,6 +179,7 @@ export default function Estates() {
         filters={filters}
         submitHandler={submitFilterHandler}
         error={error}
+        onClick={submitFilter}
       />
       {/* <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div> */}
       <div

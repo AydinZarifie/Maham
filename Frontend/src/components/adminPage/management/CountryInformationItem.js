@@ -5,7 +5,11 @@ const CountryInformationItem = (props) => {
     <tr>
       <td>
         <img
-          src={require(`../../../images/${props.img}`)}
+          // src={require(`../../../images/${props.img}`)}
+          src={`http://localhost:5000/${props.img.replace(
+            /\\/g,
+            "/"
+          )}`}
           className={styles.CountryImage}
         />
       </td>
