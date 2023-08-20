@@ -1,6 +1,5 @@
 import styles from "../../../styles/adminEstates.module.css";
 
-import lockLogo from "../../../images/lock-keyhole-svgrepo-com.svg";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import CustomTableItem from "../../general/CustomTableItem";
@@ -20,8 +19,8 @@ const LockPosition = () => {
             <th className={styles.Th}>Title</th>
             <th className={styles.Th}></th>
             <th className={styles.Th}></th>
-            <th className={styles.Th}>Contract address</th>
-            <th className={styles.Th}>Landlore address</th>
+            <th className={styles.ThEsp}>Contract address</th>
+            <th className={styles.ThEsp}>Landlore address</th>
 
             <th className={styles.Th}>Country</th>
             <th className={styles.Th}>City</th>
@@ -36,42 +35,19 @@ const LockPosition = () => {
               <td className={styles.Td}>{item.estate_title}</td>
               <td className={styles.Td}></td>
               <td className={styles.Td}></td>
-              <td className={styles.Td}>
-                className={styles.Td}
-                <CustomTableItem text={item.contractAddress} />
+              <td className={styles.TdEsp}>
+                <CustomTableItem text={item.contract_address} />
               </td>
-              <td className={styles.Td}>
-                <CustomTableItem text={item.landloreAddress} />
+              <td className={styles.TdEsp}>
+                <CustomTableItem text={item.landlor_address} />
               </td>
-
               <td className={styles.Td}>{item.country_name}</td>
               <td className={styles.Td}>{item.city_name}</td>
               <td className={styles.Td}>{item.maham_price} ETH</td>
               <td className={styles.Td}>1.96</td>
-              <td className={styles.Td}>
-                <img src={lockLogo} className={styles.LockIcon} />
-              </td>
+              <td className={styles.Td}>true</td>
             </tr>
           ))}
-          {/* <tr>
-              <td className={styles.Td}>beach home in ohaio 9877</td>
-              <td className={styles.Td}></td>
-              <td className={styles.Td}></td>
-              <td className={styles.Td}>
-                <CustomTableItem text="86966696969908696669696990989676" />
-              </td>
-              <td className={styles.Td}>
-                <CustomTableItem text="86966696969908696669696990989676" />
-              </td>
-
-              <td className={styles.Td}>united state</td>
-              <td className={styles.Td}>los angeles</td>
-              <td className={styles.Td}>89800808 ETH</td>
-              <td className={styles.Td}>1.96</td>
-              <td className={styles.Td}>
-                <img src={lockLogo} className={styles.LockIcon} />
-              </td>
-            </tr> */}
         </tbody>
       </table>
     </div>

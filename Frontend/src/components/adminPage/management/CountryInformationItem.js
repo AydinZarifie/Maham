@@ -6,16 +6,16 @@ const CountryInformationItem = (props) => {
       <td>
         <img
           // src={require(`../../../images/${props.img}`)}
-          src={`http://localhost:5000/${props.img.replace(
+          src={`http://localhost:5000/${props.country_logo.replace(
             /\\/g,
             "/"
           )}`}
           className={styles.CountryImage}
         />
       </td>
-      <td>{props.name}</td>
-      <td>{props.number}</td>
-      <td>{props.volume}</td>
+      <td>{props.country_name}</td>
+      <td>{props.country_estates.length}</td>
+      <td>-</td>
     </tr>
   );
 };

@@ -37,8 +37,8 @@
     width: 100%;
     table-layout: fixed;
     min-width: 1350px;
-    overflow-x: scroll;
-  
+    overflow: scroll;
+    /* max-height: 400px; */
   }
   .EstateImg {
     width: 100%;
@@ -46,7 +46,7 @@
     /* border-radius: 20%; */
   }
   .Th {
-    padding: 20px 15px;
+    padding: 17px 15px;
     font-weight: 500;
     font-size: 14px;
     color: #140707;
@@ -55,12 +55,15 @@
     text-align: center;
     overflow: hidden;
     white-space: normal;
-  
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid #a2a2a2;
+    z-index: 4;
 
   }
   .ThEsp{
-    width: 180px;
-    padding: 20px 15px;
+    width: 170px;
+    padding: 17px 15px;
     font-weight: 500;
     font-size: 14px;
     color: #140707;
@@ -68,9 +71,13 @@
     text-align: center;
     overflow: hidden;
     white-space: normal;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid #a2a2a2;
+    z-index: 4;
   }
   .Td {
-    padding: 15px;
+    padding: 5px 15px;
     vertical-align: middle;
     font-weight: 300;
     font-size: 14px;
@@ -92,7 +99,7 @@
   scrollbar-width: none; /* Firefox */
 }
 .TdEsp{
-  width: 180px;
+  width: 170px;
   padding: 15px;
   vertical-align: middle;
   font-weight: 300;
@@ -116,7 +123,7 @@
     /* border-radius: 20%; */
   }
   .Th {
-    padding: 20px 5px;
+    padding: 17px 5px;
     font-weight: 500;
     font-size: 10px;
     color: #140707;
@@ -125,10 +132,14 @@
     text-align: center;
     overflow: hidden;
     white-space: normal;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid #a2a2a2;
+    z-index: 0;
   }
   .ThEsp{
     width: 100px;
-    padding: 20px 5px;
+    padding: 17px 5px;
     font-weight: 500;
     font-size: 10px;
     color: #140707;
@@ -137,6 +148,10 @@
     text-align: center;
     overflow: hidden;
     white-space: normal;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid #a2a2a2;
+    z-index: 0;
   }
   .Td {
     padding: 5px;
@@ -173,9 +188,11 @@
 .Lock {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 0px;
   width: 100%;
-  overflow-x: scroll;
+  overflow: scroll;
+  max-height: 430px;
+
 }
   /* Hide scrollbar for Chrome, Safari and Opera */
   .Lock::-webkit-scrollbar {
@@ -190,12 +207,36 @@
 .Sell {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 0px;
+  overflow: scroll;
+  max-height: 430px;
 }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .Sell::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .Sell {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 .getDocument {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 0px;
+  overflow: scroll;
+  max-height: 430px;
+}
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .getDocument::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.getDocument {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .LockPositin:last-child {

@@ -270,7 +270,8 @@
   }
   .CountryInformation {
     width: 100%;
-    height: 320px;
+    min-height: 320px;
+    max-height: 320px;
     border-radius: 10px;
     overflow-y: scroll;
     overflow-x: scroll;
@@ -278,6 +279,7 @@
     scrollbar-color: transparent;
     display: flex;
     flex-direction: column;
+    background-color: #f3f3f3;
   }
 }
 @media (max-width: 1100px) {
@@ -293,7 +295,6 @@
     flex-direction: row;
     justify-content: center;
     width: 85%;
-    /* gap: 3%; */
     margin: auto;
   }
   .Tables3AndName {
@@ -301,7 +302,6 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
   }
 
   .Tables1AndName {
@@ -313,7 +313,8 @@
 
   .CountryInformation {
     width: 100%;
-    height: 320px;
+    min-height: 320px;
+    max-height: 320px;
     border-radius: 10px;
     overflow-y: scroll;
     overflow-x: scroll;
@@ -323,6 +324,7 @@
     display: flex;
     flex-direction: column;
     align-items: end;
+    background-color: #f3f3f3;
   }
 }
 @media (min-width: 750px) {
@@ -470,22 +472,21 @@
 /***   HighestValums  ***/
 .HighestVolums {
   width: 100%;
-  height: 320px;
+  min-height: 320px;
+  max-height: 320px;
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: scroll;
   scrollbar-width: thin;
   scrollbar-color: transparent;
+  background-color: #f3f3f3;
 }
 
 .styledTable {
   border-collapse: collapse;
-  /* border-radius: 20px; */
-  /* margin: 25px 0; */
   font-size: 0.9em;
   font-family: sans-serif;
   width: 100%;
-  /* min-width: 400px; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -499,6 +500,7 @@
   position: sticky;
   top: 0;
   z-index: 0;
+  border-bottom: 1px solid #959595;
 }
 
 .styledTable th,
@@ -509,15 +511,14 @@
 }
 .styledTable tbody tr {
   border-bottom: 1px solid #c7c7c7;
-  color: #585858;
+  color: #292929;
+  background-color: #ffffff;
 }
 
-.styledTable tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
-}
+
 
 .styledTable tbody tr:last-of-type {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid rgb(148, 148, 148);
 }
 .styledTable tbody tr.active-row {
   font-weight: bold;
@@ -552,12 +553,14 @@
 /***   Gainers  ***/
 .Gainers {
   width: 100%;
-  height: 320px;
+  min-height: 320px;
+  max-height: 320px;
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: scroll;
   scrollbar-width: thin;
   scrollbar-color: transparent;
+  background-color: #f3f3f3;
 }
 .Gainers::-webkit-scrollbar {
   height: 15px;
@@ -885,10 +888,12 @@
   margin: -210px auto 30px auto;
   border-radius: 10px;
   overflow-x: scroll;
-  height: 360px;
+  min-height: 360px;
+  max-height: 360px;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: transparent;
+  background-color: #f3f3f3;
 }
 .EstateInfo::-webkit-scrollbar {
   height: 15px;

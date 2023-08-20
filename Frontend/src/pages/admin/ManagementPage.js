@@ -107,7 +107,7 @@ const ManagementPage = () => {
   };
 
   const LockEstate = async (id) => {
-    let { response } = await fetchInstance("url" + id, {
+    let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {
       method: "POST",
     });
     if (response.ok) {
@@ -129,7 +129,7 @@ const ManagementPage = () => {
     fetchCountryData();
 
     const fetchCountryInfromationData = async () => {
-      let { response, data } = await fetchInstance("url");
+      let { response, data } = await fetchInstance("/admin/managment/countriesInfo");
       setCountryInformations(data.data);
     };
     fetchCountryInfromationData();
