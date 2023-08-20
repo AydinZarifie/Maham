@@ -2,20 +2,11 @@ const adminDB = require('../../models/admin');
 const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
-const { filterObj } = require('./../../utilities/mint');
-const { isEmail } = require('validator');
+const {formatStr} = require('../../utilities/mint');
+
 
 exports.getAllAdmins = catchAsync(async (req, res, next) => {
-	const admins = await adminDB.find().select({
-		first_name: 1,
-		last_name: 1,
-		full_name: 1,
-		email: 1,
-		admin_country: 1,
-		admin_city: 1,
-		admin_type: 1,
-		_id: 1,
-	});
+	const admins = await adminDB.find()
 
 	if (admins.length == 0) {
 		return next(new AppError('nothing matches', 204));
@@ -29,9 +20,12 @@ exports.getAllAdmins = catchAsync(async (req, res, next) => {
 });
 
 exports.getAdmin = catchAsync(async (req, res, next) => {
+
+	const first_name = req.body.name.split(" ")[0];
+	const last_name = req.body.name.split(" ")[1];
+
 	const admin = await adminDB
-		.findOne({ full_name: req.body.adminName })
-		.select('-__v -createdAt -updatedAt -admin_country_ref -_id');
+		.findOne({ first_name : first_name , last_name : last_name})
 
 	if (!admin) {
 		return next(new AppError('Admin not found!', 404));
@@ -41,19 +35,19 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 		status: 'success',
 		data: admin,
 	});
-});
+});	
 
 exports.searchAdminByName = catchAsync(async (req, res, next) => {
 	//// 1) check that : (A) body is not empty ; (B) adminName field is not a blank field
-	if (!req.body.adminName || /^\s*$/.test(req.body.adminName)) {
+	if (!req.body.name || /^\s*$/.test(req.body.name)) {
 		return res.status(400).json({
 			message: 'search criteria cannot be blank',
 		});
 	}
 
 	//// 2) get the given input from body and convert it to a reqular expression
-	const { adminName } = req.body;
-	const wordToInclude = new RegExp(adminName, 'ig');
+	const { name } = req.body;
+	const wordToInclude = new RegExp(name, 'ig');
 
 	//// 3) search for admins with given criteria
 	const admins = await adminDB
@@ -79,7 +73,7 @@ exports.searchAdminByName = catchAsync(async (req, res, next) => {
 		});
 	}
 
-	res.status(200).json({
+	return res.status(200).json({
 		status: 'success',
 		results: admins.length,
 		data: admins,
@@ -87,69 +81,21 @@ exports.searchAdminByName = catchAsync(async (req, res, next) => {
 });
 
 exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
-	//// 1) check if the request body contains any data as filter criters
-	if (Object.keys(req.body).length == 0) {
-		return next(new AppError('please insert some criteria', 400));
+
+	let query = {};
+	console.log(req.body);
+
+	if(req.body.adminType){
+		query = {admin_type :formatStr(req.body.adminType) }
 	}
-
-	//// 2)  modify the request object >>
-	// (A): check for request object to only contain allowed fields
-	// (B): change camelCase inputs into under_score_base
-	const newObj = filterObj(req.body, [
-		'adminType',
-		'adminCountry',
-		'adminCity',
-	]);
-
-	//// 3) check if adminName exists >> if true include it in finalObj , if false assign finalObj as newObnj
-	let finalObj;
-	if (req.body.adminName) {
-		const wordToInclude = new RegExp(req.body.adminName, 'ig');
-		finalObj = {
-			$or: [
-				{ first_name: wordToInclude },
-				{ last_name: wordToInclude },
-				{ full_name: wordToInclude },
-			],
-			...newObj,
-		};
-	} else {
-		finalObj = newObj;
+	if(req.body.countryName){
+		query = {country_name : formatStr(req.body.countryName)}
 	}
-
-	//// 4) check if the criterias for filter *except adminName* is non-empty and non-null
-	if (
-		Object.keys(finalObj).length == 0 || // check non-null
-		Object.values(finalObj).some((item) => /^\s*$/.test(item)) // check non-empty >> "" , " " , "  " , ...
-	) {
-		return next(
-			new AppError(
-				'key fields spellings are not correct or invalid inputs',
-				400
-			)
-		);
+	if(req.body.cityName){
+		query = {city_name :formatStr( req.body.cityName)}
 	}
-
-	//// 5) find admin with given criterias
-	const admins = await adminDB
-		.find(finalObj)
-		.select({
-			first_name: 1,
-			last_name: 1,
-			admin_city: 1,
-			admin_country: 1,
-			admin_type: 1,
-			_id: 0,
-		})
-		.sort('first_name');
-
-	//// 6) if nothing matches , send 204 code as response
-	if (admins.length === 0) {
-		return res.status(204).json({
-			status: 'success',
-			message: 'nothing matches',
-		});
-	}
+	console.log(query);
+	const admins = await adminDB.find(query);
 
 	//// 7) send the response
 	return res.status(200).json({
@@ -162,10 +108,9 @@ exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 
 exports.getEditAdmin = catchAsync(async (req, res, next) => {
 	const { id } = req.params;
-
+	console.log(id);
 	const admin = await adminDB
-		.findOne({ _id: id })
-		.select(['-_id', '-admin_country_ref', '-__v', '-updatedAt']);
+		.findOne({ _id: id });
 
 	if (!admin) {
 		return next(new AppError('no admin found', 404));
@@ -178,24 +123,37 @@ exports.getEditAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.updateAdmin = catchAsync(async (req, res, next) => {
-	// if (!isEmail(req.body.email)) {
-	// 	return next(new AppError('wrong email format', 401));
-	// }
 
-	// 1) update admin document
-	const filteredFields = {
+	let filteredFields = {
 		first_name: req.body.firstName,
 		last_name: req.body.lastName,
 		email: req.body.email,
 		phone_number: req.body.phoneNumber,
 		country_name: req.body.country,
-		city_name: req.body.city,
-		// password: req.body.password,
-		// profile_image: req.files.images[0].path,
+		city_name: req.body.city
 	};
 
+	if (req.body.confirmPassword && req.body.password) {
+		const newPassword = req.body.password;
+
+		const confirmNewPassword = req.body.confirmPassword;
+
+		// check if new password and its confirmation is equal
+		if (newPassword !== confirmNewPassword) {
+			return next(
+				new AppError('password and password confirmation does not match', 401)
+			);
+		}
+		// hash the new password
+		const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+		filteredFields = {
+			...filteredFields,
+			password: hashedPassword,
+		};
+	}
+
 	const updatedAdmin = await adminDB.findByIdAndUpdate(
-		// req.admin.id,
 		req.params._id,
 		filteredFields,
 		{
@@ -208,6 +166,8 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 		return next(new AppError('There is No such an admin with that id', 200));
 	}
 
+	console.log("4");
+	
 	res.status(200).json({
 		status: 'success',
 		message: 'updated successfully',
@@ -217,7 +177,6 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 
 exports.deleteAdmin = catchAsync(async (req, res, next) => {
 	const admin = await adminDB.findById(req.params.id);
-	console.log('entered into delete function');
 
 	if (!admin) {
 		return next(new AppError('There is No such an admin with that id', 404));

@@ -79,6 +79,7 @@ const ManagementPage = () => {
       method: "POST",
       body: formData,
     });
+    console.log(response);
 
     if (response.ok) {
       window.location.reload(true);

@@ -96,7 +96,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       let { response, data } = await fetchInstance("/admin/panel/getAdmins");
-      console.log(data);
+      console.log(data.data);
       setAdmins(data.data);
     };
     fetchAdmins();
@@ -116,10 +116,12 @@ const AdminPanel = () => {
   };
 
   const nameChangeFetch = async (name) => {
+    console.log(name.length);
     if (name.length > 0) {
       const formData = new FormData();
       name = name.trim();
       formData.append("name", name);
+      console.log("1");
       let { response, data } = await fetchInstance("/admin/panel/searchName", {
         method: "POST",
         body: formData,

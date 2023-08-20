@@ -9,11 +9,8 @@ router.get(
 );
 router.get('/panel/getAdmins', adminPanelController.getAllAdmins);
 router.post('/panel/searchName', adminPanelController.searchAdminByName);
-router.post(
-	'/panel/getAdminsWithFilter',
-	adminPanelController.searchAdminByFilter
-);
-
+router.post('/panel/getAdminsWithFilter',adminPanelController.searchAdminByFilter);
+router.post('/panel/getAdmin' , adminPanelController.getAdmin);	
 router
 	.route('/panel/editAdmin/:id')
 	.get(adminPanelController.getEditAdmin)

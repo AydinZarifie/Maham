@@ -254,15 +254,16 @@ const AdminFilter = forwardRef((props, ref) => {
             className={overlayStyles.SearchOverlay}
             onClick={closeSearchFilter}
           ></div>
+          
           {props.searchedAdmins.length > 0 && (
             <ul>
               {props.searchedAdmins.map((admin) => (
                 <li
                   onClick={() =>
-                    clickHandler(admin.firstname + " " + admin.lastname)
+                    clickHandler(admin.first_name + " " + admin.last_name)
                   }
                 >
-                  {admin.firstname} {admin.lastname}
+                  {admin.first_name} {admin.last_name}
                 </li>
               ))}
             </ul>

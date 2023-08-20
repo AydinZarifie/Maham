@@ -25,7 +25,7 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	if (!req.params.countryName) {
 		return next(new AppError('please select a country ', 404));
 	}
-
+	console.log("hii");
 	const country = await countryDB
 		.findOne({
 			country_name: req.params.countryName,
@@ -68,38 +68,44 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 });
 
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	countryName = formatStr(req.body.countryName);
-	countryLogo = req.files.images[0].path;
 
-	if (!req.body.countryName) {
-		return next(new AppError('no country name provided', 400));
-	}
-	if (!req.files.images) {
-		return next(new AppError('no country logo provided', 400));
-	}
-
-	let countryCode;
 	try {
-		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
-		totalCountries++;
-		countryCode = totalCountries.toString();
-	} catch (err) {
-		console.error(err);
-		return next(new AppError('error aquired on assigning countryCode', 400));
+		countryName = formatStr(req.body.countryName);
+		countryLogo = req.files.images[0].path;
+	
+		if (!req.body.countryName) {
+			return next(new AppError('no country name provided', 400));
+		}
+		if (!req.files.images) {
+			return next(new AppError('no country logo provided', 400));
+		}
+	
+		let countryCode;
+		try {
+			let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
+			totalCountries++;
+			countryCode = totalCountries.toString();
+		} catch (err) {
+			console.error(err);
+			return next(new AppError('error aquired on assigning countryCode', 400));
+		}
+	
+		const newCountry = new countryDB({
+			country_name: countryName,
+			country_logo: countryLogo,
+			country_code: countryCode,
+		});
+		// await assignCountryCode(countryName);
+		await newCountry.save();
+		return res.status(201).json({
+			status: 'success',
+		});
+		
+	} catch (error) {
+		return res.status(401).json({
+			message : "country already exist"
+		})
 	}
-
-	const newCountry = new countryDB({
-		country_name: countryName,
-		country_logo: countryLogo,
-		country_code: countryCode,
-	});
-
-	// await assignCountryCode(countryName);
-	await newCountry.save();
-
-	return res.status(201).json({
-		status: 'success',
-	});
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
@@ -118,6 +124,15 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			return next(new AppError('plesae insert city', 400));
 
 			// if all is ok , adds the city to cities collection of chosen country
+		}
+
+		const cityExist = country.cities.includes(formatStr(req.body.cityName));
+		console.log(cityExist);
+
+		if(cityExist){
+			return res.status(400).json({
+				message: "City already exist"
+			})
 		}
 
 		country.cities.push(formatStr(req.body.cityName));
@@ -173,15 +188,11 @@ exports.lockEstate = catchAsync(async (req, res, next) => {
 	const filteredFields = {
 		lock_position: true,
 	};
-
+	
 	// 2) update Estate document
 	const updatedEstate = await estateDB.findByIdAndUpdate(
-		req.body.estateId,
-		{filteredFields},
-		{
-			new: true,
-			runValidators: true,
-		}
+		req.params.id,
+		filteredFields,
 	);
 
 	if (!updatedEstate) {

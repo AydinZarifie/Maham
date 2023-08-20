@@ -210,7 +210,7 @@ exports.userVerificationCode = catchAsync(async (req, res, next) => {
 exports.userRefreshToken = catchAsync(async (req, res, next) => {
 	const cookie = req.cookies;
 	if (!cookie?.jwt) {
-		return next(new AppError('cookieis is empty!', 403));
+		return next(new AppError('cookies is empty!', 403));
 	}
 
 	const refreshToken = cookie.jwt;

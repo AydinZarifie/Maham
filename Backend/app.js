@@ -112,10 +112,7 @@ app.use(
   express.static(path.join(__dirname, "/uploads/static"))
 );
 
-
-
 app.use(upload);
-
 
 //2023/05/08 changed main route from 'adminPgae' to 'admin'
 
@@ -124,12 +121,14 @@ app.use(
   adminAuth_Router,
 )
 
+
 app.use(
   "/admin",
   adminPage_Router,
   managmentPage_Router,
   adminPanel_Router
 );
+
 app.use("/user", userAuthorization_Router);
 
 mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {

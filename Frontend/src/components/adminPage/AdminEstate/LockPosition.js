@@ -35,13 +35,15 @@ const LockPosition = () => {
             <tr>
               <td>{item.estate_title}</td>
               <td></td>
+              <td></td> 
               <td></td>
-              <td>
+              <td></td>
+       {/*        <td>
                 <CustomTableItem text={item.contractAddress} />
               </td>
               <td>
                 <CustomTableItem text={item.landloreAddress} />
-              </td>
+              </td> */}
 
               <td>{item.country_name}</td>
               <td>{item.city_name}</td>

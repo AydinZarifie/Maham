@@ -47,11 +47,11 @@ const userSchema = new mongoose.Schema(
 				required: [true, 'user must belong to a country'],
 			},
 		],
-	},
+},
 	
 	{
 		toJson: { virtuals: true },
 		toObject: { virtuals: true },
-	}
+}
 );
 module.exports = mongoose.model('User', userSchema);

@@ -330,7 +330,7 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredLocationIsValid = information.location.trim() !== "";
   const enteredTypeIsValid = information.type.trim() !== "";
   const enteredDescriptionIsValid = information.description.trim() !== "";
-  const enteredMahamPriceIsValid = information.mahamPrice.trim() !== "";
+  const enteredMahamPriceIsValid = information.mahamPrice.toString().trim() !== "";
   const enteredCustomerPriceIsValid = information.customerPrice.trim() !== "";
   const enteredImageIsValid = selectedImages.length > 0;
   const enteredVideoIsValid = selectedVideo.length > 0;

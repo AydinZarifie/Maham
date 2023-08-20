@@ -64,8 +64,6 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	}
 	const Id = country.id;
 
-	console.log("customerPrice : " + req.body.customerPrice);
-
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
 		estate_title: formatStr(req.body.title),
@@ -77,8 +75,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		location: req.body.location.toLowerCase(),
 		state_description: req.body.description,
 		estate_type: req.body.type,
-		customer_price: req.body.customerPrice,
-		maham_price: req.body.mahamPrice,
+		customer_price: Number(req.body.customerPrice),
+		maham_price: Number(req.body.mahamPrice),
 		filter: req.body.filter,
 		mintId: req.body.mintId,
 		unit_number: req.body.numberOfUnit,
@@ -238,12 +236,43 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	});
 });
 
+exports.searchEstateByFilter = catchAsync(async (req,res)=>{
+	console.log(1);
+	const country_name = req.body.countryName;
+	const city_name = req.body.cityName;
+	const low_price = Number(req.body.price[0]);
+	const high_price = Number(req.body.price[1]);
+
+	console.log(country_name);
+	console.log(city_name);
+	console.log(high_price);
+	console.log(low_price);	
+	if(!country_name || !city_name){
+		console.log(2);
+		return res.status(401).json({
+			message : "Empty field"
+		})
+	}
+	console.log(3);
+	const estate = await estateDB.find({
+		customer_price : {$gte:low_price , $lte:high_price},
+		country_name : country_name,
+		city_name : city_name,
+	})
+
+	console.log(estate);
+	return res.status(200).json({
+		message : "Successfully",
+		estate : estate,
+	})
+
+});
+
 exports.sendMint = catchAsync(async (req, res, next) => {
 	// 1) get the Country & City name from Response
 	const modifiedCountryName = formatStr(req.body.countryName);
 	const modifiedCityName = formatStr(req.body.cityName);
 
-	console.log("hi");
 
 	// 2) find the country
 	const country = await countryDB
@@ -263,8 +292,6 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 
 	// 3) generate the Mint based on given country and city
 	const mint = generateMint(country, modifiedCityName);
-	console.log("fuck");
-	console.log(mint);
 
 	// 4) save the modified country to database
 	await country.save();
@@ -450,7 +477,6 @@ exports.getEditEstate = catchAsync(async (req, res, next) => {
 		return next(new AppError('please provide estate id', 400));
 	}
 	const estate = await estateDB.findById(estateId);
-	console.log(estate);
 	if (!estate) {
 		return next(new AppError('estate wth that ID does not exists', 404));
 	}
@@ -459,26 +485,33 @@ exports.getEditEstate = catchAsync(async (req, res, next) => {
 
 exports.postFilter = catchAsync(async (req, res, next) => {
 
+	try {
 
-	const filterName = req.body.filterName;
-	const imageUrl = req.files.images[0].path;
-
-	if (!filterName || !imageUrl) {
-		return next(new AppError('filtername or image was empty', 403));
-		// res.status(403).json({ message: 'filtername or image was empty' });
+		const filterName = req.body.filterName;
+		const imageUrl = req.files.images[0].path;
+	
+		if (!filterName || !imageUrl) {
+			return next(new AppError('filtername or image was empty', 403));
+			// res.status(403).json({ message: 'filtername or image was empty' });
+		}
+	
+		const filter = new filterDB({
+			filterName: filterName,
+			filterImageUrl: imageUrl,
+		});
+	
+		await filter.save();
+	
+		return res.status(202).json({
+			status: 'success',
+			message: 'successfully added filter',
+		});
+		
+	} catch (error) {
+		return res.status(401).json({
+			message : "filter already exist",
+		})
 	}
-
-	const filter = new filterDB({
-		filterName: filterName,
-		filterImageUrl: imageUrl,
-	});
-
-	await filter.save();
-
-	return res.status(202).json({
-		status: 'success',
-		message: 'successfully added filter',
-	});
 });
 
 exports.getAllFilters = catchAsync(async (req, res, next) => {
@@ -499,8 +532,6 @@ exports.getAddEstateFilters = catchAsync(async (req, res, next) => {
 	const filters = filter.map((el) => {
 		return el.filterName;
 	})
-
-	console.log(filters);
 
 	if (!filter) {
 		return next(new AppError('no such a filter', 200));
