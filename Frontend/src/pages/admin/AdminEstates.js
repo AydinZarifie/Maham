@@ -29,7 +29,8 @@ export default function Estates() {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
-    const response = await fetch("url" + name);
+    console.log(name);
+    const response  = await fetch("http://localhost:5000/admin/managment/getCities/" + name);
     const json = await response.json();
     setCities(json.data);
   };
@@ -60,7 +61,7 @@ export default function Estates() {
     fetchFilterData();
 
     const fetchCountries = async () => {
-      let { response, data } = await fetchInstance("url");
+      let { response, data } = await fetchInstance("/admin/managment");
       setCountries(data.data);
     };
     fetchCountries();
@@ -90,11 +91,11 @@ export default function Estates() {
     formData.append("cityName", city);
     formData.append("price", lowPrice);
     formData.append("price", highPrice);
-    let { response, data } = await fetchInstance("url", {
+    let { response, data } = await fetchInstance("/admin/searchEstateByFilter", {
       method: "POST",
       body: formData,
     });
-    setData(data);
+    setData(data.estate);
     setFilterShown(false);
   };
 
@@ -143,6 +144,7 @@ export default function Estates() {
     let { response, data } = await fetchInstance(
       "/admin/panel/getSellPositionEstates"
     );
+    console.log(data.data);
     setSellPositionData(data.data);
   };
 

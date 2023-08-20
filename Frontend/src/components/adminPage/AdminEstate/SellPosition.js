@@ -36,10 +36,8 @@ const SellPosition = () => {
               <td className={styles.Td}></td>
               <td className={styles.Td}></td>
               <td className={styles.Td}>
-                <CustomTableItem text={item.contractAddress} />
               </td>
               <td className={styles.Td}>
-                <CustomTableItem text={item.landloreAddress} />
               </td>
               <td className={styles.Td}>{item.country_name}</td>
               <td className={styles.Td}>{item.city_name}</td>

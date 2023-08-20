@@ -15,6 +15,7 @@ const verifyToken = (req, res, next) => {
 		if (err) return res.status(403).json({ message: 'Forbidden' });
 		req.email = decoded.email;
 		req.roles = decoded.roles;
+		req._id = decoded._id;
 		next();
 	});
 };

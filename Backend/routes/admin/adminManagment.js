@@ -27,8 +27,9 @@ router
 router
 	.route('/managment/getEstates/:countryName/:cityName')
 	.get(verifyToken, managementController.getEstates);
+
 router
-	.route('/managment/lockEstate/:id')
-	.post(managementController.lockEstate);
+	.route('/managment/lockUnLockEstate/:id')
+	.post(managementController.lockUnLockEstate);
 
 module.exports = router;

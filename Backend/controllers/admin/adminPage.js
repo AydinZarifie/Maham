@@ -487,7 +487,7 @@ exports.postFilter = catchAsync(async (req, res, next) => {
 
 	try {
 
-		const filterName = req.body.filterName;
+		const filterName = formatStr(req.body.filterName);
 		const imageUrl = req.files.images[0].path;
 	
 		if (!filterName || !imageUrl) {

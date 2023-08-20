@@ -183,48 +183,26 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.lockEstate = catchAsync(async (req, res, next) => {
-	// 1) get information that is gonna change, from request's body
-	const filteredFields = {
-		lock_position: true,
-	};
+exports.lockUnLockEstate = catchAsync(async (req,res,next) => {
 	
-	// 2) update Estate document
-	const updatedEstate = await estateDB.findByIdAndUpdate(
-		req.params.id,
-		filteredFields,
-	);
-
-	if (!updatedEstate) {
-		return next(new AppError('Estate with that ID does not exist', 404));
+	const estate = await estateDB.findById(req.params.id);
+	
+	if(!estate){
+		return next(new AppError('estate not found', 401));
 	}
 
-	return res.status(200).json({
-		message: 'Successfully Locked',
-	});
-});
+	let lockPosition = estate.lock_position;
+	if(lockPosition == false){
 
-exports.cancelLockPosition = catchAsync(async (req, res, next) => {
-	// 1) get information that is gonna change, from request's body
-	const filteredFields = {
-		lock_position: false,
-	};
-
-	// 2) update Estate document
-	const updatedEstate = await estateDB.findByIdAndUpdate(
-		req.body.estateId,
-		filteredFields,
-		{
-			new: true,
-			runValidators: true,
-		}
-	);
-
-	if (!updatedEstate) {
-		return next(new AppError('Estate with that ID does not exist', 404));
+		lockPosition = true;
 	}
+	else{
+		lockPosition = false;
+	}
+	estate.lock_position = lockPosition;
+	await estate.save();
 
 	return res.status(200).json({
-		message: 'Successfully canceled LOCK position',
-	});
-});
+		message : 'Success',
+	})
+})

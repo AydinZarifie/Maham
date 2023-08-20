@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const generateToken = async (data) => {
 	try {
 		const information = {
-			id: data._id,
+			_id: data._id,
 			email: data.email,
 			roles: data.admin_type,
 		};

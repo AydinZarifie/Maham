@@ -236,13 +236,40 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 	return res.status(201).json(accessToken);
 });
 
-exports.editAdminProfileInfo = catchAsync(async (req,res) => {
+exports.getEditAdminProfileInfo = catchAsync(async (req,res) => {
 	const admin = await adminDB.findOne({email : req.email});
 	console.log(admin);
 	return res.status(200).json({
 		message : "Success",
 		admin : admin
 	});
+
+})
+
+exports.editAdminProfileInfo = catchAsync(async(req,res,next) => {
+
+	const password = req.body.password;
+	const confirmPassword = req.body.confirmPassword;
+
+	if((password !== confirmPassword) && (!password || !confirmPassword)){
+		return next(new AppError('password and confirm password not equal!', 401));
+	}
+	
+	const admin = await adminDB.findById(req._id);
+
+	if(!admin){
+		return next(new AppError('admin not found!', 401));
+	}
+
+	const hashedPassword = await bcrypt.hash(password , 12);
+	console.log(hashedPassword);
+
+	admin.password = hashedPassword;
+	await admin.save();
+
+	return res.status(200).json({
+		message : "Success"
+	})
 
 })
 
