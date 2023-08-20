@@ -149,7 +149,6 @@ const Signin = () => {
         const lastname = data.adminData.lastName;
         const type = data.adminData.adminType;
         const csrf = data.csrfToken;
-        console.log(csrf);
         Cookies.set("token", token);
         localStorage.setItem("firstname", firstname);
         localStorage.setItem("lastname", lastname);

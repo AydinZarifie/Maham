@@ -1,5 +1,6 @@
 import styles from "../../styles/Estate.module.css";
 import addStyles from "../../styles/Management.module.css";
+import warningIcon from "../../images/warning-attention-red-svgrepo-com.svg";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -48,6 +49,18 @@ export default function FilterWithAdder(props) {
             <div className={addStyles.closeBtn} onClick={toggleFilterShown}>
               &times;
             </div>
+
+            {props.error && (
+              <div className={styles.errorDiv}>
+                <img
+                  className={styles.ErrorIcon}
+                  src={warningIcon}
+                  alt="warning"
+                />
+                <p>Filter already exist 401 </p>
+              </div>
+            )}
+
             <div className={addStyles.wrapper2}>
               <div className={addStyles.wrapper}>
                 <div className={addStyles.inputData}>
@@ -82,12 +95,7 @@ export default function FilterWithAdder(props) {
             <button
               type="button"
               className={addStyles.AploadButton}
-              onClick={() =>
-                props.submitHandler(
-                  filterName,
-                  img
-                )
-              }
+              onClick={() => props.submitHandler(filterName, img)}
             >
               Upload
             </button>

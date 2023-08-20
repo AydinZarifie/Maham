@@ -3,6 +3,11 @@ import styles from "../../../styles/userPanel.module.css";
 const Transactions = () => {
   return (
     <>
+      {/* for error */}
+      {/* <div className={styles.NoExistDiv}>
+        There is no transactions to display for you
+      </div> */}
+      {/*  */}
       <div className={styles.TableDiv2}>
         <table className={styles.InfoTable2}>
           <thead>

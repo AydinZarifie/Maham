@@ -21,6 +21,8 @@ const ManagementPage = () => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const [error, setError] = useState(false);
+
   const toggleCountryMenu = () => {
     setCountryMenuShown((prev) => !prev);
   };
@@ -43,12 +45,11 @@ const ManagementPage = () => {
     setSelectedCityOption(option);
     setCityMenuShown(false);
 
-    
-    console.log("/admin/managment/getEstates/" +selectedCountryOption.country_name+"/" +option);
- 
     let { response, data } = await fetchInstance(
-      "/admin/managment/getEstates/" +selectedCountryOption.country_name+"/" +option
-       
+      "/admin/managment/getEstates/" +
+        selectedCountryOption.country_name +
+        "/" +
+        option
     );
 
     setSearchedEstates(data.data);
@@ -79,10 +80,37 @@ const ManagementPage = () => {
       method: "POST",
       body: formData,
     });
-    console.log(response);
 
     if (response.ok) {
       window.location.reload(true);
+    }
+    if (response.status == 400) {
+      setError("City already exists");
+    } else if (response.status == 401) {
+      setError("Country already exists");
+    }
+  };
+
+  const LockEstate = async (id) => {
+    let url = "url";
+    let { response } = await fetchInstance("url" + id, {
+      method: "POST",
+    });
+    if (response) {
+      //add code here
+      url = "";
+    } else {
+      url = "";
+    }
+    let { res } = await fetchInstance(url + id, {
+      method: "POST",
+    });
+    if (res.ok) {
+      let index = searchedEstates.findIndex((item) => item._id == id);
+      setSearchedEstates((prev) => [
+        ...prev,
+        (prev[index].lock_position = !prev[index].lock_position),
+      ]);
     }
   };
 
@@ -149,7 +177,10 @@ const ManagementPage = () => {
                       onClick={() => handleCountryOptionSelect(option)}
                     >
                       <img
-                        src={`http://localhost:5000/${option.country_logo.replace(/\\/g, "/")}`}
+                        src={`http://localhost:5000/${option.country_logo.replace(
+                          /\\/g,
+                          "/"
+                        )}`}
                         alt={option.country_name}
                       />
                       {option.country_name}
@@ -159,7 +190,6 @@ const ManagementPage = () => {
               </>
             )}
           </div>
-
           {/* <button
             className={styles.CountrySelect}
             onClick={toggleCountryMenu}
@@ -253,9 +283,10 @@ const ManagementPage = () => {
           submitHandler={submitHandler}
           closeHandler={showAddHandler}
           countries={countries}
+          error={error}
         />
       )}
-      <EstateTable estates={searchedEstates} />
+      <EstateTable estates={searchedEstates} lockEstate={LockEstate} />
     </>
   );
 };

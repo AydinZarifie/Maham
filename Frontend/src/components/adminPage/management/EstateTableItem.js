@@ -1,4 +1,7 @@
+import styles from "../../../styles/Management.module.css"
+
 import lockIcon from "../../../images/SVGRepo_iconCarrier (3).svg";
+import unlockIcon from "../../../images/unlock-svgrepo-com.svg";
 
 const EstateTableItem = (props) => {
   const redStyle = {
@@ -36,8 +39,12 @@ const EstateTableItem = (props) => {
         <td>{props.sell_position.toString()}</td>
         <td>{props.lock_position.toString()}</td>
         <td>
-          <button>
-            <img src={lockIcon} />
+          <button  className={styles.lockAndUnlockButton} onClick={() => props.lockEstate(props._id)}>
+            {props.lock_position ? (
+              <img className={styles.unlockIcon} src={unlockIcon} />
+            ) : (
+              <img src={lockIcon} />
+            )}
           </button>
         </td>
       </tr>

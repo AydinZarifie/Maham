@@ -48,7 +48,7 @@ const AdminItem = (props) => {
               strokeLinejoin="round"
             />
           </g>
-        </svg>
+        </svg>  
         <h5>{props.first_name + " " + props.last_name}</h5>
       </div>
       <h5>{props.admin_type}</h5>
@@ -56,7 +56,7 @@ const AdminItem = (props) => {
       <h5>{props.city_name}</h5>
 
       <div className={styles.profileChildDiv}>
-        <Link to={`${props._id}`}>
+        <Link to={`edit/${props._id}`}>
           <button className={styles.EandDBtn}>
             <img src={editLogo} className={styles.ProfileIcon} />
           </button>

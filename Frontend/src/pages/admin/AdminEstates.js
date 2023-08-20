@@ -23,6 +23,17 @@ export default function Estates() {
   const [smsCountdown, setSmsCountdown] = useState(60);
   const [confirmationMessage, setConfirmationMessage] = useState(false);
 
+  const [error, setError] = useState(false);
+
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const cityFetch = async (name) => {
+    const response = await fetch("url" + name);
+    const json = await response.json();
+    setCities(json.data);
+  };
+
   const toggleConfirmationMessage = () => {
     setConfirmationMessage((prev) => !prev);
   };
@@ -47,6 +58,12 @@ export default function Estates() {
       setFilters(data.data);
     };
     fetchFilterData();
+
+    const fetchCountries = async () => {
+      let { response, data } = await fetchInstance("url");
+      setCountries(data.data);
+    };
+    fetchCountries();
   }, []);
 
   const submitFilterHandler = async (filterName, filterImg) => {
@@ -62,18 +79,23 @@ export default function Estates() {
     if (response.ok) {
       window.location.reload(true);
     }
+    if (response.status == 401) {
+      setError(true);
+    }
   };
 
   const submitFilterSearch = async (country, city, lowPrice, highPrice) => {
     const formData = new FormData();
-    formData.append("country", country);
-    formData.append("city", city);
-    formData.append("lowPrice", lowPrice);
-    formData.append("highPrice", highPrice);
-    let { response } = await fetchInstance("url", {
+    formData.append("countryName", country);
+    formData.append("cityName", city);
+    formData.append("price", lowPrice);
+    formData.append("price", highPrice);
+    let { response, data } = await fetchInstance("url", {
       method: "POST",
       body: formData,
     });
+    setData(data);
+    setFilterShown(false);
   };
 
   const getSmsForDocument = async (code) => {
@@ -134,11 +156,18 @@ export default function Estates() {
           <FilterModal
             onSubmit={submitFilterSearch}
             toggleFilter={toggleFilterShown}
+            countries={countries}
+            cities={cities}
+            cityFetch={cityFetch}
           />
         )}
       </div>
 
-      <FilterWithAdder filters={filters} submitHandler={submitFilterHandler} />
+      <FilterWithAdder
+        filters={filters}
+        submitHandler={submitFilterHandler}
+        error={error}
+      />
       {/* <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div> */}
       <div
         className={styles.Main}

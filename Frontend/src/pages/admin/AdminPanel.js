@@ -30,13 +30,35 @@ const AdminPanel = () => {
     overlay.current.style.visibility = "visible";
   };
 
-  //search
-  const submitFilterHandler = async (name, type, country, city) => {
+  const submitNameFilterHandler = async (name) => {
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("adminType", type);
-    formData.append("countryName", country);
-    formData.append("cityName", city);
+    let { response, data } = await fetchInstance(
+      "/admin/panel/getAdmin",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    setAdmins(data.data);
+  };
+
+  const submitGeneralFilterHandler = async (type, country, city) => {
+    const formData = new FormData();
+    if (type) {
+      formData.append("adminType", type);
+    }
+    if (country) {
+      formData.append("countryName", country);
+    }
+    if (city) {
+      formData.append("cityName", city);
+    }
+    
+    console.log(formData.get("adminType"));
+    console.log(formData.get("countryName"));
+    console.log(formData.get("cityName"));
+
     let { response, data } = await fetchInstance(
       "/admin/panel/getAdminsWithFilter",
       {
@@ -74,7 +96,7 @@ const AdminPanel = () => {
     let url = "/admin/auth/signup";
 
     if (method === "PUT") {
-      url = "/admin/auth/signup/" + id;
+      url = "/admin/panel/editAdmin/" + id;
     }
 
     let { response } = await fetchInstance(url, {
@@ -96,7 +118,6 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       let { response, data } = await fetchInstance("/admin/panel/getAdmins");
-      console.log(data.data);
       setAdmins(data.data);
     };
     fetchAdmins();
@@ -109,6 +130,7 @@ const AdminPanel = () => {
   }, []);
 
   const cityFetch = async (name) => {
+    console.log(name);
     let { response, data } = await fetchInstance(
       "/admin/managment/getCities/" + name
     );
@@ -116,12 +138,10 @@ const AdminPanel = () => {
   };
 
   const nameChangeFetch = async (name) => {
-    console.log(name.length);
     if (name.length > 0) {
       const formData = new FormData();
       name = name.trim();
       formData.append("name", name);
-      console.log("1");
       let { response, data } = await fetchInstance("/admin/panel/searchName", {
         method: "POST",
         body: formData,
@@ -159,7 +179,8 @@ const AdminPanel = () => {
         />
       )}
       <AdminFilter
-        submitHandler={submitFilterHandler}
+        submitNameHandler={submitNameFilterHandler}
+        submitGeneralHandler={submitGeneralFilterHandler}
         closeHandler={closeFilter}
         openHandler={openFilter}
         ref={filter}
@@ -195,7 +216,8 @@ const AdminPanel = () => {
 
           <NavLink
             className={({ isActive }) => (isActive ? styles.active : undefined)}
-            to="personal"
+            to="edit"
+            onClick={(event) => event.preventDefault()}
           >
             <button className={styles.InfoBtn}>Personal</button>
           </NavLink>

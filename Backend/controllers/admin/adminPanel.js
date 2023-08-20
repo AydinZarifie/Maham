@@ -3,7 +3,7 @@ const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 const {formatStr} = require('../../utilities/mint');
-
+const bcrypt = require('bcryptjs');
 
 exports.getAllAdmins = catchAsync(async (req, res, next) => {
 	const admins = await adminDB.find()
@@ -21,12 +21,15 @@ exports.getAllAdmins = catchAsync(async (req, res, next) => {
 
 exports.getAdmin = catchAsync(async (req, res, next) => {
 
+
+
 	const first_name = req.body.name.split(" ")[0];
 	const last_name = req.body.name.split(" ")[1];
 
 	const admin = await adminDB
-		.findOne({ first_name : first_name , last_name : last_name})
-
+		.find({ first_name : first_name , last_name : last_name})
+	
+	console.log(admin);
 	if (!admin) {
 		return next(new AppError('Admin not found!', 404));
 	}
@@ -83,18 +86,17 @@ exports.searchAdminByName = catchAsync(async (req, res, next) => {
 exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 
 	let query = {};
-	console.log(req.body);
 
 	if(req.body.adminType){
-		query = {admin_type :formatStr(req.body.adminType) }
+		query.admin_type = formatStr(req.body.adminType) 
 	}
 	if(req.body.countryName){
-		query = {country_name : formatStr(req.body.countryName)}
+		query.country_name = formatStr(req.body.countryName)
 	}
 	if(req.body.cityName){
-		query = {city_name :formatStr( req.body.cityName)}
+		query.city_name = formatStr( req.body.cityName)
 	}
-	console.log(query);
+
 	const admins = await adminDB.find(query);
 
 	//// 7) send the response
@@ -130,7 +132,8 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 		email: req.body.email,
 		phone_number: req.body.phoneNumber,
 		country_name: req.body.country,
-		city_name: req.body.city
+		city_name: req.body.city,
+		admin_type : req.body.adminType,
 	};
 
 	if (req.body.confirmPassword && req.body.password) {
@@ -154,7 +157,7 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 	}
 
 	const updatedAdmin = await adminDB.findByIdAndUpdate(
-		req.params._id,
+		req.params.id,
 		filteredFields,
 		{
 			new: true,
@@ -166,8 +169,6 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 		return next(new AppError('There is No such an admin with that id', 200));
 	}
 
-	console.log("4");
-	
 	res.status(200).json({
 		status: 'success',
 		message: 'updated successfully',

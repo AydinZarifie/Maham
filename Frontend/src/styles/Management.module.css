@@ -1,33 +1,43 @@
-/***   LayOut   ***/
-/* .Tables{
-    display: flex;
-    flex-direction: row;
-    justify-content:center;
-    gap: 3%;
+.unlockIcon{
+  width:22px;
+  
 }
 
-
-.Tables12{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    gap: 3%;
- 
+.lockAndUnlockButton{
+  width: 35px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #dadada;
+  border-radius: 6px;
+  transition: .3s;
+  opacity: .8;
 }
-.Tables3AndName{
-    width: 40%;
+.lockAndUnlockButton:hover{
+  background-color: #e5e5e5;
+  opacity: 1;
 }
 
-
-
-.Tables1AndName{
-    width: 50%;
+.errorDiv {
+  position: absolute;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
-.Tables2AndName{
-    width: 50%;
-} */
+.errorDiv p {
+  color: #ff0005;
+  margin: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+.ErrorIcon {
+  width: 18px;
+  height: 18px;
+}
 
-/***    ***/
 .dropdown {
   position: relative;
   /* width: 400px; */

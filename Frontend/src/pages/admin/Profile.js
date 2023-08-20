@@ -19,8 +19,6 @@ const Profile = () => {
     password: "",
     confirmPassword: "",
   });
-        
-  console.log(data.admin_type);        
 
   useEffect(() => {
     const fetchUserData = async () => {

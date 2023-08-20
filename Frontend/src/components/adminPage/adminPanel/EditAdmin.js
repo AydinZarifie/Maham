@@ -10,7 +10,6 @@ const EditAdmin = () => {
 export async function loader({ request, params }) {
   const id = params.adminId;
   let { response, data } = await fetchInstance("/admin/panel/editAdmin/" + id);
-  console.log(data);
   return data.data;
 }
 

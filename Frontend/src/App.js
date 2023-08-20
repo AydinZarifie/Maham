@@ -22,12 +22,16 @@ import Verification from "./pages/Verification";
 import EditAdmin, {
   loader as adminDetailLoader,
 } from "./components/adminPage/adminPanel/EditAdmin";
-import Personal from "./components/adminPage/adminPanel/Personal";
 import Profile from "./pages/admin/Profile";
 import UserPanel from "./pages/UserPanel";
 import ManagementAssets from "./components/userPanel/ManagementAssets";
 import Assets from "./components/userPanel/managementAssets/Assets";
 import Transactions from "./components/userPanel/managementAssets/Transactions";
+import ClassicWatchlist from "./pages/userPanel/watchlist/ClassicWatchlist";
+import ChartWatchlist from "./pages/userPanel/watchlist/ChartWatchlist";
+import Watchlist from "./pages/Watchlist";
+import ActiveOrders from "./pages/userPanel/watchlist/ActiveOrders";
+import DailyDeals from "./pages/userPanel/watchlist/DailyDeals";
 
 const router = createBrowserRouter([
   {
@@ -92,14 +96,14 @@ const router = createBrowserRouter([
             element: <AddAdmin />,
           },
           {
-            path: ":adminId",
+            path: "edit/:adminId",
             element: <EditAdmin />,
             loader: adminDetailLoader,
           },
-          {
-            path: "personal",
-            element: <Personal />,
-          },
+          // {
+          //   path: "personal",
+          //   element: <Personal />,
+          // },
         ],
       },
       {
@@ -130,6 +134,21 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Assets /> },
           { path: "transactions", element: <Transactions /> },
+        ],
+      },
+      {
+        path: "watchlist",
+        element: <Watchlist />,
+        children: [
+          {
+            path: "classic",
+            element: <ClassicWatchlist />,
+            children: [
+              { index: true, element: <ActiveOrders /> },
+              { path: "dailyDeals", element: <DailyDeals /> },
+            ],
+          },
+          { path: "", element: <ChartWatchlist /> },
         ],
       },
     ],

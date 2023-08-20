@@ -7,8 +7,6 @@ const AdminConfig = ({ method, admin }) => {
   const { error, submitAddAdminHandler, countries, cityFetch, cities } =
     useOutletContext();
 
-  console.log(admin);
-  
   const [data, setData] = useState({
     type: admin ? admin.admin_type : "",
     firstName: admin ? admin.first_name : "",
@@ -43,7 +41,6 @@ const AdminConfig = ({ method, admin }) => {
   const enteredPasswordIsValid = data.password.trim() !== "";
   const enteredConfirmPasswordIsValid =
     data.confirmPassword.trim() !== "" && data.password == data.confirmPassword;
-
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const firstNameIsInvalid = !enteredFirstNameIsValid && touched.firstName;
   const lastNameIsInvalid = !enteredLastNameIsValid && touched.lastName;
@@ -145,12 +142,9 @@ const AdminConfig = ({ method, admin }) => {
   };
 
   useEffect(() => {
-    
-   console.log("hello" + admin);
-
-    
     if (admin) {
-      cityFetch(admin.country);
+      console.log(admin.country_name);
+      cityFetch(admin.country_name);
     }
   }, []);
 

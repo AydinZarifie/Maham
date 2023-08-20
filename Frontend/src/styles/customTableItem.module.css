@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 3px;
   }
   .numberContainer {
@@ -10,7 +11,7 @@
     flex-direction: column;
 
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     transition: 0.2s;
   } 
 
@@ -49,7 +50,7 @@
     display: block;
     opacity: 0;
     position: relative;
-   /* top: -12px; */
+     top: -10px;
     width: 190px;
     height: auto;
     padding: 5px 10px;
@@ -60,7 +61,7 @@
   }
   .FullNumber:after,
 .FullNumber:before {
-  bottom: -45%;
+  bottom: -28%;
   border: solid transparent;
   content: "";
   height: 0;
@@ -73,20 +74,22 @@
   left: 90%;
 }
   .partialNumber {
-    margin-top: -19px;
+    margin-top: -39px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     overflow-x: hidden;
+    
   }
   .HoverDiv{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: -167px;
+    margin-left: -123px;
     position: relative;
-   top: -15px;
+   top: -25px;
   }
 }
 @media (max-width:750px){
@@ -94,12 +97,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 2px;
   }
   .numberContainer {
     display: inline-block;
     cursor: pointer;
-    font-size: 8px;
+    font-size: 10px;
     transition: 0.2s;
   } 
 
@@ -121,7 +125,7 @@
     display: block;
     opacity: 0;
     position: relative;
-    top:-10px;
+    top:8px;
     font-size: 8px;
     width: 55px;
     height: auto;
@@ -137,7 +141,7 @@
     display: block;
     opacity: 0;
     position: relative;
-   top: -13px;
+   /* top: -13px; */
     width: 140px;
     height: auto;
     padding: 5px 10px;
@@ -149,7 +153,7 @@
   }
   .FullNumber:after,
 .FullNumber:before {
-  bottom: -28%;
+  bottom: -20%;
   border: solid transparent;
   content: "";
   height: 0;
@@ -162,10 +166,11 @@
   left: 90%;
 }
   .partialNumber {
-    margin-top: -24px;
+    margin-top: -36px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     /* gap: 10px; */
     overflow-x: hidden;
   }
@@ -173,9 +178,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: -145px;
+    margin-left: -100px;
     position: relative;
-   top: -14px;
+   top: -34px;
    /* max-height: 30px; */
   }
 }
@@ -205,6 +210,7 @@
   font-size: 12px;
   text-overflow: hidden;
   margin: 0;
+  word-break: break-all;
 }
 /* .FullNumber:after,
 .FullNumber:before {
@@ -254,7 +260,7 @@
 
 .CopyBox:after,
 .CopyBox:before {
-  bottom: -48%;
+  bottom: -52%;
   border: solid transparent;
   content: "";
   height: 0;
