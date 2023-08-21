@@ -335,7 +335,7 @@ const StepTwo = (props) => {
       <div className={styles.InputDiv}>
         <div className={styles.inputContainer2}>
           <input
-            type="text"
+            type="email"
             id="Email"
             name="email"
             value={data.email}

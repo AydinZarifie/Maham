@@ -46,7 +46,7 @@ const Profile = () => {
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
     let { response } = await fetchInstance("/admin/auth/profile", {
-      method: "POST",
+      method: "PUT",
       body: formData,
     });
     if (response.ok) {
@@ -60,7 +60,6 @@ const Profile = () => {
   const confirmPasswordClass = formIsValid
     ? `${styles.InputAdmin} `
     : `${styles.invalid} ${styles.InputAdmin} `;
-
   return (
     <form>
       <div className={styles.mainDiv}>
@@ -138,7 +137,7 @@ const Profile = () => {
             <input
               className={styles.InputAdmin}
               placeholder="Email"
-              type="text"
+              type="email"
               name="email"
               id="email"
               required

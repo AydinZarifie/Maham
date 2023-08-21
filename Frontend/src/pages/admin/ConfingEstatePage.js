@@ -373,7 +373,7 @@ const ConfingEstate = ({ method, estate }) => {
     video: false,
     id: false,
 
-    // plate: false,
+      // plate: false,
     // walletAddress: false,
   });
 
@@ -718,7 +718,7 @@ const ConfingEstate = ({ method, estate }) => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.ok) {
+      if (response.ok) {  
         setDeleteConfirmed(true);
       }
     }
@@ -756,7 +756,6 @@ const ConfingEstate = ({ method, estate }) => {
           title="Success!"
           detail="Estate has been successfully deleted"
           closeHandler={() => {
-            console.log("hii");
             navigate("/admin/estates");
           }}
         />
