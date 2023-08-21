@@ -39,8 +39,7 @@ const AdminConfig = ({ method, admin }) => {
   const enteredCountryIsValid = data.country.trim() !== "";
   const enteredCityIsValid = data.city.trim() !== "";
   const enteredPasswordIsValid = data.password.trim() !== "";
-  const enteredConfirmPasswordIsValid =
-    data.confirmPassword.trim() !== "" && data.password == data.confirmPassword;
+  const enteredConfirmPasswordIsValid = data.confirmPassword.trim() !== "" && data.password == data.confirmPassword;
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const firstNameIsInvalid = !enteredFirstNameIsValid && touched.firstName;
   const lastNameIsInvalid = !enteredLastNameIsValid && touched.lastName;
@@ -262,7 +261,7 @@ const AdminConfig = ({ method, admin }) => {
             <input
               className={emailClass}
               placeholder="Email"
-              type="text"
+              type="email"
               name="email"
               id="email"
               required

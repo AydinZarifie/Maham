@@ -19,9 +19,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { action as logoutAction } from "./pages/admin/Logout";
 import { checkAuthLoader, checkSuperAdminLoader } from "./util/auth";
 // import Verification from "./pages/Verification";
-// import EditAdmin, {
-//   loader as adminDetailLoader,
-// } from "./components/adminPage/adminPanel/EditAdmin";
+// import { loader as adminDetailLoader } from "./components/adminPage/adminPanel/EditAdmin";
 // import Profile from "./pages/admin/Profile";
 // import UserPanel from "./pages/UserPanel";
 // import ManagementAssets from "./components/userPanel/ManagementAssets";
@@ -187,8 +185,10 @@ const router = createBrowserRouter([
             ),
             id: "estate-detail",
             // loader: estateDetailLoader,
-            loader: () =>
-              import("./pages/DetailPage").then((module) => module.loader()),
+            loader: (meta) =>
+              import("./pages/DetailPage").then((module) =>
+                module.loader(meta)
+              ),
             // action: manipulateEstateAction,
           },
         ],
@@ -231,9 +231,9 @@ const router = createBrowserRouter([
               </Suspense>
             ),
             // loader: adminDetailLoader,
-            loader: () =>
+            loader: (meta) =>
               import("./components/adminPage/adminPanel/EditAdmin").then(
-                (module) => module.loader()
+                (module) => module.loader(meta)
               ),
           },
           // {

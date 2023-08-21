@@ -152,7 +152,8 @@ const Signin = () => {
         Cookies.set("token", token);
         localStorage.setItem("firstname", firstname);
         localStorage.setItem("lastname", lastname);
-        localStorage.setItem("type", type);
+        Cookies.set("type",type)
+        // localStorage.setItem("type", type);
         Cookies.set("csrfToken", csrf);
 
         // const expiration = new Date();

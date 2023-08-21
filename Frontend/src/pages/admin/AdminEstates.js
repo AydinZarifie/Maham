@@ -40,11 +40,8 @@ export default function Estates() {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
-    const response = await fetchInstance(
-      "http://localhost:5000/admin/managment/getCities/" + name
-    );
-    const json = await response.json();
-    setCities(json.data);
+    const {response,data} = await fetchInstance("/admin/managment/getCities/" + name);
+    setCities(data.data);
   };
 
   const toggleConfirmationMessage = () => {
@@ -165,8 +162,7 @@ export default function Estates() {
   const submitFilter = async (filterName) => {
     const formData = new FormData();
     formData.append("filterName", filterName);
-    let { response, data } = await fetchInstance(
-      "/admin/searchEstateByFilterName",
+    let { response, data } = await fetchInstance("/admin/searchEstateByFilterName",
       {
         method: "POST",
         body: formData,

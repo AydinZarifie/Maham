@@ -21,7 +21,7 @@ export function getAuthToken() {
 }
 
 export function getAdminType() {
-  const adminType = localStorage.getItem("type");
+  const adminType = Cookies.get("type");
   if (!adminType || adminType == "undefined" || adminType == "null") {
     return null;
   }
