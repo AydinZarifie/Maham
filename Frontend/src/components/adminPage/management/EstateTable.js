@@ -1,8 +1,5 @@
 import styles from "../../../styles/Management.module.css";
 
-import lockIcon from "../../../images/SVGRepo_iconCarrier (3).svg";
-import unlockIcon from "../../../images/unlock-svgrepo-com.svg";
-
 import EstateTableItem from "./EstateTableItem";
 
 const EstateTable = (props) => {
@@ -21,7 +18,7 @@ const EstateTable = (props) => {
               <th>Landlor-Address</th>
               <th>Sell-Position</th>
               <th>Lock-Position</th>
-              <th>Lock</th>
+              <th>Lock/Unlock</th>
             </tr>
           </thead>
           <tbody>

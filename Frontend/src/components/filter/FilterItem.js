@@ -2,7 +2,7 @@ import styles from "../../styles/homePage.module.css";
 
 const FilterItem = (props) => {
   return (
-    <div className={styles.underline2} key={props.name}>
+    <div className={styles.underline2} key={props.name} onClick={()=>props.onClick(props.name)}>
       <a href="#" className={styles.AfilterTag}>
         <img
           // src={require(`../../images/${props.img}`)}

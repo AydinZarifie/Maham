@@ -80,6 +80,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		filter: req.body.filter,
 		mintId: req.body.mintId,
 		unit_number: req.body.numberOfUnit,
+		contract_address : '0x1029c94a34b125409c20d65958c95cf26360b7d61c6a4f9c7f98c7bc6b2ee0eb',
+		landlor_address : '0x1029c94a34b125409c20d65958c95cf26360b7d61c6a4f9c7f98c7bc6b2ee0eb',
 		imageUrl: req.files.images.map((el) => {
 			return el.path;
 		}),
@@ -162,6 +164,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		filter: inputs.filter,
 		mint_id: inputs.mintId,
 		unit_number: inputs.unit_number,
+		landlor_address : inputs.landlor_address,
+		contract_address : inputs.contract_address,
 		// minor_street: inputs.minor_street,
 		// postal_code: inputs.postal_code ,
 		// estate_view: inputs.estate_view ,
@@ -561,3 +565,32 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 		data: null,
 	});
 });
+
+exports.searchEestatesByFilterName = async (req, res, next) => {
+	// 1) get the search criteria from request body
+	const { filterName } = req.body;
+
+	if (!filterName) {
+		return next(new AppError('please choose an option', 400));
+	}
+
+	console.log(filterName);
+
+	// 2) Execute the query
+	const results = await estateDB.find({
+		filter: { $in: [filterName] },
+	});
+
+	console.log(results);
+	if (results.length === 0) {
+		return res.status(204).json({
+			message: 'nothing matches',
+		});
+	}
+
+	return res.status(200).json({
+		message: 'successfull',
+		result: results.length,
+		data: results,
+	});
+};

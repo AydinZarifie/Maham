@@ -1,4 +1,4 @@
-import styles from "../../../styles/Management.module.css"
+import styles from "../../../styles/Management.module.css";
 
 import lockIcon from "../../../images/SVGRepo_iconCarrier (3).svg";
 import unlockIcon from "../../../images/unlock-svgrepo-com.svg";
@@ -39,7 +39,13 @@ const EstateTableItem = (props) => {
         <td>{props.sell_position.toString()}</td>
         <td>{props.lock_position.toString()}</td>
         <td>
-          <button  className={styles.lockAndUnlockButton} onClick={() => props.lockEstate(props._id)}>
+          <button
+            className={styles.lockAndUnlockButton}
+            onClick={(event) => {
+              event.preventDefault();
+              props.lockEstate(props._id);
+            }}
+          >
             {props.lock_position ? (
               <img className={styles.unlockIcon} src={unlockIcon} />
             ) : (

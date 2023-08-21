@@ -296,7 +296,6 @@ exports.verifyAdminAccessTokenProtectedRoute = async (req,res) => {
 			return res.status(200).json(true)
 		}
 	} 
-
 	catch (error) {
 		res.status(400).json({
 			message : "not valid token"

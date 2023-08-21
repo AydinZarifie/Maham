@@ -40,7 +40,11 @@ router
 
 router
 	.route("/searchEstateByFilter")
-	.post(adminPage_Controller.searchEstateByFilter);
+	.post(verifyToken,adminPage_Controller.searchEstateByFilter);
+
+router
+	.route("/searchEstateByFilterName")
+	.post(verifyToken , adminPage_Controller.searchEestatesByFilterName);
 
 
 module.exports = router;

@@ -38,10 +38,10 @@ const LockPosition = () => {
               <td className={styles.Td}></td>
               <td className={styles.Td}>
                 className={styles.Td}
-                <CustomTableItem text={item.contractAddress} />
+                <CustomTableItem text={item.contract_address} />
               </td>
               <td className={styles.Td}>
-                <CustomTableItem text={item.landloreAddress} />
+                <CustomTableItem text={item.landlor_address} />
               </td>
 
               <td className={styles.Td}>{item.country_name}</td>

@@ -48,7 +48,7 @@ const AdminItem = (props) => {
               strokeLinejoin="round"
             />
           </g>
-        </svg>  
+        </svg>
         <h5>{props.first_name + " " + props.last_name}</h5>
       </div>
       <h5>{props.admin_type}</h5>

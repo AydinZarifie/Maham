@@ -54,7 +54,7 @@ const AdminPanel = () => {
     if (city) {
       formData.append("cityName", city);
     }
-    
+
     console.log(formData.get("adminType"));
     console.log(formData.get("countryName"));
     console.log(formData.get("cityName"));
@@ -90,8 +90,10 @@ const AdminPanel = () => {
     formData.append("phoneNumber", phoneNumber);
     formData.append("country", country);
     formData.append("city", city);
-    formData.append("password", password);
-    formData.append("confirmPassword", confirmPassword);
+    if (password && confirmPassword) {
+      formData.append("password", password);
+      formData.append("confirmPassword", confirmPassword);
+    }
 
     let url = "/admin/auth/signup";
 
@@ -107,7 +109,9 @@ const AdminPanel = () => {
     if (response.ok) {
       setError(null);
       // alert("Admin successfully added");
-      setAlert(true);
+      setAlert(
+        "Your work has been successfully completed and your information has been saved"
+      );
       navigate("/admin/admins");
     }
     if (response.status == 401) {
@@ -130,7 +134,6 @@ const AdminPanel = () => {
   }, []);
 
   const cityFetch = async (name) => {
-    console.log(name);
     let { response, data } = await fetchInstance(
       "/admin/managment/getCities/" + name
     );
@@ -160,7 +163,8 @@ const AdminPanel = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        navigate("/admin/admins");
+        setAlert("Admin deleted successfully");
+        // navigate("/admin/admins");
       }
     }
   };
@@ -172,9 +176,9 @@ const AdminPanel = () => {
           lineColor="#0aff0e"
           img={trueLogo}
           title="Success!"
-          detail="Your work has been successfully completed and your information has been saved"
+          detail={alert}
           closeHandler={() => {
-            setAlert(false);
+            window.location.reload(true);
           }}
         />
       )}

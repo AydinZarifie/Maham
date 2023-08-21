@@ -16,7 +16,22 @@ const ManagementPage = () => {
 
   const [selectedCountryOption, setSelectedCountryOption] = useState(null);
   const [selectedCityOption, setSelectedCityOption] = useState(null);
-  const [searchedEstates, setSearchedEstates] = useState([]);
+  const [searchedEstates, setSearchedEstates] = useState([
+    // {
+    //   estate_title: "beach",
+    //   _id: 0,
+    //   sell_position: true,
+    //   lock_position: true,
+    // },
+    // {
+    //   estate_title: "air",
+    //   _id: 1,
+    //   sell_position: false,
+    //   lock_position: false,
+    // },
+  ]);
+
+  const [countryInformations, setCountryInformations] = useState([]);
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -92,14 +107,18 @@ const ManagementPage = () => {
   };
 
   const LockEstate = async (id) => {
-    let url = "/admin/managment/lockUnLockEstate/";
-    let { response } = await fetchInstance(url + id, {
+    let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {
       method: "POST",
     });
-    if (response) {
-      //add code here
-      url = "/admin/managment/lockUnLockEstate/";
-    } 
+    if (response.ok) {
+      const updatedEstates = [...searchedEstates];
+      let index = searchedEstates.findIndex((item) => item._id == id);
+      let editedEstate = { ...updatedEstates[index] };
+      editedEstate.lock_position = !editedEstate.lock_position;
+      updatedEstates[index] = editedEstate;
+
+      setSearchedEstates(updatedEstates);
+    }
   };
 
   useEffect(() => {
@@ -108,6 +127,12 @@ const ManagementPage = () => {
       setCountries(data.data);
     };
     fetchCountryData();
+
+    const fetchCountryInfromationData = async () => {
+      let { response, data } = await fetchInstance("/admin/managment/countriesInfo");
+      setCountryInformations(data.data);
+    };
+    fetchCountryInfromationData();
   }, []);
 
   // const eventHandler = (event) => {
@@ -121,9 +146,7 @@ const ManagementPage = () => {
           <HighestVolumes />
           <Gainers />
         </div>
-        <CountryInformations
-        // countries={countries}
-        />
+        <CountryInformations data={countryInformations} />
       </div>
       <div className={styles.SelectAndAdd}>
         <div className={styles.CountryMenu}>

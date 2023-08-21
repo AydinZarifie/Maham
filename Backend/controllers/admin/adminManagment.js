@@ -205,4 +205,16 @@ exports.lockUnLockEstate = catchAsync(async (req,res,next) => {
 	return res.status(200).json({
 		message : 'Success',
 	})
-})
+});
+
+exports.getCountriesInfo = catchAsync(async (req, res, next) => {
+	
+	console.log("hi");
+	const countriesInfo = await countryDB.find()
+
+	return res.status(200).json({
+		status: 'success',
+		data: countriesInfo,
+		// data: { countriesInfo, sumVolume, totalEstates },	
+	});
+});

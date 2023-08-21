@@ -2,7 +2,7 @@ import styles from "../../styles/AdminPanel.module.css";
 import homePageStyles from "../../styles/homePage.module.css";
 
 import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Form, NavLink, Outlet } from "react-router-dom";
 
 import filterIcon from "../../images/filter-alt-2-svgrepo-com (4).svg";
 
@@ -29,8 +29,7 @@ export default function Estates() {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
-    console.log(name);
-    const response  = await fetch("http://localhost:5000/admin/managment/getCities/" + name);
+    const response = await fetch("http://localhost:5000/admin/managment/getCities/" + name);
     const json = await response.json();
     setCities(json.data);
   };
@@ -144,8 +143,19 @@ export default function Estates() {
     let { response, data } = await fetchInstance(
       "/admin/panel/getSellPositionEstates"
     );
-    console.log(data.data);
     setSellPositionData(data.data);
+  };
+
+  const submitFilter = async (filterName) => {
+    const formData = new FormData();
+    formData.append("filterName", filterName);
+    let { response, data } = await fetchInstance("/admin/searchEstateByFilterName", {
+      method: "POST",
+      body: formData,
+    });
+    if(response.ok){
+      setData(data.data)
+    }
   };
 
   return (
@@ -169,6 +179,7 @@ export default function Estates() {
         filters={filters}
         submitHandler={submitFilterHandler}
         error={error}
+        onClick={submitFilter}
       />
       {/* <div className={styles.overlay} ref={overlay} onClick={closeFilter}></div> */}
       <div

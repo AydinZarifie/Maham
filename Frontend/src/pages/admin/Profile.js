@@ -44,10 +44,9 @@ const Profile = () => {
 
     const formData = new FormData();
     formData.append("password", data.password);
-    console.log(data.password);
     formData.append("confirmPassword", data.confirmPassword);
     let { response } = await fetchInstance("/admin/auth/profile", {
-      method: "PUT",
+      method: "POST",
       body: formData,
     });
     if (response.ok) {
