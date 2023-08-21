@@ -20,6 +20,14 @@ export function getAuthToken() {
   return token;
 }
 
+export function getAdminType() {
+  const adminType = localStorage.getItem("type");
+  if (!adminType || adminType == "undefined" || adminType == "null") {
+    return null;
+  }
+  return adminType;
+}
+
 export function getCsrfToken() {
   const csrfToken = Cookies.get("csrfToken");
 
@@ -37,8 +45,8 @@ export function getCsrfToken() {
 
 export async function checkAuthLoader() {
   const valid = 
-  200;
-  // await fetchAuthToken();
+  // 200;
+  await fetchAuthToken();
   if (valid == 200) {
     const token = getAuthToken();
 
@@ -50,6 +58,17 @@ export async function checkAuthLoader() {
   } else {
     return redirect("/loginAdmin");
   }
+}
+
+export async function checkSuperAdminLoader() {
+  const adminType = getAdminType();
+
+  if (adminType == "superadmin") {
+    return adminType;
+  } else if (adminType == "admin") {
+    return redirect("/admin/estates");
+  }
+  return redirect("/loginAdmin");
 }
 
 async function fetchAuthToken() {

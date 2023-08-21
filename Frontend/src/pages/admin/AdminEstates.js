@@ -40,7 +40,7 @@ export default function Estates() {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
-    const response = await fetch(
+    const response = await fetchInstance(
       "http://localhost:5000/admin/managment/getCities/" + name
     );
     const json = await response.json();

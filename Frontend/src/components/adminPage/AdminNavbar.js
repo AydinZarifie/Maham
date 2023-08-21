@@ -57,13 +57,16 @@ export default function AdminNavbar() {
               </div>
             </div>
 
-            <AdminMenuItem
-              link="/admin"
-              imgSrc={dashboardIcon}
-              text="Dashboard"
-              onClick={closeNav}
-              end={true}
-            />
+            {localStorage.getItem("type") === "superadmin" && (
+              <AdminMenuItem
+                link="/admin"
+                imgSrc={dashboardIcon}
+                text="Dashboard"
+                onClick={closeNav}
+                end={true}
+              />
+            )}
+
             <AdminMenuItem
               link="estates"
               imgSrc={estateIcon}
@@ -82,18 +85,23 @@ export default function AdminNavbar() {
               text="Transaction"
               onClick={closeNav}
             /> */}
-            <AdminMenuItem
-              link="management"
-              imgSrc={settingIcon}
-              text="Management"
-              onClick={closeNav}
-            />
-            <AdminMenuItem
-              link="admins"
-              imgSrc={adminPanelIcon}
-              text="Admins"
-              onClick={closeNav}
-            />
+            {localStorage.getItem("type") === "superadmin" && (
+              <AdminMenuItem
+                link="management"
+                imgSrc={settingIcon}
+                text="Management"
+                onClick={closeNav}
+              />
+            )}
+
+            {localStorage.getItem("type") === "superadmin" && (
+              <AdminMenuItem
+                link="admins"
+                imgSrc={adminPanelIcon}
+                text="Admins"
+                onClick={closeNav}
+              />
+            )}
           </div>
           <span className={styles.OpenNav} onClick={openNav}>
             &#9776;
@@ -136,7 +144,8 @@ export default function AdminNavbar() {
         <div className={styles.Names}>
           <div className={styles.AdminName}>
             <h3 className={styles.h3AdminName}>
-              {localStorage.getItem('firstname')} {localStorage.getItem('lastname')}
+              {localStorage.getItem("firstname")}{" "}
+              {localStorage.getItem("lastname")}
             </h3>
           </div>
           <div className={styles.AdminInformations}>
@@ -164,7 +173,11 @@ export default function AdminNavbar() {
               ></div>
               <ul className={styles.options}>
                 <li>
-                  <Link to="/admin/profile" style={{ width: "100%",textDecoration:'none' }} onClick={toggleDropdown}>
+                  <Link
+                    to="/admin/profile"
+                    style={{ width: "100%", textDecoration: "none" }}
+                    onClick={toggleDropdown}
+                  >
                     <button className={styles.PAndLBttons}>
                       <img src={profileIcon} />
                       Profile
