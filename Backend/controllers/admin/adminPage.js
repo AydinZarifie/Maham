@@ -69,13 +69,14 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		main_street: req.body.streetName,
 		building_number: req.body.plate,
 		floor_number: req.body.numberOfFloor,
-		location: req.body.location.toLowerCase(),
+		location: req.body.location,
 		state_description: req.body.description,
 		estate_type: req.body.type,
 		customer_price: Number(req.body.customerPrice),
 		maham_price: Number(req.body.mahamPrice),
 		filter: req.body.filter,
 		mintId: req.body.mintId,
+		volume: req.body.volume,
 		unit_number: req.body.numberOfUnit,
 		imageUrl: req.files.images.map((el) => {
 			return el.path;
@@ -83,8 +84,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		introduction_video: req.files.video.map((el) => {
 			return el.path;
 		}),
-		// minor_street : req.body. ,
 
+		// minor_street : req.body. ,
 		// postal_code : req.body. ,
 		// estate_view : req.body. ,
 
@@ -140,7 +141,8 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 	};
 
 	const estate = new estateDB({
-		///////////////////////////////////////////////////////////// setState :		estate_title: inputs.estate_title,
+		///////////////////////////////////////////////////////////// setState :
+		estate_title: inputs.estate_title,
 		city_name: inputs.city_name,
 		country_name: inputs.country_name,
 		main_street: inputs.main_street,
@@ -155,13 +157,11 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		maham_price: inputs.maham_price,
 		filter: inputs.filter,
 		mint_id: inputs.mintId,
+		volume: inputs.volume,
 		unit_number: inputs.unit_number,
 		// minor_street: inputs.minor_street,
 		// postal_code: inputs.postal_code ,
 		// estate_view: inputs.estate_view ,
-		sell_position: true,
-		lock_position: false,
-		getDocument: false,
 
 		///////////////////////////////////////////////////////////// setRooms :
 		estate_rooms: [
@@ -300,6 +300,10 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
 
 	const estate = await estateDB.findById(estateId);
+	const oldCountry = estate.country_name;
+	const oldCity = estate.city_name;
+	const oldMint = estate.mint_id;
+
 	const inputs = {
 		///////////////////////////////////////////////////////////// getState
 		estate_title: req.body.title,
@@ -317,12 +321,12 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		filter_name: req.body.filter,
 		mintId: req.body.mintId,
 
-		// introduction_video: req.files.video.map((el) => {
-		//     return el.path;
-		// }),
-		// introduction_video: req.files.video.map((el) => {
-		//     return el.path;
-		// }),
+		introduction_video: req.files.video.map((el) => {
+			return el.path;
+		}),
+		introduction_video: req.files.video.map((el) => {
+			return el.path;
+		}),
 		// minor_street : req.body. ,
 		// unit_number : req.body. ,
 		// postal_code : req.body. ,
@@ -391,9 +395,9 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		(estate.building_number = inputs.building_number),
 		(estate.floor_number = inputs.floor_number),
 		(estate.location = inputs.location),
-		(estate.estate_description = inputs.state_description),
+		(estate.estate_description = inputs.estate_description),
 		(estate.estate_type = inputs.estate_type),
-		(estate.customer_price = inputs.customerPrice),
+		(estate.customer_price = estate.customer_price),
 		(estate.maham_price = inputs.maham_price),
 		(estate.filter = inputs.filter_name),
 		(estate.mint_id = inputs.mintId);
@@ -453,54 +457,76 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		(estate.estate_facilities[0].loundry_facilities =
 			inputs.loundry_facilities),
 		(estate.estate_facilities[0].parkingLot = inputs.parkingLot),
-		(estate.estate_facilities[0].barbique = inputs.barbique),
-		await estate.save();
+		(estate.estate_facilities[0].barbique = inputs.barbique);
+
+	await estate.save();
+
+	if (oldCountry != req.body.countryName) {
+		// 1) if country of the estate has CHANGED >>
+		//    true ( it means CITY of the estate also is CHANGED ) >> update last_mints $ delete the estate.id from country estates
+		//    false >> move to next statement
+		console.log('1');
+		await countryDB.findOneAndUpdate(
+			{ country_name: oldCountry },
+			{
+				$push: { available_mints: oldMint },
+				$pull: { country_estates: estate._id },
+			}
+		);
+	} else if (oldCity != req.body.cityName) {
+		// 2) if CITY of the estate CHANGED
+		//    true >> ONLY update the last_mints object
+		//    false (neither countryName and cityName changed ) >> do nothing , EXIT the condition
+		await countryDB.findOneAndUpdate(
+			{ country_name: oldCountry },
+			{
+				$push: { available_mints: oldMint },
+			}
+		);
+	}
 
 	return res.status(200).json({
 		status: 'success',
 		message: 'succesfuly updated!',
-		// just for seeing the result and wont be included at the otiginal app
 	});
 });
 
 exports.getEditEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
+
 	if (!estateId) {
 		return next(new AppError('please provide estate id', 400));
 	}
+
 	const estate = await estateDB.findById(estateId);
+
 	if (!estate) {
 		return next(new AppError('estate wth that ID does not exists', 404));
 	}
+
 	res.status(200).json(estate);
 });
 
 exports.postFilter = catchAsync(async (req, res, next) => {
-	try {
-		const filterName = formatStr(req.body.filterName);
-		const imageUrl = req.files.images[0].path;
+	const filterName = formatStr(req.body.filterName);
+	const imageUrl = req.files.images[0].path;
 
-		if (!filterName || !imageUrl) {
-			return next(new AppError('filtername or image was empty', 403));
-			// res.status(403).json({ message: 'filtername or image was empty' });
-		}
-
-		const filter = new filterDB({
-			filterName: filterName,
-			filterImageUrl: imageUrl,
-		});
-
-		await filter.save();
-
-		return res.status(202).json({
-			status: 'success',
-			message: 'successfully added filter',
-		});
-	} catch (error) {
-		return res.status(401).json({
-			message: 'filter already exist',
-		});
+	if (!filterName) {
+		return next(new AppError('filtername or image was empty', 403));
+		// res.status(403).json({ message: 'filtername or image was empty' });
 	}
+
+	const filter = new filterDB({
+		filterName: filterName,
+		filterImageUrl: imageUrl,
+	});
+
+	await filter.save();
+
+	return res.status(202).json({
+		status: 'success',
+		message: 'successfully added filter',
+	});
 });
 
 exports.getAllFilters = catchAsync(async (req, res, next) => {
@@ -541,9 +567,10 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 	if (!deletingEstate) {
 		return next(new AppError('estate with that Id not found', 404));
 	}
-
-	clearImage(deletingEstate.imageUrl);
-	clearVideo(deletingEstate.introduction_video);
+	console.log(deletingEstate.imageUrl);
+	// await clearImage(deletingEstate.imageUrl);
+	await clearVideo(deletingEstate.introduction_video);
+	console.log('success')
 
 	await deletingEstate.deleteOne();
 
@@ -553,8 +580,8 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 		data: null,
 	});
 });
+
 exports.searchEestatesByFilterName = async (req, res, next) => {
-	console.log('1');
 	// 1) get the search criteria from request body
 	const { filterName } = req.body;
 
@@ -562,15 +589,13 @@ exports.searchEestatesByFilterName = async (req, res, next) => {
 		return next(new AppError('please choose an option', 400));
 	}
 
-	console.log(filterName);
-
 	// 2) Execute the query
 	const results = await estateDB.find({
-		filter: { $in: [filterName] },
+		filter: { $all: filterName },
 	});
 
 	if (results.length === 0) {
-		return res.status(204).json({
+		return res.status(200).json({
 			message: 'nothing matches',
 		});
 	}
@@ -581,3 +606,25 @@ exports.searchEestatesByFilterName = async (req, res, next) => {
 		data: results,
 	});
 };
+
+exports.getLockEstates = catchAsync(async (req, res, next) => {
+	const lockedEstates = await estateDB.find({ lock_position: true });
+
+	if (!lockedEstates || lockedEstates.length === 0) {
+		return res.status(200).json({ message: 'There is no locked estate!' });
+	}
+
+	return res.status(200).json({ status: 'success', data: lockedEstates });
+});
+
+exports.getSellPositionEstates = catchAsync(async (req, res, next) => {
+	const estates = await estateDB.find({ sell_position: true });
+
+	if (!estates || estates.length === 0) {
+		return res
+			.status(200)
+			.json({ message: 'there is no in-sell-position Estate' });
+	}
+
+	return res.status(200).json({ data: estates });
+});

@@ -184,9 +184,6 @@ const estateFacilitiesSchema = new mongoose.Schema({
 
 const estateSchema = new mongoose.Schema(
 	{
-		estateId: {
-			type: String,
-		},
 		country_name: {
 			type: String,
 			set: (a) => (a === '' ? undefined : a),
@@ -308,9 +305,10 @@ const estateSchema = new mongoose.Schema(
 );
 
 estateSchema.pre('save', async function (next) {
-	if (!this.isNew) {
-		return next();
-	}
+	// aosdasdasd
+	// if (!this.isNew) {
+	// 	return next();
+	// }
 
 	const country = await countryDB.findOne({
 		country_name: this.country_name,
@@ -353,34 +351,26 @@ estateSchema.pre('save', async function (next) {
 });
 
 estateSchema.pre('save', async function (next) {
-	// if document is not NEW or if it is , then if the country_name field is NOT MODIFIED >> do NOTHING
-	if (!this.isNew || !this.isModified('country_name')) {
-		return next();
-	}
+	// the document is being created and NEW or its country has CHANGED
 
-	const country = await countryDB.findOne({
-		country_name: this.country_name,
-	});
+	if (this.isNew || this.isModified('country_name')) {
+		const country = await countryDB.findOne({
+			country_name: this.country_name,
+		});
 
-	if (!country) {
-		return next(
-			new AppError('country does not exist ,please create country first', 404)
-		);
-	}
-	const countryId = country._id;
+		if (!country) {
+			return next(
+				new AppError('country does not exist ,please create country first', 404)
+			);
+		}
 
-	if (this.isNew) {
-		// the document is being created and NEW
+		const countryId = country._id;
 
 		this.country_ref = countryId;
 
 		// 3) Put estateId >> inside country's estates array >> just if document is NEW
 		country.country_estates.push(this._id);
 
-		await country.save();
-	} else if (this.isModified('country_name')) {
-		// document is being EDITED
-		this.country_ref = countryId;
 		await country.save();
 	}
 	next();

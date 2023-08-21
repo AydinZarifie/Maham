@@ -26,7 +26,7 @@ const countrySchema = new mongoose.Schema(
 		country_estates: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Estate',
+				ref: 'real_estates',
 			},
 		],
 		country_admins: [

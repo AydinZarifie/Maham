@@ -7,7 +7,13 @@ exports.getMyAssets = catchAsync(async (req, res, next) => {
 	const user = await userDB.findOne({ id: req.body.id }).populate({
 		path: 'assets',
 		// which fields ?
-		select: ['country_name', 'city_name', 'mint_id'],
+		select: [
+			'country_name',
+			'city_name',
+			'mint_id',
+			'estate_title',
+			'customer_price',
+		],
 	});
 
 	console.log(user);
@@ -197,7 +203,9 @@ exports.onSellPosition = catchAsync(async (req, res, next) => {
 	// 1) get information that is gonna change, from request's body
 	const filteredFields = {
 		sell_position: true,
+		lock_position: false,
 		customer_price: req.body.price,
+		// volume: volume + 1,
 	};
 
 	// 2) update Estate document
@@ -223,6 +231,7 @@ exports.cancelSellPosition = catchAsync(async (req, res, next) => {
 	// 1) get information that is gonna change, from request's body
 	const filteredFields = {
 		sell_position: false,
+		lock_position: false,
 	};
 
 	// 2) update Estate document
