@@ -20,12 +20,12 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 		data: countries,
 	});
 });
+
 /// get all cities of given country
 exports.getAllCities = catchAsync(async (req, res, next) => {
 	if (!req.params.countryName) {
 		return next(new AppError('please select a country ', 404));
 	}
-	console.log('hii');
 	const country = await countryDB
 		.findOne({
 			country_name: req.params.countryName,
@@ -50,7 +50,9 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
-	const estates = await estateDB.find().select('-__V');
+	const estates = await estateDB
+		.find()
+		.select(['estate_title', 'volume', 'maham_price', 'customer_price']);
 
 	console.log(estates);
 
@@ -67,50 +69,52 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 });
 
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	try {
-		countryName = formatStr(req.body.countryName);
-		countryLogo = req.files.images[0].path;
+	countryName = formatStr(req.body.countryName);
+	countryLogo = req.files.images[0].path;
 
-		if (!req.body.countryName) {
-			return next(new AppError('no country name provided', 400));
-		}
-		if (!req.files.images) {
-			return next(new AppError('no country logo provided', 400));
-		}
-
-		let countryCode;
-		try {
-			let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
-			totalCountries++;
-			countryCode = totalCountries.toString();
-		} catch (err) {
-			console.error(err);
-			return next(new AppError('error aquired on assigning countryCode', 400));
-		}
-
-		const newCountry = new countryDB({
-			country_name: countryName,
-			country_logo: countryLogo,
-			country_code: countryCode,
-		});
-		// await assignCountryCode(countryName);
-		await newCountry.save();
-		return res.status(201).json({
-			status: 'success',
-		});
-	} catch (error) {
-		return res.status(401).json({
-			message: 'country already exist',
-		});
+	if (!req.body.countryName) {
+		return next(new AppError('no country name provided', 400));
 	}
+	if (!req.files.images) {
+		return next(new AppError('no country logo provided', 400));
+	}
+
+	let countryCode;
+	try {
+		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
+		totalCountries++;
+		countryCode = totalCountries.toString();
+	} catch (err) {
+		console.error(err);
+		return next(new AppError('error aquired on assigning countryCode', 400));
+	}
+
+	const newCountry = new countryDB({
+		country_name: countryName,
+		country_logo: countryLogo,
+		country_code: countryCode,
+	});
+	// await assignCountryCode(countryName);
+	await newCountry.save();
+	return res.status(201).json({
+		status: 'success',
+	});
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
 	// check if country selected
 	if (req.body.countryName) {
-		const country = await countryDB.findOne({
-			country_name: req.body.countryName,
-		});
+		const country = await countryDB
+			.findOne({
+				country_name: req.body.countryName,
+			})
+			.select([
+				'cities',
+				'country_code',
+				'country_name',
+				'country_logo',
+				'last_mints',
+			]);
 
 		// check if selected country actually exists in DB
 		if (!country) {
@@ -119,12 +123,9 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			// check if cityName is inserted
 		} else if (!req.body.cityName) {
 			return next(new AppError('plesae insert city', 400));
-
-			// if all is ok , adds the city to cities collection of chosen country
 		}
 
 		const cityExist = country.cities.includes(formatStr(req.body.cityName));
-		console.log(cityExist);
 
 		if (cityExist) {
 			return res.status(400).json({
@@ -132,6 +133,7 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			});
 		}
 
+		// if everything is ok , adds the city to cities collection of chosen country
 		country.cities.push(formatStr(req.body.cityName));
 
 		// Set the 'last_mints' property
@@ -164,15 +166,33 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
+// estates of slected country & city
 exports.getEstates = catchAsync(async (req, res, next) => {
 	const estates = await estateDB
 		.find({
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
 		})
+		.select([
+			'country_name',
+			'city_name',
+			'landlord_address',
+			'estate_title',
+			'volume',
+			'maham_price',
+			'customer_price',
+			'contract_address',
+			'sell_position',
+			'lock_position',
+		])
 		.sort('createdAt');
 
-	console.log(estates);
+	if (!estates || estates.length === 0) {
+		return res.status(200).json({
+			message,
+		});
+	}
+
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
@@ -180,7 +200,9 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 });
 
 exports.lockUnLockEstate = catchAsync(async (req, res, next) => {
-	const estate = await estateDB.findById(req.params.id);
+	const estate = await estateDB
+		.findById(req.params.id)
+		.select(['_id', 'lock_position', 'sell_position']);
 
 	if (!estate) {
 		return next(new AppError('estate not found', 401));
@@ -189,6 +211,8 @@ exports.lockUnLockEstate = catchAsync(async (req, res, next) => {
 	let lockPosition = estate.lock_position;
 	if (lockPosition == false) {
 		lockPosition = true;
+		// if estate is being LOCKED >> set the sellPosition to FALSE
+		sellPosition = false;
 	} else {
 		lockPosition = false;
 	}

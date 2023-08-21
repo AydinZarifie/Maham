@@ -63,6 +63,8 @@ exports.searchAdminByName = catchAsync(async (req, res, next) => {
 			first_name: 1,
 			last_name: 1,
 			full_name: 1,
+			country_name: 1,
+			city_name: 1,
 			_id: 0,
 		})
 		.sort('first_name');
@@ -94,7 +96,14 @@ exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 		query.city_name = formatStr(req.body.cityName);
 	}
 
-	const admins = await adminDB.find(query);
+	const admins = await adminDB.find(query).select({
+		first_name: 1,
+		last_name: 1,
+		full_name: 1,
+		country_name: 1,
+		city_name: 1,
+		_id: 0,
+	});
 
 	//// 6) if nothing matches , send 204 code as response
 	if (admins.length === 0) {
@@ -179,7 +188,9 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteAdmin = catchAsync(async (req, res, next) => {
-	const admin = await adminDB.findById(req.params.id);
+	const admin = await adminDB
+		.findById(req.params.id)
+		.select(['first_name', 'last_name', 'country_name', 'city_name']);
 
 	if (!admin) {
 		return next(new AppError('There is No such an admin with that id', 404));
@@ -191,26 +202,4 @@ exports.deleteAdmin = catchAsync(async (req, res, next) => {
 		status: 'success',
 		message: 'admin deleted successfully',
 	});
-});
-
-exports.getLockEstates = catchAsync(async (req, res, next) => {
-	const lockedEstates = await estateDB.find({ lock_position: true });
-
-	if (!lockedEstates) {
-		return next(new AppError('There is no locked estate!', 404));
-	}
-
-	return res.status(200).json({ status: 'success', data: lockedEstates });
-});
-
-exports.getSellPositionEstates = catchAsync(async (req, res, next) => {
-	const estates = await estateDB.find({ sell_position: true });
-
-	if (!estates || estates.length === 0) {
-		return res
-			.status(404)
-			.json({ message: 'there is no in-sell-position Estate' });
-	}
-
-	return res.status(200).json({ data: estates });
 });

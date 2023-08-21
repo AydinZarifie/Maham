@@ -232,6 +232,7 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 	return res.status(201).json(accessToken);
 });
 
+// every admin has access to their own profile
 exports.getEditAdminProfileInfo = catchAsync(async (req, res) => {
 	const admin = await adminDB.findOne({ email: req.email });
 	console.log(admin);
@@ -241,6 +242,7 @@ exports.getEditAdminProfileInfo = catchAsync(async (req, res) => {
 	});
 });
 
+// admins themselves will perform this action
 exports.editAdminProfileInfo = catchAsync(async (req, res, next) => {
 	const password = req.body.password;
 	const confirmPassword = req.body.confirmPassword;
