@@ -47,7 +47,7 @@ const CustomTableItem = (props) => {
   const shortText =
     props.text.slice(0, 5) +
     "..." +
-    props.text.slice(props.text.length - 3, props.text.length);
+    props.text.slice(props.text.length - 5, props.text.length);
 
   return (
     <span className={styles.AddressDiv}>

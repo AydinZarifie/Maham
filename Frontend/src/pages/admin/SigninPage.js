@@ -159,7 +159,7 @@ const Signin = () => {
         // expiration.setHours(expiration.getHours() + 1);
         // localStorage.setItem("expiration", expiration.toISOString());
 
-        navigate("/admin");
+        navigate("/admin/estates");
       }
       if (response.status == 405) {
         setError("Email or password is not correct");
