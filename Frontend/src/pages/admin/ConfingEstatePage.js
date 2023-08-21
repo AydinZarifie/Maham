@@ -35,6 +35,13 @@ const ConfingEstate = ({ method, estate }) => {
   const [error, setError] = useState(false);
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
+  const scrollToError = () => {
+    const errorElement = document.querySelector(`.${styles.invalid}`);
+    if (errorElement) {
+      errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   useEffect(() => {
     const fetchCountryData = async () => {
       let { response, data } = await fetchInstance(
@@ -162,7 +169,9 @@ const ConfingEstate = ({ method, estate }) => {
       cityFetch(value);
     }
     if (name == "cityName") {
-      idManipulataionHandler(value);
+      if (!estate) {
+        idManipulataionHandler(value);
+      }
     }
   }
 
@@ -529,10 +538,12 @@ const ConfingEstate = ({ method, estate }) => {
 
     if (estate) {
       if (!formIsValidForEditing) {
+        scrollToError();
         return;
       }
     } else {
       if (!formIsValidForAdding) {
+        scrollToError();
         return;
       }
     }
