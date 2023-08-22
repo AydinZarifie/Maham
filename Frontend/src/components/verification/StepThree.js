@@ -180,7 +180,7 @@ const StepThree = (props) => {
                 )}
 
                 <div className={styles.gallery}>
-                  {previewImages.map((img) => (
+                  {previewImages.length>0 && previewImages.map((img) => (
                     <img key={img} src={img} />
                   ))}
                 </div>

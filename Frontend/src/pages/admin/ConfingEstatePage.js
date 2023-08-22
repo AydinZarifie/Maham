@@ -813,7 +813,7 @@ const ConfingEstate = ({ method, estate }) => {
                 onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
-                {countries.map((option) => (
+                {countries.length>0 && countries.map((option) => (
                   <option key={option.country_name} value={option.country_name}>
                     {option.country_name}
                   </option>
@@ -834,7 +834,7 @@ const ConfingEstate = ({ method, estate }) => {
                 onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
-                {cities.map((option) => (
+                {cities.length>0 && cities.map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -1780,7 +1780,7 @@ const ConfingEstate = ({ method, estate }) => {
           <div className={imageClass} id="preview-container">
             {previewImages.length > 0 && (
               <div>
-                {previewImages.map((imageURL) => (
+                {previewImages.length>0 && previewImages.map((imageURL) => (
                   <img
                     key={imageURL}
                     src={imageURL}
@@ -1834,7 +1834,7 @@ const ConfingEstate = ({ method, estate }) => {
 
             {selectedVideo.length > 0 && (
               <div>
-                {previewUrl.map((vidURL) => (
+                {previewUrl.length>0 && previewUrl.map((vidURL) => (
                   <video
                     key={vidURL}
                     src={vidURL}

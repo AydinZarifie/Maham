@@ -26,7 +26,7 @@ const HighestVolumes = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {data.length>0 && data.map((item) => (
               <HighestVolumeItem key={item.id} {...item} />
             ))}
           </tbody>

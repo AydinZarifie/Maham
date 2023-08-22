@@ -30,7 +30,7 @@ const LockPosition = () => {
           </tr>
         </thead>
         <tbody>
-          {lockPositionData.map((item) => (
+          {lockPositionData.length > 0 && lockPositionData.map((item) => (
             <tr>
               <td className={styles.Td}>{item.estate_title}</td>
               <td className={styles.Td}></td>

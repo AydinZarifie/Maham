@@ -182,7 +182,7 @@ const ManagementPage = () => {
                   onClick={toggleCountryMenu}
                 ></div>
                 <ul className={styles.options}>
-                  {countries.map((option) => (
+                  {countries.length>0 && countries.map((option) => (
                     <li
                       key={option.country_name}
                       onClick={() => handleCountryOptionSelect(option)}
@@ -249,7 +249,7 @@ const ManagementPage = () => {
                 <div className={styles.overlay2} onClick={toggleCityMenu}></div>
 
                 <ul className={styles.options}>
-                  {cities.map((option) => (
+                  {cities.length>0 && cities.map((option) => (
                     <li
                       key={option}
                       onClick={() => handleCityOptionSelect(option)}

@@ -1,0 +1,79 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.selection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  width: 100%;
+
+  /* custom */
+  background: rgba(239, 239, 239, 0);
+  height: 38px;
+  border: 1px solid rgb(198, 196, 196);
+  border-radius: 4px;
+  color: #626262;
+  z-index: 100;
+  position: relative;
+  font-size: 13px;
+  /*  */
+}
+.selectedOption {
+  min-width: 100px;
+  max-width: 180px;
+  padding-left: 8px;
+}
+.options {
+  display: none;
+  position: absolute;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  width: 100%;
+  overflow-x: hidden;
+  max-height: 160px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.options li {
+  width: 100%;
+  min-height: 22px;
+  font-size: 13px;
+  padding-top: 6px;
+  padding-left: 10px;
+  border-bottom: 1px solid #e3e3e3;
+  transition: 0.3s;
+  color: #383838;
+  background-color: #fefefe;
+}
+.options li:last-child {
+  border: none;
+}
+.options li:hover {
+  background-color: #f0f0f0;
+}
+.options.visible {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+.ArrowIcon {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+  padding-right: 8px;
+}
+
+.options::-webkit-scrollbar {
+  display: none;
+}
