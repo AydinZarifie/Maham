@@ -23,6 +23,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       let { response, data } = await fetchInstance("/admin/auth/profile");
+      console.log(data);
       setData({ ...data.admin, password: "", confirmPassword: "" });
     };
     fetchUserData();
@@ -46,7 +47,7 @@ const Profile = () => {
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
     let { response } = await fetchInstance("/admin/auth/profile", {
-      method: "POST",
+      method: "PUT",
       body: formData,
     });
     if (response.ok) {
@@ -60,7 +61,6 @@ const Profile = () => {
   const confirmPasswordClass = formIsValid
     ? `${styles.InputAdmin} `
     : `${styles.invalid} ${styles.InputAdmin} `;
-
   return (
     <form>
       <div className={styles.mainDiv}>

@@ -69,6 +69,7 @@ exports.signupAdmin = async (req, res, next) => {
 
 exports.loginAdmin = catchAsync(async (req, res, next) => {
 	// 1) validate the request body
+	
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
@@ -93,12 +94,9 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		lastName : admin.last_name
 	}
 
-	console.log(adminInfo);
-
 	if (!admin) {
 		return next(new AppError('admin not found', 405));
 	}
-
 	// 4) check if password is correct
 	const isEqual = bcrypt.compare(password, admin.password);
 	if (!isEqual) {
@@ -120,8 +118,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 	// 7) refresh and access token
 	const { accessToken, refreshToken } = await generateToken(admin);
 
-	
-
 	res.cookie('jwt', refreshToken, {
 		httpOnly: true,
 		secure: true,
@@ -129,7 +125,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		maxAge: 7 * 60 * 60 * 1000, // 7 Hours
 	});
 
-	
 	// **** putting the token within cookie and then destroying the whole SESSION ? why.
 
 	await req.session.destroy((err) => {
@@ -247,7 +242,6 @@ exports.getEditAdminProfileInfo = catchAsync(async (req,res) => {
 })
 
 exports.editAdminProfileInfo = catchAsync(async(req,res,next) => {
-
 	const password = req.body.password;
 	const confirmPassword = req.body.confirmPassword;
 

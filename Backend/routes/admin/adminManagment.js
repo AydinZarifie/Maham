@@ -10,7 +10,7 @@ router
 
 router
   .route("/managment/getCities/:countryName")
-  .get(managementController.getAllCities);
+  .get(verifyToken,managementController.getAllCities);
 
 router
   .route("/managment/getEstates")
@@ -30,10 +30,10 @@ router
 
 router
   .route("/managment/lockUnLockEstate/:id")
-  .post(managementController.lockUnLockEstate);
+  .post(verifyToken,managementController.lockUnLockEstate);
 
 router
   .route("/managment/countriesInfo")
-  .get(managementController.getCountriesInfo);
+  .get(verifyToken,managementController.getCountriesInfo);
 
 module.exports = router;

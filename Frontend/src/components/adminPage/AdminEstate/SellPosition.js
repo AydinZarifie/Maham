@@ -19,8 +19,8 @@ const SellPosition = () => {
             <th className={styles.Th}>Title</th>
             <th className={styles.Th}></th>
             <th className={styles.Th}></th>
-            <th className={styles.Th}>Contract address</th>
-            <th className={styles.Th}>Landlore address</th>
+            <th className={styles.ThEsp}>Contract address</th>
+            <th className={styles.ThEsp}>Landlore address</th>
 
             <th className={styles.Th}>Country</th>
             <th className={styles.Th}>City</th>
@@ -32,14 +32,13 @@ const SellPosition = () => {
         <tbody>
           {sellPositionData.map((item) => (
             <tr>
-              <td className={styles.Td}>{item.estate_title}</td>{" "}
+              <td className={styles.Td}>{item.estate_title}</td>
               <td className={styles.Td}></td>
               <td className={styles.Td}></td>
-              <td className={styles.Td}>
+              <td className={styles.TdEsp}>
                 <CustomTableItem text={item.contract_address} />
               </td>
-              <td className={styles.Td}>
-                {console.log(item.landlor_address)}
+              <td className={styles.TdEsp}>
                 <CustomTableItem text={item.landlor_address} />
               </td>
               <td className={styles.Td}>{item.country_name}</td>
@@ -49,37 +48,6 @@ const SellPosition = () => {
               <td className={styles.Td}>true</td>
             </tr>
           ))}
-          {/* <tr>
-            <td className={styles.Td}>beach</td>
-            <td className={styles.Td}></td>
-            <td className={styles.Td}></td>
-            <td className={styles.Td}>
-              <CustomTableItem text="32322342432423" />
-            </td>
-            <td className={styles.Td}>
-              <CustomTableItem text="32323243242424234" />
-            </td>
-            <td className={styles.Td}>iran</td>
-            <td className={styles.Td}>tabriz</td>
-            <td className={styles.Td}>23 ETH</td>
-            <td className={styles.Td}>1</td>
-            <td className={styles.Td}>true</td>
-          </tr>
-          <tr>
-            <td className={styles.Td}>beach</td> <td></td>
-            <td className={styles.Td}></td>
-            <td className={styles.Td}>
-              <CustomTableItem text="32322342432423" />
-            </td>
-            <td className={styles.Td}>
-              <CustomTableItem text="32323243242424234" />
-            </td>
-            <td className={styles.Td}>iran</td>
-            <td className={styles.Td}>tabriz</td>
-            <td className={styles.Td}>23 ETH</td>
-            <td className={styles.Td}>1</td>
-            <td className={styles.Td}>true</td>
-          </tr> */}
         </tbody>
       </table>
     </div>

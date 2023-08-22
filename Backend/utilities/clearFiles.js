@@ -8,7 +8,6 @@ exports.clearImage = async (estate) => {
 		__dirname,
 		`../uploads/images/estates/${estate.country_name}_${estate.city_name}_${estate.estate_title}`
 	);
-	console.log(filePath);
 
 	fs.rmSync(filePath, { recursive: true }, (err) => {
 		if (err) {

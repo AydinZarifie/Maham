@@ -28,7 +28,7 @@ exports.generateMint = (country, modifiedCityName) => {
 		console.log(estateNum);
 		estateCode = estateNum.toString();
 		mint = countryCode + cityCode + estateCode;
-	} else {
+	 } else {
 		for (let i = 0; i < country.available_mints.length; i++) {
 			if (pattern.test(country.available_mints[i])) {
 				// If a match is found, print the element and stop searching
@@ -39,10 +39,11 @@ exports.generateMint = (country, modifiedCityName) => {
 			}
 		}
 	}
-
 	// return the generated mint
 	return mint;
 };
+
+
 
 
 exports.formatStr = (str) => {

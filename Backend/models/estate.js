@@ -394,6 +394,13 @@ estateSchema.pre(
 		next();
 	}
 );
+
+//update the mintId if update the estate 
+estateSchema.pre('updateOne' , async function(next) {
+	
+})
+
 // update The users assets array when a but operation gets performed //
+
 
 module.exports = mongoose.model('real_estates', estateSchema);

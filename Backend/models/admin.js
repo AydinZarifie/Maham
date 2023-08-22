@@ -1,9 +1,4 @@
 const mongoose = require('mongoose');
-// mongoose.set('debug', true);
-const bcrypt = require('bcryptjs');
-const validator = require('validator');
-const AppError = require('../utilities/error/appError');
-const countryDB = require('./country');
 
 const adminSchema = new mongoose.Schema(
 	{

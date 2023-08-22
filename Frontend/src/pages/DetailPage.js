@@ -62,6 +62,7 @@ export default DetailPage;
 // }
 
 export async function loader({ request, params }) {
+  console.log(1);
   const id = params.estateId;
   let { response,data } = await fetchInstance("/admin/estates/" + id);
   return data;

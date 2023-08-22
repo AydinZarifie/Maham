@@ -30,10 +30,17 @@ import Alert from "../../components/general/Alert";
 const ConfingEstate = ({ method, estate }) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [filters, setFilters] = useState(["kojojoj", "hiiihhi"]);
+  const [filters, setFilters] = useState([]);
   const [mintUsed, setMintUsed] = useState(false);
   const [error, setError] = useState(false);
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
+
+  const scrollToError = () => {
+    const errorElement = document.querySelector(`.${styles.invalid}`);
+    if (errorElement) {
+      errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
 
   useEffect(() => {
     const fetchCountryData = async () => {
@@ -61,9 +68,6 @@ const ConfingEstate = ({ method, estate }) => {
       "/admin/estate/getCities/" + name
     );
     setCities(data.data);
-    // if (!estate) {
-    //   idManipulataionHandler();
-    // }
   };
 
   const navigate = useNavigate();
@@ -148,7 +152,7 @@ const ConfingEstate = ({ method, estate }) => {
     mahamPrice: estate ? estate.maham_price : "",
     customerPrice: "",
     // estate ? estate.customerPrice : "",
-    id: "",
+    id: estate ? estate.mint_id : "",
     // estate ? estate.id : "",
 
     //  plate: estate ? estate.plate : "",
@@ -164,8 +168,10 @@ const ConfingEstate = ({ method, estate }) => {
     if (name == "countryName") {
       cityFetch(value);
     }
-    if(name == "cityName"){
-      idManipulataionHandler(value)
+    if (name == "cityName") {
+      if (!estate) {
+        idManipulataionHandler(value);
+      }
     }
   }
 
@@ -366,9 +372,6 @@ const ConfingEstate = ({ method, estate }) => {
     image: false,
     video: false,
     id: false,
-
-    // plate: false,
-    // walletAddress: false,
   });
 
   const titleIsInvalid = !enteredTitleIsValid && touched.title;
@@ -532,10 +535,12 @@ const ConfingEstate = ({ method, estate }) => {
 
     if (estate) {
       if (!formIsValidForEditing) {
+        scrollToError();
         return;
       }
     } else {
       if (!formIsValidForAdding) {
+        scrollToError();
         return;
       }
     }
@@ -710,7 +715,7 @@ const ConfingEstate = ({ method, estate }) => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.ok) {
+      if (response.ok) {  
         setDeleteConfirmed(true);
       }
     }
@@ -725,13 +730,11 @@ const ConfingEstate = ({ method, estate }) => {
 
     const formData = new FormData();
     formData.append("cityName", name);
-    console.log(name);
     formData.append("countryName", information.countryName);
     let { response, data } = await fetchInstance("/admin/generateMint", {
       method: "POST",
       body: formData,
     });
-    console.log(data);
     if (response.ok) {
       setInformation((prev) => ({ ...prev, id: data.data }));
     }
@@ -750,7 +753,6 @@ const ConfingEstate = ({ method, estate }) => {
           title="Success!"
           detail="Estate has been successfully deleted"
           closeHandler={() => {
-            console.log("hii");
             navigate("/admin/estates");
           }}
         />
@@ -926,27 +928,27 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
 
-        {!estate && (
-          <div className={styles.IdAndWallet}>
-            <div className={styles.IdAndMint}>
-              <div className={styles.wrapper4}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="number"
-                    className={idClass}
-                    value={information.id}
-                    // onChange={basicEventHandler}
-                    name="id"
-                    disabled
-                    placeholder="Id"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  {/* <label className={styles.label}>Id</label> */}
-                </div>
+        <div className={styles.IdAndWallet}>
+          <div className={styles.IdAndMint}>
+            <div className={styles.wrapper4}>
+              <div className={styles.inputData}>
+                <input
+                  required
+                  type="number"
+                  className={idClass}
+                  value={information.id}
+                  // onChange={basicEventHandler}
+                  name="id"
+                  disabled
+                  placeholder="Id"
+                  onBlur={blurHandler}
+                />
+                <div className={styles.underline}></div>
+                {/* <label className={styles.label}>Id</label> */}
               </div>
             </div>
+          </div>
+          {!estate && (
             <div className={styles.IdAndMint}>
               <div className={styles.wrapper4}>
                 <div className={styles.inputData}>
@@ -969,8 +971,8 @@ const ConfingEstate = ({ method, estate }) => {
                 Connect Wallet
               </button>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         <div className={styles.row}>
           <div className={styles.column}>

@@ -33,6 +33,27 @@ const Transactions = () => {
               </td>
               <td>2024/09/14</td>
             </tr>
+            {/*  */}
+            {/* last two td dosent show up */}
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            {/*  */}
           </tbody>
         </table>
       </div>

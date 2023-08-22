@@ -6,6 +6,12 @@ const { formatStr } = require("../../utilities/mint");
 const bcrypt = require("bcryptjs");
 
 exports.getAllAdmins = catchAsync(async (req, res, next) => {
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
+   
   const admins = await adminDB.find();
 
   if (admins.length == 0) {
@@ -20,6 +26,13 @@ exports.getAllAdmins = catchAsync(async (req, res, next) => {
 });
 
 exports.getAdmin = catchAsync(async (req, res, next) => {
+
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
+
   const first_name = req.body.name.split(" ")[0];
   const last_name = req.body.name.split(" ")[1];
 
@@ -40,6 +53,13 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.searchAdminByName = catchAsync(async (req, res, next) => {
+
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
+
   //// 1) check that : (A) body is not empty ; (B) adminName field is not a blank field
   if (!req.body.name || /^\s*$/.test(req.body.name)) {
     return res.status(400).json({
@@ -83,6 +103,11 @@ exports.searchAdminByName = catchAsync(async (req, res, next) => {
 });
 
 exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
   let query = {};
 
   if (req.body.adminType) {
@@ -106,6 +131,11 @@ exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 });
 
 exports.getEditAdmin = catchAsync(async (req, res, next) => {
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
   const { id } = req.params;
   console.log(id);
   const admin = await adminDB.findOne({ _id: id });
@@ -121,6 +151,11 @@ exports.getEditAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.updateAdmin = catchAsync(async (req, res, next) => {
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
   try {
     let filteredFields = {
       first_name: req.body.firstName,
@@ -178,7 +213,12 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteAdmin = catchAsync(async (req, res, next) => {
-  const admin = await adminDB.findById(req.params.id);
+  if(req.roles !== 'superadmin'){
+    return res.status(401).json({
+      message : "Just superadmin can access to this function"
+    })
+  }
+const admin = await adminDB.findById(req.params.id);
 
   if (!admin) {
     return next(new AppError("There is No such an admin with that id", 404));

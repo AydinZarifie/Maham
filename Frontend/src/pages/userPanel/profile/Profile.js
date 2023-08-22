@@ -1,7 +1,7 @@
 import { forwardRef, useRef, useState } from "react";
 import styles from "../../../styles/userPanelProfile.module.css";
 
-import profileIcon from "../../../images/profile-circle-svgrepo-com.svg";
+import profileIcon from "../../../images/white-profile-circle-svgrepo-com.svg";
 import profileWithPenIcon from "../../../images/user-pen-svgrepo-com.svg";
 import securityIcon from "../../../images/security-safe-svgrepo-com.svg";
 import helpIcon from "../../../images/help-question-svgrepo-com.svg";
@@ -177,193 +177,195 @@ const Profile = forwardRef((props, ref) => {
           <h5>- Guide</h5>
           <h5>- Maham whitepaper</h5>
         </div>
-      </div>
-      <div className={styles.ProfileItemDiv} ref={profileRef}>
-        <div className={styles.ProfileItemsHeader}>
-          <img
-            className={styles.ArrowLeftIcon}
-            src={backArrowIcon}
-            onClick={closeProfile}
-          />
-          <p>Profile</p>
+        {/*  */}
+        <div className={styles.ProfileItemDiv} ref={profileRef}>
+          <div className={styles.ProfileItemsHeader}>
+            <img
+              className={styles.ArrowLeftIcon}
+              src={backArrowIcon}
+              onClick={closeProfile}
+            />
+            <p>Profile</p>
+          </div>
+
+          <div className={styles.EditDiv}>
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                id="userName"
+                name="userName"
+                value={data.userName}
+                onChange={dataEventHandler}
+                className={`${styles.inputs} ${styles.UserNameInput}`}
+                disabled={!editable.userName}
+              />
+              <label className={styles.label} htmlFor="userName">
+                <div className={styles.text}>User name</div>
+              </label>
+            </div>
+            <button
+              className={styles.ProfileEditBtn}
+              onClick={() =>
+                setEditable((prev) => ({ ...prev, userName: !prev.userName }))
+              }
+            >
+              <img src={editIcon} className={styles.ProfileEditIcon} />
+            </button>
+          </div>
+          <div className={styles.EditDiv}>
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={data.email}
+                onChange={dataEventHandler}
+                className={`${styles.inputs} ${styles.EmailInput}`}
+                disabled={!editable.email}
+              />
+              <label className={styles.label} htmlFor="email">
+                <div className={styles.text}>Email</div>
+              </label>
+            </div>
+            <button
+              className={styles.ProfileEditBtn}
+              onClick={() =>
+                setEditable((prev) => ({ ...prev, email: !prev.email }))
+              }
+            >
+              <img src={editIcon} className={styles.ProfileEditIcon} />
+            </button>
+          </div>
+          <div className={styles.EditDiv}>
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                value={data.country}
+                onChange={dataEventHandler}
+                className={`${styles.inputs} ${styles.CountryInput}`}
+                disabled={!editable.country}
+              />
+              <label className={styles.label} htmlFor="country">
+                <div className={styles.text}>Country</div>
+              </label>
+            </div>
+            <button
+              className={styles.ProfileEditBtn}
+              onClick={() =>
+                setEditable((prev) => ({ ...prev, country: !prev.country }))
+              }
+            >
+              <img src={editIcon} className={styles.ProfileEditIcon} />
+            </button>
+          </div>
+          <div className={styles.EditDiv}>
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={data.city}
+                onChange={dataEventHandler}
+                className={`${styles.inputs} ${styles.CityInput}`}
+                disabled={!editable.city}
+              />
+              <label className={styles.label} htmlFor="city">
+                <div className={styles.text}>City</div>
+              </label>
+            </div>
+            <button
+              className={styles.ProfileEditBtn}
+              onClick={() =>
+                setEditable((prev) => ({ ...prev, city: !prev.city }))
+              }
+            >
+              <img src={editIcon} className={styles.ProfileEditIcon} />
+            </button>
+          </div>
+
+          <div className={styles.EditDiv}>
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={data.phoneNumber}
+                onChange={dataEventHandler}
+                className={`${styles.inputs} ${styles.PhoneInput}`}
+                disabled={!editable.phoneNumber}
+              />
+              <label className={styles.label} htmlFor="phoneNumber">
+                <div className={styles.text}>Phone number</div>
+              </label>
+            </div>
+            <button
+              className={styles.ProfileEditBtn}
+              onClick={() =>
+                setEditable((prev) => ({
+                  ...prev,
+                  phoneNumber: !prev.phoneNumber,
+                }))
+              }
+            >
+              <img src={editIcon} className={styles.ProfileEditIcon} />
+            </button>
+          </div>
+
+          <button
+            className={styles.SubmitBtn}
+            // onClick="SubmitProfile()"
+          >
+            Submit
+          </button>
         </div>
 
-        <div className={styles.EditDiv}>
-          <div className={styles.inputContainer}>
-            <input
-              type="text"
-              id="userName"
-              name="userName"
-              value={data.userName}
-              onChange={dataEventHandler}
-              className={`${styles.inputs} ${styles.UserNameInput}`}
-              disabled={!editable.userName}
+        <div className={styles.ProfileItemDiv2} ref={passwordRef}>
+          <div className={styles.ProfileItemsHeader2}>
+            <img
+              className={styles.ArrowLeftIcon}
+              src={backArrowIcon}
+              onClick={closePassword}
             />
-            <label className={styles.label} htmlFor="userName">
-              <div className={styles.text}>User name</div>
+            <p>Change password</p>
+          </div>
+          <div className={styles.inputContainer2}>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password.password}
+              onChange={passwordEventHandler}
+              className={styles.PasswordInputs}
+            />
+            <label className={styles.PasswordLabel} htmlFor="password">
+              <div className={styles.PasswordText}>Password</div>
+            </label>
+          </div>
+          <div className={styles.inputContainer2}>
+            <input
+              // type="password"
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
+              value={password.confirmPassword}
+              onChange={passwordEventHandler}
+              className={styles.PasswordInputs}
+            />
+            <label className={styles.PasswordLabel} htmlFor="confirmPassword">
+              <div className={styles.PasswordText}>Confirm password</div>
             </label>
           </div>
           <button
-            className={styles.ProfileEditBtn}
-            onClick={() =>
-              setEditable((prev) => ({ ...prev, userName: !prev.userName }))
-            }
+            className={styles.SubmitBtn}
+            // onClick={}
           >
-            <img src={editIcon} className={styles.ProfileEditIcon} />
-          </button>
-        </div>
-        <div className={styles.EditDiv}>
-          <div className={styles.inputContainer}>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={data.email}
-              onChange={dataEventHandler}
-              className={`${styles.inputs} ${styles.EmailInput}`}
-              disabled={!editable.email}
-            />
-            <label className={styles.label} htmlFor="email">
-              <div className={styles.text}>Email</div>
-            </label>
-          </div>
-          <button
-            className={styles.ProfileEditBtn}
-            onClick={() =>
-              setEditable((prev) => ({ ...prev, email: !prev.email }))
-            }
-          >
-            <img src={editIcon} className={styles.ProfileEditIcon} />
-          </button>
-        </div>
-        <div className={styles.EditDiv}>
-          <div className={styles.inputContainer}>
-            <input
-              type="text"
-              id="country"
-              name="country"
-              value={data.country}
-              onChange={dataEventHandler}
-              className={`${styles.inputs} ${styles.CountryInput}`}
-              disabled={!editable.country}
-            />
-            <label className={styles.label} htmlFor="country">
-              <div className={styles.text}>Country</div>
-            </label>
-          </div>
-          <button
-            className={styles.ProfileEditBtn}
-            onClick={() =>
-              setEditable((prev) => ({ ...prev, country: !prev.country }))
-            }
-          >
-            <img src={editIcon} className={styles.ProfileEditIcon} />
-          </button>
-        </div>
-        <div className={styles.EditDiv}>
-          <div className={styles.inputContainer}>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              value={data.city}
-              onChange={dataEventHandler}
-              className={`${styles.inputs} ${styles.CityInput}`}
-              disabled={!editable.city}
-            />
-            <label className={styles.label} htmlFor="city">
-              <div className={styles.text}>City</div>
-            </label>
-          </div>
-          <button
-            className={styles.ProfileEditBtn}
-            onClick={() =>
-              setEditable((prev) => ({ ...prev, city: !prev.city }))
-            }
-          >
-            <img src={editIcon} className={styles.ProfileEditIcon} />
+            Submit
           </button>
         </div>
 
-        <div className={styles.EditDiv}>
-          <div className={styles.inputContainer}>
-            <input
-              type="text"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={data.phoneNumber}
-              onChange={dataEventHandler}
-              className={`${styles.inputs} ${styles.PhoneInput}`}
-              disabled={!editable.phoneNumber}
-            />
-            <label className={styles.label} htmlFor="phoneNumber">
-              <div className={styles.text}>Phone number</div>
-            </label>
-          </div>
-          <button
-            className={styles.ProfileEditBtn}
-            onClick={() =>
-              setEditable((prev) => ({
-                ...prev,
-                phoneNumber: !prev.phoneNumber,
-              }))
-            }
-          >
-            <img src={editIcon} className={styles.ProfileEditIcon} />
-          </button>
-        </div>
-
-        <button
-          className={styles.SubmitBtn}
-          // onClick="SubmitProfile()"
-        >
-          Submit
-        </button>
-      </div>
-
-      <div className={styles.ProfileItemDiv2} ref={passwordRef}>
-        <div className={styles.ProfileItemsHeader2}>
-          <img
-            className={styles.ArrowLeftIcon}
-            src={backArrowIcon}
-            onClick={closePassword}
-          />
-          <p>Change password</p>
-        </div>
-        <div className={styles.inputContainer2}>
-          <input
-            
-            type={showPassword ? 'text':'password'}
-            id="password"
-            name="password"
-            value={password.password}
-            onChange={passwordEventHandler}
-            className={styles.PasswordInputs}
-          />
-          <label className={styles.PasswordLabel} htmlFor="password">
-            <div className={styles.PasswordText}>Password</div>
-          </label>
-        </div>
-        <div className={styles.inputContainer2}>
-          <input
-            // type="password"
-            type={showConfirmPassword ? 'text':'password'}
-            id="confirmPassword"
-            name="confirmPassword"
-            value={password.confirmPassword}
-            onChange={passwordEventHandler}
-            className={styles.PasswordInputs}
-          />
-          <label className={styles.PasswordLabel} htmlFor="confirmPassword">
-            <div className={styles.PasswordText}>Confirm password</div>
-          </label>
-        </div>
-        <button
-          className={styles.SubmitBtn}
-          // onClick={}
-        >
-          Submit
-        </button>
+        {/*  */}
       </div>
     </>
   );

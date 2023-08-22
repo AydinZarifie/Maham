@@ -25,7 +25,6 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	if (!req.params.countryName) {
 		return next(new AppError('please select a country ', 404));
 	}
-	console.log("hii");
 	const country = await countryDB
 		.findOne({
 			country_name: req.params.countryName,
@@ -50,9 +49,14 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEstates = catchAsync(async (req, res, next) => {
-	const estates = await estateDB.find().select('-__V');
 
-	console.log(estates);
+	if(req.roles !== 'superadmin'){
+		return res.status(401).json({
+		  message : "Just superadmin can access to this function"
+		})
+	}
+
+	const estates = await estateDB.find().select('-__V');
 
 	if (estates.length === 0) {
 		return res.status(204).json({
@@ -70,6 +74,12 @@ exports.getAllEstates = catchAsync(async (req, res, next) => {
 exports.postAddCountry = catchAsync(async (req, res, next) => {
 
 	try {
+		if(req.roles !== 'superadmin'){
+			return res.status(401).json({
+			  message : "Just superadmin can access to this function"
+			})
+		}
+
 		countryName = formatStr(req.body.countryName);
 		countryLogo = req.files.images[0].path;
 	
@@ -109,26 +119,27 @@ exports.postAddCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
+
+	if(req.roles !== 'superadmin'){
+		return res.status(401).json({
+		  message : "Just superadmin can access to this function"
+		})
+	}
 	// check if country selected
 	if (req.body.countryName) {
 		const country = await countryDB.findOne({
 			country_name: req.body.countryName,
 		});
-
 		// check if selected country actually exists in DB
 		if (!country) {
 			return next(new AppError('country not found', 404));
-
 			// check if cityName is inserted
 		} else if (!req.body.cityName) {
 			return next(new AppError('plesae insert city', 400));
-
 			// if all is ok , adds the city to cities collection of chosen country
 		}
-
 		const cityExist = country.cities.includes(formatStr(req.body.cityName));
-		console.log(cityExist);
-
+		
 		if(cityExist){
 			return res.status(400).json({
 				message: "City already exist"
@@ -168,6 +179,12 @@ exports.addCity = catchAsync(async (req, res, next) => {
 });
 
 exports.getEstates = catchAsync(async (req, res, next) => {
+
+	if(req.roles !== 'superadmin'){
+		return res.status(401).json({
+		  message : "Just superadmin can access to this function"
+		})
+	}
 	
 	const estates = await estateDB
 		.find({
@@ -185,6 +202,12 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 
 exports.lockUnLockEstate = catchAsync(async (req,res,next) => {
 	
+	if(req.roles !== 'superadmin'){
+		return res.status(401).json({
+		  message : "Just superadmin can access to this function"
+		})
+	}
+
 	const estate = await estateDB.findById(req.params.id);
 	
 	if(!estate){
@@ -209,7 +232,12 @@ exports.lockUnLockEstate = catchAsync(async (req,res,next) => {
 
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 	
-	console.log("hi");
+	if(req.roles !== 'superadmin'){
+		return res.status(401).json({
+		  message : "Just superadmin can access to this function"
+		})
+	}
+
 	const countriesInfo = await countryDB.find()
 
 	return res.status(200).json({

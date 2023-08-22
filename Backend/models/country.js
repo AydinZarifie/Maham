@@ -49,7 +49,7 @@ countrySchema.virtual('totalCities').get(function () {
 countrySchema.virtual('totalEstates').get(function () {
 	return this.country_estates.length;
 });
-
+	
 // countrySchema.virtual('admins', {
 // 	ref: 'Admin',
 // 	foreignField: 'admin_country_ref',

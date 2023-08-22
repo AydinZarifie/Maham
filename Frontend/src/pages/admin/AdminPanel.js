@@ -115,7 +115,7 @@ const AdminPanel = () => {
       navigate("/admin/admins");
     }
     if (response.status == 401) {
-      setError("Email already exists");
+      setError("Email or phone number already exists");
     }
   };
 
