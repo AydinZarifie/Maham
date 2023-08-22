@@ -87,7 +87,7 @@ export default function FilterWithAdder(props) {
                   className={addStyles.previewContainer}
                 >
                   {preview && (
-                    <img className={addStyles.imageInput} src={preview} />
+                    <img className={addStyles.imageInput} src={preview} alt="preview" />
                   )}
                 </div>
               </div>

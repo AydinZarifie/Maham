@@ -33,9 +33,6 @@ const ClassicWatchlist = () => {
     setDividerPosition(newDividerPosition);
   };
 
-  const [countryDropdown, setCountryDropdown] = useState(false);
-  const [cityDropdown, setCityDropdown] = useState(false);
-
   const [countries, setCountries] = useState(["america", "iran", "dubai"]);
   const [cities, setCities] = useState([]);
 
@@ -44,27 +41,6 @@ const ClassicWatchlist = () => {
   const [search, setSearch] = useState("");
   const [searchedEstates, setSearchedEstates] = useState([]);
   const [sellDiv, setSellDiv] = useState(false);
-
-  const dropdownRef = useRef();
-  const dropdownRef2 = useRef();
-
-  const countrySelectEventHandler = (option) => {
-    setCountry(option);
-    toggleCountryDropdown();
-  };
-
-  const citySelectEventHandler = (option) => {
-    setCity(option);
-    toggleCityDropdown();
-  };
-
-  const toggleCountryDropdown = () => {
-    setCountryDropdown((prev) => !prev);
-  };
-
-  const toggleCityDropdown = () => {
-    setCityDropdown((prev) => !prev);
-  };
 
   const searchEventHandler = (event) => {
     const { value } = event.target;
@@ -77,31 +53,6 @@ const ClassicWatchlist = () => {
     setSearch(name);
     setSearchedEstates([]);
   };
-
-  useEffect(() => {
-    const handleClickOutsideCountry = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setCountryDropdown(false);
-      }
-    };
-
-    const handleClickOutsideCity = (event) => {
-      if (
-        dropdownRef2.current &&
-        !dropdownRef2.current.contains(event.target)
-      ) {
-        setCityDropdown(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutsideCountry);
-    document.addEventListener("click", handleClickOutsideCity);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutsideCountry);
-      document.removeEventListener("click", handleClickOutsideCity);
-    };
-  }, []);
 
   return (
     // <div className="resizable-layout">
@@ -138,6 +89,7 @@ const ClassicWatchlist = () => {
                     zIndex: "100",
                     position: "relative",
                     fontSize: "13px",
+                    minWidth:'120px'
                   }}
                 />
                 {/* <div className={styles.dropdown} ref={dropdownRef}>
@@ -181,6 +133,7 @@ const ClassicWatchlist = () => {
                     zIndex: "100",
                     position: "relative",
                     fontSize: "13px",
+                    minWidth:'120px'
                   }}
                 />
                 {/* <div className={styles.dropdown2} ref={dropdownRef2}>

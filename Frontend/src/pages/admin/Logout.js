@@ -3,7 +3,7 @@ import fetchInstance from "../../util/fetchInstance";
 import Cookies from "js-cookie";
 
 export async function action() {
-  let { response } =await fetchInstance(
+  let { response } = await fetchInstance(
     "/admin/auth/logout",
     {
       method: "post",
@@ -14,6 +14,9 @@ export async function action() {
   );
   if (response.ok) {
     Cookies.remove("token");
+    Cookies.remove("type");
+    localStorage.removeItem("firstname");
+    localStorage.removeItem("lastname");
     return redirect("/loginAdmin");
   }
   return redirect("/admin");

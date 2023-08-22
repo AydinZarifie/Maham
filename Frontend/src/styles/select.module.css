@@ -12,7 +12,7 @@
   outline: none;
   appearance: none;
   width: 100%;
-
+ 
   /* custom */
   background: rgba(239, 239, 239, 0);
   height: 38px;
@@ -25,9 +25,10 @@
   /*  */
 }
 .selectedOption {
-  min-width: 100px;
-  max-width: 180px;
+  /* min-width: 100px; */
+  /* max-width: 180px; */
   padding-left: 8px;
+  
 }
 .options {
   display: none;
@@ -43,6 +44,7 @@
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  z-index: 101;
 }
 
 .options li {

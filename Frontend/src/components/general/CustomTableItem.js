@@ -2,14 +2,12 @@ import styles from "../../styles/customTableItem.module.css";
 
 import copyIcon from "../../images/copy-documents-duplicate-svgrepo-com.svg";
 import trueIcon from "../../images/tick-svgrepo-com_2.svg";
-import { useRef, useState } from "react";
+import {  useState } from "react";
 
 const CustomTableItem = (props) => {
   const [copied, setCopied] = useState(false);
   const [hoveredContent, setHoveredContent] = useState(false);
   const [hoveredCopy, setHoveredCopy] = useState(false);
-  // const hoveredContent = useRef(null);
-  // const hoveredCopy = useRef(null);
 
   const handleCopyContent = () => {
     navigator.clipboard.writeText(props.text);
@@ -17,27 +15,22 @@ const CustomTableItem = (props) => {
   };
 
   const handleMouseEnter = () => {
-    // hoveredContent.current.style.opacity = "1";
     setHoveredContent(true);
   };
 
   const handleMouseLeave = () => {
-    // hoveredContent.current.style.opacity = "0";
     setHoveredContent(false);
   };
 
   const handleMouseEnterCopy = () => {
-    // hoveredCopy.current.style.opacity = "1";
     setHoveredCopy(true);
   };
 
   const handleMouseLeaveCopy = () => {
-    // hoveredCopy.current.style.opacity = "0";
     setHoveredCopy(false);
   };
 
   const handleMouseLeaveCopied = () => {
-    // hoveredCopy.current.style.opacity = "0";
     setHoveredCopy(false);
     const timeoutId = setTimeout(function () {
       setCopied(false);

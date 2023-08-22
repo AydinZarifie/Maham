@@ -20,7 +20,7 @@ const SellPosition = () => {
             <th className={styles.Th}></th>
             <th className={styles.Th}></th>
             <th className={styles.ThEsp}>Contract address</th>
-            <th className={styles.ThEsp}>Landlore address</th>
+            <th className={styles.ThEsp}>Landlord address</th>
 
             <th className={styles.Th}>Country</th>
             <th className={styles.Th}>City</th>
@@ -30,7 +30,7 @@ const SellPosition = () => {
           </tr>
         </thead>
         <tbody>
-          { sellPositionData.length >0 && sellPositionData.map((item) => (
+          {sellPositionData && sellPositionData.length >0 && sellPositionData.map((item) => (
             <tr>
               <td className={styles.Td}>{item.estate_title}</td>
               <td className={styles.Td}></td>

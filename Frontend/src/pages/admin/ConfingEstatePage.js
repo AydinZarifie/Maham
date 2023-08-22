@@ -991,7 +991,7 @@ const ConfingEstate = ({ method, estate }) => {
                   onBlur={blurHandler}
                 />
                 <div className={styles.underline}></div>
-                <label className={styles.label}>Location Of State</label>
+                <label className={styles.label}>Location Of Estate</label>
               </div>
             </div>
           </div>

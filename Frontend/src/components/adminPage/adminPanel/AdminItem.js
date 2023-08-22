@@ -58,14 +58,14 @@ const AdminItem = (props) => {
       <div className={styles.profileChildDiv}>
         <Link to={`edit/${props._id}`}>
           <button className={styles.EandDBtn}>
-            <img src={editLogo} className={styles.ProfileIcon} />
+            <img src={editLogo} className={styles.ProfileIcon} alt="edit" />
           </button>
         </Link>
         <button
           className={styles.EandDBtn}
           onClick={() => props.deleteHandler(props._id)}
         >
-          <img src={deleteLogo} className={styles.ProfileIcon} />
+          <img src={deleteLogo} className={styles.ProfileIcon} alt="delete" />
         </button>
       </div>
     </div>

@@ -11,7 +11,7 @@ const AdminMenuItem = (props) => {
       end={props.end}
     >
       <span className={styles.Dashboard2}>
-        <img src={props.imgSrc} className={styles.DashboardIcn} />
+        <img src={props.imgSrc} className={styles.DashboardIcn} alt="icon" />
         {props.text}
       </span>
     </NavLink>
