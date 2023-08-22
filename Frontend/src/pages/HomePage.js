@@ -77,7 +77,7 @@ const HomePage = () => {
         filters={filters}
       />
       <div id="container2" className={styles.container2}>
-        {estates.map((estate) => {
+        {estates.length>0 && estates.map((estate) => {
           return <EstateItem props={estate} />;
         })}
       </div>

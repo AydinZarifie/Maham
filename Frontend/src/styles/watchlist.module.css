@@ -1,3 +1,17 @@
+.NoExistDiv {
+  position: relative;
+  top: 140px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  min-width: 290px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #5e6e88;
+  width: 35%;
+}
+
 .LineChart {
   width: 83%;
   position: absolute;
@@ -1137,6 +1151,7 @@
 
 @media (min-width: 600px) {
   .div1 {
+    z-index: 1;
     flex: 66.66%;
     margin-left: 42px;
     /* overflow-y: scroll; */
@@ -1144,6 +1159,7 @@
     margin-top: 65px;
   }
   .div2 {
+    z-index: 2;
     flex: 33.33%;
     min-height: 38px;
     margin-left: 42px;
@@ -1420,6 +1436,7 @@
 }
 @media (max-width: 600px) {
   .div1 {
+    z-index: 1;
     flex: 66.66%;
     margin-left: 37px;
     /* overflow-y: scroll; */
@@ -1427,6 +1444,7 @@
     margin-top: 65px;
   }
   .div2 {
+    z-index: 2;
     flex: 33.33%;
     min-height: 38px;
     margin-left: 37px;

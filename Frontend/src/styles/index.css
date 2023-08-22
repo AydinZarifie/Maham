@@ -9,3 +9,6 @@ body {
   margin: 0;
   padding: 0;
 }
+::-ms-reveal{
+  display: none;
+}

@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import SearchComponent from "../../../components/userPanel/watchList/SearchComponent";
 import SellPanel from "../../../components/userPanel/watchList/SellPanel";
+import Select from "../../../components/general/Select";
 
 const ClassicWatchlist = () => {
   const { tutorial } = useOutletContext();
@@ -34,6 +35,9 @@ const ClassicWatchlist = () => {
 
   const [countryDropdown, setCountryDropdown] = useState(false);
   const [cityDropdown, setCityDropdown] = useState(false);
+
+  const [countries, setCountries] = useState(["america", "iran", "dubai"]);
+  const [cities, setCities] = useState([]);
 
   const [country, setCountry] = useState("Country");
   const [city, setCity] = useState("City");
@@ -121,7 +125,22 @@ const ClassicWatchlist = () => {
           <div className={styles.Header}>
             <div className={styles.FirstPart}>
               <div className={styles.SelectDiv}>
-                <div className={styles.dropdown} ref={dropdownRef}>
+                <Select
+                  items={countries}
+                  set={(option) => setCountry(option)}
+                  selected={country}
+                  style={{
+                    background: "rgba(239, 239, 239, 0)",
+                    height: "38px",
+                    border: "1px solid rgb(198, 196, 196)",
+                    borderRadius: "4px",
+                    color: "#626262",
+                    zIndex: "100",
+                    position: "relative",
+                    fontSize: "13px",
+                  }}
+                />
+                {/* <div className={styles.dropdown} ref={dropdownRef}>
                   <div
                     className={styles.selection}
                     onClick={toggleCountryDropdown}
@@ -147,9 +166,24 @@ const ClassicWatchlist = () => {
                       United state
                     </li>
                   </ul>
-                </div>
+                </div> */}
 
-                <div className={styles.dropdown2} ref={dropdownRef2}>
+                <Select
+                  items={cities}
+                  set={(option) => setCity(option)}
+                  selected={city}
+                  style={{
+                    background: "rgba(239, 239, 239, 0)",
+                    height: "38px",
+                    border: "1px solid rgb(198, 196, 196)",
+                    borderRadius: "4px",
+                    color: "#626262",
+                    zIndex: "100",
+                    position: "relative",
+                    fontSize: "13px",
+                  }}
+                />
+                {/* <div className={styles.dropdown2} ref={dropdownRef2}>
                   <div
                     className={styles.selection2}
                     onClick={toggleCityDropdown}
@@ -177,7 +211,7 @@ const ClassicWatchlist = () => {
                       sistan balochestan
                     </li>
                   </ul>
-                </div>
+                </div> */}
               </div>
               <form className={styles.searchContainer}>
                 <input
@@ -269,6 +303,11 @@ const ClassicWatchlist = () => {
                 </tr>
               </tbody>
             </table>
+            {/*  */}
+            {/* <div className={styles.NoExistDiv}>
+              There is no house to display its information
+            </div> */}
+            {/*  */}
           </div>
         </div>
         {/*  */}

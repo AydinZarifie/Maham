@@ -56,7 +56,7 @@ const FilterModal = (props) => {
               className={styles.CountrySelect}
             >
               <option value="">choose a country</option>
-              {props.countries.map((option) => (
+              {props.countries.length>0 && props.countries.map((option) => (
                 <option key={option.country_name} value={option.country_name}>
                   {option.country_name}
                 </option>
@@ -72,7 +72,7 @@ const FilterModal = (props) => {
               className={styles.CountrySelect}
             >
               <option value="">City</option>
-              {props.cities.map((option) => (
+              {props.cities.length>0 && props.cities.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

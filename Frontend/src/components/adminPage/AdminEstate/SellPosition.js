@@ -30,7 +30,7 @@ const SellPosition = () => {
           </tr>
         </thead>
         <tbody>
-          {sellPositionData.map((item) => (
+          { sellPositionData.length >0 && sellPositionData.map((item) => (
             <tr>
               <td className={styles.Td}>{item.estate_title}</td>
               <td className={styles.Td}></td>

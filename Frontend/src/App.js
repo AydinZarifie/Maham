@@ -36,7 +36,6 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const SigninPage = lazy(() => import("./pages/admin/SigninPage"));
 const Verification = lazy(() => import("./pages/Verification"));
 const UserPanel = lazy(() => import("./pages/UserPanel"));
-
 const AdminPage = lazy(() => import("./pages/admin/AdminPage"));
 const Dashboard = lazy(() => import("./components/adminPage/Dashboard"));
 const AdminEstates = lazy(() => import("./pages/admin/AdminEstates"));

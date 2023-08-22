@@ -79,7 +79,7 @@ const EstateItem = (props) => {
         ref={slider}
         className={styles.slider}
       >
-        {props.props.imageUrl.map((img) => (
+        { props.props.imageUrl.length>0 && props.props.imageUrl.map((img) => (
           <img
             src={`http://localhost:5000/${img.replace(
               /\\/g,

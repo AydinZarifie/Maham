@@ -72,6 +72,11 @@ const DailyDeals = () => {
           </tr>
         </tbody>
       </table>
+      {/*  */}
+      {/* <div className={styles.NoExistDiv}>
+        There are no daily deals to display for you
+      </div> */}
+      {/*  */}
     </div>
   );
 };
