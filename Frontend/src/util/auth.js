@@ -16,7 +16,6 @@ export function getAuthToken() {
   if (!token || token == "undefined" || token == "null") {
     return null;
   }
-
   return token;
 }
 
@@ -44,9 +43,9 @@ export function getCsrfToken() {
 // }
 
 export async function checkAuthLoader() {
-  const valid = 
-  // 200;
-  await fetchAuthToken();
+  const valid =
+    // 200;
+    await fetchAuthToken();
   if (valid == 200) {
     const token = getAuthToken();
 
