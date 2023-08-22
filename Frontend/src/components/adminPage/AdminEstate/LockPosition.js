@@ -20,7 +20,7 @@ const LockPosition = () => {
             <th className={styles.Th}></th>
             <th className={styles.Th}></th>
             <th className={styles.ThEsp}>Contract address</th>
-            <th className={styles.ThEsp}>Landlore address</th>
+            <th className={styles.ThEsp}>Landlord address</th>
 
             <th className={styles.Th}>Country</th>
             <th className={styles.Th}>City</th>
@@ -30,7 +30,7 @@ const LockPosition = () => {
           </tr>
         </thead>
         <tbody>
-          {lockPositionData.length > 0 && lockPositionData.map((item) => (
+          {lockPositionData && lockPositionData.length > 0 && lockPositionData.map((item) => (
             <tr>
               <td className={styles.Td}>{item.estate_title}</td>
               <td className={styles.Td}></td>

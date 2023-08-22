@@ -1,28 +1,18 @@
 import styles from "../../styles/homePage.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import overlayStyle from "../../styles/overlay.module.css";
 import MultiRangeSlider from "../multiRangeSlider/MultiRangeSlider";
+import Select from "./Select";
 
 const FilterModal = (props) => {
   const [data, setData] = useState({
-    country: "",
-    city: "",
+    country: "Country",
+    city: "City",
     firstValue: 0,
     secondValue: 999999,
   });
-
-  const eventHandler = (event) => {
-    const { name, value } = event.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    if (name == "country") {
-      props.cityFetch(value);
-    }
-  };
 
   // useEffect(() => {
   //   const fetchCountryData = async () => {
@@ -48,7 +38,7 @@ const FilterModal = (props) => {
         </span>
 
         <div className={styles.FilterDiv}>
-          <div className={styles.customSelect}>
+          {/* <div className={styles.customSelect}>
             <select
               value={data.country}
               name="country"
@@ -62,9 +52,52 @@ const FilterModal = (props) => {
                 </option>
               ))}
             </select>
+          </div> */}
+
+          <div className={styles.selectDiv}>
+            <Select
+              items={
+                props.countries.length > 0
+                  ? props.countries.map((option) => option.country_name)
+                  : []
+              }
+              set={(option) => {
+                props.cityFetch(option);
+                setData((prev) => ({ ...prev, country: option }));
+              }}
+              selected={data.country}
+              style={{
+                background: "rgba(239, 239, 239, 0)",
+                height: "38px",
+                border: "1px solid rgb(198, 196, 196)",
+                borderRadius: "4px",
+                color: "#626262",
+                zIndex: "100",
+                position: "relative",
+                fontSize: "13px",
+              }}
+            />
           </div>
 
-          <div className={styles.customSelect}>
+          <div className={styles.selectDiv}>
+            <Select
+              items={props.cities.length > 0 ? props.cities : []}
+              set={(option) => setData((prev) => ({ ...prev, city: option }))}
+              selected={data.city}
+              style={{
+                background: "rgba(239, 239, 239, 0)",
+                height: "38px",
+                border: "1px solid rgb(198, 196, 196)",
+                borderRadius: "4px",
+                color: "#626262",
+                zIndex: "100",
+                position: "relative",
+                fontSize: "13px",
+              }}
+            />
+          </div>
+
+          {/* <div className={styles.customSelect}>
             <select
               value={data.city}
               name="city"
@@ -72,13 +105,14 @@ const FilterModal = (props) => {
               className={styles.CountrySelect}
             >
               <option value="">City</option>
-              {props.cities.length>0 && props.cities.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
+              {props.cities.length > 0 &&
+                props.cities.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
             </select>
-          </div>
+          </div> */}
 
           <MultiRangeSlider
             min={0}
@@ -98,7 +132,7 @@ const FilterModal = (props) => {
               className={styles.SubmitBtn}
               role="button"
               onClick={() => {
-                if (data.country === "" || data.city === "") {
+                if (data.country === "Country" || data.city === "City") {
                   return;
                 }
                 props.onSubmit(

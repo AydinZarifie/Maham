@@ -23,7 +23,7 @@ const CountryInformations = (props) => {
                 <img src={flagIcon} />
               </th>
               <th>Country-Name</th>
-              <th>Number Of State</th>
+              <th>Number Of Estate</th>
               <th>Volume Trades</th>
             </tr>
           </thead>

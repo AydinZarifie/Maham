@@ -3,11 +3,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: 10px;
 }
 
 .slider {
   position: relative;
-  width: 80%;
+  width: 70%;
 }
 
 .slider__track,
@@ -63,7 +64,7 @@
   pointer-events: none;
   position: absolute;
   height: 0;
-  width: 80%;
+  width: 70%;
   outline: none;
 }
 

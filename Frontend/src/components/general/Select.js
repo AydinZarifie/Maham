@@ -35,7 +35,7 @@ const Select = (props) => {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <div
-        className={styles.selection}
+        className={`${styles.selection} ${props.invalid ? styles.invalid:''}`}
         style={props.style}
         onClick={toggleDropdown}
       >

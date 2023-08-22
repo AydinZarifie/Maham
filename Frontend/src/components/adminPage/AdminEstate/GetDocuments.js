@@ -36,7 +36,7 @@ const GetDocuments = () => {
                 className={styles.DocumentBtn}
                 onClick={toggleShowProfile}
               >
-                <img src={ProfileLogo} className={styles.DocumentIcon} />
+                <img src={ProfileLogo} className={styles.DocumentIcon} alt="profile" />
               </button>
             </td>
             <td className={styles.Td}>
@@ -44,12 +44,12 @@ const GetDocuments = () => {
                 className={styles.DocumentBtn}
                 onClick={toggleConfirmationMessage}
               >
-                <img src={TrueLogo} className={styles.DocumentIcon} />
+                <img src={TrueLogo} className={styles.DocumentIcon} alt="true" />
               </button>
             </td>
             <td className={styles.Td}>
               <button className={styles.DocumentBtn}>
-                <img src={FalseLogo} className={styles.DocumentIcon} />
+                <img src={FalseLogo} className={styles.DocumentIcon} alt="false" />
               </button>
             </td>
           </tr>

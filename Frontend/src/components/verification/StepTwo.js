@@ -2,24 +2,10 @@ import styles from "../../styles/verification.module.css";
 
 import { useState } from "react";
 
-import arrowDownIcon from "../../images/arrow-down-svgrepo-com.svg";
-import warningIcon from "../../images/warning-attention-red-svgrepo-com.svg"
+import warningIcon from "../../images/warning-attention-red-svgrepo-com.svg";
+import Select from "../general/Select";
 
 const StepTwo = (props) => {
-  const [toggleOne, setToggleOne] = useState(false);
-  const [toggleTwo, setToggleTwo] = useState(false);
-
-  const toggleOneToggle = () => {
-    setToggleOne((prev) => !prev);
-  };
-
-  const toggleTwoToggle = () => {
-    setToggleTwo((prev) => !prev);
-  };
-
-  let toggleOneClass = toggleOne ? `${styles.open}` : "";
-  let toggleTwoClass = toggleTwo ? `${styles.open2}` : "";
-
   const [data, setData] = useState({
     gender: props.data.gender,
     firstName: props.data.firstName,
@@ -48,13 +34,13 @@ const StepTwo = (props) => {
     passportId: false,
   });
 
-  const enteredGenderIsValid = data.gender.trim().length != 0;
+  const enteredGenderIsValid = data.gender.trim() != "Gender";
   const enteredFirstNameIsValid = data.firstName.trim().length != 0;
   const enteredLastNameIsValid = data.lastName.trim().length != 0;
   const enteredCountryIsValid = data.country.trim().length != 0;
   const enteredCityIsValid = data.city.trim().length != 0;
   const enteredYearOfBirthIsValid = data.yearOfBirth.trim().length == 4;
-  const enteredMonthOfBirthIsValid = data.monthOfBirth.trim().length != 0;
+  const enteredMonthOfBirthIsValid = data.monthOfBirth.trim() != "Month";
   const enteredDayOfBirthIsValid =
     data.dayOfBirth.trim().length == 1 || data.dayOfBirth.trim().length == 2;
   const enteredEmailIsValid = data.email.trim().length != 0;
@@ -91,9 +77,6 @@ const StepTwo = (props) => {
     formIsvalid = true;
   }
 
-  const genderClass = genderIsInvalid
-    ? `${styles.invalidForSelect}  `
-    : `${styles.mySelect} `;
   const firstNameClass = firstNameIsInvalid
     ? `${styles.invalid}  `
     : `${styles.inputs} `;
@@ -104,9 +87,6 @@ const StepTwo = (props) => {
     ? `${styles.invalid}  `
     : `${styles.inputs} `;
   const cityClass = cityIsInvalid ? `${styles.invalid}  ` : `${styles.inputs} `;
-  const monthOfBirthClass = monthOfBirthIsInvalid
-    ? `${styles.invalidForSelect2}  `
-    : `${styles.mySelect2} `;
   const dayOfBirthClass = dayOfBirthIsInvalid
     ? `${styles.invalid}  `
     : `${styles.inputs} `;
@@ -167,17 +147,15 @@ const StepTwo = (props) => {
   };
 
   return (
+    //open open2 mySelect2 invalidForSelect2 mySelect invalidForSelect
     <div className={styles.InformationDiv}>
-      {toggleOne && (
+      {/* {toggleOne && (
         <div className={styles.SelectOverlay} onClick={toggleOneToggle}></div>
-      )}
-      {toggleTwo && (
+      )} */}
+      {/* {toggleTwo && (
         <div className={styles.SelectOverlay2} onClick={toggleTwoToggle}></div>
-      )}
-      <div
-        className={`${styles.selectHeader} ${toggleOneClass}`}
-        onClick={toggleOneToggle}
-      >
+      )} */}
+      <div className={styles.selectHeader}>
         {/*  */}
         {/* <div className={styles.ErrorDiv}>
           <img
@@ -187,12 +165,12 @@ const StepTwo = (props) => {
           <p>Email or phone number already exist</p>
         </div> */}
         {/*  */}
-        <div className={styles.selectWrapper}>
-          <span className={styles.arrow}>
+        {/* <div className={styles.selectWrapper}> */}
+        {/* <span className={styles.arrow}>
             <img src={arrowDownIcon} className={styles.ArrowIcon} />
-          </span>
+          </span> */}
 
-          <select
+        {/* <select
             className={genderClass}
             onChange={eventHandler}
             name="gender"
@@ -201,8 +179,37 @@ const StepTwo = (props) => {
             <option value="">gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-          </select>
-        </div>
+          </select> */}
+        <Select
+          items={["Male", "Female"]}
+          invalid={genderIsInvalid}
+          set={(option) => setData((prev) => ({ ...prev, gender: option }))}
+          selected={data.gender}
+          style={
+            genderIsInvalid
+              ? {
+                  background: "rgba(239, 239, 239, 0)",
+                  height: "38px",
+                  border: "1px solid #ff2c2c",
+                  borderRadius: "4px",
+                  color: "#626262",
+                  zIndex: "100",
+                  position: "relative",
+                  fontSize: "13px",
+                }
+              : {
+                  background: "rgba(239, 239, 239, 0)",
+                  height: "38px",
+                  border: "1px solid #c0c0c0",
+                  borderRadius: "4px",
+                  color: "#626262",
+                  zIndex: "100",
+                  position: "relative",
+                  fontSize: "13px",
+                }
+          }
+        />
+        {/* </div> */}
       </div>
       <div className={styles.InputDiv}>
         <div className={styles.inputContainer}>
@@ -269,12 +276,54 @@ const StepTwo = (props) => {
       </div>
       <p className={styles.BirthP}>Date of birth:</p>
       <div className={styles.BirthInputDiv} style={{ marginBottom: "20px" }}>
-        <div
-          className={`${styles.selectHeader2} ${toggleTwoClass}`}
-          onClick={toggleTwoToggle}
-        >
-          <div className={styles.selectWrapper2}>
-            <span className={styles.arrow2}>
+        <div className={styles.selectHeader2}>
+          {/* <div className={styles.selectWrapper2}> */}
+         
+          <Select
+            invalid={monthOfBirthIsInvalid}
+            items={[
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ]}
+            set={(option) =>
+              setData((prev) => ({ ...prev, monthOfBirth: option }))
+            }
+            selected={data.monthOfBirth}
+            style={
+              monthOfBirthIsInvalid
+                ? {
+                    background: "rgba(239, 239, 239, 0)",
+                    height: "38px",
+                    border: "1px solid #ff2c2c",
+                    borderRadius: "4px",
+                    color: "#626262",
+                    zIndex: "100",
+                    position: "relative",
+                    fontSize: "13px",
+                  }
+                : {
+                    background: "rgba(239, 239, 239, 0)",
+                    height: "38px",
+                    border: "1px solid #c0c0c0",
+                    borderRadius: "4px",
+                    color: "#626262",
+                    zIndex: "100",
+                    position: "relative",
+                    fontSize: "13px",
+                  }
+            }
+          />
+          {/* <span className={styles.arrow2}>
               <img src={arrowDownIcon} className={styles.ArrowIcon2} />
             </span>
 
@@ -297,8 +346,8 @@ const StepTwo = (props) => {
               <option value="October">October</option>
               <option value="November">November</option>
               <option value="December">December</option>
-            </select>
-          </div>
+            </select> */}
+          {/* </div> */}
         </div>
 
         <div className={styles.inputContainer3}>

@@ -1,4 +1,4 @@
-import { useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import AdminConfig from "./AdminConfig";
 import fetchInstance from "../../../util/fetchInstance";
 

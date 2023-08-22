@@ -148,13 +148,13 @@ export default function Estates() {
   const GetDocument = async () => {};
 
   const fetchLockPositionData = async () => {
-    let { response, data } = await fetchInstance("/admin/panel/getLockEstates");
+    let { response, data } = await fetchInstance("/admin/getLockEstates");
     setLockPositionData(data.data);
   };
 
   const fetchSellPositionData = async () => {
     let { response, data } = await fetchInstance(
-      "/admin/panel/getSellPositionEstates"
+      "/admin/getSellPositionEstates"
     );
     setSellPositionData(data.data);
   };

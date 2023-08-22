@@ -1,7 +1,7 @@
 import styles from "../../styles/homePage.module.css";
 import overlayStyle from "../../styles/overlay.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import homeLogo from "../../images/home-home-svgrepo-com (1).svg";
 import creditLogo from "../../images/credit-card-2-svgrepo-com.svg";
@@ -29,21 +29,21 @@ const PhoneMenu = () => {
             <img src={homeLogo} className={styles.sidenavItemsIcn} />
             Home
           </span>
-          <hr className={styles.phoneMenuHr}/>
+          <hr className={styles.phoneMenuHr} />
         </a>
         <a href="#">
           <span className={styles.sidenavItems}>
             <img src={creditLogo} className={styles.sidenavItemsIcn} />
             Bank
           </span>
-          <hr className={styles.phoneMenuHr}/>
+          <hr className={styles.phoneMenuHr} />
         </a>
         <a href="#">
           <span className={styles.sidenavItems}>
             <img src={aboutLogo} className={styles.sidenavItemsIcn} />
             About us
           </span>
-          <hr className={styles.phoneMenuHr}/>
+          <hr className={styles.phoneMenuHr} />
         </a>
         <button className={styles.ConnectWalletBtn2}>Connect Wallet</button>
       </div>

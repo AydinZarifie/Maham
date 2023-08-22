@@ -2141,7 +2141,7 @@
   border: none;
   border-radius: 4px;
   font-size: 13px;
-  background: linear-gradient(0.55turn, #5e6e88, #5c6c93);
+  background: linear-gradient(0.55turn, #f77371, #ef605d);
   color: #ffffff;
   cursor: pointer;
   transition: 0.3s;
@@ -2150,7 +2150,7 @@
 }
 
 .SellBtn:hover {
-  background: linear-gradient(0.55turn, #5e6e88, #5e6e98);
+  background: linear-gradient(0.55turn, #ef605d, #f77371);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
