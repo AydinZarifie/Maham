@@ -2,11 +2,7 @@ const express = require('express');
 const router = express.Router();
 const adminPanelController = require('../../controllers/admin/adminPanel');
 const verifyToken = require("../../middleware/verifyToken");
-router.get('/panel/getLockEstates', verifyToken,adminPanelController.getLockEstates);
-router.get(
-	'/panel/getSellPositionEstates', verifyToken,
-	adminPanelController.getSellPositionEstates
-);
+
 router.get('/panel/getAdmins', verifyToken ,adminPanelController.getAllAdmins);
 router.post('/panel/searchName',  verifyToken,adminPanelController.searchAdminByName);
 router.post('/panel/getAdminsWithFilter', verifyToken,adminPanelController.searchAdminByFilter);

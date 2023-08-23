@@ -215,7 +215,7 @@ const Profile = forwardRef((props, ref) => {
           <div className={styles.EditDiv}>
             <div className={styles.inputContainer}>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 value={data.email}

@@ -51,7 +51,6 @@ exports.signupAdmin = async (req, res, next) => {
 			email: formatStr(email),
 			country_name: formatStr(country),
 			city_name: formatStr(city),
-			full_name : "hadirasouli"
 		});
 		await admin.save();
 
@@ -296,4 +295,4 @@ exports.verifyAdminAccessTokenProtectedRoute = async (req,res) => {
 		})
 	}
 
-}	
+}

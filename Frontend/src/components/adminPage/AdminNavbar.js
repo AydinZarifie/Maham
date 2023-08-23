@@ -15,6 +15,7 @@ import adminPanelIcon from "../../images/opencontacts-svgrepo-com.svg";
 
 import AdminMenuItem from "./AdminMenuItem";
 import { Form, Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function AdminNavbar() {
   const [overlay, setOverlay] = useState(false);
@@ -57,7 +58,7 @@ export default function AdminNavbar() {
               </div>
             </div>
 
-            {localStorage.getItem("type") === "superadmin" && (
+            {Cookies.get("type") === "superadmin" && (
               <AdminMenuItem
                 link="/admin"
                 imgSrc={dashboardIcon}
@@ -85,7 +86,7 @@ export default function AdminNavbar() {
               text="Transaction"
               onClick={closeNav}
             /> */}
-            {localStorage.getItem("type") === "superadmin" && (
+            {Cookies.get("type") === "superadmin" && (
               <AdminMenuItem
                 link="management"
                 imgSrc={settingIcon}
@@ -94,7 +95,7 @@ export default function AdminNavbar() {
               />
             )}
 
-            {localStorage.getItem("type") === "superadmin" && (
+            {Cookies.get("type") === "superadmin" && (
               <AdminMenuItem
                 link="admins"
                 imgSrc={adminPanelIcon}
@@ -150,7 +151,7 @@ export default function AdminNavbar() {
           </div>
           <div className={styles.AdminInformations}>
             <h6 className={styles.h6AdminInformations}>
-              {localStorage.getItem("type")}
+              {Cookies.get("type")}
             </h6>
           </div>
         </div>

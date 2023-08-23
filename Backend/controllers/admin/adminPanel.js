@@ -231,19 +231,3 @@ const admin = await adminDB.findById(req.params.id);
     message: "admin deleted successfully",
   });
 });
-
-exports.getLockEstates = catchAsync(async (req, res, next) => {
-  const lockedEstates = await estateDB.find({ lock_position: true });
-
-  if (!lockedEstates) {
-    return next(new AppError("There is no locked estate!", 404));
-  }
-
-  return res.status(200).json({ status: "success", data: lockedEstates });
-});
-
-exports.getSellPositionEstates = catchAsync(async (req, res, next) => {
-  const estate = await estateDB.find({ sell_position: true });
-  console.log(estate);
-  return res.status(200).json({ data: estate });
-});

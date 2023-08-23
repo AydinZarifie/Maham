@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
+// import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
 // import AdminPage from "./pages/admin/AdminPage";
 // import Dashboard from "./components/adminPage/Dashboard";
 // import AdminEstates from "./pages/admin/AdminEstates";
@@ -19,7 +19,7 @@ import DetailPage, { loader as estateDetailLoader } from "./pages/DetailPage";
 import { action as logoutAction } from "./pages/admin/Logout";
 import { checkAuthLoader, checkSuperAdminLoader } from "./util/auth";
 // import Verification from "./pages/Verification";
-import  {loader as adminDetailLoader,} from "./components/adminPage/adminPanel/EditAdmin";
+// import { loader as adminDetailLoader } from "./components/adminPage/adminPanel/EditAdmin";
 // import Profile from "./pages/admin/Profile";
 // import UserPanel from "./pages/UserPanel";
 // import ManagementAssets from "./components/userPanel/ManagementAssets";
@@ -184,9 +184,11 @@ const router = createBrowserRouter([
               </Suspense>
             ),
             id: "estate-detail",
-            loader: estateDetailLoader,
-            // loader: () =>
-            //   import("./pages/DetailPage").then((module) => module.loader()),
+            // loader: estateDetailLoader,
+            loader: (meta) =>
+              import("./pages/DetailPage").then((module) =>
+                module.loader(meta)
+              ),
             // action: manipulateEstateAction,
           },
         ],
@@ -228,11 +230,11 @@ const router = createBrowserRouter([
                 <EditAdmin />
               </Suspense>
             ),
-            loader: adminDetailLoader,
-      /*       loader: () =>
+            // loader: adminDetailLoader,
+            loader: (meta) =>
               import("./components/adminPage/adminPanel/EditAdmin").then(
-                (module) => module.loader()
-              ), */
+                (module) => module.loader(meta)
+              ),
           },
           // {
           //   path: "personal",

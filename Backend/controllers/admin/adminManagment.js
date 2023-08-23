@@ -48,29 +48,6 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getAllEstates = catchAsync(async (req, res, next) => {
-
-	if(req.roles !== 'superadmin'){
-		return res.status(401).json({
-		  message : "Just superadmin can access to this function"
-		})
-	}
-
-	const estates = await estateDB.find().select('-__V');
-
-	if (estates.length === 0) {
-		return res.status(204).json({
-			message: ' no estate exists in the DB',
-		});
-	}
-
-	return res.status(200).json({
-		status: 'success',
-		data: estates,
-
-	});
-});
-
 exports.postAddCountry = catchAsync(async (req, res, next) => {
 
 	try {
@@ -215,14 +192,17 @@ exports.lockUnLockEstate = catchAsync(async (req,res,next) => {
 	}
 
 	let lockPosition = estate.lock_position;
-	if(lockPosition == false){
+	let sellPosition = false;
 
+	if(lockPosition == false){
 		lockPosition = true;
+		sellPosition = false;
 	}
 	else{
 		lockPosition = false;
 	}
 	estate.lock_position = lockPosition;
+	estate.sell_position = sellPosition;
 	await estate.save();
 
 	return res.status(200).json({
@@ -238,7 +218,9 @@ exports.getCountriesInfo = catchAsync(async (req, res, next) => {
 		})
 	}
 
-	const countriesInfo = await countryDB.find()
+	const countriesInfo = await countryDB.find();
+
+	console.log(countriesInfo);
 
 	return res.status(200).json({
 		status: 'success',

@@ -261,7 +261,7 @@ const AdminConfig = ({ method, admin }) => {
             <input
               className={emailClass}
               placeholder="Email"
-              type="text"
+              type="email"
               name="email"
               id="email"
               required

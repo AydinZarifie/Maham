@@ -23,7 +23,6 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       let { response, data } = await fetchInstance("/admin/auth/profile");
-      console.log(data);
       setData({ ...data.admin, password: "", confirmPassword: "" });
     };
     fetchUserData();
@@ -138,7 +137,7 @@ const Profile = () => {
             <input
               className={styles.InputAdmin}
               placeholder="Email"
-              type="text"
+              type="email"
               name="email"
               id="email"
               required

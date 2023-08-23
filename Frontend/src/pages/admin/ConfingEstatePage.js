@@ -372,6 +372,9 @@ const ConfingEstate = ({ method, estate }) => {
     image: false,
     video: false,
     id: false,
+
+      // plate: false,
+    // walletAddress: false,
   });
 
   const titleIsInvalid = !enteredTitleIsValid && touched.title;

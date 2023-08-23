@@ -40,8 +40,8 @@ export default function Estates() {
   const [cities, setCities] = useState([]);
 
   const cityFetch = async (name) => {
-    const response = await fetchInstance("/admin/managment/getCities/" + name);
-    setCities(response.data.data);
+    const {response,data} = await fetchInstance("/admin/managment/getCities/" + name);
+    setCities(data.data);
   };
 
   const toggleConfirmationMessage = () => {
@@ -107,7 +107,6 @@ export default function Estates() {
         body: formData,
       }
     );
-    console.log(data);
     setData(data.estate);
     setFilterShown(false);
   };
@@ -149,7 +148,8 @@ export default function Estates() {
   const GetDocument = async () => {};
 
   const fetchLockPositionData = async () => {
-    let { response, data } = await fetchInstance("/admin/panel/getLockEstates");
+    let { response, data } = await fetchInstance("/admin/panel/getLockEstates");  
+    console.log(data.data);
     setLockPositionData(data.data);
   };
 

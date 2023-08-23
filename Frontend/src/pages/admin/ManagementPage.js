@@ -60,14 +60,16 @@ const ManagementPage = () => {
     setSelectedCityOption(option);
     setCityMenuShown(false);
 
+   
     let { response, data } = await fetchInstance(
       "/admin/managment/getEstates/" +
         selectedCountryOption.country_name +
         "/" +
         option
     );
-
+    console.log("hii");
     setSearchedEstates(data.data);
+    
   };
 
   const cityFetch = async (name) => {
