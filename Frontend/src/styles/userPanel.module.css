@@ -1,12 +1,13 @@
 .NoExistDiv {
   position: absolute;
   z-index: 2;
-  width: 25%;
   min-width: 290px;
   margin-top: 220px;
   text-align: center;
   font-size: 1.5rem;
-  font-weight: 300;
+  font-weight: 500;
+  color: #5e6e88;
+  width: 35%;
 }
 
 .Main {
@@ -25,8 +26,6 @@
   align-items: center;
   height: 42px;
   background-color: #e1e5e8;
-
-
 }
 
 .MenuButtonsDiv {
@@ -226,7 +225,6 @@
   scrollbar-width: none;
   background-color: #e1e5e8;
   display: flex;
-
 }
 
 .TableDiv2::-webkit-scrollbar {
@@ -239,7 +237,7 @@
   height: 5px;
   border: 3px solid #fff;
   background: rgb(248, 248, 248);
-  border-radius:6px;
+  border-radius: 6px;
 }
 .TableDiv2::-webkit-scrollbar-thumb:hover {
   background: rgb(223, 223, 223);

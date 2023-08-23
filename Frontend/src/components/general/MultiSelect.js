@@ -56,7 +56,7 @@ const MultiSelect = ({ options, onChange, selectedOptions, invalid }) => {
           ></div>
           <div className={styles.dropdown}>
             <ul className={styles.options}>
-              {options.map((option) => (
+              {options.length >0 && options.map((option) => (
                 <li
                   className={
                     selectedOptions.includes(option)

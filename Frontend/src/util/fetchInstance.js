@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { getAuthToken, getCsrfToken } from "./auth";
+import { encodeAndStoreInCookies, getAuthToken } from "./auth";
 
 let baseURL = "http://localhost:5000";
 
@@ -23,13 +23,13 @@ let refreshToken = async () => {
 
   let data = await response.json();
   // localStorage.setItem("token", data.accessToken);
-  Cookies.set("token", data.accessToken);
+  encodeAndStoreInCookies("token", data.accessToken);
   return data.accessToken;
 };
 
 const fetchInstance = async (url, config = {}, credentials = {}) => {
   let authTokens = getAuthToken();
-  let csrfToken = getCsrfToken();
+  // let csrfToken = getCsrfToken();
 
   config["headers"] = {
     Authorization: `Bearer ${authTokens}`,

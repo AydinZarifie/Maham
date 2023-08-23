@@ -11,13 +11,13 @@ const Verification = () => {
   const [alert, setAlert] = useState(false);
   const [data, setData] = useState({
     agreed: false,
-    gender: "",
+    gender: "Gender",
     firstName: "",
     lastName: "",
     country: "",
     city: "",
     yearOfBirth: "",
-    monthOfBirth: "",
+    monthOfBirth: "Month",
     dayOfBirth: "",
     email: "",
     phoneNumber: "",

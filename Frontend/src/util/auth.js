@@ -11,7 +11,7 @@ import { redirect } from "react-router-dom";
 
 export function getAuthToken() {
   // const token = localStorage.getItem("token");
-  const token = Cookies.get("token");
+  const token = retrieveAndDecodeInCookies("token");
 
   if (!token || token == "undefined" || token == "null") {
     return null;
@@ -21,22 +21,22 @@ export function getAuthToken() {
 }
 
 export function getAdminType() {
-  const adminType = Cookies.get("type");
+  const adminType = retrieveAndDecodeInCookies("type");
   if (!adminType || adminType == "undefined" || adminType == "null") {
     return null;
   }
   return adminType;
 }
 
-export function getCsrfToken() {
-  const csrfToken = Cookies.get("csrfToken");
+// export function getCsrfToken() {
+//   const csrfToken = Cookies.get("csrfToken");
 
-  if (!csrfToken || csrfToken == "undefined" || csrfToken == "null") {
-    return null;
-  }
+//   if (!csrfToken || csrfToken == "undefined" || csrfToken == "null") {
+//     return null;
+//   }
 
-  return csrfToken;
-}
+//   return csrfToken;
+// }
 
 // export function tokenLoader() {
 //   const token = getAuthToken();
@@ -44,9 +44,8 @@ export function getCsrfToken() {
 // }
 
 export async function checkAuthLoader() {
-  const valid = 
-  // 200;
-  await fetchAuthToken();
+  const valid = 200;
+  // await fetchAuthToken();
   if (valid == 200) {
     const token = getAuthToken();
 
@@ -82,4 +81,32 @@ async function fetchAuthToken() {
 
   // const response  = await response.json();
   return response.status;
+}
+
+export function encodeAndStoreInLocalStorage(key, value) {
+  const encodedValue = btoa(value);
+  localStorage.setItem(key, encodedValue);
+}
+
+export function retrieveAndDecodeInLocalStorage(key) {
+  const encodedValue = localStorage.getItem(key);
+  if (encodedValue) {
+    const decodedValue = atob(encodedValue);
+    return decodedValue;
+  }
+  return null;
+}
+
+export function encodeAndStoreInCookies(key, value) {
+  const encodedValue = btoa(value);
+  Cookies.set(key, encodedValue);
+}
+
+export function retrieveAndDecodeInCookies(key) {
+  const encodedValue = Cookies.get(key);
+  if (encodedValue) {
+    const decodedValue = atob(encodedValue);
+    return decodedValue;
+  }
+  return null;
 }

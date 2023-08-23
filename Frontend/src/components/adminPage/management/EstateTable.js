@@ -22,7 +22,7 @@ const EstateTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.estates.map((item) => (
+            {props.estates.length>0 && props.estates.map((item) => (
               <EstateTableItem {...item} lockEstate={props.lockEstate} />
             ))}
           </tbody>

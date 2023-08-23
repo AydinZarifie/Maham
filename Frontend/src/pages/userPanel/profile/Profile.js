@@ -8,6 +8,8 @@ import helpIcon from "../../../images/help-question-svgrepo-com.svg";
 import arrowDownIcon from "../../../images/arrow-down-svgrepo-com.svg";
 import backArrowIcon from "../../../images/arrow-sm-left-svgrepo-com.svg";
 import editIcon from "../../../images/black-edit-svgrepo-com.svg";
+import openEyeIcon from "../../../images/eye-alt-svgrepo-com.svg" 
+import closeEyeIcon from "../../../images/eye-slash-alt-svgrepo-com.svg" 
 
 const Profile = forwardRef((props, ref) => {
   const [data, setData] = useState({
@@ -107,6 +109,14 @@ const Profile = forwardRef((props, ref) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const toggleShowPassword=()=>{
+    setShowPassword((prev)=>!prev)
+  }
+
+  const toggleShowConfirmPassword=()=>{
+    setShowConfirmPassword((prev)=>!prev)
+  }
 
   const dataEventHandler = (event) => {
     const { name, value } = event.target;
@@ -342,6 +352,7 @@ const Profile = forwardRef((props, ref) => {
             <label className={styles.PasswordLabel} htmlFor="password">
               <div className={styles.PasswordText}>Password</div>
             </label>
+            <img className={styles.ShowAndHideIcon} src={showPassword ? closeEyeIcon:openEyeIcon} onClick={toggleShowPassword} />
           </div>
           <div className={styles.inputContainer2}>
             <input
@@ -356,6 +367,7 @@ const Profile = forwardRef((props, ref) => {
             <label className={styles.PasswordLabel} htmlFor="confirmPassword">
               <div className={styles.PasswordText}>Confirm password</div>
             </label>
+            <img className={styles.ShowAndHideIcon} src={showConfirmPassword ? closeEyeIcon:openEyeIcon} onClick={toggleShowConfirmPassword} />
           </div>
           <button
             className={styles.SubmitBtn}

@@ -27,7 +27,7 @@ const Gainers = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {data.length >0 && data.map((item) => (
               <GainerItem key={item.id} {...item} />
             ))}
           </tbody>

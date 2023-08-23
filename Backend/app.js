@@ -13,6 +13,7 @@ const managmentPage_Router = require("./routes/admin/adminManagment");
 const adminAuth_Router = require("./routes/admin/adminAuth");
 const adminPanel_Router = require("./routes/admin/adminPanel");
 const userAuthorization_Router = require("./routes/user/userAuthorization");
+const userPanel_Router = require("./routes/user/userPanel")
 //////////////////////////////////////////////
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -128,7 +129,11 @@ app.use(
   adminPanel_Router
 );
 
-app.use("/user", userAuthorization_Router);
+app.use
+      ("/user"
+      , userAuthorization_Router
+      , userPanel_Router);
+
 
 mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {
   console.log(`DB connection sucessful`);

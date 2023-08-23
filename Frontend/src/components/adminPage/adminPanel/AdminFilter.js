@@ -226,7 +226,7 @@ const AdminFilter = forwardRef((props, ref) => {
                     Country
                   </option>
 
-                  {props.countries.map((country) => (
+                  {props.countries.length>0 && props.countries.map((country) => (
                     <option
                       key={country.country_name}
                       className={styles.SelectOption}

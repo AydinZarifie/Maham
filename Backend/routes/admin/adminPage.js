@@ -46,6 +46,6 @@ router
 	.route("/searchEstateByFilterName")
 	.post(verifyToken , adminPage_Controller.searchEestatesByFilterName);
 
-router.get('/panel/getLockEstates', verifyToken,adminPage_Controller.getLockEstates);
-router.get('/panel/getSellPositionEstates', verifyToken,adminPage_Controller.getSellPositionEstates);
+router.get('/getLockEstates', verifyToken,adminPage_Controller.getLockEstates);
+router.get('/getSellPositionEstates', verifyToken,adminPage_Controller.getSellPositionEstates);
 module.exports = router;

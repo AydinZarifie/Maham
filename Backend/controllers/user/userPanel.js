@@ -1,28 +1,34 @@
-const userDB = require('../../models/user');
-const estateDB = require('../../models/estate');
-const catchAsync = require('./../../utilities/error/catchAsync');
-const AppError = require('./../../utilities/error/appError');
+const countryDB = require('./../../models/country');
 
-exports.getMyAssets = catchAsync(async (req, res, next) => {
-	
-	const user = await userDB.findOne({ id: req.body.id }).populate({
-		path: 'assets',
-		// which fields ?
-		select: ['country_name', 'city_name', 'mint_id'],
-	});
+exports.getCountries = async(req,res) => {
+	const countries = await countryDB.find().select(['country_name' , 'country_logo']);
+	return res.status(200).json({
+		message : "Success",
+		data : countries
+	})
+}
 
-	if (!user || user.length === 0) {
-		return next(new AppError('there is no user weith that ID', 204));
+exports.getCities = async(req,res) => {
+
+	const country = req.params.countryName;
+
+	if(!country){
+		return res.status(401).json({
+			message:"The country filed was empty"
+		})
 	}
 
-	if (user.assets.length === 0) {
-		return next(new AppError('user has no properties', 204));
+	const cities = await countryDB.findOne({country_name : country}).select('cities');
+	if(!cities){
+		return res.status(401).json({
+			message : "The city not found"
+		})
 	}
 
 	return res.status(200).json({
-		status: 'success',
-		length: user.assets.length,
-		data: user.assets,
-	});
-});
+		data:cities,
+		message:"success"
+	})
+
+}
 

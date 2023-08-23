@@ -89,7 +89,7 @@ export default function Dashboard() {
           <div className={styles.column4}>
             <div className={styles.Price}>
               <div className={styles.EthIcn}>
-                <img src={ethIcon} className={styles.EthIcon} />
+                <img src={ethIcon} className={styles.EthIcon} alt="eth"/>
               </div>
               <div className={styles.EthPrice}>
                 <h3 className={styles.h3EthPrice}>369.39 $</h3>
@@ -106,7 +106,7 @@ export default function Dashboard() {
                 <h4 className={styles.h4PurChase}>Purchase</h4>
               </div>
               <div className={styles.PurChaseIcn}>
-                <img src={chartIcon} className={styles.PurchaseIcon} />
+                <img src={chartIcon} className={styles.PurchaseIcon} alt="chart" />
               </div>
             </div>
             <div className={styles.TransactionPrice}>

@@ -359,7 +359,7 @@ const AdminConfig = ({ method, admin }) => {
               <option className={styles.SelectOption} value="">
                 Country
               </option>
-              {countries.map((country) => (
+              {countries.length>0 && countries.map((country) => (
                 <option
                   key={country.country_name}
                   className={styles.SelectOption}

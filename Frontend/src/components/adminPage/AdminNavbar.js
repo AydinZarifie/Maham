@@ -16,6 +16,10 @@ import adminPanelIcon from "../../images/opencontacts-svgrepo-com.svg";
 import AdminMenuItem from "./AdminMenuItem";
 import { Form, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import {
+  retrieveAndDecodeInCookies,
+  retrieveAndDecodeInLocalStorage,
+} from "../../util/auth";
 
 export default function AdminNavbar() {
   const [overlay, setOverlay] = useState(false);
@@ -58,7 +62,7 @@ export default function AdminNavbar() {
               </div>
             </div>
 
-            {Cookies.get("type") === "superadmin" && (
+            {retrieveAndDecodeInCookies("type") === "superadmin" && (
               <AdminMenuItem
                 link="/admin"
                 imgSrc={dashboardIcon}
@@ -86,7 +90,7 @@ export default function AdminNavbar() {
               text="Transaction"
               onClick={closeNav}
             /> */}
-            {Cookies.get("type") === "superadmin" && (
+            {retrieveAndDecodeInCookies("type") === "superadmin" && (
               <AdminMenuItem
                 link="management"
                 imgSrc={settingIcon}
@@ -95,7 +99,7 @@ export default function AdminNavbar() {
               />
             )}
 
-            {Cookies.get("type") === "superadmin" && (
+            {retrieveAndDecodeInCookies("type") === "superadmin" && (
               <AdminMenuItem
                 link="admins"
                 imgSrc={adminPanelIcon}
@@ -145,13 +149,13 @@ export default function AdminNavbar() {
         <div className={styles.Names}>
           <div className={styles.AdminName}>
             <h3 className={styles.h3AdminName}>
-              {localStorage.getItem("firstname")}{" "}
-              {localStorage.getItem("lastname")}
+              {retrieveAndDecodeInLocalStorage("firstname")}{" "}
+              {retrieveAndDecodeInLocalStorage("lastname")}
             </h3>
           </div>
           <div className={styles.AdminInformations}>
             <h6 className={styles.h6AdminInformations}>
-              {Cookies.get("type")}
+              {retrieveAndDecodeInCookies("type")}
             </h6>
           </div>
         </div>
