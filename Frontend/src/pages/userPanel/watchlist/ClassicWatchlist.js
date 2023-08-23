@@ -7,7 +7,7 @@ import sellIcon from "../../../images/shopping-cart-17-svgrepo-com.svg";
 import editIcon from "../../../images/edit-svgrepo-com2.svg";
 import deleteIcon from "../../../images/delete-2-svgrepo-com2.svg";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   NavLink,
   Outlet,
@@ -33,8 +33,9 @@ const ClassicWatchlist = () => {
     setDividerPosition(newDividerPosition);
   };
 
-  const [countries, setCountries] = useState(["america", "iran", "dubai"]);
+  const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const [data, setData] = useState([]);
 
   const [country, setCountry] = useState("Country");
   const [city, setCity] = useState("City");
@@ -45,6 +46,7 @@ const ClassicWatchlist = () => {
   const searchEventHandler = (event) => {
     const { value } = event.target;
     setSearch(value);
+    nameChangeFetch(value);
   };
 
   const submitSell = () => {};
@@ -52,18 +54,54 @@ const ClassicWatchlist = () => {
   const searchItemSelect = (name) => {
     setSearch(name);
     setSearchedEstates([]);
+    submitSearch(name);
   };
 
-  return (
-    // <div className="resizable-layout">
-    //   <div style={{ flex: dividerPosition }} className="content">
-    //     {/* Content of the first div */}
-    //   </div>
+  const submitSearch = async (value) => {
+    let response = await fetch("url for complete search");
+    const data = await response.json();
+    setData(data.data);
+  };
 
-    //   <div style={{ flex: 100 - dividerPosition }} className="content">
-    //     {/* Content of the second div */}
-    //   </div>
-    // </div>
+  const cityFetch = async (name) => {
+    let response = await fetch("url for cities" + name);
+    const data = await response.json();
+    setCities(data.data);
+  };
+
+  const nameChangeFetch = async (name) => {
+    if (name.length > 0) {
+      const formData = new FormData();
+      name = name.trim();
+      formData.append("name", name);
+      let response = await fetch("url for search", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      setSearchedEstates(data.data);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const response = await fetch("url for countries");
+      const data = await response.json();
+      setCountries(data.data);
+    };
+
+    fetchCountries();
+
+    const fetchWatchlist = async () => {
+      const response = await fetch("url for watchlist");
+      const data = await response.json();
+      setData(data.data);
+    };
+
+    fetchWatchlist();
+  }, []);
+
+  return (
     <>
       {sellDiv && (
         <SellPanel
@@ -78,7 +116,10 @@ const ClassicWatchlist = () => {
               <div className={styles.SelectDiv}>
                 <Select
                   items={countries}
-                  set={(option) => setCountry(option)}
+                  set={(option) => {
+                    cityFetch(option);
+                    setCountry(option);
+                  }}
                   selected={country}
                   style={{
                     background: "rgba(239, 239, 239, 0)",
@@ -89,7 +130,7 @@ const ClassicWatchlist = () => {
                     zIndex: "100",
                     position: "relative",
                     fontSize: "13px",
-                    minWidth:'120px'
+                    minWidth: "120px",
                   }}
                 />
                 {/* <div className={styles.dropdown} ref={dropdownRef}>
@@ -133,7 +174,7 @@ const ClassicWatchlist = () => {
                     zIndex: "100",
                     position: "relative",
                     fontSize: "13px",
-                    minWidth:'120px'
+                    minWidth: "120px",
                   }}
                 />
                 {/* <div className={styles.dropdown2} ref={dropdownRef2}>
@@ -176,7 +217,10 @@ const ClassicWatchlist = () => {
                   onChange={searchEventHandler}
                 />
                 {searchedEstates.length > 0 && (
-                  <SearchComponent itemSelect={searchItemSelect} />
+                  <SearchComponent
+                    itemSelect={searchItemSelect}
+                    items={searchedEstates}
+                  />
                 )}
               </form>
             </div>
@@ -212,6 +256,28 @@ const ClassicWatchlist = () => {
                 </tr>
               </thead>
               <tbody>
+                {data.length > 0 &&
+                  data.map((item) => (
+                    <tr>
+                      <td>
+                        <div className={styles.ActionDiv}>
+                          <img
+                            src={chartIcon}
+                            className={styles.ActionsIcon}
+                            onClick={() => navigate("/userpanel/watchlist")}
+                          />
+                          <img src={buyIcon} className={styles.ActionsIcon} />
+                        </div>
+                      </td>
+                      <td>{item.mint_id}</td>
+                      <td>{item.country_name}</td>
+                      <td>{item.city_name}</td>
+                      <td>{item.buy_price}</td>
+                      <td>{item.sell_price}</td>
+                      <td>{item.lock_position}</td>
+                      <td>{item.PM}</td>
+                    </tr>
+                  ))}
                 <tr>
                   <td>
                     <div className={styles.ActionDiv}>
@@ -257,9 +323,12 @@ const ClassicWatchlist = () => {
               </tbody>
             </table>
             {/*  */}
-            {/* <div className={styles.NoExistDiv}>
-              There is no house to display its information
-            </div> */}
+            {data.length == 0 && (
+              <div className={styles.NoExistDiv}>
+                There is no house to display its information
+              </div>
+            )}
+
             {/*  */}
           </div>
         </div>
