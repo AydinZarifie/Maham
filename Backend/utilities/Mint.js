@@ -21,24 +21,15 @@ exports.generateMint = (country, modifiedCityName) => {
 	// assining the estate Code
 	// let availableMints = country.available_mints;
 	const startsWith = countryCode + cityCode;
-	const pattern = new RegExp(`^${startsWith}`, 'i');
 
 	if (country.available_mints.length === 0) {
-		estateNum = parseInt(country.last_mints[countryCode + cityCode]) + 1;
+		estateNum = parseInt(country.last_mints[startsWith]) + 1;
 		estateCode = estateNum.toString();
 		mint = countryCode + cityCode + estateCode;
 	} else {
-		for (let i = 0; i < country.available_mints.length; i++) {
-			if (pattern.test(country.available_mints[i])) {
-				// If a match is found, print the element and stop searching
-				// estateCode = country.available_mints.splice(i, 1)[0];
-				estateCode = country.available_mints[i];
-				mint = estateCode;
-				break;
-			}
-		}
+		estateCode = country.available_mints[0];
+		mint = estateCode;
 	}
-
 	// return the generated mint
 	return mint;
 };

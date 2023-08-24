@@ -3,6 +3,50 @@ const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 
+exports.getCountries = catchAsync(async (req, res, next) => {
+	const countries = await countryDB
+		.find()
+		.select(['country_name', 'country_logo']);
+
+	if (!user || countries.length === 0) {
+		return next(new AppError('there is no country', 204));
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: countries,
+	});
+});
+
+exports.getCities = catchAsync(async (req, res, next) => {
+	const countryName = req.params.countryName;
+
+	const countries = await countryDB
+		.find()
+		.select(['country_name', 'country_logo']);
+
+	if (!countryName || /^\s*$/.test(countryName)) {
+		return res.status(401).json({
+			message: 'there is no country',
+		});
+	}
+
+	const cities = countryDB
+		.findOne({ country_name: countryName })
+		.select('cities');
+
+	if (!cities || cities.length === 0) {
+		return res.status(401).json({
+			message: 'this country has no city yet',
+		});
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: cities,
+	});
+});
+
 exports.getMyAssets = catchAsync(async (req, res, next) => {
 	const user = await userDB.findOne({ id: req.body.id }).populate({
 		path: 'assets',
@@ -54,8 +98,8 @@ exports.searchEstateByTitle = catchAsync(async (req, res, next) => {
 			estate_title: 1,
 			country_name: 1,
 			city_name: 1,
-			maham_price: 1,
-			_id: 0,
+			// maham_price: 1,
+			_id: 1,
 		})
 		.sort('estate_title');
 

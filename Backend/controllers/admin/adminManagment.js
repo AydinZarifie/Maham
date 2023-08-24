@@ -11,7 +11,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 	if (countries.length === 0) {
 		return res.status(204).json({
 			status: 'success',
-			message: 'there is no countries please create one first',
+			message: 'there is no country please create one first',
 		});
 	}
 
@@ -20,7 +20,6 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 		data: countries,
 	});
 });
-
 /// get all cities of given country
 exports.getAllCities = catchAsync(async (req, res, next) => {
 	if (!req.params.countryName) {
@@ -49,35 +48,17 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 	});
 });
 
-exports.getAllEstates = catchAsync(async (req, res, next) => {
-	const estates = await estateDB
-		.find()
-		.select(['estate_title', 'volume', 'maham_price', 'customer_price']);
-
-	console.log(estates);
-
-	if (estates.length === 0) {
-		return res.status(204).json({
-			message: ' no estate exists in the DB',
-		});
-	}
-
-	return res.status(200).json({
-		status: 'success',
-		data: estates,
-	});
-});
-
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	countryName = formatStr(req.body.countryName);
-	countryLogo = req.files.images[0].path;
-
 	if (!req.body.countryName) {
 		return next(new AppError('no country name provided', 400));
 	}
+
 	if (!req.files.images) {
 		return next(new AppError('no country logo provided', 400));
 	}
+
+	countryName = formatStr(req.body.countryName);
+	countryLogo = req.files.images[0].path;
 
 	let countryCode;
 	try {
@@ -119,12 +100,11 @@ exports.addCity = catchAsync(async (req, res, next) => {
 		// check if selected country actually exists in DB
 		if (!country) {
 			return next(new AppError('country not found', 404));
-
 			// check if cityName is inserted
 		} else if (!req.body.cityName) {
 			return next(new AppError('plesae insert city', 400));
+			// if all is ok , adds the city to cities collection of chosen country
 		}
-
 		const cityExist = country.cities.includes(formatStr(req.body.cityName));
 
 		if (cityExist) {
@@ -133,7 +113,6 @@ exports.addCity = catchAsync(async (req, res, next) => {
 			});
 		}
 
-		// if everything is ok , adds the city to cities collection of chosen country
 		country.cities.push(formatStr(req.body.cityName));
 
 		// Set the 'last_mints' property
@@ -187,9 +166,14 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 		])
 		.sort('createdAt');
 
-	if (!estates || estates.length === 0) {
-		return res.status(200).json({
-			message,
+	console.log();
+	if (!estates) {
+		return res.status(400).json({
+			message: 'country or city does not exist',
+		});
+	} else if (estates.length === 0) {
+		return res.status(204).json({
+			message: 'this city has no Estate yet.',
 		});
 	}
 
@@ -208,53 +192,40 @@ exports.lockUnLockEstate = catchAsync(async (req, res, next) => {
 		return next(new AppError('estate not found', 401));
 	}
 
-	let lockPosition = estate.lock_position;
-	if (lockPosition == false) {
-		lockPosition = true;
-		// if estate is being LOCKED >> set the sellPosition to FALSE
-		sellPosition = false;
-	} else {
-		lockPosition = false;
-	}
-	estate.lock_position = lockPosition;
+	// if estate was LOCKED >> UNLOCK
+	estate.lock_position = !estate.lock_position;
+
+	// set the sell_position to false
+	estate.sell_position = false;
+
 	await estate.save();
 
+	let resMessage;
+	if (estate.lock_position) {
+		resMessage = 'locked';
+	} else {
+		resMessage = 'unLocked';
+	}
+
 	return res.status(200).json({
-		message: 'Success',
+		message: `estate succesfully ${resMessage}`,
 	});
 });
 
 exports.getCountriesInfo = catchAsync(async (req, res, next) => {
-	const countriesInfo = await countryDB
-		.find()
-		.select(['country_logo', 'country_name', 'country_estates'])
-		.populate({
-			path: 'country_estates',
-			select: 'volume',
+	if (req.roles !== 'superadmin') {
+		return res.status(401).json({
+			message: 'Just superadmin can access to this function',
 		});
-
-	if (countriesInfo.length === 0) {
-		return next('no such countries found', 404);
 	}
 
-	const countriesData = countriesInfo.map((country) => {
-		const sumVolume = country.country_estates.reduce((total, estate) => {
-			return total + estate.volume;
-		}, 0);
+	const countriesInfo = await countryDB.find();
 
-		const totalEstates = country.country_estates.length;
-
-		return {
-			country_logo: country.country_logo,
-			country_name: country.country_name,
-			sumVolume,
-			totalEstates,
-		};
-	});
+	console.log(countriesInfo);
 
 	return res.status(200).json({
 		status: 'success',
-		data: countriesData,
+		data: countriesInfo,
 		// data: { countriesInfo, sumVolume, totalEstates },
 	});
 });

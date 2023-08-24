@@ -76,16 +76,20 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		maham_price: Number(req.body.mahamPrice),
 		filter: req.body.filter,
 		mintId: req.body.mintId,
-		volume: req.body.volume,
+		// volume: req.body.volume,
 		unit_number: req.body.numberOfUnit,
+		contract_address:
+			'0x1029c94a34b125409c20d65958c95cf26360b7d61c6a4f9c7f98c7bc6b2ee0eb',
+		landlor_address:
+			'0x1029c94a34b125409c20d65958c95cf26360b7d61c6a4f9c7f98c7bc6b2ee0eb',
 		imageUrl: req.files.images.map((el) => {
 			return el.path;
 		}),
 		introduction_video: req.files.video.map((el) => {
 			return el.path;
 		}),
-
 		// minor_street : req.body. ,
+
 		// postal_code : req.body. ,
 		// estate_view : req.body. ,
 
@@ -157,11 +161,16 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 		maham_price: inputs.maham_price,
 		filter: inputs.filter,
 		mint_id: inputs.mintId,
-		volume: inputs.volume,
+		// volume: inputs.volume,
 		unit_number: inputs.unit_number,
+		landlord_address: inputs.landlor_address,
+		contract_address: inputs.contract_address,
 		// minor_street: inputs.minor_street,
 		// postal_code: inputs.postal_code ,
 		// estate_view: inputs.estate_view ,
+		sell_position: true,
+		lock_position: false,
+		getDocument: false,
 
 		///////////////////////////////////////////////////////////// setRooms :
 		estate_rooms: [
@@ -231,30 +240,24 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 });
 
 exports.searchEstateByFilter = catchAsync(async (req, res) => {
-	console.log(1);
 	const country_name = req.body.countryName;
 	const city_name = req.body.cityName;
 	const low_price = Number(req.body.price[0]);
 	const high_price = Number(req.body.price[1]);
 
-	console.log(country_name);
-	console.log(city_name);
-	console.log(high_price);
-	console.log(low_price);
 	if (!country_name || !city_name) {
 		console.log(2);
 		return res.status(401).json({
 			message: 'Empty field',
 		});
 	}
-	console.log(3);
+
 	const estate = await estateDB.find({
 		customer_price: { $gte: low_price, $lte: high_price },
 		country_name: country_name,
 		city_name: city_name,
 	});
 
-	console.log(estate);
 	return res.status(200).json({
 		message: 'Successfully',
 		estate: estate,
@@ -299,7 +302,13 @@ exports.sendMint = catchAsync(async (req, res, next) => {
 exports.updateEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
 
+	// implement update mint proccess ///////////////////////
 	const estate = await estateDB.findById(estateId);
+
+	if (!estate) {
+		return next(new AppError('no such a estate exists', 400));
+	}
+
 	const oldCountry = estate.country_name;
 	const oldCity = estate.city_name;
 	const oldMint = estate.mint_id;
@@ -383,7 +392,6 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		// security_seystem: req.body. ,
 		// childcare_Center: req.body. ,
 	};
-
 	///////////////////////////////////////////////////////////// setState :
 	// stateId : ,
 	(estate.estate_title = inputs.estate_title),
@@ -397,7 +405,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 		(estate.location = inputs.location),
 		(estate.estate_description = inputs.estate_description),
 		(estate.estate_type = inputs.estate_type),
-		(estate.customer_price = estate.customer_price),
+		(estate.customer_price = inputs.customer_price),
 		(estate.maham_price = inputs.maham_price),
 		(estate.filter = inputs.filter_name),
 		(estate.mint_id = inputs.mintId);
@@ -458,14 +466,12 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 			inputs.loundry_facilities),
 		(estate.estate_facilities[0].parkingLot = inputs.parkingLot),
 		(estate.estate_facilities[0].barbique = inputs.barbique);
-
 	await estate.save();
 
 	if (oldCountry != req.body.countryName) {
 		// 1) if country of the estate has CHANGED >>
 		//    true ( it means CITY of the estate also is CHANGED ) >> update last_mints $ delete the estate.id from country estates
 		//    false >> move to next statement
-		console.log('1');
 		await countryDB.findOneAndUpdate(
 			{ country_name: oldCountry },
 			{
@@ -488,30 +494,27 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
 	return res.status(200).json({
 		status: 'success',
 		message: 'succesfuly updated!',
+		// just for seeing the result and wont be included at the otiginal app
 	});
 });
 
 exports.getEditEstate = catchAsync(async (req, res, next) => {
 	const estateId = req.params.estateId;
-
 	if (!estateId) {
 		return next(new AppError('please provide estate id', 400));
 	}
-
 	const estate = await estateDB.findById(estateId);
-
 	if (!estate) {
 		return next(new AppError('estate wth that ID does not exists', 404));
 	}
-
 	res.status(200).json(estate);
 });
 
 exports.postFilter = catchAsync(async (req, res, next) => {
 	const filterName = formatStr(req.body.filterName);
-	const imageUrl = req.files.images[0].path;
+	// const imageUrl = req.files.images[0].path;
 
-	if (!filterName) {
+	if (!filterName || !imageUrl) {
 		return next(new AppError('filtername or image was empty', 403));
 		// res.status(403).json({ message: 'filtername or image was empty' });
 	}
@@ -566,15 +569,15 @@ exports.deleteEstate = catchAsync(async (req, res, next) => {
 
 	if (!deletingEstate) {
 		return next(new AppError('estate with that Id not found', 404));
-	}
-	console.log(deletingEstate.imageUrl);
-	// await clearImage(deletingEstate.imageUrl);
+  }
+  
+	// console.log(deletingEstate.imageUrl);
+	await clearImage(deletingEstate.imageUrl);
 	await clearVideo(deletingEstate.introduction_video);
-	console.log('success')
 
 	await deletingEstate.deleteOne();
 
-	return res.status(204).json({
+	return res.status(200).json({
 		status: 'success',
 		message: `estate with ID deleted`,
 		data: null,
@@ -595,11 +598,11 @@ exports.searchEestatesByFilterName = async (req, res, next) => {
 	});
 
 	if (results.length === 0) {
-		return res.status(200).json({
+		return res.status(204).json({
 			message: 'nothing matches',
 		});
 	}
-
+	console.log(results);
 	return res.status(200).json({
 		message: 'successfull',
 		result: results.length,
@@ -608,8 +611,19 @@ exports.searchEestatesByFilterName = async (req, res, next) => {
 };
 
 exports.getLockEstates = catchAsync(async (req, res, next) => {
-	const lockedEstates = await estateDB.find({ lock_position: true });
+	const lockedEstates = await estateDB
+		.find({ lock_position: true })
+		.select([
+			'estate_title',
+			'contract_address',
+			'landlord_address',
+			'country_name',
+			'city_name',
+			'customer_price',
+			'lock_position',
+		]);
 
+	console.log(lockedEstates);
 	if (!lockedEstates || lockedEstates.length === 0) {
 		return res.status(200).json({ message: 'There is no locked estate!' });
 	}
