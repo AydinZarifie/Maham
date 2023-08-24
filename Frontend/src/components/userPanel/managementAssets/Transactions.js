@@ -1,12 +1,26 @@
+import { useEffect, useState } from "react";
 import styles from "../../../styles/userPanel.module.css";
 
 const Transactions = () => {
+  const [transactionsData, setTransactionsData] = useState([]);
+
+  useEffect(() => {
+    const fetchTransactionsData = async () => {
+      const response = await fetch("url for data");
+      const data = await response.json();
+      setTransactionsData(data.data);
+    };
+    fetchTransactionsData();
+  }, []);
+
   return (
     <>
       {/* for error */}
-      {/* <div className={styles.NoExistDiv}>
-        There is no transactions to display for you
-      </div> */}
+      {transactionsData.length == 0 && (
+        <div className={styles.NoExistDiv}>
+          There is no transactions to display for you
+        </div>
+      )}
       {/*  */}
       <div className={styles.TableDiv2}>
         <table className={styles.InfoTable2}>
@@ -22,6 +36,22 @@ const Transactions = () => {
             </tr>
           </thead>
           <tbody>
+            {transactionsData.length > 0 &&
+              transactionsData.map((item) => (
+                <tr>
+                  <td>{item.mint_id}</td>
+                  <td>{item.country_name}</td>
+                  <td>{item.city_name}</td>
+                  <td>{item.but_price} ETH</td>
+                  <td>{item.sell_price} ETH</td>
+                  <td>
+                    <p className={styles.BenefitGreenP}>
+                      {item.benefit_loss} ETH
+                    </p>
+                  </td>
+                  <td>{item.date}</td>
+                </tr>
+              ))}
             <tr>
               <td>34879627</td>
               <td>United State</td>
