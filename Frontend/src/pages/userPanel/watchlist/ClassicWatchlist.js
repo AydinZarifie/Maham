@@ -325,7 +325,7 @@ const ClassicWatchlist = () => {
             {/*  */}
             {data.length == 0 && (
               <div className={styles.NoExistDiv}>
-                There is no house to display its information
+                There is no estate to display its information
               </div>
             )}
 
