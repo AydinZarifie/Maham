@@ -1,18 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const adminPanelController = require('../../controllers/admin/adminPanel');
+const verifyToken = require("../../middleware/verifyToken");
 
-router.get('/panel/getAdmins', adminPanelController.getAllAdmins);
-router.post('/panel/searchName', adminPanelController.searchAdminByName);
-router.post(
-	'/panel/getAdminsWithFilter',
-	adminPanelController.searchAdminByFilter
-);
-router.post('/panel/getAdmin', adminPanelController.getAdmin);
+router.get('/panel/getAdmins', verifyToken ,adminPanelController.getAllAdmins);
+router.post('/panel/searchName',  verifyToken,adminPanelController.searchAdminByName);
+router.post('/panel/getAdminsWithFilter', verifyToken,adminPanelController.searchAdminByFilter);
+router.post('/panel/getAdmin' ,  verifyToken,adminPanelController.getAdmin);	
 router
 	.route('/panel/editAdmin/:id')
-	.get(adminPanelController.getEditAdmin)
-	.put(adminPanelController.updateAdmin)
-	.delete(adminPanelController.deleteAdmin);
+	.get(verifyToken,adminPanelController.getEditAdmin)
+	.put(verifyToken,adminPanelController.updateAdmin)
+	.delete(verifyToken,adminPanelController.deleteAdmin);
 
 module.exports = router;

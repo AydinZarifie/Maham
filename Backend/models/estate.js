@@ -305,10 +305,9 @@ const estateSchema = new mongoose.Schema(
 );
 
 estateSchema.pre('save', async function (next) {
-	// aosdasdasd
-	// if (!this.isNew) {
-	// 	return next();
-	// }
+	if (!this.isModified('mint_id')) {
+		next();
+	}
 
 	const country = await countryDB.findOne({
 		country_name: this.country_name,
@@ -341,7 +340,7 @@ estateSchema.pre('save', async function (next) {
 			[startsWith]: `${estateNum}`,
 		};
 
-		// 1) update the lastMint object of the country >> just if document is NEW
+		// 1) update the lastMint object of the country >> only if document is NEW
 		country.last_mints = obj;
 	}
 
@@ -377,9 +376,10 @@ estateSchema.pre('save', async function (next) {
 });
 
 estateSchema.pre('save', function (next) {
-	this.nesbat = (
-		parseFloat(this.customer_price) / parseFloat(this.maham_price)
-	).toFixed(2);
+	if (this.isModified('customer_price') || this.isModified('maham_price'))
+		this.nesbat = (
+			parseFloat(this.customer_price) / parseFloat(this.maham_price)
+		).toFixed(2);
 	next();
 });
 

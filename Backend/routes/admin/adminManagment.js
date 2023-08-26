@@ -13,10 +13,6 @@ router
 	.get(managementController.getAllCities);
 
 router
-	.route('/managment/getEstates')
-	.get(verifyToken, managementController.getAllEstates);
-
-router
 	.route('/managment/addCountry')
 	.post(verifyToken, managementController.postAddCountry);
 
