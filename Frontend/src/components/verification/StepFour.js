@@ -44,7 +44,7 @@ const StepFour = (props) => {
       </span>
 
       <div className={styles.Container}>
-        <div className={styles.inputfield}>
+        {/* <div className={styles.inputfield}> */}
           <OTPInput
             value={otp}
             onChange={setOtp}
@@ -56,7 +56,7 @@ const StepFour = (props) => {
             containerStyle={styles.inputfield}
             inputStyle={styles.input}
           />
-        </div>
+        {/* </div> */}
       </div>
 
       <a href="#"> Didn't get code ? Click to resend </a>

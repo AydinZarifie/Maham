@@ -86,6 +86,11 @@ const DailyDeals = lazy(() => import("./pages/userPanel/watchlist/DailyDeals"));
 const ChartWatchlist = lazy(() =>
   import("./pages/userPanel/watchlist/ChartWatchlist")
 );
+const Reports = lazy(() => import("./pages/userPanel/Reports"));
+const LockEstate = lazy(() => import("./pages/userPanel/reports/LockEstate"));
+const GetDocument = lazy(() => import("./pages/userPanel/reports/GetDocument"));
+const UserLogin = lazy(() => import("./pages/UserLogin"));
+const UserSignup = lazy(() => import("./pages/UserSignup"));
 
 const router = createBrowserRouter([
   {
@@ -93,6 +98,22 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "login",
+    element: (
+      <Suspense>
+        <UserLogin />
+      </Suspense>
+    ),
+  },
+  {
+    path: "signup",
+    element: (
+      <Suspense>
+        <UserSignup />
       </Suspense>
     ),
   },
@@ -344,6 +365,32 @@ const router = createBrowserRouter([
             element: (
               <Suspense>
                 <ChartWatchlist />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "reports",
+        element: (
+          <Suspense>
+            <Reports />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense>
+                <LockEstate />
+              </Suspense>
+            ),
+          },
+          {
+            path: "getdocument",
+            element: (
+              <Suspense>
+                <GetDocument />
               </Suspense>
             ),
           },

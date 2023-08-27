@@ -9,7 +9,7 @@ import { forwardRef, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Navigation = forwardRef(
-  ({ navRef, navOverlayRef, closeNavHandler, tutorial,openProfile }, ref) => {
+  ({ navRef, navOverlayRef, closeNavHandler, tutorial, openProfile }, ref) => {
     const managementAssets = useRef();
     const reports = useRef();
     const arrow1 = useRef();
@@ -146,7 +146,13 @@ const Navigation = forwardRef(
             </div>
             <div className={styles.ReportsItem} ref={reports}>
               <div className={styles.managementAssets2}>
-                <div className={styles.ReportsItems}>- Lock state</div>
+                <Link
+                  onClick={closeNavHandler}
+                  to="reports"
+                  className={styles.ReportsItems}
+                >
+                  - Lock Estate
+                </Link>
                 {tutorial && (
                   <div className={styles.questionMarkMenuLittle}>
                     <p>?</p>
@@ -154,7 +160,13 @@ const Navigation = forwardRef(
                 )}
               </div>
               <div className={styles.managementAssets2}>
-                <div className={styles.ReportsItems2}>- Get document</div>
+                <Link
+                  className={styles.ReportsItems2}
+                  onClick={closeNavHandler}
+                  to="reports/getdocument"
+                >
+                  - Get document
+                </Link>
                 {tutorial && (
                   <div className={styles.questionMarkMenuLittle}>
                     <p>?</p>
