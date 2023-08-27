@@ -1,8 +1,11 @@
 import styles from "../styles/userLoginAndSignup.module.css";
 
 import logoIcon from "../images/Maham2.png";
+import showPasswordIcon from "../images/eye-alt-svgrepo-com.svg";
+import hidePasswordIcon from "../images/eye-slash-alt-svgrepo-com.svg";
 import backgroundImage from "../images/Frame 110 (7) 1.png";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const UserSignup = () => {
   const [data, setData] = useState({
@@ -28,7 +31,7 @@ const UserSignup = () => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submitLogin = async () => {
+  const submitSignup = async () => {
     const formData = new FormData();
     formData.append("firstname", data.firstname);
     formData.append("lastname", data.lastname);
@@ -77,9 +80,9 @@ const UserSignup = () => {
             If you already have an account, you can log in
           </p>
           <div className={styles.LogInBtnDiv}>
-            <button className={styles.LogInBtn} onClick="LogInShow()">
-              Log in
-            </button>
+            <Link to="/login">
+              <button className={styles.LogInBtn}>Log in</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -102,66 +105,81 @@ const UserSignup = () => {
             <div className={styles.inputContainer}>
               <input
                 type="text"
-                id="Email"
-                value=""
+                id="firstname"
+                name="firstname"
+                value={data.firstname}
+                onChange={eventHandler}
                 className={styles.Inputs}
               />
-              <label className={styles.Label} for="Email">
+              <label className={styles.Label} htmlFor="firstname">
                 <div className={styles.Text}>First name</div>
               </label>
             </div>
             <div className={styles.inputContainer}>
               <input
                 type="text"
-                id="Email"
-                value=""
+                id="lastname"
+                name="lastname"
+                value={data.lastname}
+                onChange={eventHandler}
                 className={styles.Inputs}
               />
-              <label className={styles.Label} for="Email">
+              <label className={styles.Label} htmlFor="lastname">
                 <div className={styles.Text}>Last name</div>
               </label>
             </div>
           </div>
           <div className={styles.inputContainer}>
-            <input type="email" id="Email" value="" className={styles.Inputs} />
-            <label className={styles.Label} for="Email">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={data.email}
+              onChange={eventHandler}
+              className={styles.Inputs}
+            />
+            <label className={styles.Label} htmlFor="email">
               <div className={styles.Text}>Email</div>
             </label>
           </div>
           <div className={styles.inputContainer}>
             <input
-              type="password"
-              id="Email"
-              value=""
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={data.password}
+              onChange={eventHandler}
               className={`${styles.Inputs} ${styles.PasswordInputs}`}
             />
-            <label className={styles.Label} for="Email">
+            <label className={styles.Label} htmlFor="password">
               <div className={styles.Text}>Password</div>
             </label>
             <img
-              src="../public/img/eye-alt-svgrepo-com.svg"
+              src={showPassword ? hidePasswordIcon : showPasswordIcon}
               className={styles.ShowAndHideIcon}
-              onClick="togglePasswordVisibility()"
+              onClick={toggleShowPassword}
             />
           </div>
           <div className={styles.inputContainer}>
             <input
-              type="password"
-              id="Email"
-              value=""
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
+              value={data.confirmPassword}
+              onChange={eventHandler}
               className={`${styles.Inputs} ${styles.PasswordInputs}`}
             />
-            <label className={styles.Label} for="Email">
+            <label className={styles.Label} htmlFor="confirmPassword">
               <div className={styles.Text}>Confirm password</div>
             </label>
             <img
-              src="../public/img/eye-alt-svgrepo-com.svg"
+              src={showConfirmPassword ? hidePasswordIcon : showPasswordIcon}
               className={styles.ShowAndHideIcon}
-              onClick="togglePasswordVisibility()"
+              onClick={toggleShowConfirmPassword}
             />
           </div>
           <div className={styles.SinUpBtnDiv}>
-            <button className={styles.SignUpBtn}>
+            <button className={styles.SignUpBtn} onClick={submitSignup}>
               <div className={styles.InsideBtn}>Sign up</div>
             </button>
           </div>
