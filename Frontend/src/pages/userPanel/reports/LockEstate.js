@@ -1,4 +1,5 @@
 import styles from "../../../styles/reports.module.css";
+import profileIcon from "../../../images/profile-circle-svgrepo-com.svg";
 
 const LockEstate = () => {
   return (
@@ -6,26 +7,71 @@ const LockEstate = () => {
       <table className={styles.InfoTable2}>
         <thead>
           <tr>
+            <th>Title</th>
             <th>Mint ID</th>
             <th>Country</th>
             <th>City</th>
-            <th>Buy Price</th>
-            <th>Sell Price</th>
-            <th>Benefit / Loss</th>
-            <th>Date</th>
+            <th>Status</th>
+            <th>Information</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>34879627</td>
-            <td>United State</td>
-            <td>California</td>
-            <td>258900 ETH</td>
-            <td>304800 ETH</td>
+            <td>beach home in ohaio 678</td>
+            <td>99076434</td>
+            <td>united state</td>
+            <td>california</td>
             <td>
-              <p className={styles.BenefitGreenP}>2589 ETH</p>
+              <div className={styles.rejectDiv}>reject</div>
             </td>
-            <td>2024/09/14</td>
+            <td>
+              <img className={styles.infoIcon} src={profileIcon} />
+            </td>
+            <td></td>
+          </tr>
+
+          <tr class={styles.alertRow}>
+            <td
+              colspan="7"
+              style={{ padding: "0px", border: "none" }}
+              className={styles.AlertTd}
+            >
+              <div className={styles.AlertDiv}>
+                <p>
+                  The reason for the rejection of your document is because of...
+                  so your document is rejected
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>beach home in ohaio 678</td>
+            <td>99076434</td>
+            <td>united state</td>
+            <td>california</td>
+            <td>
+              <div className={styles.acceptDiv}>accept</div>
+            </td>
+            <td>
+              <img className={styles.infoIcon} src={profileIcon} />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>beach home in ohaio 678</td>
+            <td>99076434</td>
+            <td>united state</td>
+            <td>california</td>
+            <td>
+              <div className={styles.pendingDiv}>pending</div>
+            </td>
+            <td>
+              <img className={styles.infoIcon} src={profileIcon} />
+            </td>
+            <td>
+              <button className={styles.cancelBtn}>cancel</button>
+            </td>
           </tr>
         </tbody>
       </table>

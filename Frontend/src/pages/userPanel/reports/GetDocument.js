@@ -6,28 +6,176 @@ const GetDocument = () => {
       <table className={styles.InfoTable2}>
         <thead>
           <tr>
+            <th>Title</th>
             <th>Mint ID</th>
             <th>Country</th>
             <th>City</th>
-            <th>Buy Price</th>
-            <th>Sell Price</th>
-            <th>Benefit / Loss</th>
-            <th>Date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>34879627</td>
-            <td>United State</td>
-            <td>California</td>
-            <td>258900 ETH</td>
-            <td>304800 ETH</td>
+            <td>Beach home in ohaio 87</td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
             <td>
-              <p className={styles.BenefitGreenP}>2589 ETH</p>
+              <button className={styles.GetDocumentBtn}>get document</button>
             </td>
-            <td>2024/09/14</td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87</td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87</td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
           </tr>
-          
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>{" "}
+          <tr>
+            <td>Beach home in ohaio 87 </td>
+            <td>98750341</td>
+            <td>United state</td>
+            <td>california</td>
+            <td>
+              <button className={styles.GetDocumentBtn}>get document</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
