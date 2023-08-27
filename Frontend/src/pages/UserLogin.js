@@ -54,6 +54,18 @@ const UserLogin = () => {
     }
   };
 
+  const googleLogin = async (res) => {
+    const formData = new FormData();
+    formData.append("res", res);
+    const response = await fetch("url", {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      navigate("/userpanel");
+    }
+  };
+
   return (
     <>
       <div className={styles.LogIn}>
@@ -149,10 +161,11 @@ const UserLogin = () => {
             <div className={styles.googleSignInBtn}>
               {/* <img src={googleIcon} className={styles.googleIcon} />
               sign in with google */}
-              <GoogleOAuthProvider  clientId="">
+              <GoogleOAuthProvider clientId="">
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     console.log(credentialResponse);
+                    googleLogin(credentialResponse);
                   }}
                   onError={() => {
                     console.log("Login Failed");
