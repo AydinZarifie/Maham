@@ -168,7 +168,7 @@
   color: rgb(62, 62, 62);
   border-bottom: 1px solid #dbdada;
   font-size: 14px;
-  min-width: 110px;
+  min-width: 150px;
   position: sticky;
   top: 0px;
 }
@@ -210,7 +210,7 @@
     text-align: center;
     float: left;
     font-size: 14px;
-    width: 130px;
+    width: 148px;
     padding: 12px 15px;
     height: 17px;
     color: #1c1c1c;
@@ -241,7 +241,7 @@
     text-align: center;
     float: left;
     font-size: 14px;
-    width: 130px;
+    width: 148px;
     padding: 12px 15px;
     height: 17px;
 
@@ -263,7 +263,7 @@
     z-index: 3;
     position: absolute;
     margin-top: 10px;
-    margin-left: 130px;
+    margin-left: 148px;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -312,7 +312,7 @@
     text-align: center;
     float: left;
     font-size: 12px;
-    width: 110px;
+    width: 120px;
     padding: 12px 15px;
     height: 17px;
     color: #1c1c1c;
@@ -342,7 +342,7 @@
     text-align: center;
     float: left;
     font-size: 12px;
-    width: 110px;
+    width: 120px;
     padding: 12px 15px;
     height: 17px;
 
@@ -364,7 +364,7 @@
     z-index: 3;
     position: absolute;
     margin-top: 10px;
-    margin-left: 110px;
+    margin-left: 125px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -524,25 +524,20 @@
   color: #ffffff;
   border-radius: 4px;
   padding: 6px;
-  width: 60%;
-  margin-left: 20%;
-  cursor: pointer;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  transition: 0.2s;
-}
-.rejectDiv:hover {
+  width: 50%;
+  margin-left: 25%;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  transition: 0.2s;
 }
 
 .AlertDiv {
-  max-height: 45px;
+  max-height: 0px;
   overflow: hidden;
   border: 1px solid #dbdbdb;
   border-top: none;
   transition: 0.3s;
+  background-color: #e1e5e8;
 }
 .acceptDiv {
   position: relative;
@@ -550,9 +545,10 @@
   color: #ffffff;
   border-radius: 4px;
   padding: 6px;
-  width: 60%;
-  margin-left: 20%;
-  cursor: pointer;
+  width: 50%;
+  margin-left: 25%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .pendingDiv {
   position: relative;
@@ -560,26 +556,23 @@
   color: #ffffff;
   border-radius: 4px;
   padding: 6px;
-  width: 60%;
-  margin-left: 20%;
-  cursor: pointer;
-}
-
-.cancelBtn {
-  opacity: 0.8;
-  border: 1px solid #ff2121;
-  border-radius: 4px;
-  padding: 6px 14px;
-  background-color: #ff2121;
-  color: #fff;
-  font: "inter";
-  cursor: pointer;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  transition: 0.2s;
-}
-.cancelBtn:hover {
+  width: 50%;
+  margin-left: 25%;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  opacity: 1;
+}
+
+.EspDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  padding-left: 64px;
+  overflow: hidden;
+}
+.deleteIcon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }

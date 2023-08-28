@@ -151,7 +151,7 @@ const Navigation = forwardRef(
                   to="reports"
                   className={styles.ReportsItems}
                 >
-                  - Lock Estate
+                  - Get document
                 </Link>
                 {tutorial && (
                   <div className={styles.questionMarkMenuLittle}>
@@ -163,9 +163,9 @@ const Navigation = forwardRef(
                 <Link
                   className={styles.ReportsItems2}
                   onClick={closeNavHandler}
-                  to="reports/getdocument"
+                  to="reports/documentstatus"
                 >
-                  - Get document
+                  - Document status
                 </Link>
                 {tutorial && (
                   <div className={styles.questionMarkMenuLittle}>

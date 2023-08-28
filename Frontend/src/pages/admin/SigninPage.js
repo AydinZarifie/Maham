@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import image from "../../images/desktop-wallpaper-architecture-building-minimalism-glass-design-construction-facade-thumbnail.jpg";
-import Cookies from "js-cookie";
 import {
   encodeAndStoreInCookies,
   encodeAndStoreInLocalStorage,
