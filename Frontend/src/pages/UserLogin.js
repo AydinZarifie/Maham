@@ -55,11 +55,14 @@ const UserLogin = () => {
   };
 
   const googleLogin = async (res) => {
-    const formData = new FormData();
-    formData.append("res", res);
+    // const formData = new FormData();
+    // formData.append("res", res);
     const response = await fetch("url", {
       method: "POST",
-      body: formData,
+      body: JSON.stringify(res),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
     if (response.ok) {
       navigate("/userpanel");

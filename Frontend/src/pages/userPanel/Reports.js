@@ -1,8 +1,9 @@
 import styles from "../../styles/reports.module.css";
 
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useOutletContext } from "react-router-dom";
 
 const Reports = () => {
+  const { tutorial } = useOutletContext();
   return (
     <div className={styles.TableMainDiv}>
       <div className={styles.MenuDiv}>
@@ -17,7 +18,7 @@ const Reports = () => {
             >
               Assets
             </NavLink>
-            {/* {tutorial && <div className={styles.questionMarkCircle}>?</div>} */}
+            {tutorial && <div className={styles.questionMarkCircle}>?</div>}
           </div>
           <div>
             <NavLink
@@ -28,7 +29,7 @@ const Reports = () => {
             >
               Transaction
             </NavLink>
-            {/* {tutorial && <div className={styles.questionMarkCircle}>?</div>} */}
+            {tutorial && <div className={styles.questionMarkCircle}>?</div>}
           </div>
         </div>
       </div>
