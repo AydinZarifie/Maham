@@ -7,9 +7,9 @@ const adminDB = require('../../models/admin');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 const sendEmail = require('./../../utilities/sendEmail');
-const generateToken = require('./../../utilities/token/generateToken');
-const verifyRefreshToken = require('./../../utilities/token/verifyRefreshToken');
-const signAccessToken = require('./../../utilities/token/signAccessToken');
+const generateToken = require('./../../utilities/token/admin/generateToken');
+const verifyRefreshToken = require('../../utilities/token/admin/verifyRefreshToken');
+const signAccessToken = require('./../../utilities/token/admin/signAccessToken');
 const { formatStr } = require('../../utilities/mint.js');
 //////////////////////////////////////////////////////////////////
 
@@ -66,7 +66,7 @@ exports.signupAdmin = async (req, res, next) => {
 	}
 };
 
-exports.loginAdmin = catchAsync(async (req, res, next) => {
+exports.	loginAdmin = catchAsync(async (req, res, next) => {
 	// 1) validate the request body
 	
 	const error = validationResult(req);
@@ -134,7 +134,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		token: accessToken,
-		adminId: admin._id,
 		adminData : adminInfo 
 	});
 });

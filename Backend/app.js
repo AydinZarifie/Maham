@@ -13,7 +13,8 @@ const managmentPage_Router = require("./routes/admin/adminManagment");
 const adminAuth_Router = require("./routes/admin/adminAuth");
 const adminPanel_Router = require("./routes/admin/adminPanel");
 const userAuthorization_Router = require("./routes/user/userAuthorization");
-const userPanel_Router = require("./routes/user/userPanel")
+const userPanel_Router = require("./routes/user/userPanel");
+const userAuth_Router = require("./routes/user/userAuth")
 //////////////////////////////////////////////
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -132,7 +133,9 @@ app.use(
 app.use
       ("/user"
       , userAuthorization_Router
-      , userPanel_Router);
+      , userPanel_Router
+      , userAuth_Router
+      );
 
 
 mongoose.connect("mongodb://127.0.0.1:27017/Maham").then(() => {

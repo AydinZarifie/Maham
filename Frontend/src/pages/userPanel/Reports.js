@@ -1,10 +1,9 @@
-import styles from "../../styles/userPanel.module.css";
+import styles from "../../styles/reports.module.css";
 
 import { NavLink, Outlet, useOutletContext } from "react-router-dom";
 
-const ManagementAssets = () => {
+const Reports = () => {
   const { tutorial } = useOutletContext();
-
   return (
     <div className={styles.TableMainDiv}>
       <div className={styles.MenuDiv}>
@@ -26,7 +25,7 @@ const ManagementAssets = () => {
               className={({ isActive }) =>
                 isActive ? styles.tab : styles.tab2
               }
-              to="transactions"
+              to="getdocument"
             >
               Transaction
             </NavLink>
@@ -39,4 +38,4 @@ const ManagementAssets = () => {
   );
 };
 
-export default ManagementAssets;
+export default Reports;

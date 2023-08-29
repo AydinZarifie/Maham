@@ -10,6 +10,7 @@ import {
   BarElement,
   Title,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Pie, Bar } from "react-chartjs-2";
 ChartJS.register(
   CategoryScale,
@@ -133,12 +134,26 @@ export const data2 = {
 };
 
 const Assets = () => {
+  const [assetsTableData, setAssetsTableData] = useState([]);
+
+  useEffect(() => {
+    const fetchAssetsTableData = async () => {
+      const response = await fetch("url for data");
+      const data = await response.json();
+      setAssetsTableData(data.data);
+    };
+    fetchAssetsTableData();
+  }, []);
+
   return (
     <>
       {/* for error */}
-      {/* <div className={styles.NoExistDiv}>
-        There is no assets to display for you
-      </div> */}
+      {assetsTableData.length == 0 && (
+        <div className={styles.NoExistDiv}>
+          There is no assets to display for you
+        </div>
+      )}
+
       {/*  */}
       <div className={styles.TableDiv}>
         <table className={styles.InfoTable}>
@@ -154,6 +169,19 @@ const Assets = () => {
             </tr>
           </thead>
           <tbody>
+            {assetsTableData.length > 0 &&
+              assetsTableData.map((item) => (
+                <tr>
+                  <td>{item.mint_id}</td>
+                  <td>{item.country_name}</td>
+                  <td>{item.city_name}</td>
+                  <td>{item.pm}</td>
+                  <td>{item.but_price} ETH</td>
+                  <td>{item.sell_price} ETH</td>
+                  <td>{item.lock_position}</td>
+                </tr>
+              ))}
+
             <tr>
               <td>34879627</td>
               <td>United State</td>

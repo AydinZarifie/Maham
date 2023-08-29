@@ -24,7 +24,20 @@ const SearchComponent = (props) => {
         <h5>Country</h5>
         <h5>City</h5>
       </div>
-      <div className={styles.SearchOpenDivItem} onClick={()=>props.itemSelect("bech home")}>
+      {props.items.length > 0 && props.items.map((item) => (
+        <div
+          className={styles.SearchOpenDivItem}
+          onClick={() => props.itemSelect(item.name)}
+        >
+          <h5>{item.name}</h5>
+          <h5>{item.country_name}</h5>
+          <h5>{item.city_name}</h5>
+        </div>
+      ))}
+      <div
+        className={styles.SearchOpenDivItem}
+        onClick={() => props.itemSelect("bech home")}
+      >
         <h5>bech home</h5>
         <h5>United state</h5>
         <h5>California</h5>

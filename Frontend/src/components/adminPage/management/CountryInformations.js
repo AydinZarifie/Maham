@@ -28,7 +28,7 @@ const CountryInformations = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.data.length>0 && props.data.map((item) => (
+            {props.data && props.data.map((item) => (
               <CountryInformationItem key={item.id} {...item} />
             ))}
           </tbody>
