@@ -5,9 +5,11 @@ import showPasswordIcon from "../images/eye-alt-svgrepo-com.svg";
 import hidePasswordIcon from "../images/eye-slash-alt-svgrepo-com.svg";
 import backgroundImage from "../images/Frame 110 (7) 1.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserSignup = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     firstname: "",
     lastname: "",
@@ -17,6 +19,7 @@ const UserSignup = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState();
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -32,17 +35,30 @@ const UserSignup = () => {
   };
 
   const submitSignup = async () => {
+    if (
+      data.firstname == "" ||
+      data.lastname == "" ||
+      data.email == "" ||
+      data.password == "" ||
+      data.confirmPassword == ""
+    ) {
+      return;
+    }
     const formData = new FormData();
     formData.append("firstname", data.firstname);
     formData.append("lastname", data.lastname);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
-    const response = await fetch("url", {
+    const response = await fetch("http://localhost:5000/user/auth/signup", {
       method: "POST",
       body: formData,
     });
     if (response.ok) {
+      navigate("/login");
+    }
+    if (response.status == 403) {
+      setError("Email already exists");
     }
   };
 
@@ -98,8 +114,13 @@ const UserSignup = () => {
           <h5 className={styles.SignUpInfo2}>
             To create your account, please provide the following information:
           </h5>
-          <h5 className={styles.SignUpInfo3} onClick="LogInShow()">
-            Do you already have an account? click here
+          <h5 className={styles.SignUpInfo3}>
+            <Link
+              style={{ textDecoration: "none", color: "black" }}
+              to="/login"
+            >
+              Do you already have an account? click here
+            </Link>
           </h5>
           <div className={styles.FAndLDiv}>
             <div className={styles.inputContainer}>

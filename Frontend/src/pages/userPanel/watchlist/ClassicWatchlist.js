@@ -33,7 +33,7 @@ const ClassicWatchlist = () => {
     setDividerPosition(newDividerPosition);
   };
 
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState([{country_name:"iran"},{country_name:"UK"}]);
   const [cities, setCities] = useState([]);
   const [data, setData] = useState([]);
 
@@ -64,7 +64,7 @@ const ClassicWatchlist = () => {
   };
 
   const cityFetch = async (name) => {
-    let response = await fetch("url for cities" + name);
+    let response = await fetch("http://localhost:5000/user/panel/getCities/" + name);
     const data = await response.json();
     setCities(data.data);
   };
@@ -74,7 +74,7 @@ const ClassicWatchlist = () => {
       const formData = new FormData();
       name = name.trim();
       formData.append("name", name);
-      let response = await fetch("url for search", {
+      let response = await fetch("http://localhost:5000/user/panel/search/title", {
         method: "POST",
         body: formData,
       });
@@ -85,7 +85,7 @@ const ClassicWatchlist = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const response = await fetch("url for countries");
+      const response = await fetch("http://localhost:5000/user/panel/getCountries");
       const data = await response.json();
       setCountries(data.data);
     };
@@ -115,7 +115,7 @@ const ClassicWatchlist = () => {
             <div className={styles.FirstPart}>
               <div className={styles.SelectDiv}>
                 <Select
-                  items={countries}
+                  items={countries.map(item=>item.country_name)}
                   set={(option) => {
                     cityFetch(option);
                     setCountry(option);

@@ -186,7 +186,7 @@
     border: none;
     background: linear-gradient(0.35turn, #ff8797, #ef4057, #ef4077);
     border-radius: 5px;
-    width: 190px;
+    width: 180px;
     height: 42px;
     color: #ef4057;
     font: "inter";
@@ -206,7 +206,7 @@
   .InsideBtnLogIn {
     padding: 0;
     position: relative;
-    width: 186px;
+    width: 176px;
     height: 93%;
     margin-top: 1.6px;
     background-color: #fff;
@@ -252,6 +252,15 @@
     /* width: 190px; */
     /* transition: 0.3s; */
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  }
+  .ForgotP {
+    position: relative;
+    font-size: 13px;
+    text-decoration: none;
+    color: #5b5b5b;
+    transition: 0.3s;
+    top: 6%;
+    padding-bottom: 30px;
   }
 }
 
@@ -428,6 +437,15 @@
     width: 90%;
     transition: 0.3s; */
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  }
+  .ForgotP {
+    position: relative;
+    font-size: 13px;
+    text-decoration: none;
+    color: #5b5b5b;
+    transition: 0.3s;
+    top:42%;
+    padding-bottom: 30px;
   }
 }
 
@@ -665,7 +683,7 @@
   text-decoration: underline;
   color: #262626;
 }
-.ForgotP {
+/* .ForgotP {
   position: relative;
   font-size: 13px;
   text-decoration: none;
@@ -673,7 +691,7 @@
   transition: 0.3s;
   top: 6%;
   padding-bottom: 30px;
-}
+} */
 
 .VerificationOverlay {
   display: block;

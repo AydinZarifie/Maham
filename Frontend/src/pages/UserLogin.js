@@ -4,11 +4,11 @@ import logoIcon from "../images/Maham2.png";
 import backgroundImage from "../images/Frame 110 (7) 1.png";
 import showPasswordIcon from "../images/eye-alt-svgrepo-com.svg";
 import hidePasswordIcon from "../images/eye-slash-alt-svgrepo-com.svg";
-import googleIcon from "../images/google-color-svgrepo-com.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import Timer from "../components/general/Timer";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -17,6 +17,8 @@ const UserLogin = () => {
   const [otp, setOtp] = useState("");
   const [confirmation, setConfirmation] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -28,29 +30,60 @@ const UserLogin = () => {
   };
 
   const submitLogin = async () => {
+    if (data.email == "" || !data.email.includes("@") || data.password == "") {
+      return;
+    }
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-    const response = await fetch("url", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "http://localhost:5000/user/auth/verification",
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        body: formData,
+      },
+      { withCredentials: true }
+    );
     if (response.ok) {
+      setCodeSent(true);
+      setError();
       setConfirmation(true);
+    }
+    if (response.status == 401) {
+      setError("Email or password is wrong");
     }
   };
 
   const submitVerify = async () => {
+    if (
+      data.email == "" ||
+      !data.email.includes("@") ||
+      data.password == "" ||
+      otp == ""
+    ) {
+      return;
+    }
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("code", otp);
-    const response = await fetch("url", {
-      method: "POST",
-      body: formData,
-    });
+    formData.append("verificationCode", otp);
+    const response = await fetch(
+      "http://localhost:5000/user/auth/login",
+      {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+        credentials: "include",
+      },
+      { withCredentials: true }
+    );
     if (response.ok) {
       navigate("/userpanel");
+    }
+    if (response.status == 403) {
+      setError("Code is invalid");
     }
   };
 
@@ -61,8 +94,8 @@ const UserLogin = () => {
       method: "POST",
       body: JSON.stringify(res),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
     if (response.ok) {
       navigate("/userpanel");
@@ -120,8 +153,13 @@ const UserLogin = () => {
               To login to the user account , please provide the following
               information:
             </h5>
-            <h5 className={styles.SignUpInfo3} onClick="SignUpShow()">
-              Don't have an account? click here
+            <h5 className={styles.SignUpInfo3}>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/signup"
+              >
+                Don't have an account? click here
+              </Link>
             </h5>
             <div className={styles.inputContainer}>
               <input
@@ -216,7 +254,15 @@ const UserLogin = () => {
                 />
               </div>
 
-              <a href="#"> Didn't get code ? Click to resend </a>
+              <a href="#">
+                Didn't get code ?{" "}
+                {codeSent ? (
+                  <Timer onFinish={() => setCodeSent(false)} />
+                ) : (
+                  "Click"
+                )}{" "}
+                to resend
+              </a>
               <button className={styles.VerifyBtn} onClick={submitVerify}>
                 <div className={styles.InsideVerifyBtn}>verify</div>
               </button>
