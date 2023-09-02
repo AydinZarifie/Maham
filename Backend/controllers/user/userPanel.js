@@ -1,5 +1,6 @@
-const userDB = require('../../models/user');
+const countryDB = require('../../models/country');
 const estateDB = require('../../models/estate');
+const userDB = require('../../models/user');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 
@@ -8,7 +9,7 @@ exports.getCountries = catchAsync(async (req, res, next) => {
 		.find()
 		.select(['country_name', 'country_logo']);
 
-	if (!user || countries.length === 0) {
+	if (countries.length === 0) {
 		return next(new AppError('there is no country', 204));
 	}
 
@@ -294,5 +295,26 @@ exports.cancelSellPosition = catchAsync(async (req, res, next) => {
 
 	return res.status(200).json({
 		message: 'Successfully canceled SELL position',
+	});
+});
+
+exports.likeEstate = catchAsync(async (req, res, next) => {
+	const user = await userDB.findByIdAndUpdate(
+		req.params.userId,
+		{ $push: { liked_estates: req.body.estateId } },
+		{ new: true }
+	);
+
+	if (!user || !req.body.estateId) {
+		return next(
+			new AppError(
+				"user with that id does not exists, or estateId didn't provided",
+				400
+			)
+		);
+	}
+
+	return res.status(200).json({
+		message: 'Liked!',
 	});
 });

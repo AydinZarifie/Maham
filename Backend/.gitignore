@@ -1,4 +1,3 @@
 /node_modules
 *.jpg
 /controllers/user/userProfile.js
-routes/user/userProfile.js
