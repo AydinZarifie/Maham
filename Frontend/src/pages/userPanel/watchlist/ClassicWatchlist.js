@@ -212,7 +212,8 @@ const ClassicWatchlist = () => {
                   type="text"
                   className={styles.searchBox}
                   id="searchBox"
-                  placeholder="&#xF002;    search ... "
+                  placeholder="&#xF002;  Search"
+                  style={{fontFamily:"Arial, FontAwesome"}}
                   value={search}
                   onChange={searchEventHandler}
                 />

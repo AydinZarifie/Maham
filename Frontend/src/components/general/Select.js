@@ -35,7 +35,7 @@ const Select = (props) => {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <div
-        className={`${styles.selection} ${props.invalid ? styles.invalid:''}`}
+        className={`${styles.selection} ${props.invalid ? styles.invalid : ""}`}
         style={props.style}
         onClick={toggleDropdown}
       >
@@ -47,14 +47,20 @@ const Select = (props) => {
           style={
             showDropdown
               ? { transform: "rotate(180deg)", paddingLeft: "8px" }
-              : {  paddingLeft: "8px" }
+              : { paddingLeft: "8px" }
           }
         />
       </div>
       <ul className={`${styles.options} ${showDropdown ? styles.visible : ""}`}>
-        {props.items.length>0 && props.items.map((item) => (
-          <li onClick={() => selectEventHandler(item)}>{item}</li>
-        ))}
+        {props.items.length > 0 &&
+          props.items.map((item, index) => (
+            <li onClick={() => selectEventHandler(item)}>
+              {props.imgs && props.imgs.length > 0 && (
+                <img src={props.imgs[index]} className={styles.DropDownImg} />
+              )}
+              {item}
+            </li>
+          ))}
       </ul>
     </div>
   );

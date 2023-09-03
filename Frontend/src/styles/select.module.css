@@ -12,7 +12,7 @@
   outline: none;
   appearance: none;
   width: 100%;
- 
+
   /* custom */
   background: rgba(239, 239, 239, 0);
   height: 38px;
@@ -28,7 +28,6 @@
   /* min-width: 100px; */
   /* max-width: 180px; */
   padding-left: 8px;
-  
 }
 .options {
   display: none;
@@ -47,16 +46,26 @@
   z-index: 101;
 }
 
+.DropDownImg {
+  width: 25px;
+  height: 25px;
+}
+
 .options li {
   width: 100%;
   min-height: 22px;
   font-size: 13px;
-  padding-top: 6px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   padding-left: 10px;
   border-bottom: 1px solid #e3e3e3;
   transition: 0.3s;
   color: #383838;
   background-color: #fefefe;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
 }
 .options li:last-child {
   border: none;

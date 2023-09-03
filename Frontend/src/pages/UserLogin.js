@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import Timer from "../components/general/Timer";
+import warningIcon from "../images/warning-attention-red-svgrepo-com.svg";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -191,6 +192,14 @@ const UserLogin = () => {
                 className={styles.ShowAndHideIcon}
                 onClick={toggleShowPassword}
               />
+              {/* <!--  --> */}
+              {error == "Email or password is wrong" && (
+                <div className={styles.WarningDiv}>
+                  <img className={styles.WarningIcon} src={warningIcon} />
+                  <p className={styles.WarningP}>email or password is wrong</p>
+                </div>
+              )}
+              {/* <!--  --> */}
             </div>
             <div className={styles.SinUpBtnDiv}>
               <button className={styles.Side2LogInBtn} onClick={submitLogin}>
@@ -228,6 +237,15 @@ const UserLogin = () => {
           ></div>
           <div className={styles.BodyVerification}>
             <div className={styles.verificationDiv}>
+              {/* <!--  --> */}
+              {error == "Code is invalid" && (
+                <div className={styles.WarningDiv2}>
+                  <img className={styles.WarningIcon2} src={warningIcon} />
+                  <p className={styles.WarningP2}>code is invalid</p>
+                </div>
+              )}
+
+              {/* <!--  --> */}
               <div
                 className={styles.CloseVerification}
                 onClick={() => setConfirmation(false)}

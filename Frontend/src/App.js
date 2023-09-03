@@ -93,7 +93,6 @@ const DocumentStatus = lazy(() =>
 const GetDocument = lazy(() => import("./pages/userPanel/reports/GetDocument"));
 const UserLogin = lazy(() => import("./pages/UserLogin"));
 const UserSignup = lazy(() => import("./pages/UserSignup"));
-const Test = lazy(() => import("./pages/test/Test.js"));
 
 const router = createBrowserRouter([
   {
@@ -101,14 +100,6 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <HomePage />
-      </Suspense>
-    ),
-  },
-  {
-    path: "test",
-    element: (
-      <Suspense>
-        <Test />
       </Suspense>
     ),
   },
