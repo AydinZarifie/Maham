@@ -16,4 +16,6 @@ router.patch('/panel/sell', userPanelController.onSellPosition);
 
 router.patch('/panel/cancelSell', userPanelController.cancelSellPosition);
 
+router.post('/panel/like/:userId' , userPanelController.likeEstate);
+
 module.exports = router;
