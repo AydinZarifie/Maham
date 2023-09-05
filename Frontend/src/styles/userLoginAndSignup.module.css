@@ -281,24 +281,24 @@
     color: #b7b7b7;
   }
   .googleSignInBtn {
-    /* border-radius: 4px; */
-    /* display: flex;
+    border-radius: 4px;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center; */
-    /* gap: 12px; */
-    /* background-color: #fff; */
-    /* border: 1px solid #c0c0c0; */
-    /* font: "inter"; */
-    /* color: #666666; */
-    /* cursor: pointer; */
-    /* min-height: 42px; */
+    justify-content: center;
+    gap: 12px;
+    background-color: #fff;
+    border: 1px solid #c0c0c0;
+    font: "inter";
+    color: #666666;
+    cursor: pointer;
+    min-height: 42px;
     position: relative;
     top: -50px;
-    /* font-size: 14px; */
-    /* font-weight: 300; */
-    /* width: 190px; */
-    /* transition: 0.3s; */
+    font-size: 14px;
+    font-weight: 300;
+    width: 187px;
+    transition: 0.3s;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   }
   .ForgotP {
@@ -466,7 +466,7 @@
     color: #b7b7b7;
   }
   .googleSignInBtn {
-    /* border-radius: 4px;
+    border-radius: 4px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -477,13 +477,13 @@
     font: "inter";
     color: #666666;
     cursor: pointer;
-    min-height: 42px; */
+    min-height: 42px;
     position: relative;
     top: -10px;
-    /* font-size: 14px;
+    font-size: 14px;
     font-weight: 300;
     width: 90%;
-    transition: 0.3s; */
+    transition: 0.3s;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   }
   .ForgotP {
@@ -586,8 +586,8 @@
 .googleSignInBtn:hover {
   box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px,
     rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
-  /* background-color: #fbfbfb;
-  color: #484848; */
+  background-color: #fbfbfb;
+  color: #484848;
 }
 .googleIcon {
   width: 20px;

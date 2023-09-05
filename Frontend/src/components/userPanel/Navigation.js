@@ -88,7 +88,7 @@ const Navigation = forwardRef(
               <Link
                 className={styles.MenuItem}
                 onClick={closeNavHandler}
-                // to="watchlist/classic"
+                to="favourites"
               >
                 <div className={styles.InsideMenuItem}>
                   <img src={favouriteIcon} className={styles.MenuIcons} />

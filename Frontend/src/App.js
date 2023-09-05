@@ -93,6 +93,7 @@ const DocumentStatus = lazy(() =>
 const GetDocument = lazy(() => import("./pages/userPanel/reports/GetDocument"));
 const UserLogin = lazy(() => import("./pages/UserLogin"));
 const UserSignup = lazy(() => import("./pages/UserSignup"));
+const Favourites = lazy(() => import("./pages/userPanel/Favourites"));
 
 const router = createBrowserRouter([
   {
@@ -327,6 +328,14 @@ const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: "favourites",
+        element: (
+          <Suspense>
+            <Favourites />
+          </Suspense>
+        ),
       },
       {
         path: "watchlist",

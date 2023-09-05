@@ -148,6 +148,7 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
+    summary: estate ? estate.state_summary : "",
     // filter: estate ? estate.filter : "",
     mahamPrice: estate ? estate.maham_price : "",
     customerPrice: "",
@@ -161,18 +162,26 @@ const ConfingEstate = ({ method, estate }) => {
 
   function basicEventHandler(event) {
     const { name, value } = event.target;
+    if (name == "countryName") {
+      cityFetch(value);
+    } else if (name == "cityName") {
+      if (!estate) {
+        idManipulataionHandler(value);
+      }
+    } else if (name == "summary") {
+      if (value.length >= 65) {
+        const newValue = value.slice(0, 65);
+        setInformation((prev) => ({ ...prev, [name]: newValue }));
+        return;
+      } else {
+        setInformation((prev) => ({ ...prev, [name]: value }));
+        return;
+      }
+    }
     setInformation((prev) => ({
       ...prev,
       [name]: value,
     }));
-    if (name == "countryName") {
-      cityFetch(value);
-    }
-    if (name == "cityName") {
-      if (!estate) {
-        idManipulataionHandler(value);
-      }
-    }
   }
 
   function bedroomEventHandler(event) {
@@ -351,6 +360,7 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredImageIsValid = selectedImages.length > 0;
   const enteredVideoIsValid = selectedVideo.length > 0;
   const enteredIdIsValid = information.id.trim() !== "";
+  const enteredSummaryIsValid = information.summary.trim() !== "";
 
   // const enteredPlateIsValid = information.plate.trim() !== "";
   // const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
@@ -372,8 +382,9 @@ const ConfingEstate = ({ method, estate }) => {
     image: false,
     video: false,
     id: false,
+    summary: false,
 
-      // plate: false,
+    // plate: false,
     // walletAddress: false,
   });
 
@@ -399,6 +410,7 @@ const ConfingEstate = ({ method, estate }) => {
   const imageIsInvalid = !enteredImageIsValid && touched.image;
   const videoIsInvalid = !enteredVideoIsValid && touched.video;
   const idIsInvalid = !enteredIdIsValid && touched.id;
+  const summaryIsInvalid = !enteredSummaryIsValid && touched.summary;
 
   // const plateIsInvalid = !enteredPlateIsValid && touched.plate;
   // const walletAddressIsInvalid =
@@ -423,7 +435,8 @@ const ConfingEstate = ({ method, estate }) => {
     enteredCustomerPriceIsValid &&
     enteredImageIsValid &&
     enteredVideoIsValid &&
-    enteredIdIsValid
+    enteredIdIsValid &&
+    enteredSummaryIsValid
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -442,7 +455,8 @@ const ConfingEstate = ({ method, estate }) => {
     enteredNumberOfUnitIsValid &&
     enteredLocationIsValid &&
     enteredTypeIsValid &&
-    enteredDescriptionIsValid
+    enteredDescriptionIsValid &&
+    enteredSummaryIsValid
 
     // enteredPlateIsValid &&
   ) {
@@ -502,6 +516,9 @@ const ConfingEstate = ({ method, estate }) => {
   const idClass = idIsInvalid
     ? `${styles.invalid} ${styles.textinput} `
     : `${styles.textinput} `;
+  const summaryClass = summaryIsInvalid
+    ? `${styles.invalid} ${styles.DescriptionTextArea2} `
+    : `${styles.DescriptionTextArea2} `;
 
   const plateClass = styles.textinput;
   // plateIsInvalid
@@ -531,6 +548,7 @@ const ConfingEstate = ({ method, estate }) => {
       image: true,
       video: true,
       id: true,
+      summary: true,
 
       // plate: true,
       // walletAddress: true,
@@ -674,6 +692,7 @@ const ConfingEstate = ({ method, estate }) => {
     formData.append("checkGym", facilities.gym);
 
     formData.append("description", information.description);
+    formData.append("summary", information.summary);
 
     if (selectedImages.length > 0) {
       selectedImages.forEach((file) => {
@@ -718,7 +737,7 @@ const ConfingEstate = ({ method, estate }) => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.ok) {  
+      if (response.ok) {
         setDeleteConfirmed(true);
       }
     }
@@ -813,11 +832,15 @@ const ConfingEstate = ({ method, estate }) => {
                 onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
-                {countries.length>0 && countries.map((option) => (
-                  <option key={option.country_name} value={option.country_name}>
-                    {option.country_name}
-                  </option>
-                ))}
+                {countries.length > 0 &&
+                  countries.map((option) => (
+                    <option
+                      key={option.country_name}
+                      value={option.country_name}
+                    >
+                      {option.country_name}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
@@ -834,11 +857,12 @@ const ConfingEstate = ({ method, estate }) => {
                 onBlur={blurHandler}
               >
                 <option value="">Choose an option</option>
-                {cities.length>0 && cities.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
+                {cities.length > 0 &&
+                  cities.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
@@ -1758,6 +1782,23 @@ const ConfingEstate = ({ method, estate }) => {
               onBlur={blurHandler}
             ></textarea>
           </div>
+          {/*  */}
+          <div className={styles.DescriptionInfo}>
+            <h4>Summary for estate</h4>
+            <p>(You can only enter 65 characters)</p>
+            <p>{information.summary.length}/65</p>
+          </div>
+          <div className={styles.DescriptionDiv}>
+            <textarea
+              placeholder="summary"
+              name="summary"
+              value={information.summary}
+              onChange={basicEventHandler}
+              className={summaryClass}
+              onBlur={blurHandler}
+            ></textarea>
+          </div>
+          {/*  */}
         </div>
       </div>
 
@@ -1780,14 +1821,15 @@ const ConfingEstate = ({ method, estate }) => {
           <div className={imageClass} id="preview-container">
             {previewImages.length > 0 && (
               <div>
-                {previewImages.length>0 && previewImages.map((imageURL) => (
-                  <img
-                    key={imageURL}
-                    src={imageURL}
-                    alt="Preview"
-                    width="200"
-                  />
-                ))}
+                {previewImages.length > 0 &&
+                  previewImages.map((imageURL) => (
+                    <img
+                      key={imageURL}
+                      src={imageURL}
+                      alt="Preview"
+                      width="200"
+                    />
+                  ))}
               </div>
             )}
             {previewImages.length == 0 && (
@@ -1834,15 +1876,16 @@ const ConfingEstate = ({ method, estate }) => {
 
             {selectedVideo.length > 0 && (
               <div>
-                {previewUrl.length>0 && previewUrl.map((vidURL) => (
-                  <video
-                    key={vidURL}
-                    src={vidURL}
-                    alt="Preview"
-                    width="200"
-                    controls
-                  />
-                ))}
+                {previewUrl.length > 0 &&
+                  previewUrl.map((vidURL) => (
+                    <video
+                      key={vidURL}
+                      src={vidURL}
+                      alt="Preview"
+                      width="200"
+                      controls
+                    />
+                  ))}
               </div>
             )}
           </div>

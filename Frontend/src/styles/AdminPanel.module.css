@@ -413,6 +413,8 @@
   padding-bottom: 35px;
 }
 .editButton {
+  position: relative;
+  top: -48px;
   width: 100px;
   height: 40px;
   border-radius: 8px;
