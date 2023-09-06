@@ -11,8 +11,8 @@ const SellPanel = (props) => {
   });
 
   const eventHandler = (event) => {
-    const { name, value } = event.target;
-    setData((prev) => ({ ...prev, [name]: value }));
+    const { value } = event.target;
+    setData((prev) => ({ ...prev, price: value }));
   };
   return (
     <>
@@ -21,47 +21,110 @@ const SellPanel = (props) => {
           &times;
         </div>
         <div className={styles.InputsDiv}>
-          <input
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              id="title"
+              value={data.title}
+              className={styles.inputs}
+              disabled
+            />
+            <label className={styles.label} htmlFor="title">
+              <div className={styles.text}>title</div>
+            </label>
+          </div>
+
+          {/* <input
             type="text"
             placeholder="Title"
             disabled
             className={styles.SellInput}
             value={data.title}
-          />
-          <input
+          /> */}
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              id="Mint ID"
+              value={data.mintId}
+              className={styles.inputs}
+              disabled
+            />
+            <label className={styles.label} htmlFor="Mint ID">
+              <div className={styles.text}>Mint ID</div>
+            </label>
+          </div>
+          {/* <input
             type="text"
             placeholder="Mint ID"
             disabled
             className={styles.SellInput}
             value={data.mintId}
-          />
+          /> */}
         </div>
         <div className={styles.InputsDiv2}>
-          <input
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              id="country"
+              value={data.country}
+              className={styles.inputs}
+              disabled
+            />
+            <label className={styles.label} htmlFor="country">
+              <div className={styles.text}>country</div>
+            </label>
+          </div>
+          {/* <input
             type="text"
             placeholder="Country"
             disabled
             className={styles.SellInput}
             value={data.country}
-          />
-          <input
+          /> */}
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              id="city"
+              value={data.city}
+              className={styles.inputs}
+              disabled
+            />
+            <label className={styles.label} htmlFor="city">
+              <div className={styles.text}>city</div>
+            </label>
+          </div>
+          {/* <input
             type="text"
             placeholder="City"
             disabled
             className={styles.SellInput}
             value={data.city}
-          />
+          /> */}
         </div>
         <div className={styles.InputsDiv2}>
-          <input
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              id="city"
+              value={data.price}
+              className={styles.inputs}
+              onChange={eventHandler}
+            />
+            <label className={styles.label} htmlFor="price">
+              <div className={styles.text}>price</div>
+            </label>
+          </div>
+          {/* <input
             type="text"
             placeholder="Price"
             className={styles.SellInput2}
             value={data.price}
             onChange={eventHandler}
-          />
+          /> */}
         </div>
-        <button className={styles.SellBtn} onClick={props.onSubmit}>Sell</button>
+        <button className={styles.SellBtn} onClick={props.onSubmit}>
+          Sell
+        </button>
       </div>
       <div className={styles.SellOverlay} onClick={props.closeHandler}></div>
     </>

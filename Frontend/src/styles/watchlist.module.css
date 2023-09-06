@@ -1,3 +1,85 @@
+
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inputs {
+  height: 40px;
+  width: 100%;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+  padding-right: 38px;
+  color: #5a5a5a;
+  transition: 0.3s;
+  font-weight: 300;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* left: 16px; */
+  left: 12px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.inputs {
+  font-size: 13px;
+}
+
+.label .text {
+  transition: all 0.15s ease-out;
+  color: #959595;
+  font-size: 11px;
+}
+
+.inputs:focus {
+  outline: none;
+  border: 1px solid rgb(126, 126, 126);
+}
+
+.inputs:focus + .label .text,
+:not(input[value=""]) + .label .text {
+  font-size: 12px;
+  transform: translate(0, -130%);
+  background-color: white;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.inputs:focus + .label .text {
+  color: rgb(67, 67, 67);
+}
+
+.inputs:hover {
+  border: 1px solid rgb(158, 157, 157);
+}
+
+/* Chrome, Safari, Edge, Opera */
+.inputs::-webkit-outer-spin-button,
+.inputs::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.inputs[type="number"] {
+  -moz-appearance: textfield;
+}
+.inputs:disabled {
+  /* background-color: #f1f1f1; */
+  color: #949494;
+  cursor: no-drop;
+}
+
 .NoExistDiv {
   position: relative;
   top: 140px;
@@ -928,80 +1010,9 @@
     order: 1;
   }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
+ 
 
-  .selection {
-    display: flex;
-    align-items: center;
-    appearance: none;
-    background: rgba(239, 239, 239, 0);
-    width: 110px;
-    height: 40px;
-    border: 1px solid rgb(198, 196, 196);
-    border-radius: 4px;
-    color: #626262;
-    z-index: 100;
-    cursor: pointer;
-    outline: none;
-    position: relative;
 
-    font-size: 13px;
-    padding: 0 10px;
-    margin: 0 -1px;
-  }
-  .options {
-    display: none;
-    position: absolute;
-    list-style: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    width: 100%;
-    overflow-x: hidden;
-    max-height: 160px;
-    overflow-y: scroll;
-  }
-
-  .dropdown2 {
-    position: relative;
-    display: inline-block;
-  }
-
-  .selection2 {
-    display: flex;
-    align-items: center;
-    appearance: none;
-    background: rgba(239, 239, 239, 0);
-    width: 110px;
-    height: 40px;
-    border: 1px solid rgb(198, 196, 196);
-    border-radius: 4px;
-    color: #626262;
-    z-index: 100;
-    cursor: pointer;
-    outline: none;
-    position: relative;
-    font-size: 13px;
-    padding: 0 10px;
-    margin: 0 -1px;
-  }
-  .options2 {
-    display: none;
-    position: absolute;
-    list-style: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    width: 100%;
-    overflow-x: hidden;
-    max-height: 160px;
-    overflow-y: scroll;
-  }
 
   .searchContainer {
     width: 100%;
@@ -1052,83 +1063,7 @@
     width: 100%;
   }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
 
-  .selection {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-    appearance: none;
-    background: rgba(239, 239, 239, 0);
-    width: 98%;
-    height: 38px;
-    border: 1px solid rgb(198, 196, 196);
-    border-radius: 4px;
-    color: #626262;
-    z-index: 100;
-    cursor: pointer;
-    outline: none;
-    position: relative;
-
-    font-size: 13px;
-  }
-  .options {
-    display: none;
-    position: absolute;
-    list-style: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    width: 98%;
-    overflow-x: hidden;
-    max-height: 160px;
-    overflow-y: scroll;
-  }
-
-  .dropdown2 {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
-
-  .selection2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-    appearance: none;
-    background: rgba(239, 239, 239, 0);
-    width: 98%;
-    height: 38px;
-    border: 1px solid rgb(198, 196, 196);
-    border-radius: 4px;
-    color: #626262;
-    z-index: 100;
-    cursor: pointer;
-    outline: none;
-    position: relative;
-    font-size: 13px;
-  }
-
-  .options2 {
-    display: none;
-    position: absolute;
-    list-style: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    width: 98%;
-    overflow-x: hidden;
-    max-height: 160px;
-    overflow-y: scroll;
-  }
   .searchContainer {
     width: 98%;
     display: block;
@@ -1729,95 +1664,10 @@
   /*  */
 }
 
-.selectedOption {
-  min-width: 100px;
-  max-width: 180px;
-}
-.ArrowIcon1 {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.3s ease;
-}
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.options::-webkit-scrollbar {
-  display: none;
-}
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.options {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
 
-.options li {
-  cursor: pointer;
-  width: 100%;
-  min-height: 22px;
-  font-size: 13px;
-  padding-top: 6px;
-  padding-left: 10px;
-  border-bottom: 1px solid #e3e3e3;
-  transition: 0.3s;
-  color: #383838;
-  background-color: #fefefe;
-}
-.options li:last-child {
-  border: none;
-}
-.options li:hover {
-  background-color: #f0f0f0;
-}
-.options.visible {
-  display: block;
-  padding: 0;
-  margin: 0;
-}
 
-.selectedOption2 {
-  min-width: 100px;
-  max-width: 180px;
-}
-.ArrowIcon2 {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.3s ease;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.options2::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.options2 {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.options2 li {
-  cursor: pointer;
-  width: 100%;
-  min-height: 22px;
-  font-size: 13px;
-  padding-top: 6px;
-  padding-left: 10px;
-  border-bottom: 1px solid #e3e3e3;
-  transition: 0.3s;
-  color: #383838;
-  background-color: #fefefe;
-}
-.options2 li:last-child {
-  border: none;
-}
-.options2 li:hover {
-  background-color: #f0f0f0;
-}
-.options2.visible2 {
-  display: block;
-  padding: 0;
-  margin: 0;
-}
 
 .searchBox:focus {
   border: 1px solid #686868;

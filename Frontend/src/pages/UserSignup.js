@@ -6,6 +6,7 @@ import hidePasswordIcon from "../images/eye-slash-alt-svgrepo-com.svg";
 import backgroundImage from "../images/Frame 110 (7) 1.png";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import warningIcon from "../images/warning-attention-red-svgrepo-com.svg";
 
 const UserSignup = () => {
   const navigate = useNavigate();
@@ -198,6 +199,15 @@ const UserSignup = () => {
               className={styles.ShowAndHideIcon}
               onClick={toggleShowConfirmPassword}
             />
+            {/* <!--  --> */}
+            {error == "Email already exists" && (
+              <div className={styles.WarningDiv}>
+                <img className={styles.WarningIcon} src={warningIcon} />
+                <p className={styles.WarningP}>email already exist</p>
+              </div>
+            )}
+
+            {/* <!--  --> */}
           </div>
           <div className={styles.SinUpBtnDiv}>
             <button className={styles.SignUpBtn} onClick={submitSignup}>

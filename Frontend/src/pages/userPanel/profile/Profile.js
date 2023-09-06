@@ -10,6 +10,7 @@ import backArrowIcon from "../../../images/arrow-sm-left-svgrepo-com.svg";
 import editIcon from "../../../images/black-edit-svgrepo-com.svg";
 import openEyeIcon from "../../../images/eye-alt-svgrepo-com.svg" 
 import closeEyeIcon from "../../../images/eye-slash-alt-svgrepo-com.svg" 
+import logoutIcon from "../../../images/black-logout-svgrepo-com.svg"
 
 const Profile = forwardRef((props, ref) => {
   const [data, setData] = useState({
@@ -187,6 +188,14 @@ const Profile = forwardRef((props, ref) => {
           <h5>- Guide</h5>
           <h5>- Maham whitepaper</h5>
         </div>
+        <div className={styles.ProfileItem} 
+        // onClick={OpenProfileItem3}
+        >
+          <div className={styles.ProfileItemInside}>
+            <img src={logoutIcon} className={styles.ProfileItemIcon} />
+            Logout
+          </div>
+        </div>
         {/*  */}
         <div className={styles.ProfileItemDiv} ref={profileRef}>
           <div className={styles.ProfileItemsHeader}>
@@ -206,7 +215,7 @@ const Profile = forwardRef((props, ref) => {
                 name="userName"
                 value={data.userName}
                 onChange={dataEventHandler}
-                className={`${styles.inputs} ${styles.UserNameInput}`}
+                className={styles.inputs}
                 disabled={!editable.userName}
               />
               <label className={styles.label} htmlFor="userName">
@@ -230,7 +239,7 @@ const Profile = forwardRef((props, ref) => {
                 name="email"
                 value={data.email}
                 onChange={dataEventHandler}
-                className={`${styles.inputs} ${styles.EmailInput}`}
+                className={styles.inputs}
                 disabled={!editable.email}
               />
               <label className={styles.label} htmlFor="email">
@@ -254,7 +263,7 @@ const Profile = forwardRef((props, ref) => {
                 name="country"
                 value={data.country}
                 onChange={dataEventHandler}
-                className={`${styles.inputs} ${styles.CountryInput}`}
+                className={styles.inputs}
                 disabled={!editable.country}
               />
               <label className={styles.label} htmlFor="country">
@@ -278,7 +287,7 @@ const Profile = forwardRef((props, ref) => {
                 name="city"
                 value={data.city}
                 onChange={dataEventHandler}
-                className={`${styles.inputs} ${styles.CityInput}`}
+                className={styles.inputs}
                 disabled={!editable.city}
               />
               <label className={styles.label} htmlFor="city">
@@ -303,7 +312,7 @@ const Profile = forwardRef((props, ref) => {
                 name="phoneNumber"
                 value={data.phoneNumber}
                 onChange={dataEventHandler}
-                className={`${styles.inputs} ${styles.PhoneInput}`}
+                className={styles.inputs}
                 disabled={!editable.phoneNumber}
               />
               <label className={styles.label} htmlFor="phoneNumber">

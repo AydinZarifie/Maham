@@ -60,6 +60,23 @@ const HomePage = () => {
     });
   };
 
+  const submitLike = async (title) => {
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // const response = await fetch("url", {
+    //   method: "POST",
+    //   body: formData,
+    // });
+    // if(response.ok){
+    const updatedEstates = [...estates];
+    let index = estates.findIndex((item) => item.estate_title == title);
+    let editedEstate = { ...updatedEstates[index] };
+    editedEstate.liked = !editedEstate.liked;
+    updatedEstates[index] = editedEstate;
+    setEstates(updatedEstates);
+    // }
+  };
+
   return (
     <>
       <Navbar
@@ -77,9 +94,12 @@ const HomePage = () => {
         filters={filters}
       />
       <div id="container2" className={styles.container2}>
-        {estates.length>0 && estates.map((estate) => {
-          return <EstateItem props={estate} />;
-        })}
+        {estates.length > 0 &&
+          estates.map((estate) => {
+            return (
+              <EstateItem props={estate} likeHandler={submitLike} user={true} />
+            );
+          })}
       </div>
     </>
   );
