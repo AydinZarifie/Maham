@@ -1,6 +1,3 @@
-
-
-
 button:disabled,
 button:disabled:hover,
 button:disabled:active {
@@ -10,7 +7,6 @@ button:disabled:active {
   cursor: not-allowed;
   pointer-events: none;
 }
-
 
 /***  LayOut  ***/
 /***    ***/
@@ -66,10 +62,10 @@ button:disabled:active {
     width: 50%;
     margin: 20px 0 20px 0;
   }
-  .PriceAndId{
+  .PriceAndId {
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: center;
     width: 91%;
     /* align-items: center; */
     margin-left: 30px;
@@ -77,17 +73,16 @@ button:disabled:active {
   .wrapper3 {
     width: 90%;
     background: #fff;
-    padding: 30px 0px 30px  2%;
-    
+    padding: 30px 0px 30px 2%;
   }
-  .IdAndMint{
+  .IdAndMint {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 90%;
   }
-  .IdAndWallet{
+  .IdAndWallet {
     width: 85%;
     display: flex;
     flex-direction: row;
@@ -95,7 +90,6 @@ button:disabled:active {
     /* margin-top: 40px; */
     gap: 3%;
   }
-  
 }
 @media (max-width: 660px) {
   .row {
@@ -115,10 +109,10 @@ button:disabled:active {
     width: 100%;
     margin: 20px 0 30px 0;
   }
-  .PriceAndId{
+  .PriceAndId {
     display: flex;
-    flex-direction:column;
-    justify-content:center;
+    flex-direction: column;
+    justify-content: center;
     width: 91%;
     align-items: center;
   }
@@ -126,22 +120,20 @@ button:disabled:active {
     width: 90%;
     background: #fff;
     padding: 30px 0px;
-    
   }
-  .IdAndMint{
+  .IdAndMint {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 90%;
   }
-  .IdAndWallet{
+  .IdAndWallet {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
 }
 @media (min-width: 550px) {
   .Row5 {
@@ -179,15 +171,14 @@ button:disabled:active {
 .wrapper .inputData .textinput {
   height: 100%;
   width: 99%;
-  border:none;
+  border: none;
   font-size: 14px;
   border-bottom: 2px solid silver;
   outline: none;
 }
-.invalid{
-   border-radius: 4px;
-   background-color: rgba(187, 47, 50, 0.377);
-  
+.invalid {
+  border-radius: 4px;
+  background-color: rgba(187, 47, 50, 0.377);
 }
 .inputData .textinput:focus ~ .label,
 .inputData .textinput:valid ~ .label {
@@ -256,7 +247,6 @@ button:disabled:active {
   transition: all 0.3s ease;
 }
 
-
 /* .wrapper3 {
   width: 45%;
   background: #fff;
@@ -321,67 +311,61 @@ button:disabled:active {
   font-size: 14px;
 }
 
-
 .MintBtn {
-    -webkit-appearance: none;
-    width: auto;
-    min-width: 80px;
-    margin: 0 10px;
-    height: 50px;
-    border-radius: 14px;
-    text-align: center;
-    background:#009FFF;
-    color: #fff;
-    font-size: 14px;
-    margin-top: -4px;
-    font-weight: 500;
-    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.03);
-    border: none;
-    transition: all 0.3s ease;
-    outline: 0;
-    border: 1px solid rgb(207, 205, 205);
-    cursor: pointer;
-  }
-  .MintBtn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px -1px rgba(139, 104, 157, 0.65);
-    background: #009FFF;
-  }
-  .MintBtn:hover:active {
-    transform: scale(0.99);
-  }
-  .ConnectWalletBtn {
-    -webkit-appearance: none;
-    width: auto;
-    min-width: 100px;
-    height: 50px;
-    border-radius: 14px;
-    text-align: center;
-    background: #fff;
-    color: #272525;
-    font-size: 12px;
-    margin-top: -4px;
-    font-weight: 500;
-    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.03);
-    border: none;
-    transition: all 0.3s ease;
-    outline: 0;
-    border: 1px solid rgb(207, 205, 205);
-    cursor: pointer;
-  }
-  .ConnectWalletBtn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px -1px rgba(139, 104, 157, 0.65);
-    background: #f6f6f6;
-  }
-  .ConnectWalletBtn:hover:active {
-    transform: scale(0.99);
-  }
-
-
-
-
-
+  -webkit-appearance: none;
+  width: auto;
+  min-width: 80px;
+  margin: 0 10px;
+  height: 50px;
+  border-radius: 14px;
+  text-align: center;
+  background: #009fff;
+  color: #fff;
+  font-size: 14px;
+  margin-top: -4px;
+  font-weight: 500;
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.03);
+  border: none;
+  transition: all 0.3s ease;
+  outline: 0;
+  border: 1px solid rgb(207, 205, 205);
+  cursor: pointer;
+}
+.MintBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px -1px rgba(139, 104, 157, 0.65);
+  background: #009fff;
+}
+.MintBtn:hover:active {
+  transform: scale(0.99);
+}
+.ConnectWalletBtn {
+  -webkit-appearance: none;
+  width: auto;
+  min-width: 100px;
+  height: 50px;
+  border-radius: 14px;
+  text-align: center;
+  background: #fff;
+  color: #272525;
+  font-size: 12px;
+  margin-top: -4px;
+  font-weight: 500;
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.03);
+  border: none;
+  transition: all 0.3s ease;
+  outline: 0;
+  border: 1px solid rgb(207, 205, 205);
+  cursor: pointer;
+}
+.ConnectWalletBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px -1px rgba(139, 104, 157, 0.65);
+  background: #f6f6f6;
+}
+.ConnectWalletBtn:hover:active {
+  transform: scale(0.99);
+}
 
 Input::-webkit-outer-spin-button,
 Input::-webkit-inner-spin-button {
@@ -393,10 +377,7 @@ Input[type="number"] {
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
   appearance: textfield;
- 
- 
 }
-
 
 select {
   /* appearance: none; */
@@ -410,12 +391,10 @@ select {
   background-image: none;
   cursor: pointer;
   border: 2px solid rgb(150, 150, 150);
-
 }
 /* Remove IE arrow */
 
 .countryNameClass2:hover::after {
-  
   color: #fff;
   background-color: #18181a;
 }
@@ -428,11 +407,10 @@ select {
   height: 3em;
   border-radius: 0.25em;
   overflow: hidden;
-  margin:1%;
+  margin: 1%;
   /* padding: -3px; */
 }
 /* Arrow */
-
 
 /***    ***/
 
@@ -554,9 +532,6 @@ select {
   transform: scale(2.6);
 }
 
-
-
-
 /* Custom Select wrapper */
 .select2 {
   position: relative;
@@ -565,8 +540,7 @@ select {
   height: 3em;
   border-radius: 0.25em;
   /* overflow: hidden; */
-  margin: 90px auto 80px auto ;
-
+  margin: 90px auto 80px auto;
 }
 
 /***   ***/
@@ -583,16 +557,14 @@ select {
   margin-top: 40px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   scrollbar-width: thin;
-  scrollbar-color:  transparent;
+  scrollbar-color: transparent;
 }
 .Row3::-webkit-scrollbar {
   height: 15px;
   background-color: #fff;
-  
 }
 .Row3::-webkit-scrollbar:hover {
   height: 25px;
-
 }
 .Row3::-webkit-scrollbar-track {
   height: 8px;
@@ -741,7 +713,7 @@ select {
 /***  Description Of Estate    ***/
 .DescriptionTextArea {
   width: 97%;
-  height: 145px;
+  height: 211px;
   padding: 10px;
   transition: 100ms ease-in;
   border-radius: 10px;
@@ -753,7 +725,7 @@ select {
 
 .DescriptionTextArea2 {
   width: 97%;
-  height: 85px;
+  height: 18px;
   padding: 10px;
   transition: 100ms ease-in;
   border-radius: 10px;
@@ -762,14 +734,23 @@ select {
   box-shadow: 0 0 16px rgba(45, 42, 42, 0.15);
   outline: 1px solid rgb(154, 154, 154);
 }
-.DescriptionInfo{
+.DescriptionInfo {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 }
-.DescriptionInfo p{
+.DescriptionInfo h4 {
+  white-space: nowrap;
+}
+.DescriptionInfo p {
   font-size: 12px;
+  white-space: nowrap;
+}
+.attentionIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 /***     ***/
 
@@ -925,11 +906,7 @@ select {
 }
 /***    ***/
 
-
-
-
-
-.AddAndDelete{
+.AddAndDelete {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1017,7 +994,7 @@ select {
   text-decoration: none;
   cursor: pointer;
   width: 100px;
-  background:#ef4057;
+  background: #ef4057;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -1054,7 +1031,7 @@ select {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color:#ef4057;
+  background-color: #ef4057;
   transform-origin: bottom center;
   transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
   transform: skewY(9.3deg) scaleY(0);
@@ -1071,8 +1048,64 @@ select {
   opacity: 1;
   transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
 }
-.DeleteIcon{
+.DeleteIcon {
   width: 30px;
   height: 30px;
   margin-top: -5px;
+}
+
+.infoOvelay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000094;
+  backdrop-filter: blur(1px);
+  z-index: 99;
+}
+.summryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 10%;
+  width: 34%;
+  min-width: 340px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  gap: 14px;
+  padding: 24px 0;
+}
+.summryInfo h4 {
+  text-align: justify;
+  width: 90%;
+  font-weight: 600;
+  margin: 0;
+}
+.summryInfo h5 {
+  margin: 0;
+  text-align: justify;
+  width: 85%;
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+.okBtn {
+  width: 110px;
+  height: 32px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #d6d6d6;
+  background-color: #e4e4e4;
+  transition: 0.3s;
+}
+.okBtn:hover {
+  background-color: #d4d4d4;
 }
