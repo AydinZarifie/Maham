@@ -93,11 +93,6 @@ const Home = () => {
                 <td>
                   <div className={styles.AddressTd}>
                     <CustomTableItem text={item.landlord_address} />
-                    {/* 0x346...45821
-                      <img
-                        src="../public/img/copy-documents-duplicate-svgrepo-com.svg"
-                        className={styles.CopyIcon}
-                      /> */}
                   </div>
                 </td>
                 <td>{item.price} ETH</td>

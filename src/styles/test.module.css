@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.Menu{
+.Menu {
   width: 100%;
   min-height: 60px;
   background-color: black;
@@ -18,22 +18,18 @@
   flex-direction: row;
   align-items: center;
   /* gap: 20px; */
-   
 }
-.underline a {
+/* .underline a {
   cursor: pointer;
   text-decoration: none;
   outline: none;
   color: #bbbbbb;
-  text-transform:capitalize;
+  text-transform: capitalize;
   letter-spacing: 1px;
   font-weight: 300;
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   font-size: 1em;
-  /* margin-left: 40px; */
- 
-}
-
+} */
 
 .underline > a {
   padding: 0 25px 9px 25px;
@@ -41,10 +37,10 @@
   transition: 0.4s ease;
 }
 .underline > a:hover {
-  padding: 0 25px 18px 25px;
+  padding: 0 25px 19px 25px;
   border-color: rgb(253, 253, 253);
 }
-@media (min-width: 530px) {
+@media (min-width: 680px) {
   .header {
     display: flex;
     flex-direction: row;
@@ -94,8 +90,20 @@
       rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     transition: 0.2s;
   }
+  .underline a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: #bbbbbb;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-weight: 300;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 0.9em;
+    white-space: nowrap;
+  }
 }
-@media (max-width: 530px) {
+@media (max-width: 680px) {
   .header {
     display: flex;
     flex-direction: row;
@@ -125,6 +133,18 @@
   .ConnectWalletBtn {
     display: none;
   }
+  .underline a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: #bbbbbb;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-weight: 300;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 0.6em;
+    white-space: nowrap;
+  }
 }
 
 /* .header{
@@ -139,14 +159,13 @@
       background-color: black;
   } */
 .inputContainer {
-    
-      position: relative;
-      width: 20%;
-      min-width: 170px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+  position: relative;
+  width: 20%;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .Inputs {
   background-color: rgb(0, 0, 0);
   height: 42px;
@@ -528,12 +547,6 @@
   box-shadow: rgba(0, 0, 0, 0.49) 0px 1px 4px;
 }
 
-
-
-
-
-
-
 .TableDiv3 {
   flex-direction: column;
   width: 100%;
@@ -546,7 +559,7 @@
   scrollbar-width: none;
   background-color: #232323;
   display: flex;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   border-radius: 0 0 8px 8px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
@@ -573,7 +586,6 @@
   min-width: 300px;
   border-collapse: separate;
   border-spacing: 0;
-  
 }
 
 .InfoTable3 th {
@@ -601,7 +613,6 @@
   background-color: rgb(14, 14, 14);
 }
 
-
 /* .Row{
   display: flex;
   flex-direction: row;
@@ -612,7 +623,7 @@
   height: 90%;
 } */
 
-.title{
+.title {
   position: relative;
   background-color: #000000;
   color: #ffffff;
@@ -622,7 +633,7 @@
   align-items: center;
   border-radius: 8px 8px 0 0;
   border-bottom: 1px solid #6a6a6a;
-  padding: 0 30px ;
+  padding: 0 30px;
 }
 /* .column1{
   display: flex;
@@ -631,39 +642,38 @@
   margin-top: 30px;
   height: 95%;
 } */
-.AssetsIcon{
+.AssetsIcon {
   width: 22px;
   height: 22px;
   /* position: relative; */
   /* top: 3px; */
   /* left: -4px; */
 }
-.SupplyBtn{
+.SupplyBtn {
   width: 75px;
   height: 24px;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
   border-radius: 4px;
   border: none;
   background-color: #bdbdbd;
   border: 1.5px solid #fff;
 }
-.SupplyBtn:hover{
+.SupplyBtn:hover {
   background-color: #ffffff;
 }
 
-
-@media (min-width: 760px){
-  .Row{
+@media (min-width: 760px) {
+  .Row {
     display: flex;
     flex-direction: row;
-    align-items:start;
-    justify-content:center;
+    align-items: start;
+    justify-content: center;
     gap: 8%;
     width: 100%;
     height: 90%;
   }
-  .column1{
+  .column1 {
     display: flex;
     flex-direction: column;
     width: 35%;
@@ -671,17 +681,17 @@
     height: 95%;
   }
 }
-@media (max-width: 760px){
-  .Row{
+@media (max-width: 760px) {
+  .Row {
     display: flex;
     flex-direction: column;
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
     gap: 8%;
     width: 100%;
     height: 90%;
   }
-  .column1{
+  .column1 {
     display: flex;
     flex-direction: column;
     width: 65%;
@@ -689,4 +699,430 @@
     margin-top: 30px;
     height: 48%;
   }
+}
+
+/* added verification */
+
+
+@media (min-width: 560px) {
+  .radio {
+    position: relative;
+    top: 42px;
+    cursor: pointer;
+    line-height: 20px;
+    font-size: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Circle p {
+    margin-top: 40px;
+    font-weight: 300;
+    color: #cccccc;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .Line1 {
+    margin: 0;
+    padding: 0;
+    width: 21%;
+    min-width: 10px;
+    height: 3px;
+    background-color: #ffffff;
+    border: none;
+    position: relative;
+    top: 42px;
+  }
+  .Line2 {
+    margin: 0;
+    padding: 0;
+    width: 21%;
+    min-width: 10px;
+    height: 3px;
+    background-color: #ffffff;
+    border: none;
+    position: relative;
+    top: 42px;
+  }
+ 
+
+  .FirstLine {
+    margin: 0;
+    padding: 0;
+    width: 29%;
+    min-width: 10px;
+    height: 3px;
+    background-color: #e43d3d;
+    border: none;
+    position: relative;
+    top: 42px;
+  }
+  .LastLine {
+    margin: 0;
+    padding: 0;
+    width: 29%;
+    min-width: 10px;
+    height: 3px;
+    background-color: #ffffff;
+    border: none;
+    position: relative;
+    top: 42px;
+  }
+}
+@media (max-width: 560px) {
+  .radio {
+    position: relative;
+    top: 2px;
+    cursor: pointer;
+    line-height: 20px;
+    font-size: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Circle p {
+    margin-top: 40px;
+    font-weight: 300;
+    color: #cccccc;
+    font-size: 8px;
+    white-space: nowrap;
+  }
+  .Line1 {
+    margin: 0;
+    padding: 0;
+    width: 12%;
+    min-width: 49px;
+    height: 3px;
+    background-color: #ffffff;
+    border: none;
+    position: relative;
+    top: 2px;
+  }
+  .Line2 {
+    margin: 0;
+    padding: 0;
+    width: 12%;
+    min-width: 49px;
+    height: 3px;
+    background-color: #ffffff;
+    border: none;
+    position: relative;
+    top: 2px;
+  }
+
+  .FirstLine {
+    margin: 0;
+    padding: 0;
+    width: 29%;
+    min-width: 10px;
+    height: 3px;
+    background-color: #e43d3d;
+    border: none;
+    position: relative;
+    top: 2px;
+  }
+  .LastLine {
+    margin: 0;
+    padding: 0;
+    width: 29%;
+    min-width: 10px;
+    height: 3px;
+    background-color: #ffffff;
+    border: none;
+    position: relative;
+    top: 2px;
+  }
+}
+
+/*  road map    */
+.RoadMap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 85px;
+  background-color: transparent;
+}
+
+.radio .Circle1 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #ffffff;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #ffffff;
+}
+.radio .Circle2 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #ffffff;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #ffffff;
+}
+.radio .Circle3 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #ffffff;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #ffffff;
+}
+
+.radio .Circle:after {
+  content: "";
+  position: absolute;
+  top: 20.5%;
+  left: 21%;
+  width: 14px;
+  height: 14px;
+
+  border-radius: 100%;
+  background: #e43d3d;
+  transform: scale(0);
+  transition: all 0.2s ease;
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.radio:hover .Circle:after {
+  transform: scale(2.1);
+}
+input[type="radio"]:checked + .Circle {
+  border-color: #e43d3d;
+}
+input[type="radio"]:checked + .Circle:after {
+  transform: scale(1);
+  transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.StepOne{
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 7%;
+  /* background-color: #16dc00; */
+}
+.StepOne h3{
+  white-space: nowrap;
+  color: #cbcbcb;
+}
+.InputDiv{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.inputContainer3 {
+  position: relative;
+  width: 100%;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inputContainer4 {
+  position: relative;
+  width: 100%;
+  min-width: 315px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.AddressInputs {
+  background-color: #232323;
+  height: 42px;
+  width: 100%;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+  color: #cecece;
+  transition: 0.3s;
+  font-weight: 300;
+}
+
+.AddressLabel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    } 
+
+.AddressInputs {
+  font-size: 13px;
+}
+
+.AddressLabel .AddressText {
+  transition: all 0.15s ease-out;
+  color: #959595;
+  font-size: 11px;
+}
+
+.AddressInputs:focus {
+  outline: none;
+  border: 1px solid rgb(126, 126, 126);
+}
+
+.AddressInputs:focus + .AddressLabel .AddressText,
+:not(input[value=""]) + .AddressLabel .AddressText {
+  font-size: 12px;
+  transform: translate(0, -133%);
+  background-color: #232323;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.AddressInputs:focus + .AddressLabel .AddressText {
+  color: rgb(197, 197, 197);
+}
+
+.AddressInputs:hover {
+  border: 1px solid rgb(158, 157, 157);
+}
+
+/* Chrome, Safari, Edge, Opera */
+.AddressInputs::-webkit-outer-spin-button,
+.AddressInputs::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.AddressInputs[type="number"] {
+  -moz-appearance: textfield;
+}
+.AddressInputs:disabled {
+  color: #949494;
+  cursor: no-drop;
+}
+
+.ConnectBtn {
+  height: 40px;
+  min-width: 85px;
+  border-radius: 4px;
+  border: none;
+  background: #ef4057;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.258) 0px 4px 12px;
+  transition: 0.2s;
+}
+.ConnectBtn:hover {
+  box-shadow: rgba(255, 255, 255, 0.695) 0px 1px 4px;
+}
+
+.nextBtn{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background-color: transparent;
+  color: #f4b406;
+  border-radius: 4px;
+  border:1px solid #f4b406;
+  width: 90px;
+  height: 32px;
+  cursor: pointer;
+  transition: .3s;
+  margin-top: 10px;
+}
+.nextBtn:hover{
+  background-color: #f4b50631;
+}
+.nextIcon{
+  width: 25px;
+  height: 25px;
+}
+
+.StepTwo{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 8%;
+}
+.InputAndValue{
+  width: 40%;
+}
+.InputAndValue h4{
+  color: #c4c4c4;
+  white-space: nowrap;
+}
+
+
+.StepThree{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 7%;
+}
+.StepThree h2,h3{
+  margin: 0;
+  color: #e9e9e9;
+  white-space: nowrap;
+}
+.StepThree h4{
+  font-size: .8rem;
+  position: relative;
+  top: -25px;
+  font-weight: 200;
+  margin: 0;
+  color: #e9e9e9;
+  white-space: nowrap;
+}
+@keyframes dash {
+  from {
+    stroke-dashoffset: 816;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.progressCircle path {
+  stroke-dasharray: 816;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in;
+}
+.CompleteIcon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  margin-top: -142px;
 }
