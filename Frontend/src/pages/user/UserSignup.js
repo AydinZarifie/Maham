@@ -1,12 +1,12 @@
-import styles from "../styles/userLoginAndSignup.module.css";
+import styles from "../../styles/userLoginAndSignup.module.css";
 
-import logoIcon from "../images/Maham2.png";
-import showPasswordIcon from "../images/eye-alt-svgrepo-com.svg";
-import hidePasswordIcon from "../images/eye-slash-alt-svgrepo-com.svg";
-import backgroundImage from "../images/Frame 110 (7) 1.png";
+import logoIcon from "../../images/Maham2.png";
+import showPasswordIcon from "../../images/eye-alt-svgrepo-com.svg";
+import hidePasswordIcon from "../../images/eye-slash-alt-svgrepo-com.svg";
+import backgroundImage from "../../images/Frame 110 (7) 1.png";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import warningIcon from "../images/warning-attention-red-svgrepo-com.svg";
+import warningIcon from "../../images/warning-attention-red-svgrepo-com.svg";
 
 const UserSignup = () => {
   const navigate = useNavigate();

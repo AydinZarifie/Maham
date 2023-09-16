@@ -35,7 +35,7 @@ import { lazy, Suspense } from "react";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SigninPage = lazy(() => import("./pages/admin/SigninPage"));
 const Verification = lazy(() => import("./pages/Verification"));
-const UserPanel = lazy(() => import("./pages/UserPanel"));
+const UserPanel = lazy(() => import("./pages/userPanel/UserPanel"));
 const AdminPage = lazy(() => import("./pages/admin/AdminPage"));
 const Dashboard = lazy(() => import("./components/adminPage/Dashboard"));
 const AdminEstates = lazy(() => import("./pages/admin/AdminEstates"));
@@ -75,7 +75,7 @@ const Assets = lazy(() =>
 const Transactions = lazy(() =>
   import("./components/userPanel/managementAssets/Transactions")
 );
-const Watchlist = lazy(() => import("./pages/Watchlist"));
+const Watchlist = lazy(() => import("./pages/userPanel/watchlist/Watchlist"));
 const ClassicWatchlist = lazy(() =>
   import("./pages/userPanel/watchlist/ClassicWatchlist")
 );
@@ -86,13 +86,13 @@ const DailyDeals = lazy(() => import("./pages/userPanel/watchlist/DailyDeals"));
 const ChartWatchlist = lazy(() =>
   import("./pages/userPanel/watchlist/ChartWatchlist")
 );
-const Reports = lazy(() => import("./pages/userPanel/Reports"));
+const Reports = lazy(() => import("./pages/userPanel/reports/Reports"));
 const DocumentStatus = lazy(() =>
   import("./pages/userPanel/reports/DocumentStatus")
 );
 const GetDocument = lazy(() => import("./pages/userPanel/reports/GetDocument"));
-const UserLogin = lazy(() => import("./pages/UserLogin"));
-const UserSignup = lazy(() => import("./pages/UserSignup"));
+const UserLogin = lazy(() => import("./pages/user/UserLogin"));
+const UserSignup = lazy(() => import("./pages/user/UserSignup"));
 const Favourites = lazy(() => import("./pages/userPanel/Favourites"));
 
 const router = createBrowserRouter([
