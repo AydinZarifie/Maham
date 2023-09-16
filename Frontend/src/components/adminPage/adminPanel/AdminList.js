@@ -12,31 +12,6 @@ const AdminList = () => {
         admins.map((admin) => (
           <AdminItem {...admin} deleteHandler={deleteHandler} />
         ))}
-      {/*  */}
-      {/* <AdminItem
-        first_name="ali"
-        last_name="hashemi"
-        admin_type="super"
-        country_name="iran"
-        city_name='tabriz'
-        _id='23'
-        deleteHandler={deleteHandler}
-      /> */}
-      {/* <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} />
-      <AdminItem firstname="kmk" deleteHandler={deleteHandler} /> */}
-      {/*  */}
     </div>
   );
 };

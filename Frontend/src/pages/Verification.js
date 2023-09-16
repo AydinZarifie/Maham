@@ -120,7 +120,7 @@ const Verification = () => {
             type="radio"
             name="RoadMap"
             id="Alert"
-            className={`${styles.hidden} ${styles.AlertInput}`}
+            className={styles.hidden}
             checked={currentStep == 0}
           />
 

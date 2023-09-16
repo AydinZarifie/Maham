@@ -1,12 +1,12 @@
-import styles from "../styles/watchlist.module.css";
+import styles from "../../../styles/reports.module.css";
 
 import { NavLink, Outlet, useOutletContext } from "react-router-dom";
 
-const Watchlist = () => {
+const Reports = () => {
   const { tutorial } = useOutletContext();
   return (
-    <div className={styles.Row}>
-      <div className={styles.LeftHeader}>
+    <div className={styles.TableMainDiv}>
+      <div className={styles.MenuDiv}>
         <div className={styles.MenuButtonsDiv}>
           <div>
             <NavLink
@@ -16,26 +16,26 @@ const Watchlist = () => {
               to=""
               end
             >
-              Chart
+              Get document
             </NavLink>
-            {tutorial && <div className={styles.assetsInfo}>?</div>}
+            {tutorial && <div className={styles.questionMarkCircle}>?</div>}
           </div>
           <div>
             <NavLink
               className={({ isActive }) =>
                 isActive ? styles.tab : styles.tab2
               }
-              to="classic"
+              to="documentstatus"
             >
-              Classic
+              Document status
             </NavLink>
-            {tutorial && <div className={styles.transactionInfo}>?</div>}
+            {tutorial && <div className={styles.questionMarkCircle}>?</div>}
           </div>
         </div>
       </div>
-      <Outlet context={{ tutorial }} />
+      <Outlet />
     </div>
   );
 };
 
-export default Watchlist;
+export default Reports;
