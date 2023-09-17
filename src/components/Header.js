@@ -5,13 +5,16 @@ const Header = (props) => {
   return (
     <div className={styles.Menu}>
       <div className={styles.underline}>
-        <Link to="/">home</Link>
+        <Link to="/">Home</Link>
       </div>
       <div className={styles.underline}>
         <Link to="/assets">Assets</Link>
       </div>
       <div className={styles.underline}>
-        <Link to="lendingandborrowing">lending & borrowing</Link>
+        <Link to="lendingandborrowing">Lending & Borrowing</Link>
+      </div>
+      <div className={styles.underline}>
+        <Link to="banksystem">Bank System</Link>
       </div>
 
       <button
