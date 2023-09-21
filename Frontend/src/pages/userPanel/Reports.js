@@ -16,7 +16,7 @@ const Reports = () => {
               to=""
               end
             >
-              Assets
+              Get document
             </NavLink>
             {tutorial && <div className={styles.questionMarkCircle}>?</div>}
           </div>
@@ -25,9 +25,9 @@ const Reports = () => {
               className={({ isActive }) =>
                 isActive ? styles.tab : styles.tab2
               }
-              to="getdocument"
+              to="documentstatus"
             >
-              Transaction
+              Document status
             </NavLink>
             {tutorial && <div className={styles.questionMarkCircle}>?</div>}
           </div>

@@ -20,4 +20,8 @@ router
 	.route('/auth/verification')
 	.post([body('email').isEmail()], userAuthController.userVerificationCode);
 
+router
+	.route('/auth/googleLogin')
+	.post(userAuthController.loginGoogle);
+
 module.exports = router;

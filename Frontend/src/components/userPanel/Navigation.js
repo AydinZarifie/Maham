@@ -5,6 +5,7 @@ import eyeIcon from "../../images/eye-svgrepo-com.svg";
 import walletIcon from "../../images/wallet-black-svgrepo-com.svg";
 import arrowIcon from "../../images/arrow-down-black-svgrepo-com.svg";
 import reportIcon from "../../images/file-error-svgrepo-com.svg";
+import favouriteIcon from "../../images/heart-alt-svgrepo-com.svg"
 import { forwardRef, useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -83,6 +84,24 @@ const Navigation = forwardRef(
               )}
             </div>
 
+            <div>
+              <Link
+                className={styles.MenuItem}
+                onClick={closeNavHandler}
+                to="favourites"
+              >
+                <div className={styles.InsideMenuItem}>
+                  <img src={favouriteIcon} className={styles.MenuIcons} />
+                  Favourites
+                </div>
+              </Link>
+              {tutorial && (
+                <div className={styles.questionMarkMenu}>
+                  <p>?</p>
+                </div>
+              )}
+            </div>
+
             <div
               className={`${styles.MenuItem} ${styles.ManagementAssets}`}
               onClick={toggleManagementAssets}
@@ -151,7 +170,7 @@ const Navigation = forwardRef(
                   to="reports"
                   className={styles.ReportsItems}
                 >
-                  - Lock Estate
+                  - Get document
                 </Link>
                 {tutorial && (
                   <div className={styles.questionMarkMenuLittle}>
@@ -163,9 +182,9 @@ const Navigation = forwardRef(
                 <Link
                   className={styles.ReportsItems2}
                   onClick={closeNavHandler}
-                  to="reports/getdocument"
+                  to="reports/documentstatus"
                 >
-                  - Get document
+                  - Document status
                 </Link>
                 {tutorial && (
                   <div className={styles.questionMarkMenuLittle}>

@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema(
 				ref: 'real_estates',
 			},
 		],
+		liked_estates: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+			},
+		],
 		user_country_ref: [
 			{
 				type: mongoose.Schema.Types.ObjectId,

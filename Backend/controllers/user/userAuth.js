@@ -8,8 +8,20 @@ const signAccessToken = require("./../../utilities/token/client/signAccessToken"
 /////////////////////////
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const  {OAuth2Client} = require("google-auth-library")
 ///////////////////////////////////////////////////////
 const userDB = require("../../models/user");
+
+//initial firebase admin SDK//////////////////////////////////////////
+const admin = require("firebase-admin");
+
+const serviceAccount = require("../../utilities/FirebaseApi/hello-authentication-397508-firebase-adminsdk-2o7md-e44b839e1f.json");
+
+admin.initializeApp({
+  credential : admin.credential.cert(serviceAccount),
+  client_id: '996968345379-9jbfvqc6r1re3p9k8rqo7j1n88c8oijr.apps.googleusercontent.com',
+})
+//////////////////////////////////////////////////////////////////////
 
 exports.signupUser = async (req, res, next) => {
   try {
@@ -218,3 +230,16 @@ exports.userRefreshToken = catchAsync(async (req, res, next) => {
 
   return res.status(201).json(accessToken);
 });
+
+exports.loginGoogle = async (req,res) => {
+
+  const token = req.body.token;
+  console.log(token);
+  admin.auth().verifyIdToken(token).then((decode) => {
+    console.log(decode);
+    const email = decode.email;
+    console.log(email);
+  }).catch(err => {
+    console.log(err.message);
+  })
+}

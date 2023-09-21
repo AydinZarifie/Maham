@@ -33,7 +33,7 @@ const ClassicWatchlist = () => {
     setDividerPosition(newDividerPosition);
   };
 
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState([{country_name:"iran"},{country_name:"UK"}]);
   const [cities, setCities] = useState([]);
   const [data, setData] = useState([]);
 
@@ -115,7 +115,7 @@ const ClassicWatchlist = () => {
             <div className={styles.FirstPart}>
               <div className={styles.SelectDiv}>
                 <Select
-                  items={countries}
+                  items={countries.map(item=>item.country_name)}
                   set={(option) => {
                     cityFetch(option);
                     setCountry(option);
@@ -212,7 +212,8 @@ const ClassicWatchlist = () => {
                   type="text"
                   className={styles.searchBox}
                   id="searchBox"
-                  placeholder="&#xF002;    search ... "
+                  placeholder="&#xF002;  Search"
+                  style={{fontFamily:"Arial, FontAwesome"}}
                   value={search}
                   onChange={searchEventHandler}
                 />

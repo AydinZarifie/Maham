@@ -8,6 +8,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import Timer from "../components/general/Timer";
+import warningIcon from "../images/warning-attention-red-svgrepo-com.svg";
+import googleIcon from "../images/google-color-svgrepo-com.svg"
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -16,6 +19,8 @@ const UserLogin = () => {
   const [otp, setOtp] = useState("");
   const [confirmation, setConfirmation] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -27,49 +32,80 @@ const UserLogin = () => {
   };
 
   const submitLogin = async () => {
+    if (data.email == "" || !data.email.includes("@") || data.password == "") {
+      return;
+    }
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-    const response = await fetch("http://localhost:5000/user/auth/verification", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      body: formData,
-    },  { withCredentials: true });
+    const response = await fetch(
+      "http://localhost:5000/user/auth/verification",
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        body: formData,
+      },
+      { withCredentials: true }
+    );
     if (response.ok) {
+      setCodeSent(true);
+      setError();
       setConfirmation(true);
+    }
+    if (response.status == 401) {
+      setError("Email or password is wrong");
     }
   };
 
   const submitVerify = async () => {
+    if (
+      data.email == "" ||
+      !data.email.includes("@") ||
+      data.password == "" ||
+      otp == ""
+    ) {
+      return;
+    }
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("verificationCode", otp);
-    const response = await fetch("http://localhost:5000/user/auth/login", {
-      method: "POST",
-      body: formData,
-      mode: "cors",
-      credentials: "include",
-    },  { withCredentials: true });
+    const response = await fetch(
+      "http://localhost:5000/user/auth/login",
+      {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+        credentials: "include",
+      },
+      { withCredentials: true }
+    );
     if (response.ok) {
       navigate("/userpanel");
+    }
+    if (response.status == 403) {
+      setError("Code is invalid");
     }
   };
 
   const googleLogin = async (res) => {
     // const formData = new FormData();
     // formData.append("res", res);
-    const response = await fetch("url", {
-      method: "POST",
-      body: JSON.stringify(res),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    if (response.ok) {
-      navigate("/userpanel");
-    }
+    // const response = await fetch("url", {
+    //   method: "POST",
+    //   body: JSON.stringify(res),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // if (response.ok) {
+    //   navigate("/userpanel");
+    // }
+    // const provider = new firebase.auth.GoogleOAuthProvider();
+    // auth.signInWithPopup(provider).then((result) => {
+    //   console.log(result.user);
+    // });
   };
 
   return (
@@ -123,8 +159,13 @@ const UserLogin = () => {
               To login to the user account , please provide the following
               information:
             </h5>
-            <h5 className={styles.SignUpInfo3} onClick="SignUpShow()">
-              Don't have an account? click here
+            <h5 className={styles.SignUpInfo3}>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/signup"
+              >
+                Don't have an account? click here
+              </Link>
             </h5>
             <div className={styles.inputContainer}>
               <input
@@ -156,6 +197,14 @@ const UserLogin = () => {
                 className={styles.ShowAndHideIcon}
                 onClick={toggleShowPassword}
               />
+              {/* <!--  --> */}
+              {error == "Email or password is wrong" && (
+                <div className={styles.WarningDiv}>
+                  <img className={styles.WarningIcon} src={warningIcon} />
+                  <p className={styles.WarningP}>email or password is wrong</p>
+                </div>
+              )}
+              {/* <!--  --> */}
             </div>
             <div className={styles.SinUpBtnDiv}>
               <button className={styles.Side2LogInBtn} onClick={submitLogin}>
@@ -164,10 +213,10 @@ const UserLogin = () => {
             </div>
             <hr className={styles.LogInHr} />
             <p className={styles.OrP}>Or</p>
-            <div className={styles.googleSignInBtn}>
-              {/* <img src={googleIcon} className={styles.googleIcon} />
-              sign in with google */}
-              <GoogleOAuthProvider clientId="">
+            <button className={styles.googleSignInBtn} onClick={googleLogin}>
+              <img src={googleIcon} className={styles.googleIcon} />
+              sign in with google
+              {/* <GoogleOAuthProvider clientId="">
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     console.log(credentialResponse);
@@ -177,8 +226,8 @@ const UserLogin = () => {
                     console.log("Login Failed");
                   }}
                 />
-              </GoogleOAuthProvider>
-            </div>
+              </GoogleOAuthProvider> */}
+            </button>
             <a href="#" className={styles.ForgotP}>
               forgot your password ? click here
             </a>
@@ -193,6 +242,15 @@ const UserLogin = () => {
           ></div>
           <div className={styles.BodyVerification}>
             <div className={styles.verificationDiv}>
+              {/* <!--  --> */}
+              {error == "Code is invalid" && (
+                <div className={styles.WarningDiv2}>
+                  <img className={styles.WarningIcon2} src={warningIcon} />
+                  <p className={styles.WarningP2}>code is invalid</p>
+                </div>
+              )}
+
+              {/* <!--  --> */}
               <div
                 className={styles.CloseVerification}
                 onClick={() => setConfirmation(false)}
@@ -219,7 +277,15 @@ const UserLogin = () => {
                 />
               </div>
 
-              <a href="#"> Didn't get code ? Click to resend </a>
+              <a href="#">
+                Didn't get code ?{" "}
+                {codeSent ? (
+                  <Timer onFinish={() => setCodeSent(false)} />
+                ) : (
+                  "Click"
+                )}{" "}
+                to resend
+              </a>
               <button className={styles.VerifyBtn} onClick={submitVerify}>
                 <div className={styles.InsideVerifyBtn}>verify</div>
               </button>

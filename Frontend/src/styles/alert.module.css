@@ -38,6 +38,7 @@
   }
   
   .SuccessDiv p {
+    text-align: center;
     color: #5d5d5d;
     font-weight: 300;
     width: 90%;

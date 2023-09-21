@@ -87,10 +87,13 @@ const ChartWatchlist = lazy(() =>
   import("./pages/userPanel/watchlist/ChartWatchlist")
 );
 const Reports = lazy(() => import("./pages/userPanel/Reports"));
-const LockEstate = lazy(() => import("./pages/userPanel/reports/LockEstate"));
+const DocumentStatus = lazy(() =>
+  import("./pages/userPanel/reports/DocumentStatus")
+);
 const GetDocument = lazy(() => import("./pages/userPanel/reports/GetDocument"));
 const UserLogin = lazy(() => import("./pages/UserLogin"));
 const UserSignup = lazy(() => import("./pages/UserSignup"));
+const Favourites = lazy(() => import("./pages/userPanel/Favourites"));
 
 const router = createBrowserRouter([
   {
@@ -327,6 +330,14 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "favourites",
+        element: (
+          <Suspense>
+            <Favourites />
+          </Suspense>
+        ),
+      },
+      {
         path: "watchlist",
         element: (
           <Suspense>
@@ -382,15 +393,15 @@ const router = createBrowserRouter([
             index: true,
             element: (
               <Suspense>
-                <LockEstate />
+                <GetDocument />
               </Suspense>
             ),
           },
           {
-            path: "getdocument",
+            path: "documentstatus",
             element: (
               <Suspense>
-                <GetDocument />
+                <DocumentStatus />
               </Suspense>
             ),
           },
