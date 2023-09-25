@@ -232,7 +232,6 @@ exports.userRefreshToken = catchAsync(async (req, res, next) => {
 });
 
 exports.loginGoogle = async (req,res) => {
-
   const token = req.body.token;
   console.log(token);
   admin.auth().verifyIdToken(token).then((decode) => {

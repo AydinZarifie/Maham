@@ -239,6 +239,10 @@ const estateSchema = new mongoose.Schema(
 			type: String,
 			set: (a) => (a === '' ? undefined : a),
 		},
+		summary_description : {
+			type : String,
+			set: (a) => (a === '' ? undefined : a),
+		},
 		///
 		estate_type: {
 			//Commercial , Residential & etc
