@@ -29,6 +29,8 @@ import Alert from "../../components/general/Alert";
 import attentionIcon from "../../images/attention-svgrepo-com.svg";
 
 const ConfingEstate = ({ method, estate }) => {
+  const [loading, setLoading] = useState(false);
+
   const [detailBox, setDetailBox] = useState(false);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -532,6 +534,8 @@ const ConfingEstate = ({ method, estate }) => {
   //   : `${styles.textinput} `;
 
   const submitHandler = async (event) => {
+    setLoading(true);
+
     setTouched({
       title: true,
       countryName: true,
@@ -728,6 +732,8 @@ const ConfingEstate = ({ method, estate }) => {
       setError(true);
       setMintUsed(false);
     }
+
+    setLoading(false);
   };
 
   const deleteHandler = async () => {
@@ -773,11 +779,7 @@ const ConfingEstate = ({ method, estate }) => {
       {detailBox && (
         <div className={styles.infoOvelay}>
           <div className={styles.summryInfo}>
-            <h4>
-              To fill in the 34-character information of the desired house, we
-              must pay attention to the model of each house, i.e. is it an
-              apartment, a private house, or a house in nature.
-            </h4>
+            <h4>This is a warning. You should do something about it.</h4>
             <h5>
               -apartment: If it was an apartment house, the desired house floor
               + house unit number
@@ -792,7 +794,11 @@ const ConfingEstate = ({ method, estate }) => {
               write the nearest centers that this house has access to, such as
               recreational, commercial, and health centers,...
             </h5>
-            <button className={styles.okBtn} onClick={() => setDetailBox(false)}>
+            <h5>-You can only enter 34 characters</h5>
+            <button
+              className={styles.okBtn}
+              onClick={() => setDetailBox(false)}
+            >
               ok
             </button>
           </div>
@@ -1810,7 +1816,6 @@ const ConfingEstate = ({ method, estate }) => {
                 src={attentionIcon}
                 onClick={() => setDetailBox(true)}
               />
-              <p>(You can only enter 34 characters)</p>
               <p>{information.summary.length}/34</p>
             </div>
             <div className={styles.DescriptionDiv}>
@@ -1963,6 +1968,7 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
       </form>
+      {loading && (<div>loading...</div>)}
     </>
   );
 };
