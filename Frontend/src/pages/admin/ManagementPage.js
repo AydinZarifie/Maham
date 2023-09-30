@@ -10,6 +10,8 @@ import HighestVolumes from "../../components/adminPage/management/HighestVolumes
 import fetchInstance from "../../util/fetchInstance";
 
 const ManagementPage = () => {
+  const [loading, setLoading] = useState(false);
+
   const [countryMenuShown, setCountryMenuShown] = useState(false);
   const [cityMenuShown, setCityMenuShown] = useState(false);
   const [addShown, setAddShown] = useState(false);
@@ -107,6 +109,7 @@ const ManagementPage = () => {
   };
 
   const LockEstate = async (id, mintId) => {
+    setLoading(true);
     let { response } = await fetchInstance(
       "/admin/managment/lockUnLockEstate/" + id,
       {
@@ -126,6 +129,7 @@ const ManagementPage = () => {
 
       setSearchedEstates(updatedEstates);
     }
+    setLoading(true);
   };
 
   useEffect(() => {
@@ -309,6 +313,7 @@ const ManagementPage = () => {
         />
       )}
       <EstateTable estates={searchedEstates} lockEstate={LockEstate} />
+      {loading && <div>loading</div>}
     </>
   );
 };
