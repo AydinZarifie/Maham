@@ -26,8 +26,18 @@ import deleteIcon from "../../images/delete-svgrepo-com.svg";
 import fetchInstance from "../../util/fetchInstance";
 import MultiSelect from "../../components/general/MultiSelect";
 import Alert from "../../components/general/Alert";
+import attentionIcon from "../../images/attention-svgrepo-com.svg";
 
+/////////////////////web3///////////////////////
+import {mint,burn} from "../web3/MHM2023";
+import { connectWallet } from "../web3/connectWallet";
+import { ethers } from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
+///////////////////////////////////////////////
 const ConfingEstate = ({ method, estate }) => {
+  const [loading, setLoading] = useState(false);
+
+  const [detailBox, setDetailBox] = useState(false);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [filters, setFilters] = useState([]);
@@ -71,6 +81,10 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const navigate = useNavigate();
+
+  const [walletAddress ,setWallet] = useState('');
+  const [signer , setSigner] = useState({});
+
 
   const [selectedFilters, setSelectedFilters] = useState(
     estate ? estate.filter : []
@@ -148,7 +162,7 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
-    summary: estate ? estate.state_summary : "",
+    summary: estate ? estate.summary_description : "",
     // filter: estate ? estate.filter : "",
     mahamPrice: estate ? estate.maham_price : "",
     customerPrice: "",
@@ -169,8 +183,8 @@ const ConfingEstate = ({ method, estate }) => {
         idManipulataionHandler(value);
       }
     } else if (name == "summary") {
-      if (value.length >= 65) {
-        const newValue = value.slice(0, 65);
+      if (value.length >= 34) {
+        const newValue = value.slice(0, 34);
         setInformation((prev) => ({ ...prev, [name]: newValue }));
         return;
       } else {
@@ -342,6 +356,24 @@ const ConfingEstate = ({ method, estate }) => {
     const previewURLs = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreviewUrl(previewURLs);
   };
+
+  async function walletConnection(){
+
+    const { currentAccount } = await connectWallet();
+    setWallet(currentAccount);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner(currentAccount);
+    setSigner(signer);
+    const address = await signer.getAddress();
+    console.log(address);
+    
+  } 
+
+  window.ethereum.on('accountsChanged' , walletConnection)
+
+  window.ethereum.on('chainChanged' , () => {
+    window.location.reload();
+  })
 
   const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";
@@ -530,6 +562,8 @@ const ConfingEstate = ({ method, estate }) => {
   //   : `${styles.textinput} `;
 
   const submitHandler = async (event) => {
+    setLoading(true);
+
     setTouched({
       title: true,
       countryName: true,
@@ -708,6 +742,15 @@ const ConfingEstate = ({ method, estate }) => {
 
     let url = "/admin/estates";
 
+    if(method === "POST"){
+      const mintId = Number(information.id);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signers = provider.getSigner(); 
+      console.log(signers);
+      const mintRes = await mint(mintId,signers);
+      console.log(mintRes);
+    }
+
     if (method === "PUT") {
       const estateId = estate._id;
       url = "/admin/estates/" + estateId;
@@ -726,11 +769,17 @@ const ConfingEstate = ({ method, estate }) => {
       setError(true);
       setMintUsed(false);
     }
+
+    setLoading(false);
   };
 
   const deleteHandler = async () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
+      
+      const mintId = Number(information.id);
+      const burnRes = await burn(mintId ,signer);
+      console.log(burnRes);
       const estateId = estate._id;
       const url = "/admin/estates/" + estateId;
       let { response } = await fetchInstance(url, {
@@ -767,27 +816,56 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   return (
-    <form method={method} encType="multipart/form-data">
-      {deleteConfirmed && (
-        <Alert
-          lineColor="#0aff0e"
-          img={trueLogo}
-          title="Success!"
-          detail="Estate has been successfully deleted"
-          closeHandler={() => {
-            navigate("/admin/estates");
-          }}
-        />
+    <>
+      {detailBox && (
+        <div className={styles.infoOvelay}>
+          <div className={styles.summryInfo}>
+            <h4>This is a warning. You should do something about it.</h4>
+            <h5>
+              -apartment: If it was an apartment house, the desired house floor
+              + house unit number
+            </h5>
+            <h5>
+              -private house: If it was a private house, we would briefly write
+              the important features of the house, for example, it is near the
+              subway or it is close to important centers,...
+            </h5>
+            <h5>
+              -house in nature: If the house was in the nature, I will briefly
+              write the nearest centers that this house has access to, such as
+              recreational, commercial, and health centers,...
+            </h5>
+            <h5>-You can only enter 34 characters</h5>
+            <button
+              className={styles.okBtn}
+              onClick={() => setDetailBox(false)}
+            >
+              ok
+            </button>
+          </div>
+        </div>
       )}
+      <form method={method} encType="multipart/form-data">
+        {deleteConfirmed && (
+          <Alert
+            lineColor="#0aff0e"
+            img={trueLogo}
+            title="Success!"
+            detail="Estate has been successfully deleted"
+            closeHandler={() => {
+              navigate("/admin/estates");
+            }}
+          />
+        )}
 
-      <div className={styles.EstateInfo}>
-        <MultiSelect
-          options={filters}
-          onChange={handleMultiSelectChange}
-          selectedOptions={selectedFilters}
-          invalid={filterIsInvalid}
-        />
-        {/* <select
+        <div className={styles.EstateInfo}>
+          <MultiSelect
+            options={filters}
+            onChange={handleMultiSelectChange}
+            selectedOptions={selectedFilters}
+            invalid={filterIsInvalid}
+          />
+          {/* <select
             value={information.filter}
             onChange={basicEventHandler}
             name="filter"
@@ -803,1130 +881,1135 @@ const ConfingEstate = ({ method, estate }) => {
             ))}
           </select> */}
 
-        <div className={styles.wrapper}>
-          <div className={styles.inputData}>
-            <input
-              required
-              type="text"
-              className={titleClass}
-              value={information.title}
-              name="title"
-              onChange={basicEventHandler}
-              onBlur={blurHandler}
-            />
-            <div className={styles.underline}></div>
-            <label className={styles.label}>Title</label>
-          </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.column2}>
-            <div>
-              <label>Country</label>
-            </div>
-            <div className={styles.countryNameClass2}>
-              <select
-                value={information.countryName}
+          <div className={styles.wrapper}>
+            <div className={styles.inputData}>
+              <input
+                required
+                type="text"
+                className={titleClass}
+                value={information.title}
+                name="title"
                 onChange={basicEventHandler}
-                name="countryName"
-                className={countryNameClass}
                 onBlur={blurHandler}
-              >
-                <option value="">Choose an option</option>
-                {countries.length > 0 &&
-                  countries.map((option) => (
-                    <option
-                      key={option.country_name}
-                      value={option.country_name}
-                    >
-                      {option.country_name}
-                    </option>
-                  ))}
-              </select>
+              />
+              <div className={styles.underline}></div>
+              <label className={styles.label}>Title</label>
             </div>
           </div>
-          <div className={styles.column2}>
-            <div>
-              <label>City</label>
-            </div>
-            <div className={styles.countryNameClass2}>
-              <select
-                value={information.cityName}
-                onChange={basicEventHandler}
-                name="cityName"
-                className={cityNameClass}
-                onBlur={blurHandler}
-              >
-                <option value="">Choose an option</option>
-                {cities.length > 0 &&
-                  cities.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.column}>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="text"
-                  className={streetNameClass}
-                  value={information.streetName}
+          <div className={styles.row}>
+            <div className={styles.column2}>
+              <div>
+                <label>Country</label>
+              </div>
+              <div className={styles.countryNameClass2}>
+                <select
+                  value={information.countryName}
                   onChange={basicEventHandler}
-                  name="streetName"
+                  name="countryName"
+                  className={countryNameClass}
                   onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Street Name</label>
+                >
+                  <option value="">Choose an option</option>
+                  {countries.length > 0 &&
+                    countries.map((option) => (
+                      <option
+                        key={option.country_name}
+                        value={option.country_name}
+                      >
+                        {option.country_name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+            <div className={styles.column2}>
+              <div>
+                <label>City</label>
+              </div>
+              <div className={styles.countryNameClass2}>
+                <select
+                  value={information.cityName}
+                  onChange={basicEventHandler}
+                  name="cityName"
+                  className={cityNameClass}
+                  onBlur={blurHandler}
+                >
+                  <option value="">Choose an option</option>
+                  {cities.length > 0 &&
+                    cities.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                </select>
               </div>
             </div>
           </div>
-          <div className={styles.column}>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="text"
-                  className={plateClass}
-                  value={information.plate}
-                  onChange={basicEventHandler}
-                  name="plate"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Plates</label>
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={streetNameClass}
+                    value={information.streetName}
+                    onChange={basicEventHandler}
+                    name="streetName"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Street Name</label>
+                </div>
+              </div>
+            </div>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={plateClass}
+                    value={information.plate}
+                    onChange={basicEventHandler}
+                    name="plate"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Plates</label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.column}>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="text"
-                  className={numberOfPlateClass}
-                  value={information.numberOfPlate}
-                  name="numberOfPlate"
-                  onChange={basicEventHandler}
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Number Of Plates</label>
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={numberOfPlateClass}
+                    value={information.numberOfPlate}
+                    name="numberOfPlate"
+                    onChange={basicEventHandler}
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Number Of Plates</label>
+                </div>
+              </div>
+            </div>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={numberOfFloorClass}
+                    value={information.numberOfFloor}
+                    onChange={basicEventHandler}
+                    name="numberOfFloor"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Number Of Floors</label>
+                </div>
+              </div>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={numberOfUnitClass}
+                    value={information.numberOfUnit}
+                    onChange={basicEventHandler}
+                    name="numberOfUnit"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Number Of Unit</label>
+                </div>
               </div>
             </div>
           </div>
-          <div className={styles.column}>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="text"
-                  className={numberOfFloorClass}
-                  value={information.numberOfFloor}
-                  onChange={basicEventHandler}
-                  name="numberOfFloor"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Number Of Floors</label>
-              </div>
-            </div>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="text"
-                  className={numberOfUnitClass}
-                  value={information.numberOfUnit}
-                  onChange={basicEventHandler}
-                  name="numberOfUnit"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Number Of Unit</label>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div className={styles.IdAndWallet}>
-          <div className={styles.IdAndMint}>
-            <div className={styles.wrapper4}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="number"
-                  className={idClass}
-                  value={information.id}
-                  // onChange={basicEventHandler}
-                  name="id"
-                  disabled
-                  placeholder="Id"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                {/* <label className={styles.label}>Id</label> */}
-              </div>
-            </div>
-          </div>
-          {!estate && (
+          <div className={styles.IdAndWallet}>
             <div className={styles.IdAndMint}>
               <div className={styles.wrapper4}>
                 <div className={styles.inputData}>
                   <input
                     required
                     type="number"
-                    className={walletAddressClass}
-                    // value={information.location}
+                    className={idClass}
+                    value={information.id}
                     // onChange={basicEventHandler}
-                    name="walletAddress"
+                    name="id"
                     disabled
-                    placeholder="Wallet Address"
+                    placeholder="Id"
                     onBlur={blurHandler}
                   />
                   <div className={styles.underline}></div>
                   {/* <label className={styles.label}>Id</label> */}
                 </div>
               </div>
-              <button className={styles.ConnectWalletBtn}>
-                Connect Wallet
-              </button>
             </div>
-          )}
-        </div>
-
-        <div className={styles.row}>
-          <div className={styles.column}>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="text"
-                  className={locationClass}
-                  value={information.location}
-                  onChange={basicEventHandler}
-                  name="location"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Location Of Estate</label>
+       
+              <div className={styles.IdAndMint}>
+                <div className={styles.wrapper4}>
+                  <div className={styles.inputData}>
+                    <input
+                      required
+                      type="number"
+                      className={walletAddressClass}
+                  
+                      // onChange={basicEventHandler}
+                      name="walletAddress"
+                      disabled
+                      placeholder={walletAddress}
+                      onBlur={blurHandler}
+                    />
+                    <div className={styles.underline}></div>
+                    {/* <label className={styles.label}>Id</label> */}
+                  </div>
+                </div>
+                <button className={styles.ConnectWalletBtn} onClick={walletConnection}>
+                  connectWallet
+                </button>
               </div>
-            </div>
           </div>
 
-          <div className={styles.column}>
-            <div className={styles.wrapper2}>
-              <div className={styles.inputData}>
-                <input
-                  required
-                  type="number"
-                  className={mahamPriceClass}
-                  value={information.mahamPrice}
-                  onChange={basicEventHandler}
-                  name="mahamPrice"
-                  onBlur={blurHandler}
-                />
-                <div className={styles.underline}></div>
-                <label className={styles.label}>Maham price</label>
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={locationClass}
+                    value={information.location}
+                    onChange={basicEventHandler}
+                    name="location"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Location Of Estate</label>
+                </div>
               </div>
             </div>
-            {!estate && (
+
+            <div className={styles.column}>
               <div className={styles.wrapper2}>
                 <div className={styles.inputData}>
                   <input
                     required
                     type="number"
-                    className={customerPriceClass}
-                    value={information.customerPrice}
+                    className={mahamPriceClass}
+                    value={information.mahamPrice}
                     onChange={basicEventHandler}
-                    name="customerPrice"
+                    name="mahamPrice"
                     onBlur={blurHandler}
                   />
                   <div className={styles.underline}></div>
-                  <label className={styles.label}>Customer Price</label>
+                  <label className={styles.label}>Maham price</label>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.select2}>
-        <select
-          value={information.type}
-          onChange={basicEventHandler}
-          name="type"
-          className={typeClass}
-          onBlur={blurHandler}
-        >
-          <option value="">Choose an option</option>
-          <option value="residential">residential</option>
-          <option value="commercial">commercial</option>
-        </select>
-      </div>
-
-      <div className={styles.RoomAndMetarge}>
-        <h3>Romms And Metrages</h3>
-
-        <div className={styles.Row3}>
-          <table className={styles.styledTable}>
-            <tbody>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
+              {!estate && (
+                <div className={styles.wrapper2}>
+                  <div className={styles.inputData}>
                     <input
                       required
-                      type="checkbox"
-                      id="check1"
-                      name="checked"
-                      checked={bedroom.checked}
-                      onChange={bedroomEventHandler}
+                      type="number"
+                      className={customerPriceClass}
+                      value={information.customerPrice}
+                      onChange={basicEventHandler}
+                      name="customerPrice"
+                      onBlur={blurHandler}
                     />
-                    <label htmlFor="check1">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={bedIcon} className={styles.Icons} />
-                </td>
-                <td>BedRoom</td>
-                {bedroom.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={bedroom.number}
-                        onChange={bedroomEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={bedroom.metrage}
-                        onChange={bedroomEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check2"
-                      name="checked"
-                      checked={livingRoom.checked}
-                      onChange={livingRoomEventHandler}
-                    />
-                    <label htmlFor="check2">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={livingroomIcon} className={styles.Icons} />
-                </td>
-                <td>LivingRoom</td>
-                {livingRoom.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={livingRoom.number}
-                        onChange={livingRoomEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={livingRoom.metrage}
-                        onChange={livingRoomEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check3"
-                      name="checked"
-                      checked={kitchen.checked}
-                      onChange={kitchenEventHandler}
-                    />
-                    <label htmlFor="check3">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={kitchenIcon} className={styles.Icons} />
-                </td>
-                <td>Kitchen</td>
-                {kitchen.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={kitchen.number}
-                        onChange={kitchenEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={kitchen.metrage}
-                        onChange={kitchenEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check4"
-                      name="checked"
-                      checked={diningroom.checked}
-                      onChange={diningroomEventHandler}
-                    />
-                    <label htmlFor="check4">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={diningroomIcon} className={styles.Icons} />
-                </td>
-                <td>DiningRoom</td>
-                {diningroom.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={diningroom.number}
-                        onChange={diningroomEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={diningroom.metrage}
-                        onChange={diningroomEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check5"
-                      name="checked"
-                      checked={guestroom.checked}
-                      onChange={guestroomEventHandler}
-                    />
-                    <label htmlFor="check5">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={guestIcon} className={styles.Icons} />
-                </td>
-                <td>GuestRoom</td>
-                {guestroom.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={guestroom.number}
-                        onChange={guestroomEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={guestroom.metrage}
-                        onChange={guestroomEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check6"
-                      name="checked"
-                      checked={bathroom.checked}
-                      onChange={bathroomEventHandler}
-                    />
-                    <label htmlFor="check6">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={bathroomIcon} className={styles.Icons} />
-                </td>
-                <td>BathRoom</td>
-                {bathroom.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={bathroom.number}
-                        onChange={bathroomEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={bathroom.metrage}
-                        onChange={bathroomEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check7"
-                      name="checked"
-                      checked={garden.checked}
-                      onChange={gardenEventHandler}
-                    />
-                    <label htmlFor="check7">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={gardenIcon} className={styles.Icons} />
-                </td>
-                <td>Garden</td>
-                {garden.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={garden.number}
-                        onChange={gardenEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={garden.metrage}
-                        onChange={gardenEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check8"
-                      name="checked"
-                      checked={balcony.checked}
-                      onChange={balconyEventHandler}
-                    />
-                    <label htmlFor="check8">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={balconyIcon} className={styles.Icons} />
-                </td>
-                <td>Balcony</td>
-                {balcony.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={balcony.number}
-                        onChange={balconyEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={balcony.metrage}
-                        onChange={balconyEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check9"
-                      name="checked"
-                      checked={garage.checked}
-                      onChange={garageEventHandler}
-                    />
-                    <label htmlFor="check9">
-                      <span></span>
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src={garageIcon} className={styles.Icons} />
-                </td>
-                <td>Garage</td>
-                {garage.checked && (
-                  <>
-                    <td>
-                      <label htmlFor="Number">Number:</label>
-                      <input
-                        required
-                        type="number"
-                        name="number"
-                        min="0"
-                        id="Number"
-                        className={styles.Inputs}
-                        value={garage.number}
-                        onChange={garageEventHandler}
-                      />
-                    </td>
-                    <td>
-                      <label htmlFor="Metrage">Metrage:</label>
-                      <input
-                        required
-                        type="number"
-                        name="metrage"
-                        min="0"
-                        id="Metrage"
-                        className={styles.Inputs}
-                        value={garage.metrage}
-                        onChange={garageEventHandler}
-                      />
-                    </td>
-                  </>
-                )}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className={styles.DisAndFic}>
-        <div className={styles.Facilities}>
-          <h3>Facilities</h3>
-          <div className={styles.FacilitiesDiv}>
-            <div className={styles.Row5}>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check10"
-                      name="wifi"
-                      checked={facilities.wifi}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check10">
-                      <span></span>
-                    </label>
+                    <div className={styles.underline}></div>
+                    <label className={styles.label}>Customer Price</label>
                   </div>
                 </div>
-                <div>
-                  <img src={wifiIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>WIFI</h5>
-                </div>
-              </div>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check11"
-                      name="parking"
-                      checked={facilities.parking}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check11">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={parkingIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Parking</h5>
-                </div>
-              </div>
-            </div>
-            <div className={styles.Row5}>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check12"
-                      name="pool"
-                      checked={facilities.pool}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check12">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={poolIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Pool</h5>
-                </div>
-              </div>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check13"
-                      name="furniture"
-                      checked={facilities.furniture}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check13">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={furintureIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Furniture</h5>
-                </div>
-              </div>
-            </div>
-            <div className={styles.Row5}>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check14"
-                      name="elevator"
-                      checked={facilities.elevator}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check14">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={elevatorIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Elevator</h5>
-                </div>
-              </div>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check15"
-                      name="garden"
-                      checked={facilities.garden}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check15">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={gardenIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Garden</h5>
-                </div>
-              </div>
-            </div>
-            <div className={styles.Row5}>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check16"
-                      name="laundary"
-                      checked={facilities.laundary}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check16">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={laundryIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Laundary</h5>
-                </div>
-              </div>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check17"
-                      name="bbq"
-                      checked={facilities.bbq}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check17">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={bbqIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>BBQ</h5>
-                </div>
-              </div>
-            </div>
-            <div className={styles.Row5}>
-              <div className={styles.Row51}>
-                <div>
-                  <div className={styles.checkbox_wrapper}>
-                    <input
-                      required
-                      type="checkbox"
-                      id="check18"
-                      name="gym"
-                      checked={facilities.gym}
-                      onChange={facilitiesEventHandler}
-                    />
-                    <label htmlFor="check18">
-                      <span></span>
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <img src={gymIcon} className={styles.Icons} />
-                </div>
-                <div>
-                  <h5 className={styles.FacilitiesH5}>Gym</h5>
-                </div>
-              </div>
-              <div className={styles.Row51}>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
-        <div className={styles.Row4}>
-          <h3>Description of Estate</h3>
-          <div className={styles.DescriptionDiv}>
-            <textarea
-              placeholder="description"
-              name="description"
-              value={information.description}
-              onChange={basicEventHandler}
-              className={descriptionClass}
-              onBlur={blurHandler}
-            ></textarea>
-          </div>
-          {/*  */}
-          <div className={styles.DescriptionInfo}>
-            <h4>Summary for estate</h4>
-            <p>(You can only enter 65 characters)</p>
-            <p>{information.summary.length}/65</p>
-          </div>
-          <div className={styles.DescriptionDiv}>
-            <textarea
-              placeholder="summary"
-              name="summary"
-              value={information.summary}
-              onChange={basicEventHandler}
-              className={summaryClass}
-              onBlur={blurHandler}
-            ></textarea>
-          </div>
-          {/*  */}
-        </div>
-      </div>
-
-      <div className={styles.Uploader}>
-        <div className={styles.ImgUploader}>
-          <h3>Image Uploader</h3>
-          <div className={styles.UploadDiv}>
-            <input
-              required
-              type="file"
-              id="file-input"
-              name="imageInput"
-              multiple
-              hidden
-              accept="image/*"
-              className={styles.fileInput}
-              onChange={imgHandler}
-            />
-          </div>
-          <div className={imageClass} id="preview-container">
-            {previewImages.length > 0 && (
-              <div>
-                {previewImages.length > 0 &&
-                  previewImages.map((imageURL) => (
-                    <img
-                      key={imageURL}
-                      src={imageURL}
-                      alt="Preview"
-                      width="200"
-                    />
-                  ))}
-              </div>
-            )}
-            {previewImages.length == 0 && (
-              <div className={styles.uploadIcon} id="UploadIcon">
-                <div>
-                  <img src={uploadIcon} className={styles.UploadIcon2} />
-                </div>
-                <div>
-                  <h3>Uploade Image and Show photos</h3>
-                </div>
-              </div>
-            )}
-          </div>
-          <label htmlFor="file-input" className={styles.ChooseLabel}>
-            Choose Image
-          </label>
-        </div>
-
-        <div className={styles.VideoUploader}>
-          <h3>Video Uploader</h3>
-          <div className={styles.UploadDiv}>
-            <input
-              required
-              type="file"
-              className={styles.fileInput2}
-              id="file-input2"
-              multiple
-              accept="video/*"
-              hidden
-              onChange={vidHandler}
-            />
-          </div>
-          <div className={videoClass} id="preview-container2">
-            {selectedVideo.length == 0 && (
-              <div id="UploadIcon" className={styles.uploadIcon}>
-                <div>
-                  <img src={uploadIcon} className={styles.UploadIcon2} />
-                </div>
-                <div>
-                  <h3>Uploade Image and Show photos</h3>
-                </div>
-              </div>
-            )}
-
-            {selectedVideo.length > 0 && (
-              <div>
-                {previewUrl.length > 0 &&
-                  previewUrl.map((vidURL) => (
-                    <video
-                      key={vidURL}
-                      src={vidURL}
-                      alt="Preview"
-                      width="200"
-                      controls
-                    />
-                  ))}
-              </div>
-            )}
-          </div>
-          <label htmlFor="file-input2" className={styles.ChooseLabel}>
-            Choose Video
-          </label>
-        </div>
-        <div className={styles.AddAndDelete}>
-          <button
-            className={styles.AddButton}
-            // disabled={!formIsValid}
-            type="button"
-            onClick={() => submitHandler()}
+        <div className={styles.select2}>
+          <select
+            value={information.type}
+            onChange={basicEventHandler}
+            name="type"
+            className={typeClass}
+            onBlur={blurHandler}
           >
-            {estate ? (
-              <>
-                <span className={styles.text}>Edit</span>
-                <span>+</span>
-              </>
-            ) : (
-              <>
-                <span className={styles.text}>Add</span>
-                <span>+</span>
-              </>
-            )}
-          </button>
-          {estate && (
-            <button
-              className={styles.DeleteBtn}
-              type="button"
-              onClick={() => deleteHandler()}
-            >
-              <span className={styles.text}>Delete</span>
-              <span>
-                <img src={deleteIcon} className={styles.DeleteIcon}></img>
-              </span>
-            </button>
-          )}
+            <option value="">Choose an option</option>
+            <option value="residential">residential</option>
+            <option value="commercial">commercial</option>
+          </select>
         </div>
-      </div>
-    </form>
+
+        <div className={styles.RoomAndMetarge}>
+          <h3>Romms And Metrages</h3>
+
+          <div className={styles.Row3}>
+            <table className={styles.styledTable}>
+              <tbody>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check1"
+                        name="checked"
+                        checked={bedroom.checked}
+                        onChange={bedroomEventHandler}
+                      />
+                      <label htmlFor="check1">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={bedIcon} className={styles.Icons} />
+                  </td>
+                  <td>BedRoom</td>
+                  {bedroom.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={bedroom.number}
+                          onChange={bedroomEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={bedroom.metrage}
+                          onChange={bedroomEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check2"
+                        name="checked"
+                        checked={livingRoom.checked}
+                        onChange={livingRoomEventHandler}
+                      />
+                      <label htmlFor="check2">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={livingroomIcon} className={styles.Icons} />
+                  </td>
+                  <td>LivingRoom</td>
+                  {livingRoom.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={livingRoom.number}
+                          onChange={livingRoomEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={livingRoom.metrage}
+                          onChange={livingRoomEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check3"
+                        name="checked"
+                        checked={kitchen.checked}
+                        onChange={kitchenEventHandler}
+                      />
+                      <label htmlFor="check3">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={kitchenIcon} className={styles.Icons} />
+                  </td>
+                  <td>Kitchen</td>
+                  {kitchen.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={kitchen.number}
+                          onChange={kitchenEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={kitchen.metrage}
+                          onChange={kitchenEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check4"
+                        name="checked"
+                        checked={diningroom.checked}
+                        onChange={diningroomEventHandler}
+                      />
+                      <label htmlFor="check4">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={diningroomIcon} className={styles.Icons} />
+                  </td>
+                  <td>DiningRoom</td>
+                  {diningroom.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={diningroom.number}
+                          onChange={diningroomEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={diningroom.metrage}
+                          onChange={diningroomEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check5"
+                        name="checked"
+                        checked={guestroom.checked}
+                        onChange={guestroomEventHandler}
+                      />
+                      <label htmlFor="check5">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={guestIcon} className={styles.Icons} />
+                  </td>
+                  <td>GuestRoom</td>
+                  {guestroom.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={guestroom.number}
+                          onChange={guestroomEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={guestroom.metrage}
+                          onChange={guestroomEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check6"
+                        name="checked"
+                        checked={bathroom.checked}
+                        onChange={bathroomEventHandler}
+                      />
+                      <label htmlFor="check6">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={bathroomIcon} className={styles.Icons} />
+                  </td>
+                  <td>BathRoom</td>
+                  {bathroom.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={bathroom.number}
+                          onChange={bathroomEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={bathroom.metrage}
+                          onChange={bathroomEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check7"
+                        name="checked"
+                        checked={garden.checked}
+                        onChange={gardenEventHandler}
+                      />
+                      <label htmlFor="check7">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={gardenIcon} className={styles.Icons} />
+                  </td>
+                  <td>Garden</td>
+                  {garden.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={garden.number}
+                          onChange={gardenEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={garden.metrage}
+                          onChange={gardenEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check8"
+                        name="checked"
+                        checked={balcony.checked}
+                        onChange={balconyEventHandler}
+                      />
+                      <label htmlFor="check8">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={balconyIcon} className={styles.Icons} />
+                  </td>
+                  <td>Balcony</td>
+                  {balcony.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={balcony.number}
+                          onChange={balconyEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={balcony.metrage}
+                          onChange={balconyEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <td>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check9"
+                        name="checked"
+                        checked={garage.checked}
+                        onChange={garageEventHandler}
+                      />
+                      <label htmlFor="check9">
+                        <span></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <img src={garageIcon} className={styles.Icons} />
+                  </td>
+                  <td>Garage</td>
+                  {garage.checked && (
+                    <>
+                      <td>
+                        <label htmlFor="Number">Number:</label>
+                        <input
+                          required
+                          type="number"
+                          name="number"
+                          min="0"
+                          id="Number"
+                          className={styles.Inputs}
+                          value={garage.number}
+                          onChange={garageEventHandler}
+                        />
+                      </td>
+                      <td>
+                        <label htmlFor="Metrage">Metrage:</label>
+                        <input
+                          required
+                          type="number"
+                          name="metrage"
+                          min="0"
+                          id="Metrage"
+                          className={styles.Inputs}
+                          value={garage.metrage}
+                          onChange={garageEventHandler}
+                        />
+                      </td>
+                    </>
+                  )}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className={styles.DisAndFic}>
+          <div className={styles.Facilities}>
+            <h3>Facilities</h3>
+            <div className={styles.FacilitiesDiv}>
+              <div className={styles.Row5}>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check10"
+                        name="wifi"
+                        checked={facilities.wifi}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check10">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={wifiIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>WIFI</h5>
+                  </div>
+                </div>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check11"
+                        name="parking"
+                        checked={facilities.parking}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check11">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={parkingIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Parking</h5>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.Row5}>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check12"
+                        name="pool"
+                        checked={facilities.pool}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check12">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={poolIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Pool</h5>
+                  </div>
+                </div>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check13"
+                        name="furniture"
+                        checked={facilities.furniture}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check13">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={furintureIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Furniture</h5>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.Row5}>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check14"
+                        name="elevator"
+                        checked={facilities.elevator}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check14">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={elevatorIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Elevator</h5>
+                  </div>
+                </div>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check15"
+                        name="garden"
+                        checked={facilities.garden}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check15">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={gardenIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Garden</h5>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.Row5}>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check16"
+                        name="laundary"
+                        checked={facilities.laundary}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check16">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={laundryIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Laundary</h5>
+                  </div>
+                </div>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check17"
+                        name="bbq"
+                        checked={facilities.bbq}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check17">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={bbqIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>BBQ</h5>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.Row5}>
+                <div className={styles.Row51}>
+                  <div>
+                    <div className={styles.checkbox_wrapper}>
+                      <input
+                        required
+                        type="checkbox"
+                        id="check18"
+                        name="gym"
+                        checked={facilities.gym}
+                        onChange={facilitiesEventHandler}
+                      />
+                      <label htmlFor="check18">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={gymIcon} className={styles.Icons} />
+                  </div>
+                  <div>
+                    <h5 className={styles.FacilitiesH5}>Gym</h5>
+                  </div>
+                </div>
+                <div className={styles.Row51}>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.Row4}>
+            {/*  */}
+            <div className={styles.DescriptionInfo}>
+              <h4>Summary for estate</h4>
+              <img
+                className={styles.attentionIcon}
+                src={attentionIcon}
+                onClick={() => setDetailBox(true)}
+              />
+              <p>{information.summary.length}/34</p>
+            </div>
+            <div className={styles.DescriptionDiv}>
+              <textarea
+                placeholder="please read information"
+                name="summary"
+                value={information.summary}
+                onChange={basicEventHandler}
+                className={summaryClass}
+                onBlur={blurHandler}
+              ></textarea>
+            </div>
+            {/*  */}
+            <h3>Description of Estate</h3>
+            <div className={styles.DescriptionDiv}>
+              <textarea
+                placeholder="description"
+                name="description"
+                value={information.description}
+                onChange={basicEventHandler}
+                className={descriptionClass}
+                onBlur={blurHandler}
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.Uploader}>
+          <div className={styles.ImgUploader}>
+            <h3>Image Uploader</h3>
+            <div className={styles.UploadDiv}>
+              <input
+                required
+                type="file"
+                id="file-input"
+                name="imageInput"
+                multiple
+                hidden
+                accept="image/*"
+                className={styles.fileInput}
+                onChange={imgHandler}
+              />
+            </div>
+            <div className={imageClass} id="preview-container">
+              {previewImages.length > 0 && (
+                <div>
+                  {previewImages.length > 0 &&
+                    previewImages.map((imageURL) => (
+                      <img
+                        key={imageURL}
+                        src={imageURL}
+                        alt="Preview"
+                        width="200"
+                      />
+                    ))}
+                </div>
+              )}
+              {previewImages.length == 0 && (
+                <div className={styles.uploadIcon} id="UploadIcon">
+                  <div>
+                    <img src={uploadIcon} className={styles.UploadIcon2} />
+                  </div>
+                  <div>
+                    <h3>Uploade Image and Show photos</h3>
+                  </div>
+                </div>
+              )}
+            </div>
+            <label htmlFor="file-input" className={styles.ChooseLabel}>
+              Choose Image
+            </label>
+          </div>
+
+          <div className={styles.VideoUploader}>
+            <h3>Video Uploader</h3>
+            <div className={styles.UploadDiv}>
+              <input
+                required
+                type="file"
+                className={styles.fileInput2}
+                id="file-input2"
+                multiple
+                accept="video/*"
+                hidden
+                onChange={vidHandler}
+              />
+            </div>
+            <div className={videoClass} id="preview-container2">
+              {selectedVideo.length == 0 && (
+                <div id="UploadIcon" className={styles.uploadIcon}>
+                  <div>
+                    <img src={uploadIcon} className={styles.UploadIcon2} />
+                  </div>
+                  <div>
+                    <h3>Uploade Image and Show photos</h3>
+                  </div>
+                </div>
+              )}
+
+              {selectedVideo.length > 0 && (
+                <div>
+                  {previewUrl.length > 0 &&
+                    previewUrl.map((vidURL) => (
+                      <video
+                        key={vidURL}
+                        src={vidURL}
+                        alt="Preview"
+                        width="200"
+                        controls
+                      />
+                    ))}
+                </div>
+              )}
+            </div>
+            <label htmlFor="file-input2" className={styles.ChooseLabel}>
+              Choose Video
+            </label>
+          </div>
+          <div className={styles.AddAndDelete}>
+            <button
+              className={styles.AddButton}
+              // disabled={!formIsValid}
+              type="button"
+              onClick={() => submitHandler()}
+            >
+              {estate ? (
+                <>
+                  <span className={styles.text}>Edit</span>
+                  <span>+</span>
+                </>
+              ) : (
+                <>
+                  <span className={styles.text}>Add</span>
+                  <span>+</span>
+                </>
+              )}
+            </button>
+            {estate && (
+              <button
+                className={styles.DeleteBtn}
+                type="button"
+                onClick={() => deleteHandler()}
+              >
+                <span className={styles.text}>Delete</span>
+                <span>
+                  <img src={deleteIcon} className={styles.DeleteIcon}></img>
+                </span>
+              </button>
+            )}
+          </div>
+        </div>
+      </form>
+      {loading && (<div>loading...</div>)}
+    </>
   );
 };
 

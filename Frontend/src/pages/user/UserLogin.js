@@ -1,16 +1,18 @@
-import styles from "../styles/userLoginAndSignup.module.css";
+import styles from "../../styles/userLoginAndSignup.module.css";
 
-import logoIcon from "../images/Maham2.png";
-import backgroundImage from "../images/Frame 110 (7) 1.png";
-import showPasswordIcon from "../images/eye-alt-svgrepo-com.svg";
-import hidePasswordIcon from "../images/eye-slash-alt-svgrepo-com.svg";
+import logoIcon from "../../images/Maham2.png";
+import backgroundImage from "../../images/Frame 110 (7) 1.png";
+import showPasswordIcon from "../../images/eye-alt-svgrepo-com.svg";
+import hidePasswordIcon from "../../images/eye-slash-alt-svgrepo-com.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import Timer from "../components/general/Timer";
-import warningIcon from "../images/warning-attention-red-svgrepo-com.svg";
-import googleIcon from "../images/google-color-svgrepo-com.svg"
+import Timer from "../../components/general/Timer";
+import warningIcon from "../../images/warning-attention-red-svgrepo-com.svg";
+import googleIcon from "../../images/google-color-svgrepo-com.svg";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../../util/firebase";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -89,23 +91,28 @@ const UserLogin = () => {
     }
   };
 
-  const googleLogin = async (res) => {
-    // const formData = new FormData();
-    // formData.append("res", res);
-    // const response = await fetch("url", {
-    //   method: "POST",
-    //   body: JSON.stringify(res),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // if (response.ok) {
-    //   navigate("/userpanel");
-    // }
-    // const provider = new firebase.auth.GoogleOAuthProvider();
-    // auth.signInWithPopup(provider).then((result) => {
-    //   console.log(result.user);
-    // });
+  const googleLogin = async () => {
+    let credential = "";
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        credential = GoogleAuthProvider.credentialFromError(error);
+      });
+
+    const response = await fetch("url", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credential),
+    });
   };
 
   return (

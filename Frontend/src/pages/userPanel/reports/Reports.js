@@ -1,16 +1,29 @@
 import { useState } from "react";
-import styles from "../../styles/userPanel.module.css";
+import styles from "../../../styles/reports.module.css";
 
 import { NavLink, Outlet, useOutletContext } from "react-router-dom";
-import InformationModal from "./InformationModal";
+import InformationModal from "../../../components/userPanel/InformationModal";
 
-const ManagementAssets = () => {
+const Reports = () => {
   const { tutorial } = useOutletContext();
-  const [assetsTutorial, setAssetsTutorial] = useState(false);
-  const [transactionsTutorial, setTransactionsTutorial] = useState(false);
+
+  const [getDocumentTutorial, setGetDocumentTutorial] = useState(false);
+  const [documentStatusTutorial, setDocumentStatusTutorial] = useState(false);
 
   return (
     <>
+      {getDocumentTutorial && (
+        <InformationModal
+          text=""
+          onClose={() => setGetDocumentTutorial(false)}
+        />
+      )}
+      {documentStatusTutorial && (
+        <InformationModal
+          text=""
+          onClose={() => setDocumentStatusTutorial(false)}
+        />
+      )}
       <div className={styles.TableMainDiv}>
         <div className={styles.MenuDiv}>
           <div className={styles.MenuButtonsDiv}>
@@ -22,12 +35,12 @@ const ManagementAssets = () => {
                 to=""
                 end
               >
-                Assets
+                Get document
               </NavLink>
               {tutorial && (
                 <div
                   className={styles.questionMarkCircle}
-                  onClick={() => setAssetsTutorial(true)}
+                  onClick={() => setGetDocumentTutorial(true)}
                 >
                   ?
                 </div>
@@ -38,14 +51,14 @@ const ManagementAssets = () => {
                 className={({ isActive }) =>
                   isActive ? styles.tab : styles.tab2
                 }
-                to="transactions"
+                to="documentstatus"
               >
-                Transaction
+                Document status
               </NavLink>
               {tutorial && (
                 <div
                   className={styles.questionMarkCircle}
-                  onClick={() => setAssetsTutorial(true)}
+                  onClick={() => setDocumentStatusTutorial(true)}
                 >
                   ?
                 </div>
@@ -55,10 +68,8 @@ const ManagementAssets = () => {
         </div>
         <Outlet />
       </div>
-      {assetsTutorial && <InformationModal text="" onClose={()=>setAssetsTutorial(false)} />}
-      {transactionsTutorial && <InformationModal text="" onClose={()=>setTransactionsTutorial(false)} />}
     </>
   );
 };
 
-export default ManagementAssets;
+export default Reports;

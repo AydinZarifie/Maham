@@ -15,7 +15,6 @@ import adminPanelIcon from "../../images/opencontacts-svgrepo-com.svg";
 
 import AdminMenuItem from "./AdminMenuItem";
 import { Form, Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import {
   retrieveAndDecodeInCookies,
   retrieveAndDecodeInLocalStorage,

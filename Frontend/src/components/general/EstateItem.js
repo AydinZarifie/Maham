@@ -8,6 +8,7 @@ import image2 from "../../images/4918.jpg";
 import image3 from "../../images/5904.jpg";
 import likeIcon from "../../images/heart-svgrepo-com.svg";
 import filledLikeIcon from "../../images/heart-filled-svgrepo-com.svg";
+import bedroomIcon from "../../images/bed-double-svgrepo-com.svg";
 
 const EstateItem = (props) => {
   const rightButton = useRef(null);
@@ -146,8 +147,8 @@ const EstateItem = (props) => {
           // />
         )}
         {/* <img src={image1} alt="" className={styles.slide} /> */}
-        {/* <img src={image2} alt="" className={styles.slide} />
-        <img src={image3} alt="" className={styles.slide} /> */}
+        <img src={image2} alt="" className={styles.slide} />
+        <img src={image3} alt="" className={styles.slide} />
         <div className={styles.buttons}>
           <button
             className={`${styles.RLBtn} ${styles.Right}`}
@@ -172,9 +173,9 @@ const EstateItem = (props) => {
             <h3 className={styles.titleH3}>{props.props.estate_title}</h3>
             {/*  */}
             <span className={styles.InfoDiv}>
-              <h4 className={styles.InfoH4}>{props.props.country_name}</h4>
-              <h4 className={styles.InfoH4}>|</h4>
-              <h4 className={styles.InfoH4}>{props.props.city_name}</h4>
+              <h4 className={styles.titleH3}>_ {props.props.country_name}</h4>
+
+              <h4 className={styles.titleH3}>{props.props.city_name}</h4>
             </span>
             {/*  */}
           </span>
@@ -197,7 +198,9 @@ const EstateItem = (props) => {
           </span>
           <h4 className={styles.InfoH4}>|</h4> */}
         <h4 className={styles.InfoH4Limit65}>
-          This house is located in the coastal part of the city of California
+          <img className={styles.BedroomIcon} src={bedroomIcon} />
+          <div> 2 bedrooms</div> <div>|</div>
+          <div>174 kilimeters dubai sea in the </div>
         </h4>
         <span className={styles.InfoDiv}>
           <h4 className={styles.InfoH4}>Metrage:</h4>

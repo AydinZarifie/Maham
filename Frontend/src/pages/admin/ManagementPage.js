@@ -106,10 +106,17 @@ const ManagementPage = () => {
     }
   };
 
-  const LockEstate = async (id) => {
-    let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {
-      method: "POST",
-    });
+  const LockEstate = async (id, mintId) => {
+    let { response } = await fetchInstance(
+      "/admin/managment/lockUnLockEstate/" + id,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(mintId),
+      }
+    );
     if (response.ok) {
       const updatedEstates = [...searchedEstates];
       let index = searchedEstates.findIndex((item) => item._id == id);
@@ -129,7 +136,9 @@ const ManagementPage = () => {
     fetchCountryData();
 
     const fetchCountryInfromationData = async () => {
-      let { response, data } = await fetchInstance("/admin/managment/countriesInfo");
+      let { response, data } = await fetchInstance(
+        "/admin/managment/countriesInfo"
+      );
       setCountryInformations(data.data);
     };
     fetchCountryInfromationData();
@@ -182,21 +191,22 @@ const ManagementPage = () => {
                   onClick={toggleCountryMenu}
                 ></div>
                 <ul className={styles.options}>
-                  {countries.length>0 && countries.map((option) => (
-                    <li
-                      key={option.country_name}
-                      onClick={() => handleCountryOptionSelect(option)}
-                    >
-                      <img
-                        src={`http://localhost:5000/${option.country_logo.replace(
-                          /\\/g,
-                          "/"
-                        )}`}
-                        alt={option.country_name}
-                      />
-                      {option.country_name}
-                    </li>
-                  ))}
+                  {countries.length > 0 &&
+                    countries.map((option) => (
+                      <li
+                        key={option.country_name}
+                        onClick={() => handleCountryOptionSelect(option)}
+                      >
+                        <img
+                          src={`http://localhost:5000/${option.country_logo.replace(
+                            /\\/g,
+                            "/"
+                          )}`}
+                          alt={option.country_name}
+                        />
+                        {option.country_name}
+                      </li>
+                    ))}
                 </ul>
               </>
             )}
@@ -249,14 +259,15 @@ const ManagementPage = () => {
                 <div className={styles.overlay2} onClick={toggleCityMenu}></div>
 
                 <ul className={styles.options}>
-                  {cities.length>0 && cities.map((option) => (
-                    <li
-                      key={option}
-                      onClick={() => handleCityOptionSelect(option)}
-                    >
-                      {option}
-                    </li>
-                  ))}
+                  {cities.length > 0 &&
+                    cities.map((option) => (
+                      <li
+                        key={option}
+                        onClick={() => handleCityOptionSelect(option)}
+                      >
+                        {option}
+                      </li>
+                    ))}
                 </ul>
               </>
             )}

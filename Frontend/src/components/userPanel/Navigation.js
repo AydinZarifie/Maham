@@ -5,9 +5,10 @@ import eyeIcon from "../../images/eye-svgrepo-com.svg";
 import walletIcon from "../../images/wallet-black-svgrepo-com.svg";
 import arrowIcon from "../../images/arrow-down-black-svgrepo-com.svg";
 import reportIcon from "../../images/file-error-svgrepo-com.svg";
-import favouriteIcon from "../../images/heart-alt-svgrepo-com.svg"
-import { forwardRef, useRef } from "react";
+import favouriteIcon from "../../images/heart-alt-svgrepo-com.svg";
+import { forwardRef, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import InformationModal from "./InformationModal";
 
 const Navigation = forwardRef(
   ({ navRef, navOverlayRef, closeNavHandler, tutorial, openProfile }, ref) => {
@@ -15,6 +16,14 @@ const Navigation = forwardRef(
     const reports = useRef();
     const arrow1 = useRef();
     const arrow2 = useRef();
+
+    const [profileTutorial, setProfileTutorial] = useState(false);
+    const [watchlistTutorial, setWatchlistTutorial] = useState(false);
+    const [favouritesTutorial, setFavouritesTutorial] = useState(false);
+    const [assetsTutorial, setAssetsTutorial] = useState(false);
+    const [transactionsTutorial, setTransactionsTutorial] = useState(false);
+    const [getDocumentTutorial, setGetDocumentTutorial] = useState(false);
+    const [documentStatusTutorial, setDocumentStatusTutorial] = useState(false);
 
     const toggleManagementAssets = () => {
       if (managementAssets.current.style.maxHeight == "85px") {
@@ -42,6 +51,39 @@ const Navigation = forwardRef(
 
     return (
       <>
+        {profileTutorial && (
+          <InformationModal text="" onClose={() => setProfileTutorial(false)} />
+        )}
+        {watchlistTutorial && (
+          <InformationModal
+            text=""
+            onClose={() => setWatchlistTutorial(false)}
+          />
+        )}
+        {favouritesTutorial && (
+          <InformationModal text="" onClose={() => setFavouritesTutorial(false)} />
+        )}
+        {assetsTutorial && (
+          <InformationModal text="" onClose={() => setAssetsTutorial(false)} />
+        )}
+        {transactionsTutorial && (
+          <InformationModal
+            text=""
+            onClose={() => setTransactionsTutorial(false)}
+          />
+        )}
+        {getDocumentTutorial && (
+          <InformationModal
+            text=""
+            onClose={() => setGetDocumentTutorial(false)}
+          />
+        )}
+        {documentStatusTutorial && (
+          <InformationModal
+            text=""
+            onClose={() => setDocumentStatusTutorial(false)}
+          />
+        )}
         <div className={styles.sideNav} ref={navRef}>
           <div className={styles.closeSideNav} onClick={closeNavHandler}>
             &times;
@@ -60,7 +102,10 @@ const Navigation = forwardRef(
               </div>
 
               {tutorial && (
-                <div className={styles.questionMarkMenu}>
+                <div
+                  className={styles.questionMarkMenu}
+                  onClick={() => setProfileTutorial(true)}
+                >
                   <p>?</p>
                 </div>
               )}
@@ -78,7 +123,7 @@ const Navigation = forwardRef(
                 </div>
               </Link>
               {tutorial && (
-                <div className={styles.questionMarkMenu}>
+                <div className={styles.questionMarkMenu}  onClick={() => setWatchlistTutorial(true)}>
                   <p>?</p>
                 </div>
               )}
@@ -96,7 +141,7 @@ const Navigation = forwardRef(
                 </div>
               </Link>
               {tutorial && (
-                <div className={styles.questionMarkMenu}>
+                <div className={styles.questionMarkMenu}  onClick={() => setFavouritesTutorial(true)}>
                   <p>?</p>
                 </div>
               )}
@@ -127,7 +172,7 @@ const Navigation = forwardRef(
                   - Assets
                 </Link>
                 {tutorial && (
-                  <div className={styles.questionMarkMenuLittle}>
+                  <div className={styles.questionMarkMenuLittle}  onClick={() => setAssetsTutorial(true)}>
                     <p>?</p>
                   </div>
                 )}
@@ -141,7 +186,7 @@ const Navigation = forwardRef(
                   - Transaction
                 </Link>
                 {tutorial && (
-                  <div className={styles.questionMarkMenuLittle}>
+                  <div className={styles.questionMarkMenuLittle}  onClick={() => setTransactionsTutorial(true)}>
                     <p>?</p>
                   </div>
                 )}
@@ -173,7 +218,7 @@ const Navigation = forwardRef(
                   - Get document
                 </Link>
                 {tutorial && (
-                  <div className={styles.questionMarkMenuLittle}>
+                  <div className={styles.questionMarkMenuLittle}  onClick={() => setGetDocumentTutorial(true)}>
                     <p>?</p>
                   </div>
                 )}
@@ -187,7 +232,7 @@ const Navigation = forwardRef(
                   - Document status
                 </Link>
                 {tutorial && (
-                  <div className={styles.questionMarkMenuLittle}>
+                  <div className={styles.questionMarkMenuLittle}  onClick={() => setDocumentStatusTutorial(true)}>
                     <p>?</p>
                   </div>
                 )}

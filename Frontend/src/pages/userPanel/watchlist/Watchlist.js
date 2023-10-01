@@ -1,18 +1,25 @@
 import { useState } from "react";
-import styles from "../../styles/userPanel.module.css";
+import styles from "../../../styles/watchlist.module.css";
 
 import { NavLink, Outlet, useOutletContext } from "react-router-dom";
-import InformationModal from "./InformationModal";
+import InformationModal from "../../../components/userPanel/InformationModal";
 
-const ManagementAssets = () => {
+const Watchlist = () => {
   const { tutorial } = useOutletContext();
-  const [assetsTutorial, setAssetsTutorial] = useState(false);
-  const [transactionsTutorial, setTransactionsTutorial] = useState(false);
+
+  const [classicTutorial, setClassicTutorial] = useState(false);
+  const [chartTutorial, setChartTutorial] = useState(false);
 
   return (
     <>
-      <div className={styles.TableMainDiv}>
-        <div className={styles.MenuDiv}>
+      {classicTutorial && (
+        <InformationModal text="" onClose={() => setClassicTutorial(false)} />
+      )}
+      {chartTutorial && (
+        <InformationModal text="" onClose={() => setChartTutorial(false)} />
+      )}
+      <div className={styles.Row}>
+        <div className={styles.LeftHeader}>
           <div className={styles.MenuButtonsDiv}>
             <div>
               <NavLink
@@ -22,12 +29,12 @@ const ManagementAssets = () => {
                 to=""
                 end
               >
-                Assets
+                Chart
               </NavLink>
               {tutorial && (
                 <div
-                  className={styles.questionMarkCircle}
-                  onClick={() => setAssetsTutorial(true)}
+                  className={styles.assetsInfo}
+                  onClick={() => setChartTutorial(true)}
                 >
                   ?
                 </div>
@@ -38,14 +45,14 @@ const ManagementAssets = () => {
                 className={({ isActive }) =>
                   isActive ? styles.tab : styles.tab2
                 }
-                to="transactions"
+                to="classic"
               >
-                Transaction
+                Classic
               </NavLink>
               {tutorial && (
                 <div
-                  className={styles.questionMarkCircle}
-                  onClick={() => setAssetsTutorial(true)}
+                  className={styles.transactionInfo}
+                  onClick={() => setClassicTutorial(true)}
                 >
                   ?
                 </div>
@@ -53,12 +60,10 @@ const ManagementAssets = () => {
             </div>
           </div>
         </div>
-        <Outlet />
+        <Outlet context={{ tutorial }} />
       </div>
-      {assetsTutorial && <InformationModal text="" onClose={()=>setAssetsTutorial(false)} />}
-      {transactionsTutorial && <InformationModal text="" onClose={()=>setTransactionsTutorial(false)} />}
     </>
   );
 };
 
-export default ManagementAssets;
+export default Watchlist;

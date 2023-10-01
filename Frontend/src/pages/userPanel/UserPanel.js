@@ -1,10 +1,10 @@
-import styles from "../styles/userPanel.module.css";
+import styles from "../../styles/userPanel.module.css";
 
-import Navigation from "../components/userPanel/Navigation";
-import Header from "../components/userPanel/Header";
+import Navigation from "../../components/userPanel/Navigation";
+import Header from "../../components/userPanel/Header";
 import { useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Profile from "./userPanel/profile/Profile";
+import Profile from "./profile/Profile";
 
 const UserPanel = () => {
   const [tutorial, setTutorial] = useState(false);

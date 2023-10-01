@@ -17,6 +17,7 @@ import {
 import SearchComponent from "../../../components/userPanel/watchList/SearchComponent";
 import SellPanel from "../../../components/userPanel/watchList/SellPanel";
 import Select from "../../../components/general/Select";
+import InformationModal from "../../../components/userPanel/InformationModal";
 
 const ClassicWatchlist = () => {
   const { tutorial } = useOutletContext();
@@ -33,7 +34,13 @@ const ClassicWatchlist = () => {
     setDividerPosition(newDividerPosition);
   };
 
-  const [countries, setCountries] = useState([{country_name:"iran"},{country_name:"UK"}]);
+  const [activeOrderTutorial, setActiveOrderTutorial] = useState(false);
+  const [dailyDealsTutorial, setDailyDealsTutorial] = useState(false);
+
+  const [countries, setCountries] = useState([
+    { country_name: "iran" },
+    { country_name: "UK" },
+  ]);
   const [cities, setCities] = useState([]);
   const [data, setData] = useState([]);
 
@@ -64,7 +71,9 @@ const ClassicWatchlist = () => {
   };
 
   const cityFetch = async (name) => {
-    let response = await fetch("http://localhost:5000/user/panel/getCities/" + name);
+    let response = await fetch(
+      "http://localhost:5000/user/panel/getCities/" + name
+    );
     const data = await response.json();
     setCities(data.data);
   };
@@ -74,10 +83,13 @@ const ClassicWatchlist = () => {
       const formData = new FormData();
       name = name.trim();
       formData.append("name", name);
-      let response = await fetch("http://localhost:5000/user/panel/search/title", {
-        method: "POST",
-        body: formData,
-      });
+      let response = await fetch(
+        "http://localhost:5000/user/panel/search/title",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const data = await response.json();
       setSearchedEstates(data.data);
     }
@@ -85,7 +97,9 @@ const ClassicWatchlist = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const response = await fetch("http://localhost:5000/user/panel/getCountries");
+      const response = await fetch(
+        "http://localhost:5000/user/panel/getCountries"
+      );
       const data = await response.json();
       setCountries(data.data);
     };
@@ -103,6 +117,19 @@ const ClassicWatchlist = () => {
 
   return (
     <>
+      {activeOrderTutorial && (
+        <InformationModal
+          text=""
+          onClose={() => setActiveOrderTutorial(false)}
+        />
+      )}
+      {dailyDealsTutorial && (
+        <InformationModal
+          text=""
+          onClose={() => setDailyDealsTutorial(false)}
+        />
+      )}
+
       {sellDiv && (
         <SellPanel
           closeHandler={() => setSellDiv(false)}
@@ -115,7 +142,7 @@ const ClassicWatchlist = () => {
             <div className={styles.FirstPart}>
               <div className={styles.SelectDiv}>
                 <Select
-                  items={countries.map(item=>item.country_name)}
+                  items={countries.map((item) => item.country_name)}
                   set={(option) => {
                     cityFetch(option);
                     setCountry(option);
@@ -213,7 +240,7 @@ const ClassicWatchlist = () => {
                   className={styles.searchBox}
                   id="searchBox"
                   placeholder="&#xF002;  Search"
-                  style={{fontFamily:"Arial, FontAwesome"}}
+                  style={{ fontFamily: "Arial, FontAwesome" }}
                   value={search}
                   onChange={searchEventHandler}
                 />
@@ -360,7 +387,7 @@ const ClassicWatchlist = () => {
                 // className={styles.Bottomtab}
               >
                 Active order
-                {tutorial && <div className={styles.assetsInfo2}>?</div>}
+                {tutorial && <div className={styles.assetsInfo2}   onClick={() => setActiveOrderTutorial(true)} >?</div>}
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
@@ -369,7 +396,7 @@ const ClassicWatchlist = () => {
                 to="dailyDeals"
               >
                 Daily deals
-                {tutorial && <div className={styles.transactionInfo2}>?</div>}
+                {tutorial && <div className={styles.transactionInfo2}   onClick={() => setDailyDealsTutorial(true)} >?</div>}
               </NavLink>
             </div>
           </div>
