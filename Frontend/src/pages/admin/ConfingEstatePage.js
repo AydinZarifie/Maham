@@ -29,7 +29,7 @@ import Alert from "../../components/general/Alert";
 import attentionIcon from "../../images/attention-svgrepo-com.svg";
 
 /////////////////////web3///////////////////////
-import {mint,burn} from "../web3/MHM2023";
+import { mint, burn } from "../web3/MHM2023";
 import { connectWallet } from "../web3/connectWallet";
 import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
@@ -82,9 +82,8 @@ const ConfingEstate = ({ method, estate }) => {
 
   const navigate = useNavigate();
 
-  const [walletAddress ,setWallet] = useState('');
-  const [signer , setSigner] = useState({});
-
+  const [walletAddress, setWallet] = useState("");
+  const [signer, setSigner] = useState({});
 
   const [selectedFilters, setSelectedFilters] = useState(
     estate ? estate.filter : []
@@ -357,8 +356,7 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewUrl(previewURLs);
   };
 
-  async function walletConnection(){
-
+  async function walletConnection() {
     const { currentAccount } = await connectWallet();
     setWallet(currentAccount);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -366,14 +364,13 @@ const ConfingEstate = ({ method, estate }) => {
     setSigner(signer);
     const address = await signer.getAddress();
     console.log(address);
-    
-  } 
+  }
 
-  window.ethereum.on('accountsChanged' , walletConnection)
+  window.ethereum.on("accountsChanged", walletConnection);
 
-  window.ethereum.on('chainChanged' , () => {
+  window.ethereum.on("chainChanged", () => {
     window.location.reload();
-  })
+  });
 
   const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";
@@ -588,17 +585,18 @@ const ConfingEstate = ({ method, estate }) => {
       // walletAddress: true,
     });
 
-    if (estate) {
-      if (!formIsValidForEditing) {
-        scrollToError();
-        return;
-      }
-    } else {
-      if (!formIsValidForAdding) {
-        scrollToError();
-        return;
-      }
-    }
+    // if (estate) {
+    //   if (!formIsValidForEditing) {
+    //     scrollToError();
+    //     return;
+    //   }
+    // } else {
+    //   if (!formIsValidForAdding) {
+    //     scrollToError();
+    //     return;
+    //   }
+    // }
+    console.log("hello world");
     // event.preventDefault();
 
     const formData = new FormData();
@@ -625,12 +623,15 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("customerPrice", information.customerPrice);
     }
 
+    let totalMetrage = 0;
+
     formData.append("checkBedroom", bedroom.checked);
     if (bedroom.checked) {
       if (bedroom.number > 0) {
         if (bedroom.metrage > 0) {
           formData.append("numberBedroom", bedroom.number);
           formData.append("metrageBedroom", bedroom.metrage);
+          totalMetrage = totalMetrage + parseInt(bedroom.metrage);
         }
       }
     }
@@ -641,6 +642,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (livingRoom.metrage > 0) {
           formData.append("numberLivingRoom", livingRoom.number);
           formData.append("metrageLivingRoom", livingRoom.metrage);
+          totalMetrage = totalMetrage + parseInt(livingRoom.metrage);
         }
       }
     }
@@ -651,6 +653,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (kitchen.metrage > 0) {
           formData.append("numberKitchen", kitchen.number);
           formData.append("metrageKitchen", kitchen.metrage);
+          totalMetrage = totalMetrage + parseInt(kitchen.metrage);
         }
       }
     }
@@ -661,6 +664,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (diningroom.metrage > 0) {
           formData.append("numberDiningroom", diningroom.number);
           formData.append("metrageDiningroom", diningroom.metrage);
+          totalMetrage = totalMetrage + parseInt(diningroom.metrage);
         }
       }
     }
@@ -671,6 +675,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (guestroom.metrage > 0) {
           formData.append("numberGuestroom", guestroom.number);
           formData.append("metrageGuestroom", guestroom.metrage);
+          totalMetrage = totalMetrage + parseInt(guestroom.metrage);
         }
       }
     }
@@ -681,6 +686,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (bathroom.metrage > 0) {
           formData.append("numberBathroom", bathroom.number);
           formData.append("metrageBathroom", bathroom.metrage);
+          totalMetrage = totalMetrage + parseInt(bathroom.metrage);
         }
       }
     }
@@ -691,6 +697,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (garden.metrage > 0) {
           formData.append("numberGarden", garden.number);
           formData.append("metrageGarden", garden.metrage);
+          totalMetrage = totalMetrage + parseInt(garden.metrage);
         }
       }
     }
@@ -701,6 +708,7 @@ const ConfingEstate = ({ method, estate }) => {
         if (balcony.metrage > 0) {
           formData.append("numberBalcony", balcony.number);
           formData.append("metrageBalcony", balcony.metrage);
+          totalMetrage = totalMetrage + parseInt(balcony.metrage);
         }
       }
     }
@@ -711,9 +719,11 @@ const ConfingEstate = ({ method, estate }) => {
         if (garage.metrage > 0) {
           formData.append("numberGarage", garage.number);
           formData.append("metrageGarage", garage.metrage);
+          totalMetrage = totalMetrage + parseInt(garage.metrage);
         }
       }
     }
+    console.log(totalMetrage);
 
     formData.append("checkWifi", facilities.wifi);
     formData.append("checkParking", facilities.parking);
@@ -742,12 +752,12 @@ const ConfingEstate = ({ method, estate }) => {
 
     let url = "/admin/estates";
 
-    if(method === "POST"){
+    if (method === "POST") {
       const mintId = Number(information.id);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signers = provider.getSigner(); 
+      const signers = provider.getSigner();
       console.log(signers);
-      const mintRes = await mint(mintId,signers);
+      const mintRes = await mint(mintId, signers);
       console.log(mintRes);
     }
 
@@ -776,9 +786,8 @@ const ConfingEstate = ({ method, estate }) => {
   const deleteHandler = async () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
-      
       const mintId = Number(information.id);
-      const burnRes = await burn(mintId ,signer);
+      const burnRes = await burn(mintId, signer);
       console.log(burnRes);
       const estateId = estate._id;
       const url = "/admin/estates/" + estateId;
@@ -1053,29 +1062,31 @@ const ConfingEstate = ({ method, estate }) => {
                 </div>
               </div>
             </div>
-       
-              <div className={styles.IdAndMint}>
-                <div className={styles.wrapper4}>
-                  <div className={styles.inputData}>
-                    <input
-                      required
-                      type="number"
-                      className={walletAddressClass}
-                  
-                      // onChange={basicEventHandler}
-                      name="walletAddress"
-                      disabled
-                      placeholder={walletAddress}
-                      onBlur={blurHandler}
-                    />
-                    <div className={styles.underline}></div>
-                    {/* <label className={styles.label}>Id</label> */}
-                  </div>
+
+            <div className={styles.IdAndMint}>
+              <div className={styles.wrapper4}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="number"
+                    className={walletAddressClass}
+                    // onChange={basicEventHandler}
+                    name="walletAddress"
+                    disabled
+                    placeholder={walletAddress}
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  {/* <label className={styles.label}>Id</label> */}
                 </div>
-                <button className={styles.ConnectWalletBtn} onClick={walletConnection}>
-                  connectWallet
-                </button>
               </div>
+              <button
+                className={styles.ConnectWalletBtn}
+                onClick={walletConnection}
+              >
+                connectWallet
+              </button>
+            </div>
           </div>
 
           <div className={styles.row}>
@@ -2008,7 +2019,7 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
       </form>
-      {loading && (<div>loading...</div>)}
+      {loading && <div>loading...</div>}
     </>
   );
 };
