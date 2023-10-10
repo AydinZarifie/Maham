@@ -27,17 +27,9 @@ import fetchInstance from "../../util/fetchInstance";
 import MultiSelect from "../../components/general/MultiSelect";
 import Alert from "../../components/general/Alert";
 import attentionIcon from "../../images/attention-svgrepo-com.svg";
-import warningIcon from "../../images/warning-attention-svgrepo-com.svg";
+import warningIcon from "../../images/warning-attention-svgrepo-com.svg"
 
-/////////////////////web3///////////////////////
-import { mint, burn } from "../web3/MHM2023";
-import { connectWallet } from "../web3/connectWallet";
-import { ethers } from "ethers";
-import detectEthereumProvider from "@metamask/detect-provider";
-///////////////////////////////////////////////
 const ConfingEstate = ({ method, estate }) => {
-  const [loading, setLoading] = useState(false);
-
   const [detailBox, setDetailBox] = useState(false);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -82,9 +74,6 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const navigate = useNavigate();
-
-  const [walletAddress, setWallet] = useState("");
-  const [signer, setSigner] = useState({});
 
   const [selectedFilters, setSelectedFilters] = useState(
     estate ? estate.filter : []
@@ -162,7 +151,7 @@ const ConfingEstate = ({ method, estate }) => {
     location: estate ? estate.location : "",
     type: estate ? estate.estate_type : "",
     description: estate ? estate.state_description : "",
-    summary: estate ? estate.summary_description : "",
+    summary: estate ? estate.state_summary : "",
     // filter: estate ? estate.filter : "",
     mahamPrice: estate ? estate.maham_price : "",
     customerPrice: "",
@@ -357,22 +346,6 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewUrl(previewURLs);
   };
 
-  async function walletConnection() {
-    const { currentAccount } = await connectWallet();
-    setWallet(currentAccount);
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner(currentAccount);
-    setSigner(signer);
-    const address = await signer.getAddress();
-    console.log(address);
-  }
-
-  window.ethereum.on("accountsChanged", walletConnection);
-
-  window.ethereum.on("chainChanged", () => {
-    window.location.reload();
-  });
-
   const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";
   const enteredCountryNameIsValid = information.countryName.trim() !== "";
@@ -560,8 +533,6 @@ const ConfingEstate = ({ method, estate }) => {
   //   : `${styles.textinput} `;
 
   const submitHandler = async (event) => {
-    setLoading(true);
-
     setTouched({
       title: true,
       countryName: true,
@@ -623,15 +594,12 @@ const ConfingEstate = ({ method, estate }) => {
       formData.append("customerPrice", information.customerPrice);
     }
 
-    let totalMetrage = 0;
-
     formData.append("checkBedroom", bedroom.checked);
     if (bedroom.checked) {
       if (bedroom.number > 0) {
         if (bedroom.metrage > 0) {
           formData.append("numberBedroom", bedroom.number);
           formData.append("metrageBedroom", bedroom.metrage);
-          totalMetrage = totalMetrage + parseInt(bedroom.metrage);
         }
       }
     }
@@ -642,7 +610,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (livingRoom.metrage > 0) {
           formData.append("numberLivingRoom", livingRoom.number);
           formData.append("metrageLivingRoom", livingRoom.metrage);
-          totalMetrage = totalMetrage + parseInt(livingRoom.metrage);
         }
       }
     }
@@ -653,7 +620,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (kitchen.metrage > 0) {
           formData.append("numberKitchen", kitchen.number);
           formData.append("metrageKitchen", kitchen.metrage);
-          totalMetrage = totalMetrage + parseInt(kitchen.metrage);
         }
       }
     }
@@ -664,7 +630,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (diningroom.metrage > 0) {
           formData.append("numberDiningroom", diningroom.number);
           formData.append("metrageDiningroom", diningroom.metrage);
-          totalMetrage = totalMetrage + parseInt(diningroom.metrage);
         }
       }
     }
@@ -675,7 +640,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (guestroom.metrage > 0) {
           formData.append("numberGuestroom", guestroom.number);
           formData.append("metrageGuestroom", guestroom.metrage);
-          totalMetrage = totalMetrage + parseInt(guestroom.metrage);
         }
       }
     }
@@ -686,7 +650,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (bathroom.metrage > 0) {
           formData.append("numberBathroom", bathroom.number);
           formData.append("metrageBathroom", bathroom.metrage);
-          totalMetrage = totalMetrage + parseInt(bathroom.metrage);
         }
       }
     }
@@ -697,7 +660,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (garden.metrage > 0) {
           formData.append("numberGarden", garden.number);
           formData.append("metrageGarden", garden.metrage);
-          totalMetrage = totalMetrage + parseInt(garden.metrage);
         }
       }
     }
@@ -708,7 +670,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (balcony.metrage > 0) {
           formData.append("numberBalcony", balcony.number);
           formData.append("metrageBalcony", balcony.metrage);
-          totalMetrage = totalMetrage + parseInt(balcony.metrage);
         }
       }
     }
@@ -719,7 +680,6 @@ const ConfingEstate = ({ method, estate }) => {
         if (garage.metrage > 0) {
           formData.append("numberGarage", garage.number);
           formData.append("metrageGarage", garage.metrage);
-          totalMetrage = totalMetrage + parseInt(garage.metrage);
         }
       }
     }
@@ -751,25 +711,6 @@ const ConfingEstate = ({ method, estate }) => {
 
     let url = "/admin/estates";
 
-    if (method === "POST") {
-      const mintId = Number(information.id);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signers = provider.getSigner();
-      console.log(signers);
-      const mintRes = await mint(mintId, signers);
-      formData.append("hash", mintRes.hash);
-      formData.append("method", "transfer");
-      formData.append("from", mintRes.from);
-      formData.append("to", mintRes.to);
-      let dateObject = new Date();
-      let day = dateObject.getDate();
-      let month = dateObject.getMonth();
-      let year = dateObject.getFullYear();
-      let date = year + "/" + (month + 1) + "/" + day;
-      formData.append("time", date);
-      console.log(mintRes);
-    }
-
     if (method === "PUT") {
       const estateId = estate._id;
       url = "/admin/estates/" + estateId;
@@ -788,16 +729,11 @@ const ConfingEstate = ({ method, estate }) => {
       setError(true);
       setMintUsed(false);
     }
-
-    setLoading(false);
   };
 
   const deleteHandler = async () => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
-      const mintId = Number(information.id);
-      const burnRes = await burn(mintId, signer);
-      console.log(burnRes);
       const estateId = estate._id;
       const url = "/admin/estates/" + estateId;
       let { response } = await fetchInstance(url, {
@@ -839,11 +775,9 @@ const ConfingEstate = ({ method, estate }) => {
         <div className={styles.infoOvelay}>
           <div className={styles.summryInfo}>
             <div className={styles.WarningDiv}>
-              <h4>
-                <strong>This is awarning.</strong>You should do something about
-                it
-              </h4>
-              <img src={warningIcon} className={styles.warningIcon} />
+              <h4><strong>This is awarning.</strong>You should do something about it</h4>
+              <img src={warningIcon} className={styles.warningIcon}/>
+              
             </div>
             <h5>
               -apartment: If it was an apartment house, the desired house floor
@@ -859,11 +793,7 @@ const ConfingEstate = ({ method, estate }) => {
               write the nearest centers that this house has access to, such as
               recreational, commercial, and health centers,...
             </h5>
-            <h5>-You can only enter 34 characters</h5>
-            <button
-              className={styles.okBtn}
-              onClick={() => setDetailBox(false)}
-            >
+            <button className={styles.okBtn} onClick={() => setDetailBox(false)}>
               ok
             </button>
           </div>
@@ -1077,31 +1007,30 @@ const ConfingEstate = ({ method, estate }) => {
                 </div>
               </div>
             </div>
-
-            <div className={styles.IdAndMint}>
-              <div className={styles.wrapper4}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="number"
-                    className={walletAddressClass}
-                    // onChange={basicEventHandler}
-                    name="walletAddress"
-                    disabled
-                    placeholder={walletAddress}
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  {/* <label className={styles.label}>Id</label> */}
+            {!estate && (
+              <div className={styles.IdAndMint}>
+                <div className={styles.wrapper4}>
+                  <div className={styles.inputData}>
+                    <input
+                      required
+                      type="number"
+                      className={walletAddressClass}
+                      // value={information.location}
+                      // onChange={basicEventHandler}
+                      name="walletAddress"
+                      disabled
+                      placeholder="Wallet Address"
+                      onBlur={blurHandler}
+                    />
+                    <div className={styles.underline}></div>
+                    {/* <label className={styles.label}>Id</label> */}
+                  </div>
                 </div>
+                <button className={styles.ConnectWalletBtn}>
+                  Connect Wallet
+                </button>
               </div>
-              <button
-                className={styles.ConnectWalletBtn}
-                onClick={walletConnection}
-              >
-                connectWallet
-              </button>
-            </div>
+            )}
           </div>
 
           <div className={styles.row}>
@@ -1882,6 +1811,7 @@ const ConfingEstate = ({ method, estate }) => {
                 src={attentionIcon}
                 onClick={() => setDetailBox(true)}
               />
+              <p>(You can only enter 34 characters)</p>
               <p>{information.summary.length}/34</p>
             </div>
             <div className={styles.DescriptionDiv}>
@@ -2034,7 +1964,6 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
       </form>
-      {loading && <div>loading...</div>}
     </>
   );
 };

@@ -94,6 +94,7 @@ const GetDocument = lazy(() => import("./pages/userPanel/reports/GetDocument"));
 const UserLogin = lazy(() => import("./pages/user/UserLogin"));
 const UserSignup = lazy(() => import("./pages/user/UserSignup"));
 const Favourites = lazy(() => import("./pages/userPanel/Favourites"));
+const DetailPage = lazy(() => import("./pages/DetailPage.js"));
 
 const router = createBrowserRouter([
   {
@@ -120,17 +121,17 @@ const router = createBrowserRouter([
       </Suspense>
     ),
   },
-  // {
-  //   path: ":estateId",
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <DetailPage />,
-  //       // id: 'estate-detail',
-  //       // loader: estateDetailLoader,
-  //     },
-  //   ],
-  // },
+  {
+    path: ":estateId",
+    children: [
+      {
+        index: true,
+        element: <DetailPage />,
+        // id: 'estate-detail',
+        // loader: estateDetailLoader,
+      },
+    ],
+  },
   {
     path: "admin",
     element: (
