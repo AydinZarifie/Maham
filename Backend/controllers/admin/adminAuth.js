@@ -41,7 +41,7 @@ exports.signupAdmin = async (req, res, next) => {
 				new AppError('password and password confirmation does not match', 401)
 			);
 		}
-		const hashedPassword = await bcrypt.hash(password, 12);
+		const hashedPassword = await bcrypt.hash(password, process.env.HASH_NUMBER);
 		const admin = new adminDB({
 			first_name: formatStr(firstName),
 			last_name: formatStr(lastName),
@@ -253,7 +253,7 @@ exports.editAdminProfileInfo = catchAsync(async(req,res,next) => {
 		return next(new AppError('admin not found!', 401));
 	}
 
-	const hashedPassword = await bcrypt.hash(password , 12);
+	const hashedPassword = await bcrypt.hash(password , process.env.HASH_NUMBER);
 	console.log(hashedPassword);
 
 	admin.password = hashedPassword;

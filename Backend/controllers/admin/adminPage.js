@@ -5,6 +5,7 @@ const catchAsync = require("./../../utilities/error/catchAsync");
 const AppError = require("./../../utilities/error/appError");
 const countryDB = require("../../models/country");
 const filterDB = require("../../models/filter");
+const transactionDB = require("../../models/transaction");
 const { clearVideo, clearImage } = require("./../../utilities/clearFiles");
 const { formatStr, generateMint } = require("./../../utilities/mint");
 
@@ -79,6 +80,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
     city_name: req.body.cityName,
     country_name: req.body.countryName,
     main_street: req.body.streetName,
+    total_building_metraj : req.body.totalMetrage,
     building_number: req.body.plate,
     floor_number: req.body.numberOfFloor,
     location: req.body.location.toLowerCase(),
@@ -179,6 +181,7 @@ exports.createEstate = catchAsync(async (req, res, next) => {
     landlor_address: inputs.landlor_address,
     contract_address: inputs.contract_address,
     summary_description : inputs.summary_description,
+    total_building_metraj : inputs.total_building_metraj,
     // minor_street: inputs.minor_street,
     // postal_code: inputs.postal_code ,
     // estate_view: inputs.estate_view ,
@@ -246,6 +249,18 @@ exports.createEstate = catchAsync(async (req, res, next) => {
   });
 
   await estate.save();
+
+
+  const transaction = new transactionDB({
+    date : req.body.date,
+    txHash : req.body.hash,
+    from : req.body.from,
+    to : req.body.to,
+    method : req.body.method,
+    mintId : req.body.mintId
+  })
+
+  await transaction.save();
 
   return res.status(201).json({
     status: "success",

@@ -179,7 +179,7 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
         );
       }
       // hash the new password
-      const hashedPassword = await bcrypt.hash(newPassword, 12);
+      const hashedPassword = await bcrypt.hash(newPassword, process.env.HASH_NUMBER);
 
       filteredFields = {
         ...filteredFields,

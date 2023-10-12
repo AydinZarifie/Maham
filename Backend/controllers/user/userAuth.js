@@ -50,7 +50,7 @@ exports.signupUser = async (req, res, next) => {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, process.env.HASH_NUMBER);
 
     const user = new userDB({
       first_name: formatStr(firstname),
