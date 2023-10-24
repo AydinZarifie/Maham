@@ -10,7 +10,7 @@
   "sourceMap": "65:559:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "65:559:2:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: GPL-3.0\r\npragma solidity ^ 0.8.9;\r\n\r\nlibrary Roles {\r\n  struct Role {\r\n    mapping (address => bool) bearer;\r\n  }\r\n\r\n  function add(Role storage role, address account) \r\n  internal\r\n  {\r\n    require(account != address(0));\r\n    role.bearer[account] = true;\r\n  }\r\n\r\n  function remove(Role storage role, address account) \r\n  internal \r\n  {\r\n    require(account != address(0));\r\n    role.bearer[account] = false;\r\n  }\r\n\r\n  function has(Role storage role, address account)\r\n    internal\r\n    view\r\n    returns (bool)\r\n  {\r\n    require(account != address(0));\r\n    return role.bearer[account];\r\n  }\r\n}",
-  "sourcePath": "C:\\Users\\V I S I O N\\OneDrive\\Desktop\\Frontend\\src\\contracts\\library\\RBAC.sol",
+  "sourcePath": "D:\\Programs\\Maham\\Maham\\Frontend\\src\\contracts\\library\\RBAC.sol",
   "ast": {
     "absolutePath": "project:/src/contracts/library/RBAC.sol",
     "exportedSymbols": {
@@ -1070,7 +1070,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.15",
-  "updatedAt": "2023-10-12T07:37:57.866Z",
+  "updatedAt": "2023-10-23T13:31:32.259Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

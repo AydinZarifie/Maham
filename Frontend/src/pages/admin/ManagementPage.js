@@ -8,6 +8,8 @@ import EstateTable from "../../components/adminPage/management/EstateTable";
 import Gainers from "../../components/adminPage/management/Gainers";
 import HighestVolumes from "../../components/adminPage/management/HighestVolumes";
 import fetchInstance from "../../util/fetchInstance";
+import {lock,unlock} from "../web3/MHM2023";
+import { ethers } from "ethers";
 
 const ManagementPage = () => {
   const [loading, setLoading] = useState(false);
@@ -108,7 +110,7 @@ const ManagementPage = () => {
     }
   };
 
-  const LockEstate = async (id, mintId) => {
+  const LockEstate = async (id, mintID , lockPosition) => {
     setLoading(true);
     let { response } = await fetchInstance(
       "/admin/managment/lockUnLockEstate/" + id,
@@ -117,10 +119,28 @@ const ManagementPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(mintId),
+        body: JSON.stringify(mintID),
       }
     );
     if (response.ok) {
+      console.log(lockPosition);
+      const mintId = Number(mintID)
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      if(!lockPosition){
+        console.log("2");
+        console.log(lockPosition);
+        const txLock = await lock(mintId , signer);
+        console.log(txLock);
+      }
+      else {
+        console.log(3);
+        console.log(lockPosition);
+        const txUnlock = await unlock(mintId , signer);
+        console.log(txUnlock);
+        console.log(4);
+      }
+      
       const updatedEstates = [...searchedEstates];
       let index = searchedEstates.findIndex((item) => item._id == id);
       let editedEstate = { ...updatedEstates[index] };
