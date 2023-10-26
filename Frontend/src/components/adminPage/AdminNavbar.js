@@ -12,7 +12,7 @@ import estateIcon from "../../images/real-estate-search-house-svgrepo-com.svg";
 import chatIcon from "../../images/chat-line-square-svgrepo-com.svg";
 import profileIcon from "../../images/user-svgrepo-com.svg";
 import adminPanelIcon from "../../images/opencontacts-svgrepo-com.svg";
-import { setSigner,setWallet,setThird } from "../../store/wallet";
+import { setSigner,setWallet,setThird, getSigner } from "../../store/wallet";
 
 import AdminMenuItem from "./AdminMenuItem";
 import { Form, Link } from "react-router-dom";
@@ -42,7 +42,7 @@ export default function AdminNavbar() {
   };
 
   const walletHandler=()=>{
-    // setSigner,setWallet,setThird use these for saving
+    // setSigner,setWallet,setThird.getSigner,getWallet,getThird use these for saving and getting
   }
 
   return (
@@ -126,7 +126,7 @@ export default function AdminNavbar() {
         </div>
       </div>
       <div className={styles.column2}>
-        <button onClick={walletHandler}>conncet wallet</button>
+        <button className={styles.ConnectWalletBtn} onClick={walletHandler}>conncet wallet</button>
         <div className={styles.Buttons}>
           <div className={styles.ChatBtn}>
             <button type="button" className={styles.ChatButton}>

@@ -1,8 +1,8 @@
-export let signer={}
+let signer={}
 
-export let wallet={}
+let wallet={}
 
-export let third={}
+let third={}
 
 export const setSigner=(meta)=>{
     signer=meta
@@ -14,4 +14,16 @@ export const setWallet=(meta)=>{
 
 export const setThird=(meta)=>{
     third=meta
+}
+
+export function getSigner(){
+    return signer;
+}
+
+export function getWallet(){
+    return wallet;
+}
+
+export function getThird(){
+    return third;
 }

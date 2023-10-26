@@ -168,6 +168,9 @@ const ConfingEstate = ({ method, estate }) => {
     customerPrice: "",
     // estate ? estate.customerPrice : "",
     id: estate ? estate.mint_id : "",
+    buildingName: estate ? estate.buildingName : "",
+    builtYear: estate ? estate.builtYear:"",
+    propertyStyle: estate ? estate.propertyStyle:"",
     // estate ? estate.id : "",
 
     //  plate: estate ? estate.plate : "",
@@ -391,6 +394,9 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredVideoIsValid = selectedVideo.length > 0;
   const enteredIdIsValid = information.id.trim() !== "";
   const enteredSummaryIsValid = information.summary.trim() !== "";
+  const enteredBuildingNameIsValid = information.buildingName.trim() !== "";
+  const enteredBuiltYearIsValid = information.builtYear.trim() !== "";
+  const enteredPropertyStyleIsValid = information.propertyStyle.trim() !== "";
 
   // const enteredPlateIsValid = information.plate.trim() !== "";
   // const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
@@ -413,6 +419,9 @@ const ConfingEstate = ({ method, estate }) => {
     video: false,
     id: false,
     summary: false,
+    buildingName:false,
+    builtYear:false,
+    propertyStyle:false,
 
     // plate: false,
     // walletAddress: false,
@@ -441,6 +450,9 @@ const ConfingEstate = ({ method, estate }) => {
   const videoIsInvalid = !enteredVideoIsValid && touched.video;
   const idIsInvalid = !enteredIdIsValid && touched.id;
   const summaryIsInvalid = !enteredSummaryIsValid && touched.summary;
+  const buildingNameIsInvalid = !enteredBuildingNameIsValid && touched.buildingName;
+  const builtYearIsInvalid = !enteredBuiltYearIsValid && touched.builtYear;
+  const propertyStyleIsInvalid = !enteredPropertyStyleIsValid && touched.propertyStyle;
 
   // const plateIsInvalid = !enteredPlateIsValid && touched.plate;
   // const walletAddressIsInvalid =
@@ -466,7 +478,10 @@ const ConfingEstate = ({ method, estate }) => {
     enteredImageIsValid &&
     enteredVideoIsValid &&
     enteredIdIsValid &&
-    enteredSummaryIsValid
+    enteredSummaryIsValid&&
+    enteredBuildingNameIsValid&&
+    enteredBuiltYearIsValid&&
+    enteredPropertyStyleIsValid
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -486,7 +501,10 @@ const ConfingEstate = ({ method, estate }) => {
     enteredLocationIsValid &&
     enteredTypeIsValid &&
     enteredDescriptionIsValid &&
-    enteredSummaryIsValid
+    enteredSummaryIsValid&&
+    enteredBuildingNameIsValid&&
+    enteredBuiltYearIsValid&&
+    enteredPropertyStyleIsValid
 
     // enteredPlateIsValid &&
   ) {
@@ -550,6 +568,18 @@ const ConfingEstate = ({ method, estate }) => {
     ? `${styles.invalid} ${styles.DescriptionTextArea2} `
     : `${styles.DescriptionTextArea2} `;
 
+    const buildingNameClass = buildingNameIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
+    const builtYearClass = builtYearIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
+    const propertyStyleClass = propertyStyleIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
   const plateClass = styles.textinput;
   // plateIsInvalid
   //   ? `${styles.invalid} ${styles.textinput} `
@@ -581,6 +611,9 @@ const ConfingEstate = ({ method, estate }) => {
       video: true,
       id: true,
       summary: true,
+      buildingName: true,
+      builtYear: true,
+      propertyStyle: true,
 
       // plate: true,
       // walletAddress: true,
@@ -766,7 +799,7 @@ const ConfingEstate = ({ method, estate }) => {
       let month = dateObject.getMonth();
       let year = dateObject.getFullYear();
       let date = year + "/" + (month + 1) + "/" + day;
-      formData.append("time", date);
+      formData.append("date", date);
       console.log(mintRes);
     }
 
@@ -969,42 +1002,7 @@ const ConfingEstate = ({ method, estate }) => {
               </div>
             </div>
           </div>
-          <div className={styles.row}>
-            <div className={styles.column}>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={streetNameClass}
-                    value={information.streetName}
-                    onChange={basicEventHandler}
-                    name="streetName"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Street Name</label>
-                </div>
-              </div>
-            </div>
-            <div className={styles.column}>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={plateClass}
-                    value={information.plate}
-                    onChange={basicEventHandler}
-                    name="plate"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Plates</label>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div className={styles.row}>
             <div className={styles.column}>
               <div className={styles.wrapper2}>
@@ -1160,20 +1158,116 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
 
-        <div className={styles.select2}>
-          <select
-            value={information.type}
-            onChange={basicEventHandler}
-            name="type"
-            className={typeClass}
-            onBlur={blurHandler}
-          >
-            <option value="">Choose an option</option>
-            <option value="residential">residential</option>
-            <option value="commercial">commercial</option>
-          </select>
-        </div>
+        <div className={styles.PropertyInformation}>
+          <div className={styles.PropertyInformationHead}>
+            <h3>Property Information</h3>
+          </div>
+          <div className={styles.select2}>
+            <select
+              value={information.type}
+              onChange={basicEventHandler}
+              name="type"
+              className={typeClass}
+              onBlur={blurHandler}
+            >
+              <option value="">Choose an Property type</option>
+              <option value="residential">residential</option>
+              <option value="commercial">commercial</option>
+            </select>
+          </div>
 
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={streetNameClass}
+                    value={information.streetName}
+                    onChange={basicEventHandler}
+                    name="streetName"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Street Name</label>
+                </div>
+              </div>
+            </div>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={plateClass}
+                    value={information.plate}
+                    onChange={basicEventHandler}
+                    name="plate"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Plates</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={buildingNameClass}
+                    value={information.buildingName}
+                    onChange={basicEventHandler}
+                    name="buildingName"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Building name</label>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={builtYearClass}
+                    value={information.builtYear}
+                    onChange={basicEventHandler}
+                    name="builtYear"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Year Build</label>
+                </div>
+              </div>
+              {!estate && (
+                <div className={styles.wrapper2}>
+                  <div className={styles.inputData}>
+                    <input
+                      required
+                      type="number"
+                      className={propertyStyleClass}
+                      value={information.propertyStyle}
+                      onChange={basicEventHandler}
+                      name="propertyStyle"
+                      onBlur={blurHandler}
+                    />
+                    <div className={styles.underline}></div>
+                    <label className={styles.label}>Property style</label>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
         <div className={styles.RoomAndMetarge}>
           <h3>Romms And Metrages</h3>
 

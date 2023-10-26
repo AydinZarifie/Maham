@@ -65,7 +65,7 @@ export async function unlock(mintId , signer){
         'function unlock(uint256 mintId) public returns (bool)'
     ]
 
-    const contract = await ethers.Contract(contractAddress,ABI,signer);
+    const contract = new ethers.Contract(contractAddress,ABI,signer);
 
     const txRes = await contract.unlock(mintId);
     const txRec = await txRes.wait();
