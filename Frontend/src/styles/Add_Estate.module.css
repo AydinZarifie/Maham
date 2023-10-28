@@ -537,10 +537,11 @@ select {
   position: relative;
   display: flex;
   width: 45%;
+  min-width: 300px;
   height: 3em;
   border-radius: 0.25em;
   /* overflow: hidden; */
-  margin: 90px auto 80px auto;
+  margin: 20px auto 10px auto;
 }
 
 /***   ***/
@@ -1134,4 +1135,28 @@ select {
 }
 .okBtn:hover {
   background-color: #d4d4d4;
+}
+
+
+.PropertyInformation{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ width: 86%;
+ margin-left: 7%;
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  margin-bottom: 50px;
+}
+.PropertyInformationHead{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  border-bottom: 1px solid #cfcfcf;
+}
+.PropertyInformationHead h3{
+  padding-left: 20px;
+  color: #3c3c3c;
 }

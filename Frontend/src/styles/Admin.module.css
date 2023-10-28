@@ -146,17 +146,14 @@ right: 60px;
   align-content: center;
   justify-content: space-between;
 }
-/* .column2 {
+.column2 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 70px;
-} */
-/*.column45{
-  display: flex;
   gap: 30px;
-  margin-left:12%;
-}*/
+}
+
+
 .Buttons {
   display: flex;
   flex-direction: row;
@@ -232,7 +229,7 @@ right: 60px;
   }
   /***    ***/
 }
-@media (min-width: 790px) {
+@media (min-width: 830px) {
   .hrPurchase {
     background-color: #111;
     height: 70px;
@@ -305,7 +302,7 @@ right: 60px;
     margin-top: 0px;
   }
 }
-@media (max-width: 790px) {
+@media (max-width: 830px) {
   .Header {
     height: 104.8px;
   }
@@ -393,21 +390,14 @@ right: 60px;
     top: -7px;
   }
 }
-/* @media (max-width: 540px) {
-  .column1 {
-    margin-top: 21px;
-  }
-  .OpenNav {
-    font-size: 35px;
-    cursor: pointer;
-    margin-left: 30px;
-    position: relative;
-    top: -10px;
-  }
-} */
 
+@media (max-width: 690px){
+  .Buttons {
+    display: none;
+  }
+}
+@media (min-width: 490px){ 
 
-@media (min-width: 490px){
   .ProfileButton {
     width: 44px;
     height: 44px;
@@ -439,69 +429,70 @@ right: 60px;
     border: 1px solid rgb(134, 132, 132);
     background: #ede9e9;
   }
-
   .dropdown {
     position: relative;
-  right: 60px;
-    
+     right: 40px;   
   }
-
-  @media (max-width: 490px){
-    .dropdown {
-      position: relative;
-    right: 60px;
-      
-    }
-  }
-  /* .h3AdminName {
-    margin: 0;
-    margin-bottom: 8px;
-    margin-right: 15px;
-    width: 170px;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 1rem;
-  } */
-}
-@media (max-width: 593px){
-  .column2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-  }
-  .Buttons {
-    order: 2;
-    gap: 10px;
-    display: none;
-  }
-}
-@media (min-width: 490px){
 .h3AdminName {
   margin: 0;
   margin-bottom: 8px;
   margin-right: 25px;
-  width: 200px;
+  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   font-size: 1rem;
 }
+
+
+.ConnectWalletBtn {
+  width: 110px;
+  height: 37px;
+  background-color: #ef4057;
+  border-radius: 60px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: .75rem;
+  transition: 0.4s;
+  box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+  font: 'inter';
+}
+
 }
 @media (max-width: 490px) {
+
+  .ConnectWalletBtn {
+    width: 70px;
+    height: 34px;
+    background-color: #ef4057;
+    border-radius: 6px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.5rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+    white-space: nowrap;
+  }
+   .dropdown {
+      position: relative;
+      right: 20px;   
+    }
   .header {
     border-bottom: 1px solid rgb(165, 165, 165);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     height: 90px;
   }
-  .column2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width:90%;
+
+  .OpenNav {
+    font-size: 35px;
+    cursor: pointer;
+    margin-left: 10px;
+    position: relative;
+    top: -9px;
   }
 
   .h6AdminInformations {
@@ -562,12 +553,6 @@ right: 60px;
   }
   /***    ***/
 
-  .column45 {
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    margin-right: 11%;
-  }
 
 
 
@@ -610,8 +595,7 @@ right: 60px;
   .h3AdminName {
     margin: 0;
     margin-bottom: 8px;
-    margin-right: 15px;
-    width: 170px;
+    max-width: 170px;
     white-space: nowrap;
     overflow: hidden;
     font-size: .8rem;
@@ -625,18 +609,7 @@ right: 60px;
     align-items: center;
     height: 90px;
   }
-  .column45 {
-    display: flex;
 
-    gap: 30px;
-    margin-left: 12%;
-  }
-  .column2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 30px;
-  }
 
 }
 
@@ -898,6 +871,26 @@ right: 60px;
   color: #9ca1a8;
 }
 /***    ***/
+
+
+/* .ConnectWalletBtn {
+  width: 110px;
+  height: 37px;
+  background-color: #ef4057;
+  border-radius: 60px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: 0.4s;
+  box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+  font: "inter";
+} */
+.ConnectWalletBtn:hover {
+  box-shadow: rgba(255, 64, 64, 0.167) 0px 6px 24px 0px,
+    rgba(255, 64, 64, 0.237) 0px 0px 0px 1px;
+  transform: translateY(1px);
+}
 
 /***  BarGraf  ***/
 .BarGraf {

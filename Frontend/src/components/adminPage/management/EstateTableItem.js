@@ -43,7 +43,7 @@ const EstateTableItem = (props) => {
             className={styles.lockAndUnlockButton}
             onClick={(event) => {
               event.preventDefault();
-              props.lockEstate(props._id,props.mint_id);//change 
+              props.lockEstate(props._id,props.mint_id , props.lock_position);//change 
             }}
           >
             {props.lock_position ? (
