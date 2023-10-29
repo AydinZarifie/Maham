@@ -131,11 +131,31 @@ const ManagementPage = () => {
         console.log("2");
         console.log(lockPosition);
         const txLock = await lock(mintId, signer);
+        let { response } = await fetchInstance(
+          "url" ,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(txLock),
+          }
+        );
         console.log(txLock);
       } else {
         console.log(3);
         console.log(lockPosition);
         const txUnlock = await unlock(mintId, signer);
+        let { response } = await fetchInstance(
+          "url" ,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(txUnlock),
+          }
+        );
         console.log(txUnlock);
         console.log(4);
       }
