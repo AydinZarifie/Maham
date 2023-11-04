@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
-	{
+{
 		first_name: {
 			type: String,
 		},
@@ -40,10 +40,23 @@ const userSchema = new mongoose.Schema(
 				ref: 'real_estates',
 			},
 		],
-	},
+		liked_estates: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+			},
+		],
+		user_country_ref: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Country',
+				required: [true, 'user must belong to a country'],
+			},
+		],
+},
+	
 	{
 		toJson: { virtuals: true },
 		toObject: { virtuals: true },
-	}
+}
 );
 module.exports = mongoose.model('User', userSchema);

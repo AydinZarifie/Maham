@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const countryDB = require('./country');
-const AppError = require('../utilities/error/appError');
-const catchAsync = require('../utilities/error/catchAsync');
+const countryDB = require("./country");
 
 const estateRoomsSchema = new mongoose.Schema({
 	//estate rooms schema
@@ -184,6 +182,9 @@ const estateFacilitiesSchema = new mongoose.Schema({
 
 const estateSchema = new mongoose.Schema(
 	{
+		estateId: {
+			type: String,
+		},
 		country_name: {
 			type: String,
 			set: (a) => (a === '' ? undefined : a),
@@ -233,17 +234,13 @@ const estateSchema = new mongoose.Schema(
 			type: Number,
 			set: (a) => (a === '' ? undefined : a),
 		},
-		nesbat: {
+		///
+		state_description: {
 			type: String,
-		},
-		volume: {
-			type: Number,
-			default: 0,
 			set: (a) => (a === '' ? undefined : a),
 		},
-		///
-		estate_description: {
-			type: String,
+		summary_description : {
+			type : String,
 			set: (a) => (a === '' ? undefined : a),
 		},
 		///
@@ -266,7 +263,7 @@ const estateSchema = new mongoose.Schema(
 			type: Array,
 		},
 		//store blockchain data///
-		landlord_address: {
+		landlor_address: {
 			type: String,
 		},
 		contract_address: {
@@ -274,26 +271,20 @@ const estateSchema = new mongoose.Schema(
 		},
 		mint_id: {
 			type: String,
-			unique: true,
 		},
 		sell_position: {
 			type: Boolean,
-			default: false,
 		},
 		lock_position: {
 			type: Boolean,
-			default: false,
 		},
 		getDocument: {
 			type: Boolean,
 		},
 		filter: {
-			type: [String],
+			type: Array,
 		},
-		country_ref: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Country',
-		},
+		//////////////////////////
 
 		//import createdBy///////
 		/////////////////////////
@@ -305,8 +296,8 @@ const estateSchema = new mongoose.Schema(
 );
 
 estateSchema.pre('save', async function (next) {
-	if (!this.isModified('mint_id')) {
-		next();
+	if (!this.isNew) {
+		return next();
 	}
 
 	const country = await countryDB.findOne({
@@ -317,10 +308,6 @@ estateSchema.pre('save', async function (next) {
 		return next(
 			new AppError('country does not exist ,please create country first', 404)
 		);
-	}
-
-	if (!country.cities.includes(this.city_name)) {
-		return next(new AppError('city does not exist', 404));
 	}
 
 	const startsWith =
@@ -340,7 +327,7 @@ estateSchema.pre('save', async function (next) {
 			[startsWith]: `${estateNum}`,
 		};
 
-		// 1) update the lastMint object of the country >> only if document is NEW
+		// 1) update the lastMint object of the country >> just if document is NEW
 		country.last_mints = obj;
 	}
 
@@ -350,20 +337,24 @@ estateSchema.pre('save', async function (next) {
 });
 
 estateSchema.pre('save', async function (next) {
-	// the document is being created and NEW or its country has CHANGED
+	// if document is not NEW or if it is , then if the country_name field is NOT MODIFIED >> do NOTHING
+	if (!this.isNew || !this.isModified('country_name')) {
+		return next();
+	}
 
-	if (this.isNew || this.isModified('country_name')) {
-		const country = await countryDB.findOne({
-			country_name: this.country_name,
-		});
+	const country = await countryDB.findOne({
+		country_name: this.country_name,
+	});
 
-		if (!country) {
-			return next(
-				new AppError('country does not exist ,please create country first', 404)
-			);
-		}
+	if (!country) {
+		return next(
+			new AppError('country does not exist ,please create country first', 404)
+		);
+	}
+	const countryId = country._id;
 
-		const countryId = country._id;
+	if (this.isNew) {
+		// the document is being created and NEW
 
 		this.country_ref = countryId;
 
@@ -371,15 +362,11 @@ estateSchema.pre('save', async function (next) {
 		country.country_estates.push(this._id);
 
 		await country.save();
+	} else if (this.isModified('country_name')) {
+		// document is being EDITED
+		this.country_ref = countryId;
+		await country.save();
 	}
-	next();
-});
-
-estateSchema.pre('save', function (next) {
-	if (this.isModified('customer_price') || this.isModified('maham_price'))
-		this.nesbat = (
-			parseFloat(this.customer_price) / parseFloat(this.maham_price)
-		).toFixed(2);
 	next();
 });
 
@@ -411,6 +398,13 @@ estateSchema.pre(
 		next();
 	}
 );
+
+//update the mintId if update the estate 
+estateSchema.pre('updateOne' , async function(next) {
+	
+})
+
 // update The users assets array when a but operation gets performed //
+
 
 module.exports = mongoose.model('real_estates', estateSchema);

@@ -2,6 +2,7 @@ const express = require('express');
 // const router = require('./adminPage');
 const router = express.Router();
 const managementController = require('../../controllers/admin/adminManagment');
+const { checkAuhtorized } = require('../../controllers/admin/adminAuth');
 const verifyToken = require('../../middleware/verifyToken');
 
 router
@@ -10,7 +11,7 @@ router
 
 router
 	.route('/managment/getCities/:countryName')
-	.get(managementController.getAllCities);
+	.get(verifyToken, managementController.getAllCities);
 
 router
 	.route('/managment/addCountry')
@@ -21,15 +22,15 @@ router
 	.post(verifyToken, managementController.addCity);
 
 router
+	.route('/managment/lockUnLockEstate/:id')
+	.post(verifyToken, managementController.lockUnLockEstate);
+
+router
 	.route('/managment/getEstates/:countryName/:cityName')
 	.get(verifyToken, managementController.getEstates);
 
 router
-	.route('/managment/lockUnLockEstate/:id')
-	.post(managementController.lockUnLockEstate);
-
-router
 	.route('/managment/countriesInfo')
-	.get(managementController.getCountriesInfo);
+	.get(verifyToken, managementController.getCountriesInfo);
 
 module.exports = router;

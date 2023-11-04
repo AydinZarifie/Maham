@@ -8,8 +8,8 @@ const filterSchema = new mongoose.Schema({
 	},
 	filterImageUrl: {
 		type: String,
-		// required: true,
-		// unique: true,
+		required: true,
+		unique: true,
 	},
 });
 

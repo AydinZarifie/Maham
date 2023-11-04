@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const adminPage_Controller = require('../../controllers/admin/adminPage');
+const { checkAuhtorized } = require('../../controllers/admin/adminAuth');
+
 const verifyToken = require('../../middleware/verifyToken');
 
 router
@@ -35,17 +37,21 @@ router
 
 // /getFilters or /estates/getFilters
 router
-	  .route('/getFilters')
-	  .get(verifyToken,adminPage_Controller.getAllFilters);
+	.route('/getFilters')
+	.get(verifyToken, adminPage_Controller.getAllFilters);
 
 router
-	.route("/searchEstateByFilter")
-	.post(verifyToken,adminPage_Controller.searchEstateByFilter);
+	.route('/searchEstateByFilter')
+	.post(verifyToken, adminPage_Controller.searchEstateByFilter);
 
 router
-	.route("/searchEstateByFilterName")
-	.post(verifyToken , adminPage_Controller.searchEestatesByFilterName);
+	.route('/searchEstateByFilterName')
+	.post(verifyToken, adminPage_Controller.searchEestatesByFilterName);
 
-router.get('/getLockEstates', verifyToken,adminPage_Controller.getLockEstates);
-router.get('/getSellPositionEstates', verifyToken,adminPage_Controller.getSellPositionEstates);
+router.get('/getLockEstates', verifyToken, adminPage_Controller.getLockEstates);
+router.get(
+	'/getSellPositionEstates',
+	verifyToken,
+	adminPage_Controller.getSellPositionEstates
+);
 module.exports = router;

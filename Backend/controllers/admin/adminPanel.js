@@ -6,11 +6,11 @@ const { formatStr } = require('../../utilities/mint');
 const bcrypt = require('bcryptjs');
 
 exports.getAllAdmins = catchAsync(async (req, res, next) => {
-	if (req.roles !== 'superadmin') {
-		return res.status(401).json({
-			message: 'Just superadmin can access to this function',
-		});
-	}
+	// if (req.roles !== 'superadmin') {
+	// 	return res.status(401).json({
+	// 		message: 'Just superadmin can access to this function',
+	// 	});
+	// }
 
 	const admins = await adminDB.find();
 
@@ -35,7 +35,7 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 	const first_name = req.body.name.split(' ')[0];
 	const last_name = req.body.name.split(' ')[1];
 
-	const admin = await adminDB.findOne({
+	const admin = await adminDB.find({
 		first_name: first_name,
 		last_name: last_name,
 	});
@@ -118,22 +118,7 @@ exports.searchAdminByFilter = catchAsync(async (req, res, next) => {
 		query.city_name = formatStr(req.body.cityName);
 	}
 
-	const admins = await adminDB.find(query).select({
-		first_name: 1,
-		last_name: 1,
-		full_name: 1,
-		country_name: 1,
-		city_name: 1,
-		_id: 0,
-	});
-
-	//// 6) if nothing matches , send 204 code as response
-	if (admins.length === 0) {
-		return res.status(204).json({
-			status: 'success',
-			message: 'nothing matches',
-		});
-	}
+	const admins = await adminDB.find(query);
 
 	//// 7) send the response
 	return res.status(200).json({
@@ -192,7 +177,10 @@ exports.updateAdmin = catchAsync(async (req, res, next) => {
 				);
 			}
 			// hash the new password
-			const hashedPassword = await bcrypt.hash(newPassword, 12);
+			const hashedPassword = await bcrypt.hash(
+				newPassword,
+				process.env.HASH_NUMBER
+			);
 
 			filteredFields = {
 				...filteredFields,
@@ -231,9 +219,7 @@ exports.deleteAdmin = catchAsync(async (req, res, next) => {
 			message: 'Just superadmin can access to this function',
 		});
 	}
-	const admin = await adminDB
-		.findById(req.params.id)
-		.select(['first_name', 'last_name', 'country_name', 'city_name']);
+	const admin = await adminDB.findById(req.params.id);
 
 	if (!admin) {
 		return next(new AppError('There is No such an admin with that id', 404));
@@ -244,5 +230,73 @@ exports.deleteAdmin = catchAsync(async (req, res, next) => {
 	return res.status(204).json({
 		status: 'success',
 		message: 'admin deleted successfully',
+	});
+});
+
+exports.getWallet = catchAsync(async (req, res, next) => {
+	if (!req.body.id) {
+		return next(new AppError("admin's Id has not been provided", 400));
+	}
+
+	const admin = await adminDB.findById(req.body.id).select('wallet');
+
+	if (!admin) {
+		return next(new AppError('there is no admin with that id', 400));
+	}
+
+	return res.status(200).json({
+		status: 'success',
+		data: admin.wallet,
+	});
+});
+
+exports.addIdToWallet = catchAsync(async (req, res, next) => {
+	if (!req.body.id) {
+		return next(new AppError("admin's id has not been provided", 400));
+	} else if (!req.body.walletId) {
+		return next(new AppError('provide a id to add to the wallet', 400));
+	}
+
+	const updatedAdmin = await adminDB.findByIdAndUpdate(
+		req.body.id,
+		// Use $addToSet to add element to the array if it's not already present
+		{ $addToSet: { wallet: req.body.walletId } },
+		{ new: true }
+	);
+
+	if (!updatedAdmin) {
+		return next(
+			new AppError('there is no such an admin with provided ID', 400)
+		);
+	}
+
+	res.status(200).json({
+		status: 'success',
+		message: "ID successfully added to admin's wallet",
+	});
+});
+
+exports.removeIdFromWallet = catchAsync(async (req, res, next) => {
+	if (!req.body.id) {
+		return next(new AppError("Admin's id has not been provided", 400));
+	} else if (!req.body.walletId) {
+		return next(new AppError('Provide an id to remove from the wallet', 400));
+	}
+
+	const updatedAdmin = await adminDB.findByIdAndUpdate(
+		req.body.id,
+		{ $pull: { wallet: req.body.walletId } }, // Use $pull to remove the specified value from the array
+		{ new: true }
+	);
+
+	if (!updatedAdmin) {
+		return next(
+			new AppError('There is no such an admin with the provided ID', 404)
+		);
+	}
+
+	res.status(200).json({
+		status: 'success',
+		message: "ID successfully removed from admin's wallet",
 	});
 });
