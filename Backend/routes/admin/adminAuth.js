@@ -23,8 +23,16 @@ router
 
 router
 	.route('/auth/profile')
-	.get(verifyToken, adminAuthController.getEditAdminProfileInfo)
-	.put(verifyToken, adminAuthController.editAdminProfileInfo);
+	.get(
+		verifyToken,
+		adminAuthController.checkAuhtorized,
+		adminAuthController.getEditAdminProfileInfo
+	)
+	.put(
+		verifyToken,
+		adminAuthController.checkAuhtorized,
+		adminAuthController.editAdminProfileInfo
+	);
 
 router
 	.route('/verifyToken')

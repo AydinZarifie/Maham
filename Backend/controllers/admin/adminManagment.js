@@ -11,7 +11,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 	if (countries.length === 0) {
 		return res.status(204).json({
 			status: 'success',
-			message: 'there is no country please create one first',
+			message: 'there is no countries please create one first',
 		});
 	}
 
@@ -49,54 +49,61 @@ exports.getAllCities = catchAsync(async (req, res, next) => {
 });
 
 exports.postAddCountry = catchAsync(async (req, res, next) => {
-	if (!req.body.countryName) {
-		return next(new AppError('no country name provided', 400));
-	}
-
-	if (!req.files.images) {
-		return next(new AppError('no country logo provided', 400));
-	}
-
-	countryName = formatStr(req.body.countryName);
-	countryLogo = req.files.images[0].path;
-
-	let countryCode;
 	try {
-		let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
-		totalCountries++;
-		countryCode = totalCountries.toString();
-	} catch (err) {
-		console.error(err);
-		return next(new AppError('error aquired on assigning countryCode', 400));
-	}
+		if (req.roles !== 'superadmin') {
+			return res.status(401).json({
+				message: 'Just superadmin can access to this function',
+			});
+		}
 
-	const newCountry = new countryDB({
-		country_name: countryName,
-		country_logo: countryLogo,
-		country_code: countryCode,
-	});
-	// await assignCountryCode(countryName);
-	await newCountry.save();
-	return res.status(201).json({
-		status: 'success',
-	});
+		countryName = formatStr(req.body.countryName);
+		countryLogo = req.files.images[0].path;
+
+		if (!req.body.countryName) {
+			return next(new AppError('no country name provided', 400));
+		}
+		if (!req.files.images) {
+			return next(new AppError('no country logo provided', 400));
+		}
+
+		let countryCode;
+		try {
+			let totalCountries = await countryDB.countDocuments({}, { hint: '_id_' });
+			totalCountries++;
+			countryCode = totalCountries.toString();
+		} catch (err) {
+			console.error(err);
+			return next(new AppError('error aquired on assigning countryCode', 400));
+		}
+
+		const newCountry = new countryDB({
+			country_name: countryName,
+			country_logo: countryLogo,
+			country_code: countryCode,
+		});
+		// await assignCountryCode(countryName);
+		await newCountry.save();
+		return res.status(201).json({
+			status: 'success',
+		});
+	} catch (error) {
+		return res.status(401).json({
+			message: 'country already exist',
+		});
+	}
 });
 
 exports.addCity = catchAsync(async (req, res, next) => {
+	if (req.roles !== 'superadmin') {
+		return res.status(401).json({
+			message: 'Just superadmin can access to this function',
+		});
+	}
 	// check if country selected
 	if (req.body.countryName) {
-		const country = await countryDB
-			.findOne({
-				country_name: req.body.countryName,
-			})
-			.select([
-				'cities',
-				'country_code',
-				'country_name',
-				'country_logo',
-				'last_mints',
-			]);
-
+		const country = await countryDB.findOne({
+			country_name: req.body.countryName,
+		});
 		// check if selected country actually exists in DB
 		if (!country) {
 			return next(new AppError('country not found', 404));
@@ -145,38 +152,21 @@ exports.addCity = catchAsync(async (req, res, next) => {
 	}
 });
 
-// estates of slected country & city
 exports.getEstates = catchAsync(async (req, res, next) => {
+	if (req.roles !== 'superadmin') {
+		return res.status(401).json({
+			message: 'Just superadmin can access to this function',
+		});
+	}
+
 	const estates = await estateDB
 		.find({
 			country_name: `${req.params.countryName}`,
 			city_name: `${req.params.cityName}`,
 		})
-		.select([
-			'country_name',
-			'city_name',
-			'landlord_address',
-			'estate_title',
-			'volume',
-			'maham_price',
-			'customer_price',
-			'contract_address',
-			'sell_position',
-			'lock_position',
-		])
 		.sort('createdAt');
 
-	console.log();
-	if (!estates) {
-		return res.status(400).json({
-			message: 'country or city does not exist',
-		});
-	} else if (estates.length === 0) {
-		return res.status(204).json({
-			message: 'this city has no Estate yet.',
-		});
-	}
-
+	console.log(estates);
 	return res.status(200).json({
 		status: 'success',
 		data: estates,
@@ -184,31 +174,33 @@ exports.getEstates = catchAsync(async (req, res, next) => {
 });
 
 exports.lockUnLockEstate = catchAsync(async (req, res, next) => {
-	const estate = await estateDB
-		.findById(req.params.id)
-		.select(['_id', 'lock_position', 'sell_position']);
+	if (req.roles !== 'superadmin') {
+		return res.status(401).json({
+			message: 'Just superadmin can access to this function',
+		});
+	}
+
+	const estate = await estateDB.findById(req.params.id);
 
 	if (!estate) {
 		return next(new AppError('estate not found', 401));
 	}
 
-	// if estate was LOCKED >> UNLOCK
-	estate.lock_position = !estate.lock_position;
+	let lockPosition = estate.lock_position;
+	let sellPosition = false;
 
-	// set the sell_position to false
-	estate.sell_position = false;
-
+	if (lockPosition == false) {
+		lockPosition = true;
+		sellPosition = false;
+	} else {
+		lockPosition = false;
+	}
+	estate.lock_position = lockPosition;
+	estate.sell_position = sellPosition;
 	await estate.save();
 
-	let resMessage;
-	if (estate.lock_position) {
-		resMessage = 'locked';
-	} else {
-		resMessage = 'unLocked';
-	}
-
 	return res.status(200).json({
-		message: `estate succesfully ${resMessage}`,
+		message: 'Success',
 	});
 });
 

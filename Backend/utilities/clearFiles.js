@@ -4,8 +4,10 @@ const path = require('path');
 exports.clearImage = async (estate) => {
 	console.log(estate);
 
-	const filePath = path.join(__dirname, '../', estate);
-	console.log(filePath);
+	const filePath = path.join(
+		__dirname,
+		`../uploads/images/estates/${estate.country_name}_${estate.city_name}_${estate.estate_title}`
+	);
 
 	fs.rmSync(filePath, { recursive: true }, (err) => {
 		if (err) {

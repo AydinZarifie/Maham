@@ -1,35 +1,33 @@
+const cookieParser = require('cookie-parser');
 const express = require('express');
-const dotenv = require('dotenv');
+
 const path = require('path');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
 const cors = require('cors');
 const helmet = require('helmet');
-const hpp = require('hpp');
-// const xss = require('xss');
 
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
 //////////////////////////////////////////////
-const adminPage_router = require('./routes/admin/adminPage');
-const adminManagmentPage_router = require('./routes/admin/adminManagment');
-const adminAuth_router = require('./routes/admin/adminAuth');
-const adminPanel_router = require('./routes/admin/adminPanel');
-////////////
-const userAuthorization_router = require('./routes/user/userAuthorization');
-const userAuthentication_router = require('./routes/user/userAuthentication');
-const userPanel_router = require('./routes/user/userPanel');
-// const userProfile_router = require('./routes/user/userProfile');
-///////////////////////
+const adminPage_Router = require('./routes/admin/adminPage');
+const managmentPage_Router = require('./routes/admin/adminManagment');
+const adminAuth_Router = require('./routes/admin/adminAuth');
+const adminPanel_Router = require('./routes/admin/adminPanel');
+const userAuthorization_Router = require('./routes/user/userAuthorization');
+const userPanel_Router = require('./routes/user/userPanel');
+const userAuth_Router = require('./routes/user/userAuth');
+//////////////////////////////////////////////
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 const AppError = require('./utilities/error/appError');
-//////////////////////////////////////////////
-dotenv.config({ path: './config.env' });
-const app = express();
-//////////////////////////////////////////////
+const dotenv = require('dotenv');
+const session = require('express-session');
 
+dotenv.config({ path: './config.env' });
+
+const app = express();
+
+// ERROR HANDLING
 process.on('uncaughtException', (err) => {
 	console.log('UNCAUGHT EXCEPTION! Shutting down...');
 	console.log(err.name, err.message);
@@ -39,28 +37,19 @@ process.on('uncaughtException', (err) => {
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		if (file.fieldname === 'images') {
-			if (req.originalUrl.endsWith('/estates')) {
-				const estateImagePath = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
+			if (req.body.title) {
+				let path = `./uploads/images/estates/${req.body.countryName}_${req.body.cityName}_${req.body.title}`;
 
-				if (fs.existsSync(estateImagePath)) {
-					cb(null, estateImagePath);
+				if (fs.existsSync(path)) {
+					cb(null, path);
 				} else {
-					fs.mkdirSync(estateImagePath);
-					cb(null, estateImagePath);
+					fs.mkdirSync(path);
+					cb(null, path);
 				}
-			} else if (req.originalUrl.endsWith('/addFilter')) {
+			} else if (req.body.filterName) {
 				cb(null, './uploads/images/filters/');
-			} else if (req.originalUrl.endsWith('/addCountry')) {
+			} else if (req.body.countryName && !req.body.title) {
 				cb(null, './uploads/images/countries/');
-			} else if (req.originalUrl.endsWith('/userAuthorization')) {
-				const userImagePath = `./uploads/images/users/${req.body.firstName}-${req.body.lastName}`;
-
-				if (fs.existsSync(userImagePath)) {
-					cb(null, userImagePath);
-				} else {
-					fs.mkdirSync(userImagePath);
-					cb(null, userImagePath);
-				}
 			}
 		} else if (file.fieldname == 'video') {
 			cb(null, './uploads/videos/');
@@ -79,37 +68,8 @@ const storage = multer.diskStorage({
 	},
 });
 
-function checkFileType(file, cb) {
-	if (file.fieldname === 'video') {
-		if (
-			file.mimetype === 'video/mp4' ||
-			file.mimetype === 'video/jpeg' ||
-			file.mimetype === 'video/mpv' ||
-			file.mimetype === 'video/quicktime'
-		) {
-			cb(null, true);
-		} else {
-			cb(new Error('video type not supported !'), false);
-		}
-	} else if (file.fieldname === 'images') {
-		if (
-			file.mimetype === 'image/png' ||
-			file.mimetype === 'image/jpg' ||
-			file.mimetype === 'image/jpeg' ||
-			fiel.mimetype === 'image/gif'
-		) {
-			cb(null, true);
-		} else {
-			cb(new Error('image type not supported!'), false);
-		}
-	}
-}
-
 const upload = multer({
 	storage: storage,
-	fileFilter: (req, file, cb) => {
-		checkFileType(file, cb);
-	},
 }).fields([
 	{
 		name: 'images',
@@ -117,24 +77,26 @@ const upload = multer({
 	{
 		name: 'video',
 	},
+	{
+		name: 'logo',
+	},
 ]);
 
-/////////////////////////////////////
-//////////// MIDDLEWARES ////////////
-/////////////////////////////////////
-
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use(globalErrorHandler);
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET_KEY,
 		saveUninitialized: false,
-		resave: true,
+		resave: false,
 		cookie: {
 			secure: false,
-			maxAge: 7000 * 1000,
+			maxAge: 70 * 1000,
 		},
 	})
 );
-
+app.use(cookieParser());
+//2023/05/08 >> changed bodyparser.json() to express.json() ; express.json() is a built-in middleware
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
@@ -142,48 +104,41 @@ app.use(
 	})
 );
 
-app.use(express.static(path.join(__dirname, 'uploads/static')));
-app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(express.json());
-app.use(cookieParser());
+
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(hpp({ whitelist: ['price'] }));
+app.use('/uploads', express.static('uploads'));
+app.use(express.static('public'));
+app.use(
+	'uploads/static/',
+	express.static(path.join(__dirname, '/uploads/static'))
+);
 
 app.use(upload);
 
-// app.use(path.join(__dirname, '/public'))
+//2023/05/08 changed main route from 'adminPgae' to 'admin'
 
-app.use(
-	'/admin',
-	adminAuth_router,
-	adminPage_router,
-	adminManagmentPage_router,
-	adminPanel_router
-);
+app.use('/admin', adminAuth_Router);
 
-app.use(
-	'/user',
-	userAuthorization_router,
-	userAuthentication_router,
-	userPanel_router
-	// userProfile_router
-);
+app.use('/admin', adminPage_Router, managmentPage_Router, adminPanel_Router);
 
-const DBlocal = process.env.LOCAL_DATABASE;
-const port = process.env.PORT;
-mongoose.connect(DBlocal).then(() => {
-	console.log(`local DB connection sucessful`);
-	app.listen(port, () => {
-		console.log(`Server is runing on port ${port}`);
+app.use('/user', userAuthorization_Router, userPanel_Router, userAuth_Router);
+
+mongoose.connect('mongodb://127.0.0.1:27017/maham').then(() => {
+	console.log(`DB connection sucessful`);
+	app.listen(5000, () => {
+		console.log(`Server is runing on port 5000`);
 	});
 });
 
+/////////////////////////////////////////////
+
+// ERROR HANDLING
 app.all('*', (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-app.use(globalErrorHandler);
-
+// ERROR HANDLING
 process.on('unhandledRejection', (err) => {
 	console.log('UNHANDLED REJECTION!');
 	console.log(err.name, err.message);

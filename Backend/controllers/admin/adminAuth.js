@@ -7,9 +7,9 @@ const adminDB = require('../../models/admin');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 const sendEmail = require('./../../utilities/sendEmail');
-const generateToken = require('./../../utilities/token/generateToken');
-const verifyRefreshToken = require('./../../utilities/token/verifyRefreshToken');
-const signAccessToken = require('./../../utilities/token/signAccessToken');
+const generateToken = require('./../../utilities/token/admin/generateToken');
+const verifyRefreshToken = require('../../utilities/token/admin/verifyRefreshToken');
+const signAccessToken = require('./../../utilities/token/admin/signAccessToken');
 const { formatStr } = require('../../utilities/mint.js');
 //////////////////////////////////////////////////////////////////
 
@@ -40,7 +40,7 @@ exports.signupAdmin = async (req, res, next) => {
 				new AppError('password and password confirmation does not match', 401)
 			);
 		}
-		const hashedPassword = await bcrypt.hash(password, 12);
+		const hashedPassword = await bcrypt.hash(password, 8);
 		const admin = new adminDB({
 			first_name: formatStr(firstName),
 			last_name: formatStr(lastName),
@@ -50,7 +50,6 @@ exports.signupAdmin = async (req, res, next) => {
 			email: formatStr(email),
 			country_name: formatStr(country),
 			city_name: formatStr(city),
-			full_name: 'hadirasouli',
 		});
 		await admin.save();
 
@@ -68,11 +67,12 @@ exports.signupAdmin = async (req, res, next) => {
 
 exports.loginAdmin = catchAsync(async (req, res, next) => {
 	// 1) validate the request body
+
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
 		return res.status(405).json({
-			message: `${error.errors[0].msg} in ${error.errors[0].path}`,
+			message: 'Error 405',
 		});
 	}
 	const { password, email, verificationCode } = req.body;
@@ -92,12 +92,9 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 		lastName: admin.last_name,
 	};
 
-	console.log(adminInfo);
-
 	if (!admin) {
 		return next(new AppError('admin not found', 405));
 	}
-
 	// 4) check if password is correct
 	const isEqual = bcrypt.compare(password, admin.password);
 	if (!isEqual) {
@@ -136,7 +133,6 @@ exports.loginAdmin = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		token: accessToken,
-		adminId: admin._id,
 		adminData: adminInfo,
 	});
 });
@@ -166,12 +162,13 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 		if (!error.isEmpty()) {
 			console.log(error.array());
 			return res.status(405).json({
-				message: `${error.errors[0].msg} in ${error.errors[0].path}`,
+				message: 'Error 405',
 			});
 		}
 		const { email, password } = req.body;
 
 		const admin = await adminDB.findOne({ email }).select('+password');
+
 		if (!admin) {
 			return next(new AppError('Wrong email!', 405));
 		}
@@ -232,7 +229,6 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 	return res.status(201).json(accessToken);
 });
 
-// every admin has access to their own profile
 exports.getEditAdminProfileInfo = catchAsync(async (req, res) => {
 	const admin = await adminDB.findOne({ email: req.email });
 	console.log(admin);
@@ -242,7 +238,6 @@ exports.getEditAdminProfileInfo = catchAsync(async (req, res) => {
 	});
 });
 
-// admins themselves will perform this action
 exports.editAdminProfileInfo = catchAsync(async (req, res, next) => {
 	const password = req.body.password;
 	const confirmPassword = req.body.confirmPassword;
@@ -257,7 +252,7 @@ exports.editAdminProfileInfo = catchAsync(async (req, res, next) => {
 		return next(new AppError('admin not found!', 401));
 	}
 
-	const hashedPassword = await bcrypt.hash(password, 12);
+	const hashedPassword = await bcrypt.hash(password, process.env.HASH_NUMBER);
 	console.log(hashedPassword);
 
 	admin.password = hashedPassword;
@@ -291,3 +286,21 @@ exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
 		});
 	}
 };
+
+exports.checkAuhtorized = catchAsync(async (req, res, next) => {
+	// 1) this approach is more efficient , because it does not fetch the document from DB
+	// *  instead of using adminDB.findById(req.params.id)
+	const admin = await adminDB.countDocuments({ _id: req.body.id });
+
+	if (!req.body.id) {
+		return next(new AppError('document Id has not been provided', 400));
+	} else if (!admin) {
+		console.log(`Unauthorized action form : id = ${req.body.id}`);
+		return next(
+			new AppError('Not authorized - There is no admin with that Id', 403)
+		);
+	}
+
+	console.log(`Authorized - id:${req.body.id} `);
+	return next();
+});
