@@ -131,31 +131,29 @@ const ManagementPage = () => {
         console.log("2");
         console.log(lockPosition);
         const txLock = await lock(mintId, signer);
-        let { response } = await fetchInstance(
-          "url" ,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(txLock),
-          }
-        );
+        const formData = new FormData();
+        formData.append("hash", txLock.hash);//change these 4 to your needs
+        formData.append("method", "lock");
+        formData.append("from", txLock.from);
+        formData.append("to", txLock.to);
+        let { response } = await fetchInstance("url", {
+          method: "POST",
+          body: formData,
+        });
         console.log(txLock);
       } else {
         console.log(3);
         console.log(lockPosition);
         const txUnlock = await unlock(mintId, signer);
-        let { response } = await fetchInstance(
-          "url" ,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(txUnlock),
-          }
-        );
+        const formData = new FormData();
+        formData.append("hash", txUnlock.hash);//change these 4 to your needs
+        formData.append("method", "unlock");
+        formData.append("from", txUnlock.from);
+        formData.append("to", txUnlock.to);
+        let { response } = await fetchInstance("url", {
+          method: "POST",
+          body: formData,
+        });
         console.log(txUnlock);
         console.log(4);
       }
