@@ -1,11 +1,16 @@
 import styles from "../../../styles/AdminPanel.module.css";
+import DeleteIcon from "../../../images/delete-2-svgrepo-com2.svg";
+import EditIcon from "../../../images/edit-pencil-line-01-svgrepo-com.svg";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const AdminConfig = ({ method, admin }) => {
   const { error, submitAddAdminHandler, countries, cityFetch, cities } =
     useOutletContext();
+
+  const [walletAddresses, setWalletAddresses] = useState([]);
+  const walletAddressRef = useRef();
 
   const [data, setData] = useState({
     type: admin ? admin.admin_type : "",
@@ -17,6 +22,7 @@ const AdminConfig = ({ method, admin }) => {
     city: admin ? admin.city_name : "",
     password: "",
     confirmPassword: "",
+    walletAddress: "",
   });
 
   const [touched, setTouched] = useState({
@@ -29,6 +35,7 @@ const AdminConfig = ({ method, admin }) => {
     city: false,
     password: false,
     confirmPassword: false,
+    walletAddress: false,
   });
 
   const enteredTypeIsValid = data.type.trim() !== "";
@@ -39,7 +46,10 @@ const AdminConfig = ({ method, admin }) => {
   const enteredCountryIsValid = data.country.trim() !== "";
   const enteredCityIsValid = data.city.trim() !== "";
   const enteredPasswordIsValid = data.password.trim() !== "";
-  const enteredConfirmPasswordIsValid = data.confirmPassword.trim() !== "" && data.password == data.confirmPassword;
+  const enteredConfirmPasswordIsValid =
+    data.confirmPassword.trim() !== "" && data.password == data.confirmPassword;
+  const enteredWalletAddressIsValid = data.walletAddress.trim() !== "";
+
   const typeIsInvalid = !enteredTypeIsValid && touched.type;
   const firstNameIsInvalid = !enteredFirstNameIsValid && touched.firstName;
   const lastNameIsInvalid = !enteredLastNameIsValid && touched.lastName;
@@ -51,6 +61,8 @@ const AdminConfig = ({ method, admin }) => {
   const passwordIsInvalid = !enteredPasswordIsValid && touched.password;
   const confirmPasswordIsInvalid =
     !enteredConfirmPasswordIsValid && touched.confirmPassword;
+  const walletAddressIsInvalid =
+    !enteredWalletAddressIsValid && touched.walletAddress;
 
   let formIsValidForAdding = false;
   let formIsValidForEditing = false;
@@ -64,7 +76,8 @@ const AdminConfig = ({ method, admin }) => {
     enteredCountryIsValid &&
     enteredCityIsValid &&
     enteredPasswordIsValid &&
-    enteredConfirmPasswordIsValid
+    enteredConfirmPasswordIsValid &&
+    enteredWalletAddressIsValid
   ) {
     formIsValidForAdding = true;
   }
@@ -122,6 +135,7 @@ const AdminConfig = ({ method, admin }) => {
         phoneNumber: true,
         country: true,
         city: true,
+        walletAddress: true,
         password: true,
         confirmPassword: true,
       });
@@ -183,9 +197,31 @@ const AdminConfig = ({ method, admin }) => {
   const confirmPasswordClass = confirmPasswordIsInvalid
     ? `${styles.invalid} ${styles.InputAdmin} `
     : `${styles.InputAdmin} `;
+  const walletAddressClass = walletAddressIsInvalid
+    ? `${styles.invalid} ${styles.InputAdmin} `
+    : `${styles.InputAdmin} `;
+
+  const addToWalletAddresses = () => {
+    if (walletAddresses.length < 3) {
+      setWalletAddresses((prev) => [...prev, data.walletAddress]);
+      setData((prev) => ({ ...prev, walletAddress: "" }));
+      setTouched((prev) => ({ ...prev, walletAddress: false }));
+    }
+  };
+
+  const deleteFromWalletAddresses = (walletAddress) => {
+    let array = walletAddresses.filter((item) => item !== walletAddress);
+    setWalletAddresses(array);
+  };
+
+  const editwalletAddressItem = (walletAddress) => {
+    setData((prev) => ({ ...prev, walletAddress: walletAddress }));
+    deleteFromWalletAddresses(walletAddress);
+    walletAddressRef.current.focus();
+  };
 
   return (
-    <form method={method}>
+    <form className={styles.FormAdmin} method={method}>
       <div className={styles.mainDiv}>
         {error && <p className={styles.error}>{error}</p>}
         <div className={styles.SelectDiv}>
@@ -346,6 +382,92 @@ const AdminConfig = ({ method, admin }) => {
             </div>
           </div>
         </div>
+        {/*  */}
+        <div className={styles.WalletAddres}>
+          <div className={styles.WalletHead}>
+            <h3>Admin Wallet addres</h3>
+          </div>
+          <div className={styles.WalletInputDiv}>
+            <div className={styles.floatingLabel2}>
+              <input
+                className={walletAddressClass}
+                placeholder="Wallet address"
+                type="text"
+                name="walletAddress"
+                id="walletAddress"
+                onChange={eventHandler}
+                value={data.walletAddress}
+                // onBlur={blurHandler}
+                ref={walletAddressRef}
+              />
+              <label className={styles.InputLabel} htmlFor="walletAddress">
+                Wallet addres
+              </label>
+              <div className={styles.icon}>
+                <svg
+                  fill="#000000"
+                  width="64px"
+                  height="64px"
+                  viewBox="0 0 32 32"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="#000000"
+                  stroke-width="0.00032"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+
+                  <g id="SVGRepo_iconCarrier">
+                    <path d="M31.989 9.078c0.015-0.739-0.184-2.464-2.433-3.064l-22.576-4.519c-1.655 0-3 1.345-3 3v4.022l-1-0.002c-1.649 0.007-2.989 1.348-2.989 2.999v15.994c0 1.654 1.345 3 3 3h26.014c1.654 0 3-1.346 3-3zM5.981 4.494c0-0.522 0.402-0.952 0.913-0.996l22.063 4.465c0.008 0.004-0.164 0.56-0.965 0.55h-22.011zM30.008 27.507c0 0.552-0.448 1-1 1h-26.015c-0.552 0-1-0.448-1-1v-15.995c0-0.552 0.448-1 1-1h25.002c0.982 0 2.012-0.335 2.012-0.996v17.991h0zM5.995 17.516c-1.104 0-2 0.895-2 2s0.896 2 2 2 2-0.895 2-2-0.896-2-2-2z" />{" "}
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <span onClick={addToWalletAddresses}>+</span>
+          </div>
+          {walletAddresses &&
+            walletAddresses.length > 0 &&
+            walletAddresses.map((item, index) => (
+              <div className={styles.AddresEditDiv}>
+                <div className={styles.InputDiv}>
+                  {index + 1}-
+                  <div className={styles.inputContainer}>
+                    <input
+                      type="text"
+                      disabled
+                      //id="WalletAddres"
+                      value={item}
+                      className={styles.inputs}
+                    />
+                    <label
+                      className={styles.label}
+                      //for="WalletAddres"
+                    >
+                      <div className={styles.text}>Wallet Addres</div>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.IconsDiv}>
+                  <img
+                    className={styles.DeleteIcon}
+                    src={DeleteIcon}
+                    onClick={() => deleteFromWalletAddresses(item)}
+                  />
+                  <img
+                    className={styles.EditIcon}
+                    src={EditIcon}
+                    onClick={() => editwalletAddressItem(item)}
+                  />
+                </div>
+              </div>
+            ))}
+        </div>
+        {/*  */}
         <div className={styles.CountryAndCityDiv}>
           <div className={styles.SelectDiv} style={{ marginTop: 0 }}>
             <select
@@ -359,15 +481,16 @@ const AdminConfig = ({ method, admin }) => {
               <option className={styles.SelectOption} value="">
                 Country
               </option>
-              {countries.length>0 && countries.map((country) => (
-                <option
-                  key={country.country_name}
-                  className={styles.SelectOption}
-                  value={country.country_name}
-                >
-                  {country.country_name}
-                </option>
-              ))}
+              {countries.length > 0 &&
+                countries.map((country) => (
+                  <option
+                    key={country.country_name}
+                    className={styles.SelectOption}
+                    value={country.country_name}
+                  >
+                    {country.country_name}
+                  </option>
+                ))}
             </select>
           </div>
           <div className={styles.SelectDiv} style={{ marginTop: 0 }}>

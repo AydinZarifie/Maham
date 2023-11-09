@@ -123,7 +123,7 @@ body {
   justify-content: start;
   width: 84%;
   height: 260px;
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
   border: 1px solid #cfcfcf;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -197,6 +197,11 @@ body {
 .DeleteIcon {
   width: 26px;
   height: 26px;
+  cursor: pointer;
+ transition: .3s;
+}
+.DeleteIcon:hover{
+transform: scale(1.05);
 }
 
 /* .LocSection{
@@ -219,6 +224,8 @@ body {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 190px;
+  border-right: 1px solid #cfcfcf;
 }
 .Section {
   width: 100%;
@@ -228,6 +235,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-right: 1px solid #cfcfcf
 }
 
 .InputDiv {
@@ -314,7 +322,12 @@ body {
 }
 .EditIcon {
   width: 28px;
-  height: 28px;
+  height: 28px; 
+cursor: pointer;
+ transition: .3s;
+}
+.EditIcon:hover{
+transform: scale(1.05);
 }
 
 .LocationEdit {

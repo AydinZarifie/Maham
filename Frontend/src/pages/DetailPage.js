@@ -29,10 +29,12 @@ import buildingIcon2 from "../images/building-svgrepo-com.svg";
 import CustomTableItem from "../components/general/CustomTableItem";
 import poolIcon from "../images/pool-svgrepo-com (2).svg";
 import ArrowUpIcon from "../images/arrow-down-svgrepo-com.svg";
-import PropertyInfoIcon from "../images/inbox-information-svgrepo-com.svg"
+import PropertyInfoIcon from "../images/inbox-information-svgrepo-com.svg";
+import hideIcon from "../images/eye-slash-alt-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/general/Navbar";
+import Menu from "../components/general/Menu";
 
 const DetailPage = () => {
   const [approverBox, setApproverBox] = useState(false);
@@ -42,18 +44,20 @@ const DetailPage = () => {
   const [features, setFeatures] = useState(false);
 
   const featuresRef = useRef();
+  const scrolledDownRef = useRef();
 
   const toggleFeatures = () => {
-    let div=document.getElementById("InteriorFeaturesBody");
-    let size=div.scrollHeight;
+    let div = document.getElementById("InteriorFeaturesBody");
+    let size = div.scrollHeight;
     console.log(size);
-    if (features) {
-      featuresRef.current.style.height = "308px";
-      setFeatures(false);
-    } else {
-      featuresRef.current.style.height = (size+98) + "px";
-      setFeatures(true);
-    }
+    // if (features) {
+    // featuresRef.current.style.height = "308px";
+    // setFeatures(false);
+    // }
+    //  else {
+    featuresRef.current.style.height = size + 98 + "px";
+    setFeatures(true);
+    // }
   };
 
   const slider = useRef(null);
@@ -92,15 +96,18 @@ const DetailPage = () => {
     }
   };
 
-  const [scrolledDown, setScrolledDown] = useState(false);
+  function handleScroll() {}
   useEffect(() => {
-    const handleScroll = () => {
+    handleScroll = () => {
       const size = document.getElementById("localInfo");
 
       if (window.scrollY > size.offsetTop) {
-        setScrolledDown(true);
-      }else {
-        setScrolledDown(false);
+        scrolledDownRef.current.style.height = "65.8px";
+        scrolledDownRef.current.style.borderBottom =
+          " 1px solid rgb(209, 213, 219)";
+      } else {
+        scrolledDownRef.current.style.height = "0px";
+        scrolledDownRef.current.style.borderBottom = "0px";
       }
     };
 
@@ -113,21 +120,31 @@ const DetailPage = () => {
 
   return (
     <>
-      <div className={styles.Menu}>
-        <Navbar />
-      </div>
+      <Menu />
 
-      {scrolledDown && (
-        <div className={styles.BuyMenu}>
-          <div className={styles.TitleForMenu}>
-            <h4>Bech home in ohaio 123</h4>
-            <h5>united state_california</h5>
+      {/* {scrolledDown && ( */}
+      <div className={styles.BuyMenu} ref={scrolledDownRef}>
+        <div className={styles.BuyMenuBody}>
+          <div className={styles.TitleAndPrice}>
+            <div className={styles.TitleForMenu}>
+              <h4>Bech home in ohaio 123</h4>
+              <h5>united state_california</h5>
+            </div>
+            <h4>1234 ETh</h4>
           </div>
-
           <div className={styles.BuyAndPrice}>
             <div className={styles.PriceAndIcon}>
-              <h4>1234 ETh</h4>
               <div className={styles.MenuIconsDiv}>
+                <span
+                  onClick={() => {
+                    scrolledDownRef.current.style.height = "0px";
+                    scrolledDownRef.current.style.borderBottom = "0px";
+                    window.removeEventListener("scroll", handleScroll);
+                  }}
+                >
+                  <img className={styles.HeadMenuIcon} src={hideIcon} />
+                  hide
+                </span>
                 <span>
                   <img className={styles.HeadMenuIcon} src={heartIcon} />
                   save
@@ -141,7 +158,8 @@ const DetailPage = () => {
             <button className={styles.MenuBuyBtn}>Buy</button>
           </div>
         </div>
-      )}
+      </div>
+      {/* )} */}
 
       <div className={styles.HeadDiv}>
         <div className={styles.Column1}>
@@ -391,7 +409,10 @@ const DetailPage = () => {
             <img src={recieptIcon} className={styles.SectionHeadIcon} />
             <h3>Interior Features</h3>
           </div>
-          <div className={styles.InteriorFeaturesBody} id="InteriorFeaturesBody" >
+          <div
+            className={styles.InteriorFeaturesBody}
+            id="InteriorFeaturesBody"
+          >
             <div className={styles.InteriorFeaturesSections}>
               <h5>
                 <img src={buildingIcon1} className={styles.PropertyIcon} />
@@ -475,19 +496,12 @@ const DetailPage = () => {
                 </button>
               </div>
             )}
-
+            {/* 
             {features && (
-              <div className={styles.ArrowUp}
-              onClick={toggleFeatures}>
-                 close <h4>&times;</h4>
-                {/* <img
-                  
-                  src={ArrowUpIcon}
-                  className={styles.ArrowUpIcon}
-                /> */}
-               
+              <div className={styles.ArrowUp} onClick={toggleFeatures}>
+                close <h4>&times;</h4>
               </div>
-            )}
+            )} */}
           </div>
         </div>
 
@@ -567,7 +581,7 @@ const DetailPage = () => {
         </div>
 
         <div className={styles.PropertyInfo}>
-        <div className={styles.SectionHead}>
+          <div className={styles.SectionHead}>
             <img src={PropertyInfoIcon} className={styles.SectionHeadIcon} />
             <h3>Property Information</h3>
           </div>
@@ -668,8 +682,8 @@ const DetailPage = () => {
                   </td>
                   <td>
                     <div className={styles.MethodDiv}>
-                     <div>Transfer</div> 
-                      </div>
+                      <div>Transfer</div>
+                    </div>
                   </td>
                   <td>
                     <CustomTableItem text="3141592653589793238462643383279502884197169399375105820974944592" />
