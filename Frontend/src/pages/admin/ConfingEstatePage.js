@@ -1,7 +1,7 @@
 import styles from "../../styles/Add_Estate.module.css";
 import locationStyles from "../../styles/addLocation.module.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import trueLogo from "../../images/tick-svgrepo-com_1.svg";
@@ -48,6 +48,8 @@ const ConfingEstate = ({ method, estate }) => {
   const [mintUsed, setMintUsed] = useState(false);
   const [error, setError] = useState(false);
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
+
+  const facilityLocationRef = useRef([]);
 
   const scrollToError = () => {
     const errorElement = document.querySelector(`.${styles.invalid}`);
@@ -898,7 +900,7 @@ const ConfingEstate = ({ method, estate }) => {
     setFacilityLocation(array);
   };
 
-  const addToFacilityLocationItems = (index,event) => {
+  const addToFacilityLocationItems = (index, event) => {
     let oldValues = [...facilityLocation];
     oldValues[index].childList.push(facilityLocation[index].input);
     oldValues[index].input = "";
@@ -906,11 +908,22 @@ const ConfingEstate = ({ method, estate }) => {
     setFacilityLocation(oldValues);
   };
 
-  const deleteFromFacilityLocationItems = (index,deletingItem,event) => {
-    let array=[...facilityLocation]
-    let itemsArray = array[index].childList.filter((item) => item !== deletingItem);
-    array[index].childList=itemsArray;
-    setFacilityLocation(array)
+  const deleteFromFacilityLocationItems = (index, deletingItem, event) => {
+    let array = [...facilityLocation];
+    let itemsArray = array[index].childList.filter(
+      (item) => item !== deletingItem
+    );
+    array[index].childList = itemsArray;
+    setFacilityLocation(array);
+  };
+
+  const editFacilityLocationItem = (index, facilityLocation) => {
+    setFacilityLocation((prev) => [
+      ...prev,
+      (prev[index].input = facilityLocation),
+    ]);
+    deleteFromFacilityLocationItems(index, facilityLocation);
+    facilityLocationRef.current[index].focus();
   };
 
   return (
@@ -1321,30 +1334,32 @@ const ConfingEstate = ({ method, estate }) => {
             <h3>location Title</h3>
           </div>
 
-          <div className={locationStyles.Locationwrapper}>
-            <div className={locationStyles.inputData}>
-              <input
-                type="text"
-                className={locationStyles.textinput}
-                value={information.facilityLocation}
-                name="facilityLocation"
-                onChange={basicEventHandler}
-              />
-              <div className={locationStyles.underline}></div>
-              <label className={locationStyles.label}>Title</label>
+          {facilityLocation.length < 3 && (
+            <div className={locationStyles.Locationwrapper}>
+              <div className={locationStyles.inputData}>
+                <input
+                  type="text"
+                  className={locationStyles.textinput}
+                  value={information.facilityLocation}
+                  name="facilityLocation"
+                  onChange={basicEventHandler}
+                />
+                <div className={locationStyles.underline}></div>
+                <label className={locationStyles.label}>Title</label>
+              </div>
+              <button
+                type="button"
+                className={locationStyles.AddBtn}
+                onClick={addToFacilityLocation}
+              >
+                +
+              </button>
             </div>
-            <button
-              type="button"
-              className={locationStyles.AddBtn}
-              onClick={addToFacilityLocation}
-            >
-              +
-            </button>
-          </div>
+          )}
 
           <div className={locationStyles.LocationBody}>
             <div className={locationStyles.LocationFullHead}>
-              {facilityLocation.map((item) => (
+              {facilityLocation.map((item, index) => (
                 <div className={locationStyles.LocationHead}>
                   <h5 className={locationStyles.title}>{item.title}</h5>
                   <img
@@ -1352,57 +1367,74 @@ const ConfingEstate = ({ method, estate }) => {
                     className={locationStyles.DeleteIcon}
                     onClick={() => deleteFromFacilityLocation(item.title)}
                   />
-                  <span>+</span>
+                  <div className={locationStyles.InputDiv}>
+                    <div className={locationStyles.inputContainer}>
+                      <input
+                        type="text"
+                        id={index}
+                        value={item.input}
+                        className={locationStyles.inputs}
+                        onChange={(event) =>
+                          facilityLocationEventHandler(index, event)
+                        }
+                        ref={(element) =>
+                          (facilityLocationRef.current[index] = element)
+                        }
+                      />
+                      <label className={locationStyles.label} htmlFor={index}>
+                        <div className={locationStyles.text}>Location</div>
+                      </label>
+                    </div>
+                    <span
+                      onClick={(event) =>
+                        addToFacilityLocationItems(index, event)
+                      }
+                    >
+                      +
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
             <div className={locationStyles.LocationSection}>
-              {facilityLocation.map((item, index) => (
+              {facilityLocation.map((parentItem, parentIndex) => (
                 <div className={locationStyles.SectionBody}>
                   <div className={locationStyles.Section}>
-                    <div className={locationStyles.InputDiv}>
-                      <div className={locationStyles.inputContainer}>
-                        <input
-                          type="text"
-                          id={index}
-                          value={item.input}
-                          className={locationStyles.inputs}
-                          onChange={(event) =>
-                            facilityLocationEventHandler(index, event)
+                    {/* <div className={locationStyles.LocationEdit}> */}
+                    {parentItem.childList.map((item, index) => (
+                      <div className={locationStyles.InputDiv}>
+                        {index + 1}-
+                        <div className={locationStyles.inputContainer}>
+                          <input
+                            type="text"
+                            value={item}
+                            className={locationStyles.inputs}
+                            disabled
+                          />
+                          <label className={locationStyles.label}>
+                            <div className={locationStyles.text}>Location</div>
+                          </label>
+                        </div>
+                        <img
+                          src={deleteIcon2}
+                          className={locationStyles.DeleteIcon}
+                          onClick={(event) =>
+                            deleteFromFacilityLocationItems(
+                              parentIndex,
+                              item,
+                              event
+                            )
                           }
                         />
-                        <label className={locationStyles.label} htmlFor={index}>
-                          <div className={locationStyles.text}>Location</div>
-                        </label>
+                        <img
+                          src={editIcon}
+                          className={locationStyles.EditIcon}
+                          onClick={(event) =>
+                            editFacilityLocationItem(parentIndex, item, event)
+                          }
+                        />
                       </div>
-                      <span onClick={(event)=>addToFacilityLocationItems(index,event)}>+</span>
-                    </div>
-                    {/* <div className={locationStyles.LocationEdit}> */}
-                      {item.childList.map((item) => (
-                        <div className={locationStyles.InputDiv}>
-                          <div className={locationStyles.inputContainer}>
-                            <input
-                              type="text"
-                              value={item}
-                              className={locationStyles.inputs}
-                            />
-                            <label className={locationStyles.label} >
-                              <div className={locationStyles.text}>
-                                Location
-                              </div>
-                            </label>
-                          </div>
-                          <img
-                            src={deleteIcon2}
-                            className={locationStyles.DeleteIcon}
-                            onClick={(event)=>deleteFromFacilityLocationItems(index,item,event)}
-                          />
-                          {/* <img
-                            src={editIcon}
-                            className={locationStyles.EditIcon}
-                          /> */}
-                        </div>
-                      ))}
+                    ))}
                     {/* </div> */}
                   </div>
                 </div>

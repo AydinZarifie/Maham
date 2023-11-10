@@ -336,7 +336,7 @@
     height: 18px;
   }
 }
-@media (min-width: 660px) {
+@media (min-width: 770px) {
   .HeadInfo h5 {
     color: rgb(45, 112, 0);
     white-space: nowrap;
@@ -709,7 +709,7 @@
     margin-bottom: 40px;
   }
 }
-@media (max-width: 660px) {
+@media (max-width: 770px) {
   .Column1 {
     display: flex;
     flex-direction: row;
@@ -2179,22 +2179,49 @@
   position: fixed;
   top: 66px;
   width: 100%;
-  height: 65.8px;
+  height: 0px;
   border-bottom: 1px solid rgb(209, 213, 219);
   background-color: white;
   z-index: 99;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  overflow: hidden;
+  transition: .3s;
+  
 }
+
 
 .MenuIconsDiv span:hover {
   opacity: 0.9;
   color: rgb(42, 42, 42);
 }
 
-@media (min-width: 660px) {
+
+
+@media (min-width: 770px) {
+  .BuyMenuBody{
+    width: 84%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .TitleAndPrice{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 50px;
+    }
+  .TitleAndPrice h4{
+    margin: 0;
+    color: #282828;
+    font-size: 600;
+    font-size: .8rem;
+    white-space: nowrap;
+  }
   .TitleForMenu {
     display: flex;
     flex-direction: column;
@@ -2205,29 +2232,33 @@
     margin: 0;
     color: #282828;
     font-size: 600;
+    font-size: .8rem;
+    white-space: nowrap;
   }
   .TitleForMenu h5 {
     margin: 0;
-    color: #626262;
-    font-weight: 300;
+    color: #3d3d3d;
+    font-weight: 400;
+    font-size: .8rem;
+    white-space: nowrap;
   }
   .BuyAndPrice {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 50px;
+    gap: 10px;
     padding-right: 22px;
   }
 
   .MenuBuyBtn {
-    min-width: 100px;
-    height: 40px;
+    min-width: 80px;
+    height: 36px;
     background-color: #ef4057;
     border-radius: 6px;
     border: none;
     color: #ffffff;
     cursor: pointer;
-    font-size: 1.02rem;
+    font-size: .98rem;
     transition: 0.4s;
     box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
   }
@@ -2242,38 +2273,58 @@
     align-items: center;
     gap: 20px;
   }
-  .PriceAndIcon h4 {
-    margin: 0;
-    color: #282828;
-    font-size: 600;
-    white-space: nowrap;
-  }
   .MenuIconsDiv {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    margin-top: 13px;
+    /* margin-top: 13px; */
   }
   .MenuIconsDiv span {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    font-size: 11px;
-    color: #ffffff;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    color: #404040;
     cursor: pointer;
     transition: 0.3s;
-    opacity: 0.7;
-    border-radius: 50%;
+    opacity: 0.6;
+    border-radius: 8px;
+    border: 1px #a1a1a1 solid;
+    width: 65px;
+    height: 36px;
   }
   .HeadMenuIcon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 }
 
-@media (max-width: 660px) {
+@media (max-width: 770px) {
+  .BuyMenuBody{
+    width: 97%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .TitleAndPrice{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 10px;
+    }
+  .TitleAndPrice h4{
+    margin: 0;
+    color: #282828;
+    font-size: 600;
+    font-size: .7rem;
+    white-space: nowrap;
+  }
   .TitleForMenu {
     display: flex;
     flex-direction: column;
@@ -2288,8 +2339,8 @@
   }
   .TitleForMenu h5 {
     margin: 0;
-    color: #626262;
-    font-weight: 300;
+    color: #3d3d3d;
+    font-weight: 400;
     font-size: 0.7rem;
   }
 
@@ -2302,14 +2353,14 @@
   }
 
   .MenuBuyBtn {
-    min-width: 70px;
-    height: 39px;
+    min-width: 60px;
+    height: 35px;
     background-color: #ef4057;
     border-radius: 6px;
     border: none;
     color: #ffffff;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     transition: 0.4s;
     box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
   }
@@ -2326,21 +2377,14 @@
     gap: 5px;
     margin-top: 13px;
   }
-  .PriceAndIcon h4 {
-    margin: 0;
-    color: #282828;
-    font-size: 600;
-    white-space: nowrap;
-    font-size: 0.7rem;
-  }
 
   .MenuIconsDiv {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    /* margin-top: 0px; */
+    margin-top: -8px;
   }
   .MenuIconsDiv span {
     display: flex;

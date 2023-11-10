@@ -132,10 +132,11 @@ const ManagementPage = () => {
         console.log(lockPosition);
         const txLock = await lock(mintId, signer);
         const formData = new FormData();
-        formData.append("hash", txLock.hash);//change these 4 to your needs
+        formData.append("hash", txLock.hash);
         formData.append("method", "lock");
         formData.append("from", txLock.from);
         formData.append("to", txLock.to);
+        formData.append("mintId", mintID);
         let { response } = await fetchInstance("url", {
           method: "POST",
           body: formData,
@@ -146,10 +147,11 @@ const ManagementPage = () => {
         console.log(lockPosition);
         const txUnlock = await unlock(mintId, signer);
         const formData = new FormData();
-        formData.append("hash", txUnlock.hash);//change these 4 to your needs
+        formData.append("hash", txUnlock.hash);
         formData.append("method", "unlock");
         formData.append("from", txUnlock.from);
         formData.append("to", txUnlock.to);
+        formData.append("mintId", mintID);
         let { response } = await fetchInstance("url", {
           method: "POST",
           body: formData,
