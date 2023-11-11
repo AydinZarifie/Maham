@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const adminPage_Controller = require('../../controllers/admin/adminPage');
-const { checkAuhtorized } = require('../../controllers/admin/adminAuth');
 
 const verifyToken = require('../../middleware/verifyToken');
 

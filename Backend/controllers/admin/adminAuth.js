@@ -287,20 +287,38 @@ exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
 	}
 };
 
-exports.checkAuhtorized = catchAsync(async (req, res, next) => {
-	// 1) this approach is more efficient , because it does not fetch the document from DB
-	// *  instead of using adminDB.findById(req.params.id)
-	const admin = await adminDB.countDocuments({ _id: req.body.id });
+exports.checkAdminAuthorization = catchAsync(async (req, res, next) => {
+	if (!req.body.email) {
+		return next(new AppError('Email has not been provided', 400));
+	} else if (!req.body.walletId) {
+		return next(new AppError('Wallet ID has not been provided', 400));
+	}
 
-	if (!req.body.id) {
-		return next(new AppError('document Id has not been provided', 400));
-	} else if (!admin) {
-		console.log(`Unauthorized action form : id = ${req.body.id}`);
+	const admin = await adminDB.findOne({ email: req.body.email });
+
+	if (!admin) {
+		console.log(`Unauthorized action for email: ${req.body.email}`);
+		return next(new AppError('Not authorized - Admin not found', 403));
+	}
+
+	// Check if walletId exists in the admin's wallet array
+	if (!admin.wallet.includes(req.body.walletId)) {
+		console.log(
+			`Unauthorized action for email: ${req.body.email}, walletId: ${req.body.walletId}`
+		);
 		return next(
-			new AppError('Not authorized - There is no admin with that Id', 403)
+			new AppError(
+				"Not authorized - Wallet ID not found in admin's wallet",
+				403
+			)
 		);
 	}
 
-	console.log(`Authorized - id:${req.body.id} `);
+	console.log(
+		`Authorized - email: ${req.body.email}, walletId: ${req.body.walletId}`
+	);
 	return next();
+	// we are not returning any response
+	// because if we want to return a value that indicates that admin is authorized
+	// like as True or False , it WILL NOT be practical and secure
 });
