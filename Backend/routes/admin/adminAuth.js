@@ -25,17 +25,22 @@ router
 	.route('/auth/profile')
 	.get(
 		verifyToken,
-		adminAuthController.checkAuhtorized,
+
 		adminAuthController.getEditAdminProfileInfo
 	)
 	.put(
 		verifyToken,
-		adminAuthController.checkAuhtorized,
+
 		adminAuthController.editAdminProfileInfo
 	);
 
 router
 	.route('/verifyToken')
 	.post(adminAuthController.verifyAdminAccessTokenProtectedRoute);
+
+router.post(
+	'/auth/authorizeAdmin',
+	adminAuthController.checkAdminAuthorization
+);
 
 module.exports = router;
