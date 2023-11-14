@@ -33,6 +33,7 @@ exports.signupAdmin = async (req, res, next) => {
 			phoneNumber,
 			country,
 			city,
+			wallet,
 		} = req.body;
 
 		if (password !== confirmPassword) {
@@ -50,6 +51,7 @@ exports.signupAdmin = async (req, res, next) => {
 			email: formatStr(email),
 			country_name: formatStr(country),
 			city_name: formatStr(city),
+			wallet: wallet,
 		});
 		await admin.save();
 
