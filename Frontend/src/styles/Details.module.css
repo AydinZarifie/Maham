@@ -337,8 +337,15 @@
   }
 }
 @media (min-width: 770px) {
+  .HeadDiv {
+    margin-top: 75.8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .HeadInfo h5 {
-    color: rgb(45, 112, 0);
+    color:  rgb(60, 60, 60);
     white-space: nowrap;
     max-width: 370px;
     overflow-x: hidden;
@@ -372,7 +379,7 @@
     bottom: 3%;
     width: 85%;
     background-color: #ffffff;
-    z-index: 101;
+    z-index: 1001;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
@@ -710,6 +717,13 @@
   }
 }
 @media (max-width: 770px) {
+  .HeadDiv {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .Column1 {
     display: flex;
     flex-direction: row;
@@ -722,7 +736,7 @@
     display: none;
   }
   .HeadInfo2 h5 {
-    color: rgb(45, 112, 0);
+    color: rgb(60, 60, 60);
     white-space: nowrap;
     max-width: 370px;
     overflow-x: hidden;
@@ -769,7 +783,7 @@
     bottom: 0%;
     width: 100%;
     background-color: #ffffff;
-    z-index: 101;
+    z-index: 1001;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1126,13 +1140,13 @@
 }
 /*  */
 
-.HeadDiv {
+/* .HeadDiv {
   margin-top: 75.8px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 .BackDiv:hover {
   opacity: 0.9;
@@ -1249,13 +1263,14 @@
   left: 0;
   background-color: #00000035;
   backdrop-filter: blur(1px);
-  z-index: 100;
+  z-index: 1000;
   overflow: auto;
 }
 .GalleryMain {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -2180,7 +2195,7 @@
   top: 66px;
   width: 100%;
   height: 0px;
-  border-bottom: 1px solid rgb(209, 213, 219);
+  border-bottom: 0px solid rgb(209, 213, 219);
   background-color: white;
   z-index: 99;
   display: flex;
@@ -2234,6 +2249,8 @@
     font-size: 600;
     font-size: .8rem;
     white-space: nowrap;
+    max-width: 150px;
+    overflow: hidden;
   }
   .TitleForMenu h5 {
     margin: 0;
@@ -2336,6 +2353,8 @@
     color: #282828;
     font-size: 600;
     font-size: 0.7rem;
+    max-width: 130px;
+    overflow: hidden;
   }
   .TitleForMenu h5 {
     margin: 0;
