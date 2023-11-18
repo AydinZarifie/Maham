@@ -34,9 +34,7 @@ import editIcon from "../../images/edit-pencil-line-01-svgrepo-com.svg";
 
 /////////////////////web3///////////////////////
 import { mint, burn } from "../web3/MHM2023";
-import { connectWallet } from "../web3/connectWallet";
 import { ethers } from "ethers";
-import detectEthereumProvider from "@metamask/detect-provider";
 ///////////////////////////////////////////////
 const ConfingEstate = ({ method, estate }) => {
   const [loading, setLoading] = useState(false);
@@ -376,22 +374,6 @@ const ConfingEstate = ({ method, estate }) => {
     const previewURLs = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreviewUrl(previewURLs);
   };
-
-  async function walletConnection() {
-    const { currentAccount } = await connectWallet();
-    setWallet(currentAccount);
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner(currentAccount);
-    setSigner(signer);
-    const address = await signer.getAddress();
-    console.log(address);
-  }
-
-  window.ethereum.on("accountsChanged", walletConnection);
-
-  window.ethereum.on("chainChanged", () => {
-    window.location.reload();
-  });
 
   const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";
@@ -1155,7 +1137,6 @@ const ConfingEstate = ({ method, estate }) => {
               </div>
               <button
                 className={styles.ConnectWalletBtn}
-                onClick={walletConnection}
               >
                 connectWallet
               </button>
