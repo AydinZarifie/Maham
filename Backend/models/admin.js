@@ -31,6 +31,10 @@ const adminSchema = new mongoose.Schema(
 		profile_image: {
 			type: String,
 		},
+		wallet: {
+			type: [String],
+			default: [],
+		},
 		country_name: {
 			type: String,
 		},
@@ -67,4 +71,4 @@ const adminSchema = new mongoose.Schema(
 		toObject: { virtuals: true },
 	}
 );
-module.exports = mongoose.model('Admin', adminSchema);
+module.exports = mongoose.model('admins', adminSchema);

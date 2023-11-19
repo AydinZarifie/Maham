@@ -1,0 +1,345 @@
+html {
+  font-family: "Inter", sans-serif;
+  font-size: 100%;
+  background-color: white;
+  scroll-behavior: smooth;
+}
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.LocationSet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 86%;
+  margin-left: 7%;
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  margin-bottom: 50px;
+  margin-top: 40px;
+  /* height: 200px; */
+  transition: 0.3s;
+}
+
+.LocationSetHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  border-bottom: 1px solid #cfcfcf;
+}
+.LocationSetHead h3 {
+  padding-left: 20px;
+  color: #3c3c3c;
+}
+
+.Locationwrapper {
+  width: 84%;
+  background: #fff;
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: 20px;
+}
+.Locationwrapper .inputData {
+  height: 40px;
+  width: 100%;
+  position: relative;
+}
+.Locationwrapper .inputData .textinput {
+  height: 100%;
+  width: 99%;
+  border: none;
+  font-size: 14px;
+  border-bottom: 2px solid silver;
+  outline: none;
+}
+.invalid {
+  border-radius: 4px;
+  background-color: rgba(187, 47, 50, 0.377);
+}
+.inputData .textinput:focus ~ .label,
+.inputData .textinput:valid ~ .label {
+  transform: translateY(-18px);
+  font-size: 12px;
+  color: #989898;
+}
+.Locationwrapper .inputData .label {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  color: rgb(53, 53, 53);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+.inputData .underline {
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  bottom: -4px;
+}
+.inputData .underline:before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 99%;
+  background: #989898;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+.inputData .textinput:focus ~ .underline:before,
+.inputData .textinput:valid ~ .underline:before {
+  transform: scaleX(1);
+}
+
+.AddBtn {
+  width: 60px;
+  height: 35px;
+  border-radius: 10px;
+  font-size: 1.4rem;
+  background-color: #fff;
+  border: 1px solid #cdcdcd;
+  color: #5a5a5a;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  transition: 0.3s;
+}
+.AddBtn:hover {
+  background-color: #f6f6f6;
+}
+
+.LocationBody {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  width: 84%;
+  height: 260px;
+  /* padding-bottom: 15px; */
+  border: 1px solid #cfcfcf;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  /* padding: 0 20px;  */
+  overflow-x: scroll;
+  transition: 0.3s;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.LocationBody::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.LocationBody {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.LocationFullHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #cfcfcf;
+  min-width: 700px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
+}
+.LocationFullHead:first-child {
+  border-left: none;
+}
+.LocationHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  gap: 10px;
+  font-size: 1.4rem;
+  padding: 0 10px;
+  border-left: 0.5px solid #cfcfcf;
+  border-right: 0.5px solid #cfcfcf;
+}
+.LocationHead span {
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+  font-size: 1.4rem;
+  background-color: #fff;
+  border: 1px solid #cdcdcd;
+  color: #5a5a5a;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.LocationHead span:hover {
+  background-color: #f6f6f6;
+}
+.title {
+  font-size: 1rem;
+  min-width: 70px;
+  white-space: nowrap;
+  max-width: 90px;
+  color: #5a5a5a;
+}
+.DeleteIcon {
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+ transition: .3s;
+}
+.DeleteIcon:hover{
+transform: scale(1.05);
+}
+
+/* .LocSection{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    } */
+
+.LocationSection {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+
+  justify-content: space-between;
+  width: 100%;
+  min-width: 700px;
+}
+.SectionBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 190px;
+  border-right: 1px solid #cfcfcf;
+}
+.Section {
+  width: 100%;
+  /* height: 200px; */
+  /* border: 1px solid #cfcfcf; */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #cfcfcf
+}
+
+.InputDiv {
+  width: 92%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  height: 45px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inputs {
+  height: 40px;
+  width: 100%;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+  color: #484848;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.label .text {
+  transition: all 0.15s ease-out;
+  color: #959595;
+  font-size: 12px;
+}
+
+.inputs:focus {
+  outline: none;
+  border: 1px solid rgb(126, 126, 126);
+}
+
+.inputs:focus + .label .text,
+:not(input[value=""]) + .label .text {
+  font-size: 12px;
+  transform: translate(0, -125%);
+  background-color: white;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.inputs:focus + .label .text {
+  color: rgb(67, 67, 67);
+}
+
+.InputDiv span {
+  width: 27px;
+  height: 25px;
+  border-radius: 15px;
+  font-size: 1.4rem;
+  background-color: #fff;
+  border: 1px solid #cdcdcd;
+  color: #5a5a5a;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.InputDiv span:hover {
+  background-color: #f6f6f6;
+}
+.EditIcon {
+  width: 28px;
+  height: 28px; 
+cursor: pointer;
+ transition: .3s;
+}
+.EditIcon:hover{
+transform: scale(1.05);
+}
+
+.LocationEdit {
+  position: relative;
+  width: 100%;
+  background-color: #ffffff;
+  height: 0px;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.3s;
+  overflow: hidden;
+}

@@ -28,15 +28,37 @@ import buildingIcon1 from "../images/building-02-svgrepo-com.svg";
 import buildingIcon2 from "../images/building-svgrepo-com.svg";
 import CustomTableItem from "../components/general/CustomTableItem";
 import poolIcon from "../images/pool-svgrepo-com (2).svg";
+import ArrowUpIcon from "../images/arrow-down-svgrepo-com.svg";
+import PropertyInfoIcon from "../images/inbox-information-svgrepo-com.svg";
+import hideIcon from "../images/eye-slash-alt-svgrepo-com.svg";
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/general/Navbar";
+import Menu from "../components/general/Menu";
 
 const DetailPage = () => {
   const [approverBox, setApproverBox] = useState(false);
   const [pmBox, setPmBox] = useState(false);
   const [gallery, setGallery] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const [features, setFeatures] = useState(false);
+
+  const featuresRef = useRef();
+  const scrolledDownRef = useRef();
+
+  const toggleFeatures = () => {
+    let div = document.getElementById("InteriorFeaturesBody");
+    let size = div.scrollHeight;
+    console.log(size);
+    // if (features) {
+    // featuresRef.current.style.height = "308px";
+    // setFeatures(false);
+    // }
+    //  else {
+    featuresRef.current.style.height = size + 98 + "px";
+    setFeatures(true);
+    // }
+  };
 
   const slider = useRef(null);
 
@@ -74,20 +96,83 @@ const DetailPage = () => {
     }
   };
 
+  function handleScroll() {}
+  useEffect(() => {
+    handleScroll = () => {
+      const size = document.getElementById("localInfo");
+
+      if (window.scrollY > size.offsetTop) {
+        scrolledDownRef.current.style.height = "65.8px";
+        scrolledDownRef.current.style.borderBottom =
+          " 1px solid rgb(209, 213, 219)";
+      } else {
+        scrolledDownRef.current.style.height = "0px";
+        scrolledDownRef.current.style.borderBottom = "0px";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <div className={styles.Menu}>
-        <Navbar />
+      <Menu />
+
+      {/* {scrolledDown && ( */}
+      <div className={styles.BuyMenu} ref={scrolledDownRef}>
+        <div className={styles.BuyMenuBody}>
+          <div className={styles.TitleAndPrice}>
+            <div className={styles.TitleForMenu}>
+              <h4>Bech home in ohaio 123</h4>
+              <h5>united state_california</h5>
+            </div>
+            <h4>1234 ETh</h4>
+          </div>
+          <div className={styles.BuyAndPrice}>
+            <div className={styles.PriceAndIcon}>
+              <div className={styles.MenuIconsDiv}>
+                <span
+                  onClick={() => {
+                    scrolledDownRef.current.style.height = "0px";
+                    scrolledDownRef.current.style.borderBottom = "0px";
+                    window.removeEventListener("scroll", handleScroll);
+                  }}
+                >
+                  <img className={styles.HeadMenuIcon} src={hideIcon} />
+                  hide
+                </span>
+                <span>
+                  <img className={styles.HeadMenuIcon} src={heartIcon} />
+                  save
+                </span>
+                <span>
+                  <img className={styles.HeadMenuIcon} src={shareIcon} />
+                  share
+                </span>
+              </div>
+            </div>
+            <button className={styles.MenuBuyBtn}>Buy</button>
+          </div>
+        </div>
       </div>
+      {/* )} */}
 
       <div className={styles.HeadDiv}>
         <div className={styles.Column1}>
-          <Link to="/" className={styles.BackDiv}>
-            <img src={leftArrowIcon} className={styles.ArrowIcon} />
-            <h5>back to search</h5>
-          </Link>
-          <div className={styles.HeadInfo}>
-            <h5>For sale &gt; Residential &gt; united state &gt; california</h5>
+          <div className={styles.BackInfo}>
+            <Link to="/" className={styles.BackDiv}>
+              <img src={leftArrowIcon} className={styles.ArrowIcon} />
+              <h5>back</h5>
+            </Link>
+            <div className={styles.HeadInfo}>
+              <h5>
+                For sale &gt; Residential &gt; united state &gt; california
+              </h5>
+            </div>
           </div>
           <div className={styles.IconsDiv}>
             <span>
@@ -292,7 +377,7 @@ const DetailPage = () => {
           </div>
         )}
 
-        <div className={styles.LocalInfo}>
+        <div className={styles.LocalInfo} id="localInfo">
           <h3>Local Information</h3>
           <div className={styles.Buttons}>
             <button>Map</button>
@@ -319,102 +404,104 @@ const DetailPage = () => {
             where you can watch the whole city.
           </p>
         </div>
-        <div className={styles.InteriorFeatures}>
+        <div className={styles.InteriorFeatures} ref={featuresRef}>
           <div className={styles.SectionHead}>
             <img src={recieptIcon} className={styles.SectionHeadIcon} />
             <h3>Interior Features</h3>
           </div>
-          <div className={styles.FacilitiesContainer}>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>Bedroom</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>123 m^2</h4>
-                <h4>2</h4>
-              </div>
+          <div
+            className={styles.InteriorFeaturesBody}
+            id="InteriorFeaturesBody"
+          >
+            <div className={styles.InteriorFeaturesSections}>
+              <h5>
+                <img src={buildingIcon1} className={styles.PropertyIcon} />
+                bedrooms
+              </h5>
+              <span className={styles.PropertySpan2}>
+                <span>
+                  &#8226;
+                  <h5>Number of bedrooms:</h5>
+                  <h5>3</h5>
+                </span>
+
+                <span>
+                  &#8226;
+                  <h5>Metrage :</h5>
+                  <h5>24 m^2</h5>
+                </span>
+              </span>
             </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>Living room</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>146 m^2</h4>
-                <h4>1</h4>
-              </div>
+            <div className={styles.InteriorFeaturesSections}>
+              <h5>
+                <img src={buildingIcon2} className={styles.PropertyIcon} />
+                Bathrooms
+              </h5>
+              <span className={styles.PropertySpan2}>
+                <span>
+                  &#8226;
+                  <h5>Number of bathrooms :</h5>
+                  <h5>1</h5>
+                </span>
+
+                <span>
+                  &#8226;
+                  <h5>metrage :</h5>
+                  <h5>43 m^2</h5>
+                </span>
+              </span>
             </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>Kitchen</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>64 m^2</h4>
-                <h4>1</h4>
-              </div>
+            <div className={styles.InteriorFeaturesSections}>
+              <h5>
+                <img src={buildingIcon2} className={styles.PropertyIcon} />
+                Bathrooms
+              </h5>
+              <span className={styles.PropertySpan2}>
+                <span>
+                  &#8226;
+                  <h5>Number of bathrooms :</h5>
+                  <h5>1</h5>
+                </span>
+
+                <span>
+                  &#8226;
+                  <h5>metrage :</h5>
+                  <h5>43 m^2</h5>
+                </span>
+              </span>
             </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>dining room</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>43 m^2</h4>
-                <h4>1</h4>
-              </div>
+            <div className={styles.InteriorFeaturesSections}>
+              <h5>
+                <img src={buildingIcon2} className={styles.PropertyIcon} />
+                Bathrooms
+              </h5>
+              <span className={styles.PropertySpan2}>
+                <span>
+                  &#8226;
+                  <h5>Number of bathrooms :</h5>
+                  <h5>1</h5>
+                </span>
+
+                <span>
+                  &#8226;
+                  <h5>metrage :</h5>
+                  <h5>43 m^2</h5>
+                </span>
+              </span>
             </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>guest room</h4>
+            {!features && (
+              <div className={styles.ShowAllDiv}>
+                <button onClick={toggleFeatures} className={styles.ShowAllBtn}>
+                  Show all
+                </button>
               </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>25 m^2</h4>
-                <h4>2</h4>
+            )}
+            {/* 
+            {features && (
+              <div className={styles.ArrowUp} onClick={toggleFeatures}>
+                close <h4>&times;</h4>
               </div>
-            </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>bath room</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>10 m^2</h4>
-                <h4>2</h4>
-              </div>
-            </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>garden</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>42 m^2</h4>
-                <h4>1</h4>
-              </div>
-            </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>balcony</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>12 m^2</h4>
-                <h4>2</h4>
-              </div>
-            </div>
-            <div className={styles.facilitiesOption}>
-              <div className={styles.facilitiesOptionSide1}>
-                <img src={wifiIcon} className={styles.FacilitiesIcon} />
-                <h4>garage</h4>
-              </div>
-              <div className={styles.facilitiesOptionSide2}>
-                <h4>62 m^2</h4>
-                <h4>1</h4>
-              </div>
-            </div>
+            )} */}
           </div>
         </div>
 
@@ -494,7 +581,10 @@ const DetailPage = () => {
         </div>
 
         <div className={styles.PropertyInfo}>
-          <h3>Property Information</h3>
+          <div className={styles.SectionHead}>
+            <img src={PropertyInfoIcon} className={styles.SectionHeadIcon} />
+            <h3>Property Information</h3>
+          </div>
           <div className={styles.PropertyBody}>
             <div className={styles.propertySections}>
               <h5>
@@ -591,7 +681,9 @@ const DetailPage = () => {
                     </span> */}
                   </td>
                   <td>
-                    <div className={styles.MethodDiv}>Transfer</div>
+                    <div className={styles.MethodDiv}>
+                      <div>Transfer</div>
+                    </div>
                   </td>
                   <td>
                     <CustomTableItem text="3141592653589793238462643383279502884197169399375105820974944592" />
@@ -733,7 +825,11 @@ const DetailPage = () => {
 
               {fullscreen && (
                 <>
-                  <div className={styles.ImageOverlay} onClick={()=>setFullscreen(false)} id="overlay">
+                  <div
+                    className={styles.ImageOverlay}
+                    onClick={() => setFullscreen(false)}
+                    id="overlay"
+                  >
                     <span className={styles.closeButton}>
                       <div onClick={() => setFullscreen(false)}>&times;</div>
                     </span>

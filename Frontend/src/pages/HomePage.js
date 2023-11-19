@@ -6,6 +6,7 @@ import EstateItem from "../components/general/EstateItem";
 import Navbar from "../components/general/Navbar";
 import Preferences from "../components/general/Preferences";
 import Slogan from "../components/general/Slogan";
+import Menu from "../components/general/Menu";
 
 const HomePage = () => {
   const [searchShown, setSearchShown] = useState(false);
@@ -79,14 +80,15 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar
+      {/* <Navbar
         searchShown={searchShown}
         searchCloseHandler={toggleSearchShown}
         filterShown={filterShown}
         filterShowHandler={toggleFilterShown}
         submitSearch={submitSearch}
         submitFilterSearch={submitFilterSearch}
-      />
+      /> */}
+      <Menu />
       <Slogan />
       <Preferences
         clickHandlerForSearchShown={toggleSearchShown}

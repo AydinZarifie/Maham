@@ -92,7 +92,7 @@
     gap: 15px;
     /* margin-left: 6.6%; */
     position: relative;
-    top: -48px;
+    top: -45px;
   }
 
   .SignUpInfo3 {
@@ -307,8 +307,7 @@
     text-decoration: none;
     color: #5b5b5b;
     transition: 0.3s;
-    top: 6%;
-    padding-bottom: 30px;
+    top: 3%;
   }
 }
 
@@ -492,7 +491,7 @@
     text-decoration: none;
     color: #5b5b5b;
     transition: 0.3s;
-    top: 42%;
+    top: 36%;
     padding-bottom: 30px;
   }
 }

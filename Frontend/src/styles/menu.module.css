@@ -1,0 +1,1177 @@
+@media (min-width: 730px) {
+  .LogoDiv {
+    display: flex;
+  }
+
+  .ContactBtn {
+    width: 110px;
+    height: 37px;
+    background-color: #ffffff;
+    border-radius: 60px;
+    border: none;
+    color: #5a5a5a;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.4s;
+    box-shadow: rgba(201, 201, 201, 0.479) 0px 4px 12px;
+    font: "inter";
+    border: 1px solid rgb(209, 213, 219);
+  }
+  .LogInBtn {
+    width: 110px;
+    height: 37px;
+    background-color: #ef4057;
+    border-radius: 60px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+  }
+
+  .underline a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: #7b7b7b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 300;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 1em;
+  }
+  .underline:hover a {
+    color: #4f4f4f;
+  }
+
+  .underline > a {
+    padding: 0 13px 9px 13px;
+    border-bottom: 1.5px solid transparent;
+    transition: 0.3s ease;
+  }
+  .underline > a:hover {
+    padding: 0 13px 21px 13px;
+    border-color: rgb(108, 108, 108);
+  }
+  .ProfileDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 35px;
+  }
+
+  .Guide {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background-color: #ffffff;
+    top: 66px;
+    border-bottom: 0px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    z-index: 2;
+    transition: 0.3s;
+  }
+  .GuideSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgb(209, 213, 219);
+    width: 25%;
+    height: 80%;
+    gap: 15px;
+  }
+  .GuideSection:last-child {
+    border-right: none;
+  }
+  .GuideSection h3 {
+    font-size: 0.9rem;
+    color: #292929;
+    margin: 0;
+    font-weight: 700;
+  }
+  .GuideSection h4 {
+    color: #545454;
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 6px;
+    transition: 0.3s;
+    width: 80%;
+    background-color: #ffffff;
+  }
+
+  .HomeMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background-color: #ffffff;
+    top: 66px;
+    border-bottom: 0px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    transition: 0.3s;
+    z-index: 3;
+  }
+}
+@media (max-width: 730px) {
+  .LogoDiv {
+    display: none;
+  }
+
+  .ContactBtn {
+    width: 90px;
+    height: 37px;
+    background-color: #ffffff;
+    border-radius: 60px;
+    border: none;
+    color: #5a5a5a;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.4s;
+    box-shadow: rgba(201, 201, 201, 0.479) 0px 4px 12px;
+    font: "inter";
+    border: 1px solid rgb(209, 213, 219);
+  }
+  .LogInBtn {
+    width: 90px;
+    height: 37px;
+    background-color: #ef4057;
+    border-radius: 60px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+  }
+  .underline a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: #7b7b7b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 300;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 0.9em;
+  }
+  .underline:hover a {
+    color: #4f4f4f;
+  }
+
+  .underline > a {
+    padding: 0 16px 9px 16px;
+    border-bottom: 1.5px solid transparent;
+    transition: 0.3s ease;
+  }
+  .underline > a:hover {
+    padding: 0 16px 22px 16px;
+    border-color: rgb(108, 108, 108);
+  }
+  .ProfileDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .Guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background-color: #ffffff;
+    top: 67px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    z-index: 2;
+    overflow-y: hidden;
+    transition: 0.3s;
+  }
+  .GuideSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid rgb(209, 213, 219);
+    width: 90%;
+    height: 80%;
+    /* gap: 15px; */
+  }
+  .GuideSection:last-child {
+    border-bottom: none;
+  }
+  .GuideSection h3 {
+    color: #292929;
+    margin: 0;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .GuideSection h4 {
+    font-size: 0.8rem;
+    color: #545454;
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 6px;
+    transition: 0.3s;
+    width: 80%;
+    background-color: #ffffff;
+  }
+
+  .HomeMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background-color: #ffffff;
+    top: 67px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    transition: 0.3s;
+    z-index: 3;
+  }
+}
+
+@media (min-width: 440px) {
+  .HeadBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding-right: 20px;
+  }
+
+  /* .ProfileDiv{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 30px;
+      } */
+  .ProfileIcon {
+    width: 38px;
+    height: 38px;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  .MenuIcon {
+    width: 35px;
+    height: 35px;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .MenuIcon:hover {
+    opacity: 0.9;
+  }
+}
+@media (max-width: 440px) {
+  .underline a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: #7b7b7b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 300;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 0.8em;
+  }
+  .underline:hover a {
+    color: #4f4f4f;
+  }
+
+  .underline > a {
+    padding: 0 10px 9px 10px;
+    border-bottom: 1.5px solid transparent;
+    transition: 0.3s ease;
+  }
+  .underline > a:hover {
+    padding: 0 10px 22px 10px;
+    border-color: rgb(108, 108, 108);
+  }
+
+  .HeadBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding-right: 8px;
+  }
+  .ContactBtn {
+    width: 60px;
+    height: 34px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: none;
+    color: #5a5a5a;
+    cursor: pointer;
+    font-size: 0.6rem;
+    transition: 0.4s;
+    box-shadow: rgba(201, 201, 201, 0.479) 0px 4px 12px;
+    font: "inter";
+    border: 1px solid rgb(209, 213, 219);
+    white-space: nowrap;
+  }
+  .LogInBtn {
+    width: 60px;
+    height: 34px;
+    background-color: #ef4057;
+    border-radius: 6px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.6rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+    white-space: nowrap;
+  }
+
+  .ProfileDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 3%;
+  }
+  .ProfileIcon {
+    width: 31px;
+    height: 31px;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  .MenuIcon {
+    width: 28px;
+    height: 28px;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .MenuIcon:hover {
+    opacity: 0.9;
+  }
+}
+
+.Header {
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  height: 65.8px;
+  border-bottom: 1px solid rgb(209, 213, 219);
+  z-index: 999;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.Maham {
+  text-decoration: none;
+  color: #252525;
+}
+.LogoAndTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding-left: 10px;
+}
+.Title {
+  font-size: 2.8rem;
+  padding: 0;
+  margin: 0;
+  font-weight: 200;
+  color: #444444;
+}
+.Logo {
+  width: 24px;
+  height: 33px;
+  border-radius: 2px;
+}
+
+.menuLittle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 3px;
+}
+
+/* .underline a {
+      cursor: pointer;
+      text-decoration: none;
+      outline: none;
+      color:  #7b7b7b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 300;
+      text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+      font-size: 1em;
+    }
+    .underline:hover a {
+      color: #4f4f4f;
+    }
+    
+    .underline > a {
+      padding: 0 13px 9px 13px;
+      border-bottom: 1.5px solid transparent;
+      transition: 0.3s ease;
+    }
+    .underline > a:hover {
+      padding: 0 13px 21px 13px;
+      border-color: rgb(108, 108, 108);
+    } */
+
+/* .HeadBtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding-right: 20px;
+  } */
+
+/* .ContactBtn {
+    width: 110px;
+    height: 37px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: none;
+    color: #5a5a5a;
+    cursor: pointer;
+    font-size: .9rem;
+    transition: 0.4s;
+    box-shadow: rgba(201, 201, 201, 0.479) 0px 4px 12px;
+    font: 'inter';
+    border: 1px solid rgb(209, 213, 219);
+  } */
+.ContactBtn:hover {
+  box-shadow: rgba(176, 176, 176, 0.167) 0px 6px 24px 0px,
+    rgba(193, 193, 193, 0.237) 0px 0px 0px 1px;
+  transform: translateY(1px);
+}
+/* .LogInBtn {
+      width: 110px;
+      height: 37px;
+      background-color: #ef4057;
+      border-radius: 6px;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: .9rem;
+      transition: 0.4s;
+      box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+      font: 'inter';
+    } */
+.LogInBtn:hover {
+  box-shadow: rgba(255, 64, 64, 0.167) 0px 6px 24px 0px,
+    rgba(255, 64, 64, 0.237) 0px 0px 0px 1px;
+  transform: translateY(1px);
+}
+
+/* .ProfileDiv{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-left: 20px;
+    }
+    .ProfileIcon{
+      width: 38px;
+      height: 38px;
+      opacity: .6;
+      cursor: pointer;
+    }
+    .MenuIcon{
+      width: 35px;
+      height: 35px;
+      opacity: .6;
+      cursor: pointer;
+      transition: .3s;
+    }
+    .MenuIcon:hover{
+      opacity: .9;
+    } */
+/* .Guide {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 350px;
+    background-color: #ffffff;
+    top: 66px;
+    border-bottom: 1px solid rgb(209, 213, 219);
+    overflow-x: scroll;
+    z-index: 2;
+  } */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.Guide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.Guide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* .GuideSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgb(209, 213, 219);
+    width: 25%;
+    height: 80%;
+    gap: 15px;
+  }
+  .GuideSection:last-child {
+    border-right: none;
+  } */
+/* .GuideSection h3 {
+    color: #292929;
+    margin: 0;
+    font-weight: 600;
+  }
+  .GuideSection h4 {
+    color: #545454;
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 6px;
+    transition: 0.3s;
+    width: 80%;
+    background-color: #ffffff;
+  } */
+.GuideSection h4:hover {
+  background-color: #f7f7f7;
+}
+
+.diffrentGuide {
+  background-color: #015aff94;
+  padding: 10px;
+  border-radius: 6px;
+}
+.diffrentGuide h3 {
+  color: #ffffff;
+}
+.diffrentGuide h4 {
+  color: #ffffff;
+  background-color: #015aff28;
+  transition: 0.3s;
+}
+.diffrentGuide h4:hover {
+  background-color: #015affab;
+}
+
+/* .HomeMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background-color: #ffffff;
+    top: 66px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    transition: 0.4s;
+    z-index: 3;
+  } */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.HomeMenu::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.HomeMenu {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* .ArrowUp {
+    width: 47px;
+    height: 30px;
+    background-color: rgb(246, 246, 246);
+    position: absolute;
+    right: 40px;
+    bottom: 0px;
+    border: 1px solid rgb(255, 255, 255);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  .ArrowUp:before,
+  .ArrowUp:after {
+    content: "";
+    position: absolute;
+  
+    height: 14px;
+    width: 20px;
+  
+    bottom: 0;
+  }
+  .ArrowUp:after {
+    right: -20px;
+  
+    border-radius: 0 0 0 10px;
+    -moz-border-radius: 0 0 0 10px;
+    -webkit-border-radius: 0 0 0 10px;
+  
+    -webkit-box-shadow: -10px 0 0 0 rgb(246, 246, 246);
+    box-shadow: -10px 0 0 0 rgb(246, 246, 246);
+  }
+  
+  .ArrowUp:before {
+    left: -20px;
+  
+    border-radius: 0 0 10px 0;
+    -moz-border-radius: 0 0 10px 0;
+    -webkit-border-radius: 0 0 10px 0;
+  
+    -webkit-box-shadow: 10px 0 0 0 rgb(246, 246, 246);
+    box-shadow: 10px 0 0 0 rgb(246, 246, 246);
+  }
+  
+  .ArrowUpIcon {
+    transition: 0.4s;
+    rotate: 0deg;
+    width: 30px;
+    height: 30px;
+    opacity: 0.6;
+    position: relative;
+    top: 3px;
+  }
+  .ArrowUpIcon:hover {
+    opacity: 0.9;
+  }
+  .HeadOvelay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  } */
+
+.Filtering {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 3%;
+  align-items: center;
+  position: sticky;
+  top: 64px;
+  background-color: #ffffff;
+  z-index: 99;
+  border-bottom: 1px solid rgb(209, 213, 219);
+  height: 70px;
+  min-height: 70px;
+  max-height: 70px;
+  /* overflow: hidden; */
+}
+
+.Filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 7px;
+  max-width: 65%;
+  position: relative;
+  left: 5%;
+  /* margin-left: 5%; */
+  max-height: 80px;
+  padding: 0 0 0 20px;
+  z-index: 2;
+}
+
+.slideLeft {
+  opacity: 0.2;
+
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  display: block;
+  cursor: pointer;
+}
+.slideRight {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  display: block;
+  cursor: pointer;
+}
+
+.slideLeft {
+  color: #717171;
+  transition: 0.2s;
+}
+.slideRight {
+  color: #717171;
+  transition: 0.2s;
+}
+.slideLeft:hover {
+  color: #8e8e8e;
+}
+
+.slideRight:hover {
+  color: #8e8e8e;
+}
+
+/*  Filter menu   */
+.FilterMenu {
+  width: 100%;
+
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  overflow-y: hidden;
+  height: 78px;
+  max-height: 80px;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* align-items: center; */
+  /* gap: 22px; */
+  z-index: 2;
+  /* white-space: nowrap; */
+}
+.FilterMenu::-webkit-scrollbar {
+  display: none;
+}
+
+.FilterMenu {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.menuBig {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  /* gap: 22px; */
+}
+
+.underline2 a {
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  color: #191919;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  font-size: 0.8em;
+  max-height: 10px;
+  background-color: #ffffff;
+}
+
+.underline2 > a {
+  padding: 0 14px 4px 14px;
+  border-bottom: 1.5px solid transparent;
+  transition: 0.3s ease;
+}
+.underline2 > a:hover {
+  padding: 0 14px 25px 14px;
+  border-color: rgb(0, 0, 0);
+}
+
+.AfilterTag {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: -4px;
+  align-items: center;
+  margin-top: 38px;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+.AfilterTag:hover {
+  opacity: 0.9;
+}
+.FilterIcn {
+  width: 32px;
+  height: 32px;
+  /* opacity: .6; */
+  padding: 0;
+  z-index: 10;
+  background-color: white;
+  border-bottom: none;
+}
+
+.FilteringSection2 {
+  position: absolute;
+  right: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  /* width: 30%; */
+  width: 30%;
+  justify-content: end;
+}
+
+.EthAndBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px 0 0;
+}
+/*  eth price */
+/* .EthPrice {
+      width: 110px;
+      height: 37px;
+      background-color: #ffffff;
+      border: 1px solid rgb(209, 213, 219);
+      border-radius: 60px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    } */
+.EthIcn {
+  width: 24px;
+  height: 24px;
+}
+.EthPriceh5 {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #5f5f5f;
+  max-width: 80px;
+  overflow-x: hidden;
+}
+
+/* .ConnectWalletBtn {
+      width: 110px;
+      height: 37px;
+      background-color: #ef4057;
+      border-radius: 60px;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: .75rem;
+      transition: 0.4s;
+      box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+      font: 'inter';
+    } */
+
+.ConnectWalletBtn:hover {
+  box-shadow: rgba(255, 64, 64, 0.167) 0px 6px 24px 0px,
+    rgba(255, 64, 64, 0.237) 0px 0px 0px 1px;
+  transform: translateY(1px);
+}
+
+.FilterAndSearch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-left: 25px;
+}
+/*    Filter and Search btn  */
+/* .FilterandSearchBtn {
+        background-color: #ffffff;
+        border: 1px solid rgb(209, 213, 219);
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        color: #111827;
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+        padding: 0.1rem 1.05rem;
+        text-align: center;
+        text-decoration: none #4c4c4e solid;
+        text-decoration-thickness: auto;
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        transition: 0.2s;
+        opacity: 0.7;
+      } */
+
+.FilterandSearchBtn:hover {
+  background-color: rgb(251, 251, 251);
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  opacity: 1;
+}
+
+.FilterandSearchBtn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.FilterandSearchBtn:focus-visible {
+  box-shadow: none;
+}
+.FilterAndSearchIcn {
+  width: 25px;
+  height: 25px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+.SearchBox {
+  position: absolute;
+  left: 40px;
+  /* background-color: #c95c5c; */
+  height: 52px;
+  /* width: 0; */
+  transition: 0.4s;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-left: -15px;
+}
+.InsideSearchBox {
+  transition: 0.3s;
+  width: 0%;
+  height: 100%;
+
+  background-color: #ffffff;
+  z-index: 3;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  padding: 0;
+}
+.InsideSearchBox:focus {
+  border: 1px solid #686868;
+  transition: 0.35s ease;
+  color: #686868;
+}
+.InsideSearchBox:focus::-webkit-input-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+.InsideSearchBox:focus::-moz-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+.InsideSearchBox:focus:-ms-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+
+.SearchOpenDiv {
+  padding: 0 22px;
+  margin-top: 52px;
+  min-height: 100px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  max-height: 240px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  z-index: 101;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.SearchOpenDiv::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.SearchOpenDiv {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.SearchOpenDivHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  background-color: #f0f0f0;
+  position: sticky;
+  top: 0;
+  width: 106%;
+}
+.SearchOpenDivHead h5 {
+  margin: 0;
+  color: #222222;
+  font-weight: 500;
+  width: 30%;
+  min-width: 60px;
+  text-align: center;
+}
+.SearchOpenDivItem {
+  width: 106%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  /* padding: 15px 0; */
+  height: 30px;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-bottom: 1px solid #e5e5e5;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.SearchOpenDivItem::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.SearchOpenDivItem {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.SearchOpenDivItem:hover {
+  background-color: #f7f7f7;
+}
+.SearchOpenDivItem h5 {
+  margin: 0;
+  color: #2d2d2d;
+  font-weight: 400;
+  width: 30%;
+  min-width: 60px;
+  text-align: center;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+@media (min-width: 970px) {
+  .EthPrice {
+    width: 110px;
+    height: 37px;
+    background-color: #ffffff;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+}
+@media (max-width: 970px) {
+  .EthPrice {
+    display: none;
+  }
+}
+
+@media (min-width: 730px) {
+  .ConnectWalletBtn {
+    width: 110px;
+    height: 37px;
+    background-color: #ef4057;
+    border-radius: 60px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+  }
+  .FilterandSearchBtn {
+    background-color: #ffffff;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: 0.1rem 1.05rem;
+    text-align: center;
+    text-decoration: none #4c4c4e solid;
+    text-decoration-thickness: auto;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: 0.2s;
+    opacity: 0.7;
+  }
+}
+@media (max-width: 730px) {
+  .ConnectWalletBtn {
+    width: 90px;
+    height: 37px;
+    background-color: #ef4057;
+    border-radius: 60px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.65rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+  }
+  .FilterandSearchBtn {
+    background-color: #ffffff;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: 0.1rem 0.9rem;
+    text-align: center;
+    text-decoration: none #4c4c4e solid;
+    text-decoration-thickness: auto;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: 0.2s;
+    opacity: 0.7;
+  }
+}
+
+@media (min-width: 440px) {
+}
+@media (max-width: 440px) {
+  .ConnectWalletBtn {
+    width: 70px;
+    height: 34px;
+    background-color: #ef4057;
+    border-radius: 6px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.5rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+    font: "inter";
+    white-space: nowrap;
+  }
+  .FilterandSearchBtn {
+    display: none;
+  }
+}

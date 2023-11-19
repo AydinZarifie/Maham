@@ -14,8 +14,8 @@ const { formatStr } = require('../../utilities/mint.js');
 //////////////////////////////////////////////////////////////////
 
 exports.signupAdmin = async (req, res, next) => {
-
 	try {
+		console.log("hi");
 		const error = validationResult(req);
 		if (!error.isEmpty()) {
 			console.log(error.array());
@@ -34,14 +34,15 @@ exports.signupAdmin = async (req, res, next) => {
 			phoneNumber,
 			country,
 			city,
+			wallet,
 		} = req.body;
-	
+
 		if (password !== confirmPassword) {
 			return next(
 				new AppError('password and password confirmation does not match', 401)
 			);
 		}
-		const hashedPassword = await bcrypt.hash(password, process.env.HASH_NUMBER);
+		const hashedPassword = await bcrypt.hash(password, 8);
 		const admin = new adminDB({
 			first_name: formatStr(firstName),
 			last_name: formatStr(lastName),
@@ -51,6 +52,7 @@ exports.signupAdmin = async (req, res, next) => {
 			email: formatStr(email),
 			country_name: formatStr(country),
 			city_name: formatStr(city),
+			wallet: wallet,
 		});
 		await admin.save();
 
@@ -61,14 +63,14 @@ exports.signupAdmin = async (req, res, next) => {
 	} catch (error) {
 		console.log(error.message);
 		return res.status(401).json({
-			message : "email or phone number already exist"
-		})
+			message: 'email or phone number already exist',
+		});
 	}
 };
 
-exports.	loginAdmin = catchAsync(async (req, res, next) => {
+exports.loginAdmin = catchAsync(async (req, res, next) => {
 	// 1) validate the request body
-	
+
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		console.log(error.array());
@@ -88,10 +90,10 @@ exports.	loginAdmin = catchAsync(async (req, res, next) => {
 	const admin = await adminDB.findOne({ email }).select('+password');
 
 	const adminInfo = {
-		adminType : admin.admin_type,
-		firstName : admin.first_name,
-		lastName : admin.last_name
-	}
+		adminType: admin.admin_type,
+		firstName: admin.first_name,
+		lastName: admin.last_name,
+	};
 
 	if (!admin) {
 		return next(new AppError('admin not found', 405));
@@ -107,7 +109,7 @@ exports.	loginAdmin = catchAsync(async (req, res, next) => {
 	console.log(verificationCode);
 	// 5) check if cookie expired
 	if (!verificationCodeSession) {
-			return next(new AppError('verification code has expired, try again.', 402));
+		return next(new AppError('verification code has expired, try again.', 402));
 	}
 
 	// 6) validate the verificaion code
@@ -134,7 +136,7 @@ exports.	loginAdmin = catchAsync(async (req, res, next) => {
 	return res.status(202).json({
 		status: 'success',
 		token: accessToken,
-		adminData : adminInfo 
+		adminData: adminInfo,
 	});
 });
 
@@ -168,7 +170,10 @@ exports.adminVerificationCode = catchAsync(async (req, res, next) => {
 		}
 		const { email, password } = req.body;
 
+		console.log(email);
+
 		const admin = await adminDB.findOne({ email }).select('+password');
+
 		if (!admin) {
 			return next(new AppError('Wrong email!', 405));
 		}
@@ -229,69 +234,96 @@ exports.adminRefreshToken = catchAsync(async (req, res, next) => {
 	return res.status(201).json(accessToken);
 });
 
-exports.getEditAdminProfileInfo = catchAsync(async (req,res) => {
-	const admin = await adminDB.findOne({email : req.email});
+exports.getEditAdminProfileInfo = catchAsync(async (req, res) => {
+	const admin = await adminDB.findOne({ email: req.email });
 	console.log(admin);
 	return res.status(200).json({
-		message : "Success",
-		admin : admin
+		message: 'Success',
+		admin: admin,
 	});
+});
 
-})
-
-exports.editAdminProfileInfo = catchAsync(async(req,res,next) => {
+exports.editAdminProfileInfo = catchAsync(async (req, res, next) => {
 	const password = req.body.password;
 	const confirmPassword = req.body.confirmPassword;
 
-	if((password !== confirmPassword) && (!password || !confirmPassword)){
+	if (password !== confirmPassword && (!password || !confirmPassword)) {
 		return next(new AppError('password and confirm password not equal!', 401));
 	}
-	
+
 	const admin = await adminDB.findById(req._id);
 
-	if(!admin){
+	if (!admin) {
 		return next(new AppError('admin not found!', 401));
 	}
 
-	const hashedPassword = await bcrypt.hash(password , process.env.HASH_NUMBER);
+	const hashedPassword = await bcrypt.hash(password, process.env.HASH_NUMBER);
 	console.log(hashedPassword);
 
 	admin.password = hashedPassword;
 	await admin.save();
 
 	return res.status(200).json({
-		message : "Success"
-	})
+		message: 'Success',
+	});
+});
 
-})
-
-exports.verifyAdminAccessTokenProtectedRoute = async (req,res) => {
-
+exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
 	try {
-
 		const accessToken = req.body.token;
 
-		if(!accessToken){
+		if (!accessToken) {
 			return res.status(401).json({
-				message : "accessToken was empty"
-			})
+				message: 'accessToken was empty',
+			});
 		}
-	
-		const decode = jwt.verify(accessToken , process.env.ACCESS_TOKEN_SECRET);
-	
-	
-		if(!decode.email || !decode.roles){
-			return res.status(401).json(false)
+
+		const decode = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+		if (!decode.email || !decode.roles) {
+			return res.status(401).json(false);
+		} else {
+			return res.status(200).json(true);
 		}
-	
-		else{
-			return res.status(200).json(true)
-		}
-	} 
-	catch (error) {
+	} catch (error) {
 		res.status(400).json({
-			message : "not valid token"
-		})
+			message: 'not valid token',
+		});
+	}
+};
+
+exports.checkAdminAuthorization = catchAsync(async (req, res, next) => {
+	if (!req.body.email) {
+		return next(new AppError('Email has not been provided', 400));
+	} else if (!req.body.walletId) {
+		return next(new AppError('Wallet ID has not been provided', 400));
 	}
 
-}
+	const admin = await adminDB.findOne({ email: req.body.email });
+
+	if (!admin) {
+		console.log(`Unauthorized action for email: ${req.body.email}`);
+		return next(new AppError('Not authorized - Admin not found', 403));
+	}
+
+	// Check if walletId exists in the admin's wallet array
+	if (!admin.wallet.includes(req.body.walletId)) {
+		console.log(
+			`Unauthorized action for email: ${req.body.email}, walletId: ${req.body.walletId}`
+		);
+		return next(
+			new AppError(
+				"Not authorized - Wallet ID not found in admin's wallet",
+				403
+			)
+		);
+	}
+
+	console.log(
+		`Authorized - email: ${req.body.email}, walletId: ${req.body.walletId}`
+	);
+	return next();
+	// we are not returning any response
+	// because if we want to return a value that indicates that admin is authorized
+	// like as True or False , it WILL NOT be practical and secure
+});

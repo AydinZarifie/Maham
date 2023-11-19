@@ -520,11 +520,11 @@
 
 .rejectDiv {
   position: relative;
-  background-color: #ff1f1f2d;
+  background-color: #ff1f1f17;
   color: #ff1f1f;
-  border-radius: 4px;
-  padding: 6px;
-  width: 50%;
+  border-radius: 12px;
+  padding: 6px 0;
+  width: 47%;
   margin-left: 25%;
   /* box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */
@@ -541,22 +541,22 @@
 }
 .acceptDiv {
   position: relative;
-  background-color: #22ba002d;
+  background-color: #22ba0017;
   color: #22ba00;
-  border-radius: 4px;
-  padding: 6px;
-  width: 50%;
+  border-radius: 12px;
+  padding: 6px 0px;
+  width: 47%;
   margin-left: 25%;
   /* box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */
 }
 .pendingDiv {
   position: relative;
-  background-color: #ffb41f2d;
+  background-color: #ffb41f17;
   color: #ffb41f;
-  border-radius: 4px;
-  padding: 6px;
-  width: 50%;
+  border-radius: 12px;
+  padding: 6px 0;
+  width: 47%;
   margin-left: 25%;
   /* box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */

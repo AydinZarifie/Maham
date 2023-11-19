@@ -8,7 +8,7 @@ import EstateTable from "../../components/adminPage/management/EstateTable";
 import Gainers from "../../components/adminPage/management/Gainers";
 import HighestVolumes from "../../components/adminPage/management/HighestVolumes";
 import fetchInstance from "../../util/fetchInstance";
-import {lock,unlock} from "../web3/MHM2023";
+import { lock, unlock } from "../web3/MHM2023";
 import { ethers } from "ethers";
 
 const ManagementPage = () => {
@@ -110,7 +110,7 @@ const ManagementPage = () => {
     }
   };
 
-  const LockEstate = async (id, mintID , lockPosition) => {
+  const LockEstate = async (id, mintID, lockPosition) => {
     setLoading(true);
     let { response } = await fetchInstance(
       "/admin/managment/lockUnLockEstate/" + id,
@@ -124,23 +124,42 @@ const ManagementPage = () => {
     );
     if (response.ok) {
       console.log(lockPosition);
-      const mintId = Number(mintID)
+      const mintId = Number(mintID);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      if(!lockPosition){
+      if (!lockPosition) {
         console.log("2");
         console.log(lockPosition);
-        const txLock = await lock(mintId , signer);
+        const txLock = await lock(mintId, signer);
+        const formData = new FormData();
+        formData.append("hash", txLock.hash);
+        formData.append("method", "lock");
+        formData.append("from", txLock.from);
+        formData.append("to", txLock.to);
+        formData.append("mintId", mintID);
+        let { response } = await fetchInstance("url", {
+          method: "POST",
+          body: formData,
+        });
         console.log(txLock);
-      }
-      else {
+      } else {
         console.log(3);
         console.log(lockPosition);
-        const txUnlock = await unlock(mintId , signer);
+        const txUnlock = await unlock(mintId, signer);
+        const formData = new FormData();
+        formData.append("hash", txUnlock.hash);
+        formData.append("method", "unlock");
+        formData.append("from", txUnlock.from);
+        formData.append("to", txUnlock.to);
+        formData.append("mintId", mintID);
+        let { response } = await fetchInstance("url", {
+          method: "POST",
+          body: formData,
+        });
         console.log(txUnlock);
         console.log(4);
       }
-      
+
       const updatedEstates = [...searchedEstates];
       let index = searchedEstates.findIndex((item) => item._id == id);
       let editedEstate = { ...updatedEstates[index] };

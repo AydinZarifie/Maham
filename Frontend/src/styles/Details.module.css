@@ -20,7 +20,6 @@
   }
   .BackDiv {
     display: flex;
-    text-decoration: none;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -32,6 +31,7 @@
     padding: 4px 9px 4px 6px;
     opacity: 0.8;
     margin-left: -0.5%;
+    text-decoration: none;
   }
   .BackDiv h5 {
     white-space: nowrap;
@@ -157,7 +157,7 @@
   .AddressSpan {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     width: 80%;
   }
@@ -188,7 +188,6 @@
   }
   .BackDiv {
     display: flex;
-    text-decoration: none;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -199,6 +198,7 @@
     border: 1px solid #ffffff;
     padding: 4px 6px 4px 6px;
     opacity: 0.8;
+    text-decoration: none;
   }
   .BackDiv h5 {
     display: none;
@@ -317,7 +317,7 @@
   .AddressSpan {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     width: 80%;
     justify-content: space-between;
   }
@@ -336,9 +336,16 @@
     height: 18px;
   }
 }
-@media (min-width: 660px) {
+@media (min-width: 770px) {
+  .HeadDiv {
+    margin-top: 75.8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .HeadInfo h5 {
-    color: rgb(42, 42, 42);
+    color:  rgb(60, 60, 60);
     white-space: nowrap;
     max-width: 370px;
     overflow-x: hidden;
@@ -372,7 +379,7 @@
     bottom: 3%;
     width: 85%;
     background-color: #ffffff;
-    z-index: 101;
+    z-index: 1001;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
@@ -475,7 +482,6 @@
   } */
   .OneImage {
     position: fixed;
-    display: block;
     top: 12%;
     z-index: 101;
     max-width: 80%;
@@ -532,7 +538,7 @@
     flex-direction: column;
     align-items: start;
     width: 81%;
-    padding-top: 50px;
+    padding-top: 120px;
   }
   .Description h3 {
     font-weight: 500;
@@ -556,6 +562,8 @@
     border: 1px solid #dbdbdb;
     border-radius: 8px;
     overflow: hidden;
+    height: 308px;
+    transition: .4s;
   }
   .InteriorFeatures h3 {
     font-weight: 500;
@@ -563,6 +571,18 @@
     white-space: nowrap;
     font-size: 1.3rem;
     text-transform: capitalize;
+  }
+  .InteriorFeaturesSections h5 {
+    margin: 0;
+    color: #313131;
+    font-size: 1.2rem;
+    font-weight: 400;
+    white-space: nowrap;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
   }
   .Facilities {
     display: flex;
@@ -588,6 +608,9 @@
     align-items: start;
     width: 81%;
     margin-top: 40px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    overflow: hidden;
   }
   .PropertyInfo h3 {
     font-weight: 500;
@@ -648,17 +671,17 @@
   }
 
   .PropertyHr1 {
-    width: 65%;
+    width: 78%;
     position: absolute;
-    margin-top: 115px;
+    margin-top: 120px;
     min-height: 1px;
     background-color: #dbdbdb;
     border: none;
   }
   .PropertyHr2 {
-    width: 65%;
+    width: 78%;
     position: absolute;
-    margin-top: 225px;
+    margin-top: 240px;
     min-height: 1px;
     background-color: #dbdbdb;
     border: none;
@@ -693,7 +716,14 @@
     margin-bottom: 40px;
   }
 }
-@media (max-width: 660px) {
+@media (max-width: 770px) {
+  .HeadDiv {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .Column1 {
     display: flex;
     flex-direction: row;
@@ -706,7 +736,7 @@
     display: none;
   }
   .HeadInfo2 h5 {
-    color: rgb(42, 42, 42);
+    color: rgb(60, 60, 60);
     white-space: nowrap;
     max-width: 370px;
     overflow-x: hidden;
@@ -753,7 +783,7 @@
     bottom: 0%;
     width: 100%;
     background-color: #ffffff;
-    z-index: 101;
+    z-index: 1001;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -847,7 +877,6 @@
     animation: myColorChange 2s linear infinite;
   }
   .OneImage {
-    display: block;
     position: fixed;
     top: 50px;
     z-index: 101;
@@ -899,7 +928,7 @@
   .AddressSpan {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     width: 77%;
   }
@@ -954,6 +983,8 @@
     border: 1px solid #dbdbdb;
     border-radius: 8px;
     overflow: hidden;
+    height: 308px;
+    transition: .4s;
   }
   .InteriorFeatures h3 {
     font-weight: 500;
@@ -961,6 +992,19 @@
     white-space: nowrap;
     font-size: 1.1rem;
     text-transform: capitalize;
+  }
+
+  .InteriorFeaturesSections h5 {
+    margin: 0;
+    color: #313131;
+    font-size: 0.9rem;
+    font-weight: 400;
+    white-space: nowrap;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
   }
   .Facilities {
     display: flex;
@@ -986,6 +1030,9 @@
     align-items: start;
     width: 90%;
     margin-top: 40px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    overflow: hidden;
   }
   .PropertyInfo h3 {
     font-weight: 500;
@@ -998,7 +1045,7 @@
   .propertySections h5 {
     margin: 0;
     color: #313131;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 400;
     white-space: nowrap;
     text-transform: capitalize;
@@ -1019,7 +1066,7 @@
     text-transform: capitalize;
   }
   .PropertySpan h5 {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     margin: 0;
     color: #313131;
     white-space: nowrap;
@@ -1031,7 +1078,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 40px;
+    gap: 20px;
     font-size: 1.5rem;
     color: #313131;
     width: 100%;
@@ -1039,24 +1086,24 @@
     text-transform: capitalize;
   }
   .PropertySpan2 h5 {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     margin: 0;
     color: #313131;
     white-space: nowrap;
     text-transform: capitalize;
   }
   .PropertyHr1 {
-    width: 80%;
+    width: 84%;
     position: absolute;
-    margin-top: 105px;
+    margin-top: 110px;
     min-height: 1px;
     background-color: #dbdbdb;
     border: none;
   }
   .PropertyHr2 {
-    width: 80%;
+    width: 84%;
     position: absolute;
-    margin-top: 210px;
+    margin-top: 220px;
     min-height: 1px;
     background-color: #dbdbdb;
     border: none;
@@ -1093,13 +1140,13 @@
 }
 /*  */
 
-.HeadDiv {
+/* .HeadDiv {
   margin-top: 75.8px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 .BackDiv:hover {
   opacity: 0.9;
@@ -1216,13 +1263,14 @@
   left: 0;
   background-color: #00000035;
   backdrop-filter: blur(1px);
-  z-index: 100;
+  z-index: 1000;
   overflow: auto;
 }
 .GalleryMain {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -1285,7 +1333,7 @@
 }
 
 .ImageOverlay {
-  display: flex;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1600,6 +1648,7 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  background-color: #fcfcfc;
 }
 .SectionHeadIcon {
   width: 30px;
@@ -1616,6 +1665,7 @@
   width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
+  background-color: #fcfcfc;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .FacilitiesContainer::-webkit-scrollbar {
@@ -1628,7 +1678,7 @@
   scrollbar-width: none; /* Firefox */
 }
 .facilitiesOption {
-  background-color: #fcfcfc;
+  background-color: #ffffff;
 
   width: 100%;
   min-width: 310px;
@@ -1642,7 +1692,7 @@
 }
 
 .facilitiesOption:hover {
-  background-color: #ffffff;
+  background-color: #fcfcfc;
   /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px; */
 }
 .facilitiesOptionSide1 {
@@ -1685,13 +1735,144 @@
   text-transform: capitalize;
 }
 
+.InteriorFeaturesBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow: auto;
+  /* height: 500px; */
+  overflow-y: hidden;
+  transition: 0.4s;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.InteriorFeaturesBody::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.InteriorFeaturesBody {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.InteriorFeaturesSections {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 95%;
+  padding: 25px 0;
+  gap: 5px;
+  border-bottom: 1px solid #dbdbdb;
+}
+.InteriorFeaturesSections:nth-last-child(-n + 2) {
+  border-bottom: none;
+  margin-top: 1px;
+}
+.ShowAllDiv {
+  position: absolute;
+  background-color: #ffffffdd;
+  width: 81%;
+  height: 73px;
+  margin-top: 166px;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0px -10px 10px #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.ShowAllBtn {
+  width: 90px;
+  height: 30px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #ef4057;
+  border: 1px solid #ef4057;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.ShowAllBtn:hover {
+  background-color: #ef405725;
+}
+
+.ArrowUp {
+  position: relative;
+  border: 1px solid #ef4057;
+  border-radius: 6px ;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: 300;
+  top: -10px;
+  color:#ef4057 ;
+  width: 80px;
+  height: 27px;
+  background-color: #ffffff;
+  transition: 0.3s;
+  cursor: pointer;
+  font-size: .8rem;
+}
+.ArrowUp:hover {
+  background-color: #ef405725;
+}
+.ArrowUp h4{
+  font-weight: 300;
+  font-size: 1.1rem;
+}
+/* .ArrowUp:before,
+.ArrowUp:after {
+  content: "";
+  position: absolute;
+
+  height: 14px;
+  width: 20px;
+
+  bottom: 0;
+}
+.ArrowUp:after {
+  right: -19px;
+
+  border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  -webkit-border-radius: 0 0 0 10px;
+
+  -webkit-box-shadow: -10px 0 0 0 rgb(255, 255, 255);
+  box-shadow: -10px 0 0 0 rgb(255, 255, 255);
+  border-bottom:1px solid #ef4057 ;
+}
+
+.ArrowUp:before {
+  left: -20px;
+
+  border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  -webkit-border-radius: 0 0 10px 0;
+
+  -webkit-box-shadow: 10px 0 0 0 rgb(255, 255, 255);
+  box-shadow: 10px 0 0 0 rgb(255, 255, 255);
+  border-bottom:1px solid #ef4057 ;
+} */
+
+.ArrowUpIcon {
+  transition: 0.4s;
+  rotate: 180deg;
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  position: relative;
+  top: 3px;
+}
+.ArrowUpIcon:hover {
+  opacity: 0.9;
+}
+
 .PropertyBody {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  border: 1px solid #dbdbdb;
-  border-radius: 6px;
   overflow: auto;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -1709,7 +1890,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 80%;
+  width: 95%;
   padding: 25px 0;
   gap: 5px;
   /* border-bottom: 1px solid #dbdbdb; */
@@ -1749,7 +1930,7 @@
 
 .InfoTable {
   width: 100%;
-  text-align: left;
+  text-align: center;
   min-width: 800px;
   border-collapse: separate;
   border-spacing: 0;
@@ -1774,15 +1955,18 @@
   font-size: 14px;
   padding: 10px 20px;
   /* white-space: nowrap; */
+ 
 }
 .InfoTable tbody tr {
   background-color: rgb(255, 255, 255);
   /* white-space: nowrap; */
+ 
 }
 
 .InfoTable tbody tr:hover {
   background-color: rgb(247, 247, 247);
   /* white-space: nowrap; */
+
 }
 
 .AddressDiv {
@@ -1961,11 +2145,17 @@
 }
 
 .MethodDiv {
-  border: 1px solid #04040422;
   text-align: center;
-  width: 100px;
+  width: 100%;
   font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.MethodDiv div{
+  width: 100px;
   padding: 5px 0px;
+  border: 1px solid #04040422;
   border-radius: 6px;
   background-color: #f4f4f4;
   color: #383838;
@@ -1990,3 +2180,245 @@
   align-items: center;
   height: 0;
 }
+
+.BackInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+/* buy menu  */
+
+.BuyMenu {
+  position: fixed;
+  top: 66px;
+  width: 100%;
+  height: 0px;
+  border-bottom: 0px solid rgb(209, 213, 219);
+  background-color: white;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: .3s;
+  
+}
+
+
+.MenuIconsDiv span:hover {
+  opacity: 0.9;
+  color: rgb(42, 42, 42);
+}
+
+
+
+@media (min-width: 770px) {
+  .BuyMenuBody{
+    width: 84%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .TitleAndPrice{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 50px;
+    }
+  .TitleAndPrice h4{
+    margin: 0;
+    color: #282828;
+    font-size: 600;
+    font-size: .8rem;
+    white-space: nowrap;
+  }
+  .TitleForMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 22px;
+  }
+  .TitleForMenu h4 {
+    margin: 0;
+    color: #282828;
+    font-size: 600;
+    font-size: .8rem;
+    white-space: nowrap;
+    max-width: 150px;
+    overflow: hidden;
+  }
+  .TitleForMenu h5 {
+    margin: 0;
+    color: #3d3d3d;
+    font-weight: 400;
+    font-size: .8rem;
+    white-space: nowrap;
+  }
+  .BuyAndPrice {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding-right: 22px;
+  }
+
+  .MenuBuyBtn {
+    min-width: 80px;
+    height: 36px;
+    background-color: #ef4057;
+    border-radius: 6px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: .98rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+  }
+  .MenuBuyBtn:hover {
+    box-shadow: rgba(255, 64, 64, 0.167) 0px 6px 24px 0px,
+      rgba(255, 64, 64, 0.237) 0px 0px 0px 1px;
+    transform: translateY(1px);
+  }
+  .PriceAndIcon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  .MenuIconsDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    /* margin-top: 13px; */
+  }
+  .MenuIconsDiv span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    color: #404040;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.6;
+    border-radius: 8px;
+    border: 1px #a1a1a1 solid;
+    width: 65px;
+    height: 36px;
+  }
+  .HeadMenuIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 770px) {
+  .BuyMenuBody{
+    width: 97%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .TitleAndPrice{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 10px;
+    }
+  .TitleAndPrice h4{
+    margin: 0;
+    color: #282828;
+    font-size: 600;
+    font-size: .7rem;
+    white-space: nowrap;
+  }
+  .TitleForMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 11px;
+  }
+  .TitleForMenu h4 {
+    margin: 0;
+    color: #282828;
+    font-size: 600;
+    font-size: 0.7rem;
+    max-width: 130px;
+    overflow: hidden;
+  }
+  .TitleForMenu h5 {
+    margin: 0;
+    color: #3d3d3d;
+    font-weight: 400;
+    font-size: 0.7rem;
+  }
+
+  .BuyAndPrice {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding-right: 11px;
+  }
+
+  .MenuBuyBtn {
+    min-width: 60px;
+    height: 35px;
+    background-color: #ef4057;
+    border-radius: 6px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.4s;
+    box-shadow: rgba(255, 64, 64, 0.479) 0px 4px 12px;
+  }
+  .MenuBuyBtn:hover {
+    box-shadow: rgba(255, 64, 64, 0.167) 0px 6px 24px 0px,
+      rgba(255, 64, 64, 0.237) 0px 0px 0px 1px;
+    transform: translateY(1px);
+  }
+
+  .PriceAndIcon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 13px;
+  }
+
+  .MenuIconsDiv {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: -8px;
+  }
+  .MenuIconsDiv span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 9px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.7;
+    border-radius: 50%;
+  }
+  .HeadMenuIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+/* end buy menu */

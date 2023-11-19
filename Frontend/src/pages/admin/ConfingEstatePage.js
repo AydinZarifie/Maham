@@ -1,6 +1,7 @@
 import styles from "../../styles/Add_Estate.module.css";
+import locationStyles from "../../styles/addLocation.module.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import trueLogo from "../../images/tick-svgrepo-com_1.svg";
@@ -28,12 +29,12 @@ import MultiSelect from "../../components/general/MultiSelect";
 import Alert from "../../components/general/Alert";
 import attentionIcon from "../../images/attention-svgrepo-com.svg";
 import warningIcon from "../../images/warning-attention-svgrepo-com.svg";
+import deleteIcon2 from "../../images/delete-2-svgrepo-com2.svg";
+import editIcon from "../../images/edit-pencil-line-01-svgrepo-com.svg";
 
 /////////////////////web3///////////////////////
 import { mint, burn } from "../web3/MHM2023";
-import { connectWallet } from "../web3/connectWallet";
 import { ethers } from "ethers";
-import detectEthereumProvider from "@metamask/detect-provider";
 ///////////////////////////////////////////////
 const ConfingEstate = ({ method, estate }) => {
   const [loading, setLoading] = useState(false);
@@ -45,6 +46,8 @@ const ConfingEstate = ({ method, estate }) => {
   const [mintUsed, setMintUsed] = useState(false);
   const [error, setError] = useState(false);
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
+
+  const facilityLocationRef = useRef([]);
 
   const scrollToError = () => {
     const errorElement = document.querySelector(`.${styles.invalid}`);
@@ -94,6 +97,11 @@ const ConfingEstate = ({ method, estate }) => {
 
   const [selectedVideo, setSelectedVideo] = useState([]);
   const [previewUrl, setPreviewUrl] = useState([]);
+
+  const [facilityLocation, setFacilityLocation] = useState([
+    { title: "hello", input: "", childList: ["hello 1", "hello 2"] },
+    { title: "old", input: "", childList: ["old 1", "old 2"] },
+  ]);
 
   const [bedroom, setBedroom] = useState({
     checked: estate ? estate.estate_rooms[0].bedroom : false,
@@ -168,11 +176,21 @@ const ConfingEstate = ({ method, estate }) => {
     customerPrice: "",
     // estate ? estate.customerPrice : "",
     id: estate ? estate.mint_id : "",
+    buildingName: estate ? estate.buildingName : "",
+    builtYear: estate ? estate.builtYear : "",
+    propertyStyle: estate ? estate.propertyStyle : "",
+    facilityLocation: "",
     // estate ? estate.id : "",
 
     //  plate: estate ? estate.plate : "",
     //  walletAddress:estate ? estate.walletAddress :"",
   });
+
+  function facilityLocationEventHandler(index, event) {
+    const newValues = [...facilityLocation];
+    newValues[index].input = event.target.value;
+    setFacilityLocation(newValues);
+  }
 
   function basicEventHandler(event) {
     const { name, value } = event.target;
@@ -357,21 +375,8 @@ const ConfingEstate = ({ method, estate }) => {
     setPreviewUrl(previewURLs);
   };
 
-  async function walletConnection() {
-    const { currentAccount } = await connectWallet();
-    setWallet(currentAccount);
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner(currentAccount);
-    setSigner(signer);
-    const address = await signer.getAddress();
-    console.log(address);
-  }
 
-  window.ethereum.on("accountsChanged", walletConnection);
 
-  window.ethereum.on("chainChanged", () => {
-    window.location.reload();
-  });
 
   const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";
@@ -391,6 +396,9 @@ const ConfingEstate = ({ method, estate }) => {
   const enteredVideoIsValid = selectedVideo.length > 0;
   const enteredIdIsValid = information.id.trim() !== "";
   const enteredSummaryIsValid = information.summary.trim() !== "";
+  const enteredBuildingNameIsValid = information.buildingName.trim() !== "";
+  const enteredBuiltYearIsValid = information.builtYear.trim() !== "";
+  const enteredPropertyStyleIsValid = information.propertyStyle.trim() !== "";
 
   // const enteredPlateIsValid = information.plate.trim() !== "";
   // const enteredWalletAddressIsValid = information.walletAddress.trim() !== "";
@@ -413,6 +421,9 @@ const ConfingEstate = ({ method, estate }) => {
     video: false,
     id: false,
     summary: false,
+    buildingName: false,
+    builtYear: false,
+    propertyStyle: false,
 
     // plate: false,
     // walletAddress: false,
@@ -441,6 +452,11 @@ const ConfingEstate = ({ method, estate }) => {
   const videoIsInvalid = !enteredVideoIsValid && touched.video;
   const idIsInvalid = !enteredIdIsValid && touched.id;
   const summaryIsInvalid = !enteredSummaryIsValid && touched.summary;
+  const buildingNameIsInvalid =
+    !enteredBuildingNameIsValid && touched.buildingName;
+  const builtYearIsInvalid = !enteredBuiltYearIsValid && touched.builtYear;
+  const propertyStyleIsInvalid =
+    !enteredPropertyStyleIsValid && touched.propertyStyle;
 
   // const plateIsInvalid = !enteredPlateIsValid && touched.plate;
   // const walletAddressIsInvalid =
@@ -466,7 +482,10 @@ const ConfingEstate = ({ method, estate }) => {
     enteredImageIsValid &&
     enteredVideoIsValid &&
     enteredIdIsValid &&
-    enteredSummaryIsValid
+    enteredSummaryIsValid &&
+    enteredBuildingNameIsValid &&
+    enteredBuiltYearIsValid &&
+    enteredPropertyStyleIsValid
 
     // enteredPlateIsValid &&
     // enteredWalletAddressIsValid
@@ -486,7 +505,10 @@ const ConfingEstate = ({ method, estate }) => {
     enteredLocationIsValid &&
     enteredTypeIsValid &&
     enteredDescriptionIsValid &&
-    enteredSummaryIsValid
+    enteredSummaryIsValid &&
+    enteredBuildingNameIsValid &&
+    enteredBuiltYearIsValid &&
+    enteredPropertyStyleIsValid
 
     // enteredPlateIsValid &&
   ) {
@@ -550,6 +572,18 @@ const ConfingEstate = ({ method, estate }) => {
     ? `${styles.invalid} ${styles.DescriptionTextArea2} `
     : `${styles.DescriptionTextArea2} `;
 
+  const buildingNameClass = buildingNameIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
+  const builtYearClass = builtYearIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
+  const propertyStyleClass = propertyStyleIsInvalid
+    ? `${styles.invalid} ${styles.textinput} `
+    : `${styles.textinput} `;
+
   const plateClass = styles.textinput;
   // plateIsInvalid
   //   ? `${styles.invalid} ${styles.textinput} `
@@ -581,6 +615,9 @@ const ConfingEstate = ({ method, estate }) => {
       video: true,
       id: true,
       summary: true,
+      buildingName: true,
+      builtYear: true,
+      propertyStyle: true,
 
       // plate: true,
       // walletAddress: true,
@@ -757,9 +794,6 @@ const ConfingEstate = ({ method, estate }) => {
       const signers = provider.getSigner();
       console.log(signers);
       const mintRes = await mint(mintId, signers);
-      console.log(mintRes.hash);
-      console.log(mintRes.to);
-      console.log(mintRes.from);
       formData.append("hash", mintRes.hash);
       formData.append("method", "transfer");
       formData.append("from", mintRes.from);
@@ -769,7 +803,6 @@ const ConfingEstate = ({ method, estate }) => {
       let month = dateObject.getMonth();
       let year = dateObject.getFullYear();
       let date = year + "/" + (month + 1) + "/" + day;
-      console.log(date);
       formData.append("date", date);
       console.log(mintRes);
     }
@@ -835,6 +868,47 @@ const ConfingEstate = ({ method, estate }) => {
 
   const handleMultiSelectChange = (filters) => {
     setSelectedFilters(filters);
+  };
+
+  const addToFacilityLocation = () => {
+    if (facilityLocation.length < 3) {
+      setFacilityLocation((prev) => [
+        ...prev,
+        { title: information.facilityLocation, input: "", childList: [] },
+      ]);
+      setInformation((prev) => ({ ...prev, facilityLocation: "" }));
+    }
+  };
+
+  const deleteFromFacilityLocation = (title) => {
+    let array = facilityLocation.filter((item) => item.title !== title);
+    setFacilityLocation(array);
+  };
+
+  const addToFacilityLocationItems = (index, event) => {
+    let oldValues = [...facilityLocation];
+    oldValues[index].childList.push(facilityLocation[index].input);
+    oldValues[index].input = "";
+    console.log(oldValues);
+    setFacilityLocation(oldValues);
+  };
+
+  const deleteFromFacilityLocationItems = (index, deletingItem, event) => {
+    let array = [...facilityLocation];
+    let itemsArray = array[index].childList.filter(
+      (item) => item !== deletingItem
+    );
+    array[index].childList = itemsArray;
+    setFacilityLocation(array);
+  };
+
+  const editFacilityLocationItem = (index, facilityLocation) => {
+    setFacilityLocation((prev) => [
+      ...prev,
+      (prev[index].input = facilityLocation),
+    ]);
+    deleteFromFacilityLocationItems(index, facilityLocation);
+    facilityLocationRef.current[index].focus();
   };
 
   return (
@@ -973,42 +1047,7 @@ const ConfingEstate = ({ method, estate }) => {
               </div>
             </div>
           </div>
-          <div className={styles.row}>
-            <div className={styles.column}>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={streetNameClass}
-                    value={information.streetName}
-                    onChange={basicEventHandler}
-                    name="streetName"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Street Name</label>
-                </div>
-              </div>
-            </div>
-            <div className={styles.column}>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={plateClass}
-                    value={information.plate}
-                    onChange={basicEventHandler}
-                    name="plate"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Plates</label>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div className={styles.row}>
             <div className={styles.column}>
               <div className={styles.wrapper2}>
@@ -1101,7 +1140,6 @@ const ConfingEstate = ({ method, estate }) => {
               </div>
               <button
                 className={styles.ConnectWalletBtn}
-                onClick={walletConnection}
               >
                 connectWallet
               </button>
@@ -1164,20 +1202,231 @@ const ConfingEstate = ({ method, estate }) => {
           </div>
         </div>
 
-        <div className={styles.select2}>
-          <select
-            value={information.type}
-            onChange={basicEventHandler}
-            name="type"
-            className={typeClass}
-            onBlur={blurHandler}
-          >
-            <option value="">Choose an option</option>
-            <option value="residential">residential</option>
-            <option value="commercial">commercial</option>
-          </select>
-        </div>
+        <div className={styles.PropertyInformation}>
+          <div className={styles.PropertyInformationHead}>
+            <h3>Property Information</h3>
+          </div>
+          <div className={styles.select2}>
+            <select
+              value={information.type}
+              onChange={basicEventHandler}
+              name="type"
+              className={typeClass}
+              onBlur={blurHandler}
+            >
+              <option value="">Choose an Property type</option>
+              <option value="residential">residential</option>
+              <option value="commercial">commercial</option>
+            </select>
+          </div>
 
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={streetNameClass}
+                    value={information.streetName}
+                    onChange={basicEventHandler}
+                    name="streetName"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Street Name</label>
+                </div>
+              </div>
+            </div>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={plateClass}
+                    value={information.plate}
+                    onChange={basicEventHandler}
+                    name="plate"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Plates</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={buildingNameClass}
+                    value={information.buildingName}
+                    onChange={basicEventHandler}
+                    name="buildingName"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Building name</label>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={builtYearClass}
+                    value={information.builtYear}
+                    onChange={basicEventHandler}
+                    name="builtYear"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Year Build</label>
+                </div>
+              </div>
+              {!estate && (
+                <div className={styles.wrapper2}>
+                  <div className={styles.inputData}>
+                    <input
+                      required
+                      type="number"
+                      className={propertyStyleClass}
+                      value={information.propertyStyle}
+                      onChange={basicEventHandler}
+                      name="propertyStyle"
+                      onBlur={blurHandler}
+                    />
+                    <div className={styles.underline}></div>
+                    <label className={styles.label}>Property style</label>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        {/*  */}
+        <div className={locationStyles.LocationSet}>
+          <div className={locationStyles.LocationSetHead}>
+            <h3>location Title</h3>
+          </div>
+
+          {facilityLocation.length < 3 && (
+            <div className={locationStyles.Locationwrapper}>
+              <div className={locationStyles.inputData}>
+                <input
+                  type="text"
+                  className={locationStyles.textinput}
+                  value={information.facilityLocation}
+                  name="facilityLocation"
+                  onChange={basicEventHandler}
+                />
+                <div className={locationStyles.underline}></div>
+                <label className={locationStyles.label}>Title</label>
+              </div>
+              <button
+                type="button"
+                className={locationStyles.AddBtn}
+                onClick={addToFacilityLocation}
+              >
+                +
+              </button>
+            </div>
+          )}
+
+          <div className={locationStyles.LocationBody}>
+            <div className={locationStyles.LocationFullHead}>
+              {facilityLocation.map((item, index) => (
+                <div className={locationStyles.LocationHead}>
+                  <h5 className={locationStyles.title}>{item.title}</h5>
+                  <img
+                    src={deleteIcon2}
+                    className={locationStyles.DeleteIcon}
+                    onClick={() => deleteFromFacilityLocation(item.title)}
+                  />
+                  <div className={locationStyles.InputDiv}>
+                    <div className={locationStyles.inputContainer}>
+                      <input
+                        type="text"
+                        id={index}
+                        value={item.input}
+                        className={locationStyles.inputs}
+                        onChange={(event) =>
+                          facilityLocationEventHandler(index, event)
+                        }
+                        ref={(element) =>
+                          (facilityLocationRef.current[index] = element)
+                        }
+                      />
+                      <label className={locationStyles.label} htmlFor={index}>
+                        <div className={locationStyles.text}>Location</div>
+                      </label>
+                    </div>
+                    <span
+                      onClick={(event) =>
+                        addToFacilityLocationItems(index, event)
+                      }
+                    >
+                      +
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={locationStyles.LocationSection}>
+              {facilityLocation.map((parentItem, parentIndex) => (
+                <div className={locationStyles.SectionBody}>
+                  <div className={locationStyles.Section}>
+                    {/* <div className={locationStyles.LocationEdit}> */}
+                    {parentItem.childList.map((item, index) => (
+                      <div className={locationStyles.InputDiv}>
+                        {index + 1}-
+                        <div className={locationStyles.inputContainer}>
+                          <input
+                            type="text"
+                            value={item}
+                            className={locationStyles.inputs}
+                            disabled
+                          />
+                          <label className={locationStyles.label}>
+                            <div className={locationStyles.text}>Location</div>
+                          </label>
+                        </div>
+                        <img
+                          src={deleteIcon2}
+                          className={locationStyles.DeleteIcon}
+                          onClick={(event) =>
+                            deleteFromFacilityLocationItems(
+                              parentIndex,
+                              item,
+                              event
+                            )
+                          }
+                        />
+                        <img
+                          src={editIcon}
+                          className={locationStyles.EditIcon}
+                          onClick={(event) =>
+                            editFacilityLocationItem(parentIndex, item, event)
+                          }
+                        />
+                      </div>
+                    ))}
+                    {/* </div> */}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/*  */}
         <div className={styles.RoomAndMetarge}>
           <h3>Romms And Metrages</h3>
 

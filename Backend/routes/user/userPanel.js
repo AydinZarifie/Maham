@@ -7,4 +7,6 @@ router.route('/panel/getCities/:countryName').get(userPanelController.getCities)
 router.post('/panel/search/title', userPanelController.searchEstateByTitle);
 
 
+router.post('/panel/like/:userId' , userPanelController.likeEstate);
+
 module.exports = router;
