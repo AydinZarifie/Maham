@@ -1,4 +1,4 @@
-import { ethers } from "ethers"
+import { Signer, ethers } from "ethers"
 import MHM2023 from "../../abis/MHM2023.json";
 
 const provider = new ethers.providers.JsonRpcProvider('HTTP://127.0.0.1:7545');
@@ -93,4 +93,17 @@ export async function landlorOf(mintId){
     const landlor = await contract.landlorOf(mintId);
 
     return landlor;
+}
+
+export async function addAdmin(walletAddress,signer){
+    const ABI = [
+        'function addAdmin(address walletAddress) public onlyAdmin()'
+    ]
+
+    const contract = new ethers.Contract(contractAddress,ABI,signer);
+    const txAddAdmin = await contract.addAdmin(walletAddress);
+    const txRec = await txAddAdmin.wait();
+
+    return txRec;
+
 }

@@ -8,6 +8,8 @@ import trueLogo from "../../images/tick-svgrepo-com_1.svg";
 import AdminFilter from "../../components/adminPage/adminPanel/AdminFilter";
 import fetchInstance from "../../util/fetchInstance";
 import Alert from "../../components/general/Alert";
+import { ethers } from "ethers";
+import { addAdmin } from "../web3/MHM2023";
 
 const AdminPanel = () => {
   const [admins, setAdmins] = useState([]);
@@ -73,6 +75,7 @@ const AdminPanel = () => {
     city,
     password,
     confirmPassword,
+    walletAddress,
     id
   ) => {
     const formData = new FormData();
@@ -88,11 +91,26 @@ const AdminPanel = () => {
       formData.append("confirmPassword", confirmPassword);
     }
 
+    console.log(walletAddress);
+    for(let i=0;i<walletAddress.length;i++){
+      formData.append("wallet",walletAddress[i]);
+    }
+
     let url = "/admin/auth/signup";
 
     if (method === "PUT") {
       url = "/admin/panel/editAdmin/" + id;
     }
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    console.log(provider);
+    //for to length of wallet array and execute addAdmin//
+    for(let i=0;i<walletAddress.length;i++){
+      const addAdmintTX = await addAdmin(signer , walletAddress[i]);
+    }
+    //////////////////////////////////////////////////////
 
     let { response } = await fetchInstance(url, {
       method: method,
