@@ -1,4 +1,4 @@
-import styles from "../../styles/Add_Estate.module.css";
+  import styles from "../../styles/Add_Estate.module.css";
 import locationStyles from "../../styles/addLocation.module.css";
 
 import { useEffect, useRef, useState } from "react";
@@ -374,9 +374,6 @@ const ConfingEstate = ({ method, estate }) => {
     const previewURLs = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreviewUrl(previewURLs);
   };
-
-
-
 
   const enteredFilterIsValid = selectedFilters.length > 0;
   const enteredTitleIsValid = information.title.trim() !== "";

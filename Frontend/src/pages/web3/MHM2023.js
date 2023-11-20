@@ -97,8 +97,10 @@ export async function landlorOf(mintId){
 
 export async function addAdmin(walletAddress,signer){
     const ABI = [
-        'function addAdmin(address walletAddress) public onlyAdmin()'
+        'function addAdmin(address walletAddress) public'
     ]
+
+    console.log(walletAddress[0]);
 
     const contract = new ethers.Contract(contractAddress,ABI,signer);
     const txAddAdmin = await contract.addAdmin(walletAddress);

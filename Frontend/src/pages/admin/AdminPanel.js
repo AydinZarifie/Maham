@@ -75,6 +75,7 @@ const AdminPanel = () => {
     city,
     password,
     confirmPassword,
+    walletAddress,
     id
   ) => {
     const formData = new FormData();
@@ -90,38 +91,54 @@ const AdminPanel = () => {
       formData.append("confirmPassword", confirmPassword);
     }
 
+    console.log(walletAddress);
+    for(let i=0;i<walletAddress.length;i++){
+      formData.append("wallet",walletAddress[i]);
+    }
+
     let url = "/admin/auth/signup";
 
     if (method === "PUT") {
       url = "/admin/panel/editAdmin/" + id;
     }
+
+    ///blockchain proccess
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const address = await  signer.getAddress();
+      console.log("address : " + address);
+      const txAddAdmin = await addAdmin(walletAddress[0],signer).then(async(res) => {
+        console.log(res);
+        let { response } = await fetchInstance(url, {
+          method: method,
+          body: formData,
+        });
+      
+        if (response.ok) {
+          setError(null);
+          // alert("Admin successfully added");
+          setAlert(
+            "Your work has been successfully completed and your information has been saved"
+          );
+          navigate("/admin/admins");
+        }
+        if (response.status == 401) {
+          setError("Email or phone number already exists");
+        }
+      }).catch((err) => {
+        // blockchain error handling
+        console.log(err);
+      })
+      console.log(txAddAdmin);
+  
+
     
-
-
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-
-    console.log(provider);
     //for to length of wallet array and execute addAdmin//
-    const addAdmintTX = await addAdmin(signer , "0x29907c60EF926983fe8744475161dAdC25AF1D43");
+/*     for(let i=0;i<walletAddress.length;i++){
+      const addAdmintTX = await addAdmin(signer , walletAddress[i]);
+      console.log(addAdmintTX);
+    } */
     //////////////////////////////////////////////////////
-
-    let { response } = await fetchInstance(url, {
-      method: method,
-      body: formData,
-    });
-
-    if (response.ok) {
-      setError(null);
-      // alert("Admin successfully added");
-      setAlert(
-        "Your work has been successfully completed and your information has been saved"
-      );
-      navigate("/admin/admins");
-    }
-    if (response.status == 401) {
-      setError("Email or phone number already exists");
-    }
   };
 
   useEffect(() => {

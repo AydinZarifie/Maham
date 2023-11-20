@@ -76,8 +76,8 @@ const AdminConfig = ({ method, admin }) => {
     enteredCountryIsValid &&
     enteredCityIsValid &&
     enteredPasswordIsValid &&
-    enteredConfirmPasswordIsValid &&
-    enteredWalletAddressIsValid
+    enteredConfirmPasswordIsValid
+    //enteredWalletAddressIsValid
   ) {
     formIsValidForAdding = true;
   }
@@ -160,6 +160,7 @@ const AdminConfig = ({ method, admin }) => {
       data.city,
       data.password,
       data.confirmPassword,
+      walletAddresses,
       admin ? admin._id : null
     );
   };
