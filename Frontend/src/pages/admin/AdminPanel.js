@@ -102,35 +102,42 @@ const AdminPanel = () => {
       url = "/admin/panel/editAdmin/" + id;
     }
 
-    ///blockchain proccess
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const address = await  signer.getAddress();
-      console.log("address : " + address);
-      const txAddAdmin = await addAdmin(walletAddress[0],signer).then(async(res) => {
-        console.log(res);
-        let { response } = await fetchInstance(url, {
-          method: method,
-          body: formData,
-        });
-      
-        if (response.ok) {
-          setError(null);
-          // alert("Admin successfully added");
-          setAlert(
-            "Your work has been successfully completed and your information has been saved"
-          );
-          navigate("/admin/admins");
-        }
-        if (response.status == 401) {
-          setError("Email or phone number already exists");
-        }
-      }).catch((err) => {
-        // blockchain error handling
-        console.log(err);
-      })
-      console.log(txAddAdmin);
+    let { response } = await fetchInstance(url, {
+      method: method,
+      body: formData,
+    });
   
+    if (response.ok) {
+
+      ///blockchain proccess
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const address =  signer._address;
+
+        if(!address){
+          //show error please connect or install the metamask
+        }
+
+        addAdmin(walletAddress[0],signer).then((res) => {
+          //set transaction data in formdata
+          //set fetch to send transaction data to backend
+          //navigate and show success message here
+        }).catch((err) => {
+          //show error alert and navigate to adminPanel
+          //set fetch again to revert admin information (delete admin)
+        })
+        
+      setError(null);
+      // alert("Admin successfully added");
+      setAlert(
+        "Your work has been successfully completed and your information has been saved"
+      );
+      navigate("/admin/admins");
+    }
+    if (response.status == 401) {
+      setError("Email or phone number already exists");
+    }
+     
 
     
     //for to length of wallet array and execute addAdmin//
