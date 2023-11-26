@@ -111,6 +111,15 @@ const ManagementPage = () => {
   };
 
   const LockEstate = async (id, mintID, lockPosition) => {
+    
+    const mintId = Number(mintID);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    if(!signer._address){
+      //error handling --> please login or install metamask
+    }
+
     setLoading(true);
     let { response } = await fetchInstance(
       "/admin/managment/lockUnLockEstate/" + id,
@@ -123,41 +132,50 @@ const ManagementPage = () => {
       }
     );
     if (response.ok) {
-      console.log(lockPosition);
-      const mintId = Number(mintID);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
       if (!lockPosition) {
-        console.log("2");
-        console.log(lockPosition);
-        const txLock = await lock(mintId, signer);
         const formData = new FormData();
-        formData.append("hash", txLock.hash);
-        formData.append("method", "lock");
-        formData.append("from", txLock.from);
-        formData.append("to", txLock.to);
-        formData.append("mintId", mintID);
-        let { response } = await fetchInstance("url", {
+        lock(mintId, signer).then((txLock) => {
+          formData.append("hash", txLock.hash);
+          formData.append("method", "lock");
+          formData.append("from", txLock.from);
+          formData.append("to", txLock.to);
+          formData.append("mintId", mintID);
+        }).catch(async (err)=>{
+          //revert lock estate (unlockEstate)
+          let { response } = await fetchInstance(
+            "/admin/managment/lockUnLockEstate/" + id,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(mintID),
+            }
+          );
+          //mintId already lock , your not approver  
+        });
+        let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {
           method: "POST",
           body: formData,
         });
-        console.log(txLock);
       } else {
-        console.log(3);
-        console.log(lockPosition);
-        const txUnlock = await unlock(mintId, signer);
         const formData = new FormData();
-        formData.append("hash", txUnlock.hash);
-        formData.append("method", "unlock");
-        formData.append("from", txUnlock.from);
-        formData.append("to", txUnlock.to);
-        formData.append("mintId", mintID);
-        let { response } = await fetchInstance("url", {
-          method: "POST",
-          body: formData,
-        });
-        console.log(txUnlock);
-        console.log(4);
+        unlock(mintId, signer).then((txUnlock) => {
+          formData.append("hash", txUnlock.hash);
+          formData.append("method", "unlock");
+          formData.append("from", txUnlock.from);
+          formData.append("to", txUnlock.to);
+          formData.append("mintId", mintID);
+        }).catch(async(err)=> {
+          //revert UnlockEstate(lockEstate)
+          let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {
+            method: "POST",
+            body: formData,
+          });
+          //show error --> this mintId already unlock , your not or approver,
+          
+        })
+ 
       }
 
       const updatedEstates = [...searchedEstates];

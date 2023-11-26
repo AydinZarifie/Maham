@@ -27,7 +27,6 @@ router.post(
 router.post(
 	'/panel/getAdmin',
 	verifyToken,
-
 	adminPanelController.getAdmin
 );
 router
