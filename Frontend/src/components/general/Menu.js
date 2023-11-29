@@ -32,7 +32,7 @@ const Menu = () => {
   };
 
   return (
-    <header className={styles.Header}>
+    <header className={styles.Header} id="headerId">
       <div className={styles.LogoDiv}>
         <a className={styles.Maham}>
           <span className={styles.LogoAndTitle}>
@@ -48,16 +48,16 @@ const Menu = () => {
         <div className={styles.underline}>
           <a>MEI</a>
         </div>
-        <div className={styles.underline}>
+        <div className={styles.underline} >
           <a onMouseEnter={toggleGuide} onMouseLeave={toggleGuide}>
             Guide
           </a>
         </div>
       </div>
       <div className={styles.HeadBtn}>
-        <button className={styles.ContactBtn}>Contact us</button>
-        {/* <button className={styles.LogInBtn}>Log In</button> */}
-        <div className={styles.ProfileDiv}>
+        <button className={styles.ContactBtn} id="contactUsId">Contact us</button>
+        <button className={styles.LogInBtn} id="logInId">Log In</button>
+        {/* <div className={styles.ProfileDiv} id="profileId">
           <img src={profileLogo} className={styles.ProfileIcon} />
           <img
             src={menuLogo}
@@ -65,7 +65,7 @@ const Menu = () => {
             onMouseEnter={toggleMenu}
             onMouseLeave={toggleMenu}
           />
-        </div>
+        </div> */}
       </div>
 
       <div
@@ -75,6 +75,7 @@ const Menu = () => {
         onmousemove="ShowGuide()"
         onmouseout="HideGuide()"
         ref={guideRef}
+        id="guideId"
       >
         <div className={`${styles.GuideSection} ${styles.diffrentGuide}`}>
           <h3>Guide</h3>
