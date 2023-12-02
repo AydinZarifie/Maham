@@ -102,32 +102,72 @@ const AdminPanel = () => {
       url = "/admin/panel/editAdmin/" + id;
     }
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-
-    console.log(provider);
-    //for to length of wallet array and execute addAdmin//
-    for(let i=0;i<walletAddress.length;i++){
-      const addAdmintTX = await addAdmin(signer , walletAddress[i]);
-    }
-    //////////////////////////////////////////////////////
-
     let { response } = await fetchInstance(url, {
       method: method,
       body: formData,
     });
-
+  
     if (response.ok) {
-      setError(null);
-      // alert("Admin successfully added");
-      setAlert(
-        "Your work has been successfully completed and your information has been saved"
-      );
-      navigate("/admin/admins");
+
+      ///blockchain proccess
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const address =  signer._address;
+
+        if(!address){
+          setError("Please connect or install the metamask")
+        }
+
+        addAdmin(walletAddress[0],signer).then(async (res) => {
+          //set transaction data in formdata
+          //set fetch to send transaction data to backend
+          //navigate and show success message here
+          let { response } = await fetchInstance("url", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              res: res,
+            }),
+          });
+          if(response.ok){
+            setError(null);
+            // alert("Admin successfully added");
+            setAlert(
+              "Your work has been successfully completed and your information has been saved"
+            );
+            navigate("/admin/admins");
+          }
+        }).catch(async (err) => {
+          //show error alert and navigate to adminPanel
+          //set fetch again to revert admin information (delete admin)
+          setError("Error");//set error
+          let { response } = await fetchInstance("url", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+            }),
+          });
+        })
+        
+     
     }
     if (response.status == 401) {
       setError("Email or phone number already exists");
     }
+     
+
+    
+    //for to length of wallet array and execute addAdmin//
+    /*     for(let i=0;i<walletAddress.length;i++){
+      const addAdmintTX = await addAdmin(signer , walletAddress[i]);
+      console.log(addAdmintTX);
+    } */
+    //////////////////////////////////////////////////////
   };
 
   useEffect(() => {

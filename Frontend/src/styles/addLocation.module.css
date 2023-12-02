@@ -162,13 +162,20 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   width: 100%;
   gap: 10px;
   font-size: 1.4rem;
   padding: 0 10px;
   border-left: 0.5px solid #cfcfcf;
   border-right: 0.5px solid #cfcfcf;
+}
+.Section2Head{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 .LocationHead span {
   width: 25px;
@@ -249,6 +256,17 @@ transform: scale(1.05);
   overflow: hidden;
   transition: 0.3s;
 }
+.InputDivHead{
+  width: 92%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 5px;
+  height: 0px;
+  overflow: hidden;
+  transition: 0.3s;
+}
 
 .inputContainer {
   position: relative;
@@ -303,11 +321,11 @@ transform: scale(1.05);
   color: rgb(67, 67, 67);
 }
 
-.InputDiv span {
-  width: 27px;
-  height: 25px;
-  border-radius: 15px;
-  font-size: 1.4rem;
+.InputDivHead span {
+  width: 70px;
+  height: 34px;
+  border-radius: 6px;
+  font-size: .8rem;
   background-color: #fff;
   border: 1px solid #cdcdcd;
   color: #5a5a5a;
@@ -318,7 +336,7 @@ transform: scale(1.05);
   align-items: center;
   justify-content: center;
 }
-.InputDiv span:hover {
+.InputDivHead span:hover {
   background-color: #f6f6f6;
 }
 .EditIcon {

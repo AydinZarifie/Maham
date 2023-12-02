@@ -86,9 +86,6 @@ const ConfingEstate = ({ method, estate }) => {
 
   const navigate = useNavigate();
 
-  const [walletAddress, setWallet] = useState("");
-  const [signer, setSigner] = useState({});
-
   const [selectedFilters, setSelectedFilters] = useState(
     estate ? estate.filter : []
   );
@@ -591,6 +588,25 @@ const ConfingEstate = ({ method, estate }) => {
   //   : `${styles.textinput} `;
 
   const submitHandler = async (event) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signers = provider.getSigner();
+    if(!signers._address){
+      //show error please connect or install your metamask
+    }
+
+    //set fetch for authorize the admin wallet 
+    //error status 400,403
+    let { res } = await fetchInstance("url for authorize", {
+      // method: method,
+      // body: formData,
+    });
+    if(res.status==400 || res.staus==403){
+      
+    }else{
+      //put every thing in here
+    }
+
+
     setLoading(true);
 
     setTouched({
@@ -785,25 +801,6 @@ const ConfingEstate = ({ method, estate }) => {
 
     let url = "/admin/estates";
 
-    if (method === "POST") {
-      const mintId = Number(information.id);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signers = provider.getSigner();
-      console.log(signers);
-      const mintRes = await mint(mintId, signers);
-      formData.append("hash", mintRes.hash);
-      formData.append("method", "transfer");
-      formData.append("from", mintRes.from);
-      formData.append("to", mintRes.to);
-      let dateObject = new Date();
-      let day = dateObject.getDate();
-      let month = dateObject.getMonth();
-      let year = dateObject.getFullYear();
-      let date = year + "/" + (month + 1) + "/" + day;
-      formData.append("date", date);
-      console.log(mintRes);
-    }
-
     if (method === "PUT") {
       const estateId = estate._id;
       url = "/admin/estates/" + estateId;
@@ -815,7 +812,35 @@ const ConfingEstate = ({ method, estate }) => {
     });
 
     if (response.ok) {
-      navigate("/admin/estates");
+      if (method === "POST") {
+        //blockchain proccess
+        const mintId = Number(information.id);
+        mint(mintId, signers).then((mintRes) => {
+          formData.append("hash", mintRes.hash);
+          formData.append("method", "transfer");
+          formData.append("from", mintRes.from);
+          formData.append("to", mintRes.to);
+          let dateObject = new Date();
+          let day = dateObject.getDate();
+          let month = dateObject.getMonth();
+          let year = dateObject.getFullYear();
+          let date = year + "/" + (month + 1) + "/" + day;
+          formData.append("date", date);
+          console.log(mintRes);
+          navigate("/admin/estates");
+        }).catch(async (err) => {
+          //delete the estate(set fetch for delete the estate)
+          const url = "/admin/estates/" + mintId;// again here there is no id and this will not work
+          let { response } = await fetchInstance(url, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          });
+          //show error --> mintId already exist , just admin can mint estate
+        })
+      }
+      else {
+        navigate("/admin/estates");
+      }
     }
 
     if ((response.status = 404)) {
@@ -827,20 +852,41 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const deleteHandler = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signers = provider.getSigner();
+    if(!signers._address){
+      //show error please connect or install your metamask
+    }
+
+    //authorized the admin wallet
+    let { res } = await fetchInstance("url for authorize", {
+      // method: method,
+      // body: formData,
+    });
+    if(res.status==400 || res.staus==403){
+      
+    }else{
+      //put every thing in here
+    }
+
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
+      //blockchain proccess
+      
       const mintId = Number(information.id);
-      const burnRes = await burn(mintId, signer);
-      console.log(burnRes);
-      const estateId = estate._id;
-      const url = "/admin/estates/" + estateId;
-      let { response } = await fetchInstance(url, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.ok) {
-        setDeleteConfirmed(true);
-      }
+      burn(mintId, signers).then(async(burnRes) => {
+        const estateId = estate._id;
+        const url = "/admin/estates/" + estateId;
+        let { response } = await fetchInstance(url, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (response.ok) {
+          setDeleteConfirmed(true);
+        }
+      }).catch((err) => {
+        //just admin can burn the estate
+      })
     }
   };
 
@@ -1128,7 +1174,7 @@ const ConfingEstate = ({ method, estate }) => {
                     // onChange={basicEventHandler}
                     name="walletAddress"
                     disabled
-                    placeholder={walletAddress}
+                    placeholder="walletAddress"
                     onBlur={blurHandler}
                   />
                   <div className={styles.underline}></div>

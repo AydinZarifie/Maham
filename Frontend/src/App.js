@@ -95,6 +95,8 @@ const UserLogin = lazy(() => import("./pages/user/UserLogin"));
 const UserSignup = lazy(() => import("./pages/user/UserSignup"));
 const Favourites = lazy(() => import("./pages/userPanel/Favourites"));
 const DetailPage = lazy(() => import("./pages/DetailPage.js"));
+const GuidePage = lazy(() => import("./pages/GuidePage.js"));
+const GuideHomePage = lazy(() => import("./pages/guidePage/GuideHomePage.js"));
 
 const router = createBrowserRouter([
   {
@@ -104,6 +106,24 @@ const router = createBrowserRouter([
         <HomePage />
       </Suspense>
     ),
+  },
+  {
+    path: "guide",
+    element: (
+      <Suspense>
+        <GuidePage />
+      </Suspense>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense>
+            <GuideHomePage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: "login",
