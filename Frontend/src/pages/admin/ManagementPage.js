@@ -110,8 +110,7 @@ const ManagementPage = () => {
     }
   };
 
-  const LockEstate = async (id, mintID, lockPosition) => {
-    
+  const LockEstate = async (id, mintID, lockPosition) => {   
     const mintId = Number(mintID);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -138,8 +137,10 @@ const ManagementPage = () => {
           formData.append("hash", txLock.hash);
           formData.append("method", "lock");
           formData.append("from", txLock.from);
-          formData.append("to", txLock.to);
           formData.append("mintId", mintID);
+          //set date to this transaction!
+
+          //set fetch to send data to backend --> url(/admin/transaction) 
         }).catch(async (err)=>{
           //revert lock estate (unlockEstate)
           let { response } = await fetchInstance(
@@ -152,7 +153,7 @@ const ManagementPage = () => {
               body: JSON.stringify(mintID),
             }
           );
-          //mintId already lock , your not approver  
+          //show this errors --> mintId already lock , your not approver  
         });
         let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {
           method: "POST",
@@ -166,6 +167,12 @@ const ManagementPage = () => {
           formData.append("from", txUnlock.from);
           formData.append("to", txUnlock.to);
           formData.append("mintId", mintID);
+          //set date to this transaction!
+
+          //set fetch to send data to backend --> url(/admin/transaction)
+
+
+
         }).catch(async(err)=> {
           //revert UnlockEstate(lockEstate)
           let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {

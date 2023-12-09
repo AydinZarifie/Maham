@@ -1,4 +1,4 @@
-  import styles from "../../styles/Add_Estate.module.css";
+import styles from "../../styles/Add_Estate.module.css";
 import locationStyles from "../../styles/addLocation.module.css";
 
 import { useEffect, useRef, useState } from "react";
@@ -593,9 +593,18 @@ const ConfingEstate = ({ method, estate }) => {
     if(!signers._address){
       //show error please connect or install your metamask
     }
+    const formData = new FormData();
+    const address = await signers.getAddress();
+    formData.append("wallet",address);
+    //set admin email wallet in formdata
 
-    //set fetch for authorize the admin wallet 
-    //error status 400,403
+    const res = await fetchInstance("/admin/auth/authorizeAdmin", {
+      method: 'POST',
+      body: formData,
+    });
+    if(res.status==400 || res.staus==403){
+      //show error
+    }
 
 
     setLoading(true);
@@ -640,7 +649,7 @@ const ConfingEstate = ({ method, estate }) => {
     }
     // event.preventDefault();
 
-    const formData = new FormData();
+    
 
     for (var i = 0; i < selectedFilters.length; i++) {
       formData.append("filter", selectedFilters[i]);
@@ -792,8 +801,6 @@ const ConfingEstate = ({ method, estate }) => {
 
     let url = "/admin/estates";
 
-  
-
     if (method === "PUT") {
       const estateId = estate._id;
       url = "/admin/estates/" + estateId;
@@ -812,17 +819,24 @@ const ConfingEstate = ({ method, estate }) => {
           formData.append("hash", mintRes.hash);
           formData.append("method", "transfer");
           formData.append("from", mintRes.from);
-          formData.append("to", mintRes.to);
+          formData.append("to", mintRes.to);  
           let dateObject = new Date();
           let day = dateObject.getDate();
           let month = dateObject.getMonth();
           let year = dateObject.getFullYear();
           let date = year + "/" + (month + 1) + "/" + day;
           formData.append("date", date);
-          console.log(mintRes);
+
+          // send transaction data for backend --> url (/admin/transaction)
+
           navigate("/admin/estates");
-        }).catch((err) => {
+        }).catch(async (err) => {
           //delete the estate(set fetch for delete the estate)
+          const url = "/admin/estates/" + mintId;// again here there is no id and this will not work
+          let { response } = await fetchInstance(url, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          });
           //show error --> mintId already exist , just admin can mint estate
         })
       }
@@ -842,11 +856,20 @@ const ConfingEstate = ({ method, estate }) => {
   const deleteHandler = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signers = provider.getSigner();
-    if(!signers._address){
-      //show error please connect or install your metamask
+    const formData = new FormData();
+    const address = await signers.getAddress();
+    formData.append("wallet" ,address);
+    //set admin email wallet in formdata
+    
+    let { res } = await fetchInstance("/admin/auth/authorizeAdmin", {
+      method: 'POST',
+      body: formData,
+    });
+    if(res.status==400 || res.staus==403){
+      //show error ==> this wallet address is not for admin
+    }else{
+      //put every thing in here
     }
-
-    //authorized the admin wallet
 
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
@@ -860,11 +883,19 @@ const ConfingEstate = ({ method, estate }) => {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         });
+
+        // set transaction data in formData and send to backend --> url (/admin/transaction)
+
+
+
         if (response.ok) {
           setDeleteConfirmed(true);
         }
       }).catch((err) => {
+
         //just admin can burn the estate
+
+
       })
     }
   };
@@ -1153,6 +1184,7 @@ const ConfingEstate = ({ method, estate }) => {
                     // onChange={basicEventHandler}
                     name="walletAddress"
                     disabled
+                    placeholder="walletAddress"
                     onBlur={blurHandler}
                   />
                   <div className={styles.underline}></div>

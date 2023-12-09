@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const transactionSchema = new mongoose.Schema({
-
     date : {
         type:String,
         required : true
@@ -15,11 +14,9 @@ const transactionSchema = new mongoose.Schema({
     },
     from : {
         type : String ,
-        required : true,
     },
     to : {
-        type : String ,
-        required : true
+        type : String,
     },
     method : {
         type : String ,
@@ -27,7 +24,6 @@ const transactionSchema = new mongoose.Schema({
     },
     mintId : {
         type :  String , 
-        required : true
     }
 })
 

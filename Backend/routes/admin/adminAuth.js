@@ -39,7 +39,7 @@ router
 	.post(adminAuthController.verifyAdminAccessTokenProtectedRoute);
 
 router.post(
-	'/auth/authorizeAdmin',
+	'/auth/authorizeAdmin',verifyToken,
 	adminAuthController.checkAdminAuthorization
 );
 

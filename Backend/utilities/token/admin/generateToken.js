@@ -9,7 +9,7 @@ const generateToken = async (data) => {
 		};
 
 		const accessToken = jwt.sign(information, process.env.ACCESS_TOKEN_SECRET, {
-			expiresIn: '15m',
+			expiresIn: '10s',
 		});
 		const refreshToken = jwt.sign(
 			information,

@@ -250,17 +250,6 @@ exports.createEstate = catchAsync(async (req, res, next) => {
 
 	await estate.save();
 
-	const transaction = new transactionDB({
-		date: req.body.date,
-		txHash: req.body.hash,
-		from: req.body.from,
-		to: req.body.to,
-		method: req.body.method,
-		mintId: req.body.mintId,
-	});
-
-	await transaction.save();
-
 	return res.status(201).json({
 		status: 'success',
 		message: 'estate created',

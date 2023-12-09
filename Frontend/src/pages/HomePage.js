@@ -22,7 +22,85 @@ const HomePage = () => {
   };
 
   const [filters, setFilters] = useState([]);
-  const [estates, setEstates] = useState([]);
+  const [estates, setEstates] = useState([
+    {
+      imageUrl: [],
+      estate_title: "beach home in ohaio ",
+      PM: 2,
+      country_name: "Usa",
+      city_name: "california",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+  ]);
 
   useEffect(() => {
     const fetchEstatesData = async () => {

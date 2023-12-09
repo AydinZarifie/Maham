@@ -1,5 +1,4 @@
 const adminDB = require('../../models/admin');
-const estateDB = require('../../models/estate');
 const catchAsync = require('./../../utilities/error/catchAsync');
 const AppError = require('./../../utilities/error/appError');
 const { formatStr } = require('../../utilities/mint');
@@ -141,7 +140,7 @@ exports.getEditAdmin = catchAsync(async (req, res, next) => {
 	if (!admin) {
 		return next(new AppError('no admin found', 404));
 	}
-
+	console.log(admin);
 	return res.status(200).json({
 		status: 'success',
 		data: admin,

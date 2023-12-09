@@ -76,7 +76,8 @@ const AdminConfig = ({ method, admin }) => {
     enteredCountryIsValid &&
     enteredCityIsValid &&
     enteredPasswordIsValid &&
-    enteredConfirmPasswordIsValid
+    enteredConfirmPasswordIsValid&&
+    walletAddresses.length > 0 
     //enteredWalletAddressIsValid
   ) {
     formIsValidForAdding = true;
@@ -387,6 +388,8 @@ const AdminConfig = ({ method, admin }) => {
         <div className={styles.WalletAddres}>
           <div className={styles.WalletHead}>
             <h3>Admin Wallet addres</h3>
+            {walletAddresses.length >=3 && ( <h4>(Only 3 wallet addresses are acceptable)</h4>)}
+           
           </div>
           <div className={styles.WalletInputDiv}>
             <div className={styles.floatingLabel2}>

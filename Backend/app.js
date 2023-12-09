@@ -12,6 +12,7 @@ const adminPage_Router = require('./routes/admin/adminPage');
 const managmentPage_Router = require('./routes/admin/adminManagment');
 const adminAuth_Router = require('./routes/admin/adminAuth');
 const adminPanel_Router = require('./routes/admin/adminPanel');
+const transaction_Router = require("./routes/admin/transaction");
 const userAuthorization_Router = require('./routes/user/userAuthorization');
 const userPanel_Router = require('./routes/user/userPanel');
 const userAuth_Router = require('./routes/user/userAuth');
@@ -120,7 +121,7 @@ app.use(upload);
 
 app.use('/admin', adminAuth_Router);
 
-app.use('/admin', adminPage_Router, managmentPage_Router, adminPanel_Router);
+app.use('/admin', adminPage_Router, managmentPage_Router, adminPanel_Router,transaction_Router);
 
 app.use('/user', userAuthorization_Router, userPanel_Router, userAuth_Router);
 

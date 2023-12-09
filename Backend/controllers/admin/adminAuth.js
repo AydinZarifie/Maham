@@ -15,6 +15,7 @@ const { formatStr } = require('../../utilities/mint.js');
 
 exports.signupAdmin = async (req, res, next) => {
 	try {
+		console.log("hello");
 		console.log("hi");
 		const error = validationResult(req);
 		if (!error.isEmpty()) {
@@ -291,25 +292,31 @@ exports.verifyAdminAccessTokenProtectedRoute = async (req, res) => {
 		});
 	}
 };
-
+	
 exports.checkAdminAuthorization = catchAsync(async (req, res, next) => {
-	if (!req.body.email) {
+
+	console.log(req.email);
+	console.log(req.body.wallet);
+	if (!req.email) {
 		return next(new AppError('Email has not been provided', 400));
-	} else if (!req.body.walletId) {
+	} else if (!req.body.wallet) {
 		return next(new AppError('Wallet ID has not been provided', 400));
 	}
 
-	const admin = await adminDB.findOne({ email: req.body.email });
+	
+
+	const admin = await adminDB.findOne({ email: req.email });
 
 	if (!admin) {
-		console.log(`Unauthorized action for email: ${req.body.email}`);
+		console.log(`Unauthorized action for email: ${req.email}`);
 		return next(new AppError('Not authorized - Admin not found', 403));
 	}
 
 	// Check if walletId exists in the admin's wallet array
-	if (!admin.wallet.includes(req.body.walletId)) {
+	if (!admin.wallet.includes(req.body.wallet)) {
+	
 		console.log(
-			`Unauthorized action for email: ${req.body.email}, walletId: ${req.body.walletId}`
+			`Unauthorized action for email: ${req.email}, walletId: ${req.body.wallet}`
 		);
 		return next(
 			new AppError(
@@ -320,9 +327,12 @@ exports.checkAdminAuthorization = catchAsync(async (req, res, next) => {
 	}
 
 	console.log(
-		`Authorized - email: ${req.body.email}, walletId: ${req.body.walletId}`
+		`Authorized - email: ${req.email}, walletId: ${req.body.wallet}`
 	);
-	return next();
+
+	return res.status(200).json({
+		message :  "success"
+	});
 	// we are not returning any response
 	// because if we want to return a value that indicates that admin is authorized
 	// like as True or False , it WILL NOT be practical and secure

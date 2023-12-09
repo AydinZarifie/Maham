@@ -78,11 +78,29 @@ const AdminPanel = () => {
     walletAddress,
     id
   ) => {
-    const formData = new FormData();
+    const formData = new FormData();      
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address =  await signer.getAddress();
+    if(!address){
+      setError("Please connect or install the metamask")
+    }
+    
+    formData.append('wallet' , address)
+ 
+    const res = await fetchInstance("/admin/auth/authorizeAdmin", {
+      method: 'POST',
+      body: formData,
+    });
+
+    if(res.status==400 || res.staus==403){
+      setError("Please connect with admin wallet address")
+    }
+    formData.append("email", email);
     formData.append("adminType", type);
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
-    formData.append("email", email);
+
     formData.append("phoneNumber", phoneNumber);
     formData.append("country", country);
     formData.append("city", city);
@@ -93,7 +111,7 @@ const AdminPanel = () => {
 
     console.log(walletAddress);
     for(let i=0;i<walletAddress.length;i++){
-      formData.append("wallet",walletAddress[i]);
+       
     }
 
     let url = "/admin/auth/signup";
@@ -109,30 +127,37 @@ const AdminPanel = () => {
   
     if (response.ok) {
 
-      ///blockchain proccess
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const address =  signer._address;
+        addAdmin(walletAddress[0],signer).then(async (res) => {
+          const transactionFormData = new FormData();
+          transactionFormData.append('hash' , transactionFormData.has);
+          //set another transaction ---> from , date , adminWalletAddress(to) , method (AddAdmin) , hash
 
-        if(!address){
-          //show error please connect or install the metamask
-        }
+          //send formdata value for backend --> url(/admin/transaction)
 
-        addAdmin(walletAddress[0],signer).then((res) => {
-          //set transaction data in formdata
-          //set fetch to send transaction data to backend
-          //navigate and show success message here
-        }).catch((err) => {
+          if(response.ok){
+            setError(null);
+            // alert("Admin successfully added");
+            setAlert(
+              "Your work has been successfully completed and your information has been saved"
+            );
+            navigate("/admin/admins");
+          }
+        }).catch(async (err) => {
           //show error alert and navigate to adminPanel
           //set fetch again to revert admin information (delete admin)
+          setError("Error");//set error
+          let { response } = await fetchInstance("url", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+            }),
+          });
         })
         
-      setError(null);
-      // alert("Admin successfully added");
-      setAlert(
-        "Your work has been successfully completed and your information has been saved"
-      );
-      navigate("/admin/admins");
+     
     }
     if (response.status == 401) {
       setError("Email or phone number already exists");
@@ -141,7 +166,7 @@ const AdminPanel = () => {
 
     
     //for to length of wallet array and execute addAdmin//
-/*     for(let i=0;i<walletAddress.length;i++){
+    /*     for(let i=0;i<walletAddress.length;i++){
       const addAdmintTX = await addAdmin(signer , walletAddress[i]);
       console.log(addAdmintTX);
     } */
