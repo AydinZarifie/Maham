@@ -5,11 +5,9 @@ import profileLogo from "../../images/profile-circle-svgrepo-com.svg";
 import menuLogo from "../../images/menu-fries-svgrepo-com.svg";
 import { useRef } from "react";
 
-const Menu = () => {
+const Menu = (props) => {
   const menuRef = useRef();
   const guideRef = useRef();
-
-  let time;
 
   const toggleMenu = () => {
     if (menuRef.current.style.height == "350px") {
@@ -31,10 +29,12 @@ const Menu = () => {
     }
   };
 
+  //hadi => className={props.scrolledDown ? styles.true:styles.false}
+
   return (
     <header className={styles.Header} id="headerId">
       <div className={styles.LogoDiv}>
-        <a className={styles.Maham}>
+        <a className={styles.Maham} >
           <span className={styles.LogoAndTitle}>
             <img className={styles.Logo} src={logo} />
             <h1 className={styles.Title}>MAHAM</h1>
@@ -43,13 +43,14 @@ const Menu = () => {
       </div>
       <div className={styles.menuLittle}>
         <div className={styles.underline}>
-          <a>Home</a>
+          <a id="menuItemsId1">Home</a>
         </div>
         <div className={styles.underline}>
-          <a>MEI</a>
+          <a id="menuItemsId2">MEI</a>
         </div>
-        <div className={styles.underline} >
-          <a onMouseEnter={toggleGuide} onMouseLeave={toggleGuide}>
+        <div className=
+        {`${styles.GuideBtn} ${styles.underline} `} >
+          <a onMouseEnter={toggleGuide} onMouseLeave={toggleGuide} id="menuItemsId3">
             Guide
           </a>
         </div>

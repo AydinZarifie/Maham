@@ -48,6 +48,15 @@ const ConfingEstate = ({ method, estate }) => {
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   const facilityLocationRef = useRef([]);
+  const facilityAddLocationRef=useRef([]);
+
+  const toggleAddLocation=(index)=>{
+    if( facilityAddLocationRef.current[index].style.height!="45px"){
+      facilityAddLocationRef.current[index].style.height="45px";
+    }else{
+      facilityAddLocationRef.current[index].style.height="0px";
+    }
+  }
 
   const scrollToError = () => {
     const errorElement = document.querySelector(`.${styles.invalid}`);
@@ -590,22 +599,22 @@ const ConfingEstate = ({ method, estate }) => {
   const submitHandler = async (event) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signers = provider.getSigner();
-    if(!signers._address){
+    if (!signers._address) {
       //show error please connect or install your metamask
     }
 
-    //set fetch for authorize the admin wallet 
-    //error status 400,403
-    let { res } = await fetchInstance("url for authorize", {
-      // method: method,
-      // body: formData,
+    const formData = new FormData();
+    const address = await signers.getAddress();
+    formData.append("wallet",address);
+    //set admin email wallet in formdata
+
+    const res = await fetchInstance("/admin/auth/authorizeAdmin", {
+      method: 'POST',
+      body: formData,
     });
     if(res.status==400 || res.staus==403){
-      
-    }else{
-      //put every thing in here
+      //show error
     }
-
 
     setLoading(true);
 
@@ -648,8 +657,6 @@ const ConfingEstate = ({ method, estate }) => {
       }
     }
     // event.preventDefault();
-
-    const formData = new FormData();
 
     for (var i = 0; i < selectedFilters.length; i++) {
       formData.append("filter", selectedFilters[i]);
@@ -815,30 +822,35 @@ const ConfingEstate = ({ method, estate }) => {
       if (method === "POST") {
         //blockchain proccess
         const mintId = Number(information.id);
-        mint(mintId, signers).then((mintRes) => {
-          formData.append("hash", mintRes.hash);
-          formData.append("method", "transfer");
-          formData.append("from", mintRes.from);
-          formData.append("to", mintRes.to);
-          let dateObject = new Date();
-          let day = dateObject.getDate();
-          let month = dateObject.getMonth();
-          let year = dateObject.getFullYear();
-          let date = year + "/" + (month + 1) + "/" + day;
-          formData.append("date", date);
-          console.log(mintRes);
-          navigate("/admin/estates");
-        }).catch(async (err) => {
-          //delete the estate(set fetch for delete the estate)
-          const url = "/admin/estates/" + mintId;// again here there is no id and this will not work
-          let { response } = await fetchInstance(url, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
+        mint(mintId, signers)
+          .then(async(mintRes) => {
+            formData.append("hash", mintRes.hash);
+            formData.append("method", "transfer");
+            formData.append("from", mintRes.from);
+            formData.append("to", mintRes.to);
+            let dateObject = new Date();
+            let day = dateObject.getDate();
+            let month = dateObject.getMonth();
+            let year = dateObject.getFullYear();
+            let date = year + "/" + (month + 1) + "/" + day;
+            formData.append("date", date);
+            let { response } = await fetchInstance("/admin/transaction" , {
+              method: "POST",
+              body: formData,
+            });
+            
+            navigate("/admin/estates");
+          })
+          .catch(async (err) => {
+            //delete the estate(set fetch for delete the estate)
+            const url = "/admin/estates/" + mintId; // again here there is no id and this will not work
+            let { response } = await fetchInstance(url, {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+            });
+            //show error --> mintId already exist , just admin can mint estate
           });
-          //show error --> mintId already exist , just admin can mint estate
-        })
-      }
-      else {
+      } else {
         navigate("/admin/estates");
       }
     }
@@ -854,17 +866,17 @@ const ConfingEstate = ({ method, estate }) => {
   const deleteHandler = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signers = provider.getSigner();
-    if(!signers._address){
-      //show error please connect or install your metamask
-    }
-
-    //authorized the admin wallet
-    let { res } = await fetchInstance("url for authorize", {
-      // method: method,
-      // body: formData,
+    const formData = new FormData();
+    const address = await signers.getAddress();
+    formData.append("wallet" ,address);
+    //set admin email wallet in formdata
+    
+    let { res } = await fetchInstance("/admin/auth/authorizeAdmin", {
+      method: 'POST',
+      body: formData,
     });
     if(res.status==400 || res.staus==403){
-      
+      //show error ==> this wallet address is not for admin
     }else{
       //put every thing in here
     }
@@ -872,21 +884,24 @@ const ConfingEstate = ({ method, estate }) => {
     const proceed = window.confirm("Are you Sure?");
     if (proceed) {
       //blockchain proccess
-      
+
       const mintId = Number(information.id);
-      burn(mintId, signers).then(async(burnRes) => {
-        const estateId = estate._id;
-        const url = "/admin/estates/" + estateId;
-        let { response } = await fetchInstance(url, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
+      burn(mintId, signers)
+        .then(async (burnRes) => {
+          const estateId = estate._id;
+          const url = "/admin/estates/" + estateId;
+          let { response } = await fetchInstance(url, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          });
+           // set transaction data in formData and send to backend --> url (/admin/transaction)
+          if (response.ok) {
+            setDeleteConfirmed(true);
+          }
+        })
+        .catch((err) => {
+          //just admin can burn the estate
         });
-        if (response.ok) {
-          setDeleteConfirmed(true);
-        }
-      }).catch((err) => {
-        //just admin can burn the estate
-      })
     }
   };
 
@@ -934,6 +949,7 @@ const ConfingEstate = ({ method, estate }) => {
     oldValues[index].input = "";
     console.log(oldValues);
     setFacilityLocation(oldValues);
+    toggleAddLocation(index);
   };
 
   const deleteFromFacilityLocationItems = (index, deletingItem, event) => {
@@ -946,6 +962,7 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const editFacilityLocationItem = (index, facilityLocation) => {
+    toggleAddLocation(index);
     setFacilityLocation((prev) => [
       ...prev,
       (prev[index].input = facilityLocation),
@@ -1091,57 +1108,7 @@ const ConfingEstate = ({ method, estate }) => {
             </div>
           </div>
 
-          <div className={styles.row}>
-            <div className={styles.column}>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={numberOfPlateClass}
-                    value={information.numberOfPlate}
-                    name="numberOfPlate"
-                    onChange={basicEventHandler}
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Number Of Plates</label>
-                </div>
-              </div>
-            </div>
-            <div className={styles.column}>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={numberOfFloorClass}
-                    value={information.numberOfFloor}
-                    onChange={basicEventHandler}
-                    name="numberOfFloor"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Number Of Floors</label>
-                </div>
-              </div>
-              <div className={styles.wrapper2}>
-                <div className={styles.inputData}>
-                  <input
-                    required
-                    type="text"
-                    className={numberOfUnitClass}
-                    value={information.numberOfUnit}
-                    onChange={basicEventHandler}
-                    name="numberOfUnit"
-                    onBlur={blurHandler}
-                  />
-                  <div className={styles.underline}></div>
-                  <label className={styles.label}>Number Of Unit</label>
-                </div>
-              </div>
-            </div>
-          </div>
+        
 
           <div className={styles.IdAndWallet}>
             <div className={styles.IdAndMint}>
@@ -1181,11 +1148,7 @@ const ConfingEstate = ({ method, estate }) => {
                   {/* <label className={styles.label}>Id</label> */}
                 </div>
               </div>
-              <button
-                className={styles.ConnectWalletBtn}
-              >
-                connectWallet
-              </button>
+              <button className={styles.ConnectWalletBtn}>connectWallet</button>
             </div>
           </div>
 
@@ -1261,6 +1224,57 @@ const ConfingEstate = ({ method, estate }) => {
               <option value="residential">residential</option>
               <option value="commercial">commercial</option>
             </select>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={numberOfPlateClass}
+                    value={information.numberOfPlate}
+                    name="numberOfPlate"
+                    onChange={basicEventHandler}
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Number Of Plates</label>
+                </div>
+              </div>
+            </div>
+            <div className={styles.column}>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={numberOfFloorClass}
+                    value={information.numberOfFloor}
+                    onChange={basicEventHandler}
+                    name="numberOfFloor"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Number Of Floors</label>
+                </div>
+              </div>
+              <div className={styles.wrapper2}>
+                <div className={styles.inputData}>
+                  <input
+                    required
+                    type="text"
+                    className={numberOfUnitClass}
+                    value={information.numberOfUnit}
+                    onChange={basicEventHandler}
+                    name="numberOfUnit"
+                    onBlur={blurHandler}
+                  />
+                  <div className={styles.underline}></div>
+                  <label className={styles.label}>Number Of Unit</label>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className={styles.row}>
@@ -1389,36 +1403,24 @@ const ConfingEstate = ({ method, estate }) => {
               {facilityLocation.map((item, index) => (
                 <div className={locationStyles.LocationHead}>
                   <h5 className={locationStyles.title}>{item.title}</h5>
-                  <img
-                    src={deleteIcon2}
-                    className={locationStyles.DeleteIcon}
-                    onClick={() => deleteFromFacilityLocation(item.title)}
-                  />
-                  <div className={locationStyles.InputDiv}>
-                    <div className={locationStyles.inputContainer}>
-                      <input
-                        type="text"
-                        id={index}
-                        value={item.input}
-                        className={locationStyles.inputs}
-                        onChange={(event) =>
-                          facilityLocationEventHandler(index, event)
+
+                  <div className={locationStyles.DeleteAndEditDiv}>
+                    <img
+                      src={deleteIcon2}
+                      className={locationStyles.DeleteIcon}
+                      onClick={() => deleteFromFacilityLocation(item.title)}
+                    />
+                    <div className={locationStyles.InputDiv}>
+                      <span
+                        onClick={(event) =>
+                          // addToFacilityLocationItems(index, event)
+                          toggleAddLocation(index,event)
                         }
-                        ref={(element) =>
-                          (facilityLocationRef.current[index] = element)
-                        }
-                      />
-                      <label className={locationStyles.label} htmlFor={index}>
-                        <div className={locationStyles.text}>Location</div>
-                      </label>
+                        
+                      >
+                        +
+                      </span>
                     </div>
-                    <span
-                      onClick={(event) =>
-                        addToFacilityLocationItems(index, event)
-                      }
-                    >
-                      +
-                    </span>
                   </div>
                 </div>
               ))}
@@ -1427,6 +1429,38 @@ const ConfingEstate = ({ method, estate }) => {
               {facilityLocation.map((parentItem, parentIndex) => (
                 <div className={locationStyles.SectionBody}>
                   <div className={locationStyles.Section}>
+                    <div className={locationStyles.InputDivUnique} ref={(element) =>
+                            (facilityAddLocationRef.current[parentIndex] = element)
+                          }>
+                      <div className={locationStyles.inputContainer}>
+                        <input
+                          type="text"
+                          id={parentIndex}
+                          value={parentItem.input}
+                          className={locationStyles.inputs}
+                          onChange={(event) =>
+                            facilityLocationEventHandler(parentIndex, event)
+                          }
+                          ref={(element) =>
+                            (facilityLocationRef.current[parentIndex] = element)
+                          }
+                        />
+                        <label
+                          className={locationStyles.label}
+                          htmlFor={parentIndex}
+                        >
+                          <div className={locationStyles.text}>Location</div>
+                        </label>
+                      </div>
+                      <span
+                      className={locationStyles.ImportBtn}
+                        onClick={(event) =>
+                          addToFacilityLocationItems(parentIndex, event)
+                        }
+                      >
+                        +
+                      </span>
+                    </div>
                     {/* <div className={locationStyles.LocationEdit}> */}
                     {parentItem.childList.map((item, index) => (
                       <div className={locationStyles.InputDiv}>

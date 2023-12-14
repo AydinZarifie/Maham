@@ -11,9 +11,9 @@ import bathtubIcon from "../images/bathtub-svgrepo-com.svg";
 import metrageIcon from "../images/arrow-increase-svgrepo-com.svg";
 import attentionIcon from "../images/attention-svgrepo-com.svg";
 import warningIcon from "../images/warning-attention-svgrepo-com.svg";
-import recieptIcon from "../images/reciept-svgrepo-com.svg";
+import recieptIcon from "../images/chat-message-sms-text-svgrepo2-com.svg";
 import wifiIcon from "../images/wifi-outline-svgrepo-com.svg";
-import facilitiesIcon from "../images/home-add-angle-svgrepo-com.svg";
+import facilitiesIcon from "../images/home-add-angle-svgrepo2-com.svg";
 import trueIcon from "../images/tick-svgrepo-com (3).svg";
 import falseIcon from "../images/close-svgrepo-com.svg";
 import parkingIcon from "../images/parking-svgrepo-com.svg";
@@ -29,7 +29,8 @@ import buildingIcon2 from "../images/building-svgrepo-com.svg";
 import CustomTableItem from "../components/general/CustomTableItem";
 import poolIcon from "../images/pool-svgrepo-com (2).svg";
 import ArrowUpIcon from "../images/arrow-down-svgrepo-com.svg";
-import PropertyInfoIcon from "../images/inbox-information-svgrepo-com.svg";
+import PropertyInfoIcon from "../images/pencil-and-filled-paper-sheet-svgrepo2-com.svg";
+import TransactionIcon from "../images/transaction-svgrepo2-com.svg";
 import hideIcon from "../images/eye-slash-alt-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -641,8 +642,12 @@ const DetailPage = () => {
         </div>
 
         <div className={styles.Transactions}>
-          <h3>Transactions</h3>
-
+        <div className={styles.SectionHead}>
+            <img src={TransactionIcon} className={styles.SectionHeadIcon} />
+            <h3>Transactions</h3>
+          </div>
+          {/* <h3>Transactions</h3> */}
+          
           <div className={styles.TableDiv}>
             <table className={styles.InfoTable}>
               <thead>

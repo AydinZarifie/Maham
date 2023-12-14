@@ -10,6 +10,7 @@ import Menu from "../components/general/Menu";
 
 const HomePage = () => {
   const [searchShown, setSearchShown] = useState(false);
+  const [scrolledDown, setScrolledDown] = useState(false);
 
   const toggleSearchShown = () => {
     setSearchShown((prev) => !prev);
@@ -100,6 +101,39 @@ const HomePage = () => {
       metrage: 125,
       customer_price: 11,
     },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
+    {
+      imageUrl: [],
+      estate_title: "beach",
+      PM: 2,
+      country_name: "iran",
+      city_name: "tabriz",
+      monthOfBuild: "july",
+      yearOfBuild: 1992,
+      metrage: 125,
+      customer_price: 11,
+    },
   ]);
 
   useEffect(() => {
@@ -116,6 +150,18 @@ const HomePage = () => {
       setFilters(json.data);
     };
     fetchFilterData();
+    const handleScroll = () => {
+      const size = document.getElementById("container2");
+      if (window.scrollY + 178 > size.offsetTop) {
+        setScrolledDown(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [filters, estates]);
 
   const submitSearch = async (searchPhrase) => {
@@ -166,8 +212,8 @@ const HomePage = () => {
         submitSearch={submitSearch}
         submitFilterSearch={submitFilterSearch}
       /> */}
-      <Menu />
-      <Slogan />
+      <Menu scrolledDown={scrolledDown} />
+      {scrolledDown ? null : <Slogan />}
       <Preferences
         clickHandlerForSearchShown={toggleSearchShown}
         clickHandlerForFilterShown={toggleFilterShown}
