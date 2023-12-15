@@ -1612,7 +1612,7 @@
   height: 63px;
 }
 .InputDiv{
-width: 70%;
+width:calc(95% - 20px) ;
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -1656,7 +1656,7 @@ color: #3f3f3f;
 
 @media (min-width: 750px) {
   .WalletAddres{
-    min-height: 335px;
+    min-height: auto;
     width: 90%;
     background-color: #ffffff;
     display: flex;
@@ -1668,7 +1668,7 @@ color: #3f3f3f;
 }
 @media (max-width: 750px) {
   .WalletAddres{
-    min-height: 335px;
+    min-height: auto;
     width: 90%;
     background-color: #ffffff;
     display: flex;

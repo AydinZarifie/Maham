@@ -137,8 +137,14 @@ const ManagementPage = () => {
           formData.append("hash", txLock.hash);
           formData.append("method", "lock");
           formData.append("from", txLock.from);
-          formData.append("to", txLock.to);
           formData.append("mintId", mintID);
+          let dateObject = new Date();
+          let day = dateObject.getDate();
+          let month = dateObject.getMonth();
+          let year = dateObject.getFullYear();
+          let date = year + "/" + (month + 1) + "/" + day;
+          formData.append("date", date);
+
         }).catch(async (err)=>{
           //revert lock estate (unlockEstate)
           let { response } = await fetchInstance(
@@ -159,12 +165,22 @@ const ManagementPage = () => {
         });
       } else {
         const formData = new FormData();
-        unlock(mintId, signer).then((txUnlock) => {
+        unlock(mintId, signer).then(async(txUnlock) => {
           formData.append("hash", txUnlock.hash);
           formData.append("method", "unlock");
           formData.append("from", txUnlock.from);
           formData.append("to", txUnlock.to);
           formData.append("mintId", mintID);
+          let dateObject = new Date();
+          let day = dateObject.getDate();
+          let month = dateObject.getMonth();
+          let year = dateObject.getFullYear();
+          let date = year + "/" + (month + 1) + "/" + day;
+          formData.append("date", date);
+          let { response } = await fetchInstance("/admin/transaction" , {
+            method: "POST",
+            body: formData,
+          });
         }).catch(async(err)=> {
           //revert UnlockEstate(lockEstate)
           let { response } = await fetchInstance("/admin/managment/lockUnLockEstate/" + id, {

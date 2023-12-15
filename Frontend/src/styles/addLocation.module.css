@@ -170,6 +170,12 @@ body {
   border-left: 0.5px solid #cfcfcf;
   border-right: 0.5px solid #cfcfcf;
 }
+.DeleteAndEditDiv{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
 .Section2Head{
   display: flex;
   flex-direction: row;
@@ -255,7 +261,39 @@ transform: scale(1.05);
   height: 45px;
   overflow: hidden;
   transition: 0.3s;
+  margin-bottom: 5px;
 }
+.InputDivUnique{
+  width: 92%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  height: 0px;
+  overflow: hidden;
+  transition: 0.3s;
+  margin-bottom: 10px;
+}
+
+.ImportBtn  {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  border: 1px solid #cdcdcd;
+  color: #5a5a5a;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.ImportBtn:hover {
+  background-color: #f6f6f6;
+}
+
 .InputDivHead{
   width: 92%;
   display: flex;

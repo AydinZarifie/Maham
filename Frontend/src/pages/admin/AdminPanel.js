@@ -79,10 +79,27 @@ const AdminPanel = () => {
     id
   ) => {
     const formData = new FormData();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address =  await signer.getAddress();
+    if(!address){
+      setError("Please connect or install the metamask")
+    }
+    
+    formData.append('wallet' , address)
+ 
+    const res = await fetchInstance("/admin/auth/authorizeAdmin", {
+      method: 'POST',
+      body: formData,
+    });
+
+    if(res.status==400 || res.staus==403){
+      setError("Please connect with admin wallet address")
+    }
+    formData.append("email", email);
     formData.append("adminType", type);
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
-    formData.append("email", email);
     formData.append("phoneNumber", phoneNumber);
     formData.append("country", country);
     formData.append("city", city);
@@ -92,9 +109,6 @@ const AdminPanel = () => {
     }
 
     console.log(walletAddress);
-    for(let i=0;i<walletAddress.length;i++){
-      formData.append("wallet",walletAddress[i]);
-    }
 
     let url = "/admin/auth/signup";
 
@@ -110,27 +124,26 @@ const AdminPanel = () => {
     if (response.ok) {
 
       ///blockchain proccess
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const address =  signer._address;
+      addAdmin(walletAddress[0],signer).then(async (res) => {
+        const transactionFormData = new FormData();
+        transactionFormData.append('hash' , res.hash);
+        transactionFormData.append("method", "addAdmin");
+        transactionFormData.append("from", res.from);
+        transactionFormData.append("to", res.to);
+        let dateObject = new Date();
+        let day = dateObject.getDate();
+        let month = dateObject.getMonth();
+        let year = dateObject.getFullYear();
+        let date = year + "/" + (month + 1) + "/" + day;
+        transactionFormData.append("date", date);
 
-        if(!address){
-          setError("Please connect or install the metamask")
-        }
 
-        addAdmin(walletAddress[0],signer).then(async (res) => {
-          //set transaction data in formdata
-          //set fetch to send transaction data to backend
-          //navigate and show success message here
-          let { response } = await fetchInstance("url", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              res: res,
-            }),
-          });
+        let { response } = await fetchInstance("/admin/transaction" , {
+          method: "POST",
+          body: transactionFormData,
+        });
+        //send formdata value for backend --> url(/admin/transaction)
+
           if(response.ok){
             setError(null);
             // alert("Admin successfully added");

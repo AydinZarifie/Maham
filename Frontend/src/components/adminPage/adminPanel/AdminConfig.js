@@ -387,7 +387,7 @@ const AdminConfig = ({ method, admin }) => {
         {/*  */}
         <div className={styles.WalletAddres}>
           <div className={styles.WalletHead}>
-            <h3>Admin Wallet addres</h3>
+            <h3>Admin Wallet address</h3>
             {walletAddresses.length >=3 && ( <h4>(Only 3 wallet addresses are acceptable)</h4>)}
            
           </div>
@@ -462,11 +462,11 @@ const AdminConfig = ({ method, admin }) => {
                     src={DeleteIcon}
                     onClick={() => deleteFromWalletAddresses(item)}
                   />
-                  <img
+                  {/* <img
                     className={styles.EditIcon}
                     src={EditIcon}
                     onClick={() => editwalletAddressItem(item)}
-                  />
+                  /> */}
                 </div>
               </div>
             ))}
