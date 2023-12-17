@@ -23,6 +23,7 @@ const AdminPanel = () => {
   const navigate = useNavigate();
 
   const closeFilter = () => {
+
     filter.current.style.visibility = "hidden";
     overlay.current.style.visibility = "hidden";
   };
@@ -124,7 +125,7 @@ const AdminPanel = () => {
     if (response.ok) {
 
       ///blockchain proccess
-      addAdmin(walletAddress[0],signer).then(async (res) => {
+      addAdmin(walletAddress,signer).then(async (res) => {
         const transactionFormData = new FormData();
         transactionFormData.append('hash' , res.hash);
         transactionFormData.append("method", "addAdmin");
@@ -150,7 +151,7 @@ const AdminPanel = () => {
             setAlert(
               "Your work has been successfully completed and your information has been saved"
             );
-            navigate("/admin/admins");
+            // navigate("/admin/admins");
           }
         }).catch(async (err) => {
           //show error alert and navigate to adminPanel

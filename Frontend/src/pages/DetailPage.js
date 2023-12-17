@@ -36,6 +36,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/general/Navbar";
 import Menu from "../components/general/Menu";
+import DetailMenu from "../components/general/DetailMenu";
 
 const DetailPage = () => {
   const [approverBox, setApproverBox] = useState(false);
@@ -121,7 +122,7 @@ const DetailPage = () => {
 
   return (
     <>
-      <Menu />
+      <DetailMenu />
 
       {/* {scrolledDown && ( */}
       <div className={styles.BuyMenu} ref={scrolledDownRef}>

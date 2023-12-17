@@ -1,4 +1,4 @@
-import styles from "../../styles/homePage.module.css";
+import styles from "../../styles/preferences.module.css";
 
 const FilterItem = (props) => {
   return (

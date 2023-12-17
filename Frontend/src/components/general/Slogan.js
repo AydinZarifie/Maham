@@ -6,6 +6,13 @@ import sloganPicture from "../../images/modern-business-building-scenery-touchin
 
 const Slogan = () => {
   const sloganDiv = useRef(null);
+
+  const scrollToEstates=()=>{
+    window.scrollTo({
+      top: 725,
+    });
+  }
+
   useEffect(() => {
     // const size = document.getElementById("container2");
     // const headerId = document.getElementById("headerId");
@@ -22,7 +29,7 @@ const Slogan = () => {
 
     if (sloganDiv) {
       sloganDiv.current.style.opacity = "1";
-      sloganDiv.current.style.top = "100px";
+      sloganDiv.current.style.top = "150px";
     }
 
     // const handleScroll = () => {
@@ -68,7 +75,7 @@ const Slogan = () => {
                   sector and will soon change the real estate sales process
                 </h4>
               </div>
-              <a className={styles.GetStartedBtn} href="#container2">
+              <a onClick={scrollToEstates} className={styles.GetStartedBtn} >
                 Get Started
               </a>
             </div>

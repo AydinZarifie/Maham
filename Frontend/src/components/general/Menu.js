@@ -1,13 +1,15 @@
 import styles from "../../styles/menu.module.css";
 
 import logo from "../../images/Maham2.png";
+import whiteLogo from "../../images/WhiteLogo.png";
 import profileLogo from "../../images/profile-circle-svgrepo-com.svg";
 import menuLogo from "../../images/menu-fries-svgrepo-com.svg";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Menu = (props) => {
   const menuRef = useRef();
   const guideRef = useRef();
+  const [guideButton,setGuideButton] = useState(false);
 
   const toggleMenu = () => {
     if (menuRef.current.style.height == "350px") {
@@ -20,44 +22,77 @@ const Menu = (props) => {
   };
 
   const toggleGuide = () => {
-    if (guideRef.current.style.height == "350px") {
+    if (guideRef.current.style.height == "260px") {
       guideRef.current.style.height = "0px";
       guideRef.current.style.borderBottom = "0px";
+      if (!props.scrolledDown) {
+        setGuideButton(false)
+      }
     } else {
-      guideRef.current.style.height = "350px";
+      guideRef.current.style.height = "260px";
       guideRef.current.style.borderBottom = "1px solid rgb(209, 213, 219)";
+      if (!props.scrolledDown) {
+        setGuideButton(true)
+      }
     }
   };
 
   //hadi => className={props.scrolledDown ? styles.true:styles.false}
 
   return (
-    <header className={styles.Header} id="headerId">
+    <header
+      className={props.scrolledDown ? styles.Header : styles.HeaderTop}
+      id="headerId"
+    >
       <div className={styles.LogoDiv}>
-        <a className={styles.Maham} >
+        <a className={styles.Maham}>
           <span className={styles.LogoAndTitle}>
-            <img className={styles.Logo} src={logo} />
-            <h1 className={styles.Title}>MAHAM</h1>
+            {props.scrolledDown && <img className={styles.Logo} src={logo} />}
+            {!props.scrolledDown && (
+              <img className={styles.Logo2} src={whiteLogo} />
+            )}
+            <h1 className={props.scrolledDown ? styles.Title : styles.TitleTop}>
+              MAHAM
+            </h1>
           </span>
         </a>
       </div>
       <div className={styles.menuLittle}>
-        <div className={styles.underline}>
-          <a id="menuItemsId1">Home</a>
+        <div
+          className={
+            props.scrolledDown ? styles.underline : styles.underlineTop
+          }
+        >
+          <a className={styles.aTag}>Home</a>
         </div>
-        <div className={styles.underline}>
-          <a id="menuItemsId2">MEI</a>
+        <div
+          className={
+            props.scrolledDown ? styles.underline : styles.underlineTop
+          }
+        >
+          <a className={styles.aTag}>MEI</a>
         </div>
-        <div className=
-        {`${styles.GuideBtn} ${styles.underline} `} >
-          <a onMouseEnter={toggleGuide} onMouseLeave={toggleGuide} id="menuItemsId3">
+        <div
+          className={
+            props.scrolledDown ? styles.underline : styles.underlineTop
+          }
+        >
+          <a
+            className={props.scrolledDown ? styles.aTag : guideButton ? styles.aTagEspiHover:styles.aTagEspi}
+            onMouseEnter={toggleGuide}
+            onMouseLeave={toggleGuide}
+          >
             Guide
           </a>
         </div>
       </div>
       <div className={styles.HeadBtn}>
-        <button className={styles.ContactBtn} id="contactUsId">Contact us</button>
-        <button className={styles.LogInBtn} id="logInId">Log In</button>
+        <button className={styles.ContactBtn} id="contactUsId">
+          Contact us
+        </button>
+        <button className={styles.LogInBtn} id="logInId">
+          Log In
+        </button>
         {/* <div className={styles.ProfileDiv} id="profileId">
           <img src={profileLogo} className={styles.ProfileIcon} />
           <img

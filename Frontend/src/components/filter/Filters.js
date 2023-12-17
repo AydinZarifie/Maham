@@ -1,4 +1,4 @@
-import styles from "../../styles/homePage.module.css";
+import styles from "../../styles/preferences.module.css";
 
 import data from "../../dummyData/newFilterData";
 
@@ -36,9 +36,8 @@ const Filters = (props) => {
   };
 
   return (
-    <form
+    <div
       className={props.admin ? `${styles.FilterAdmin}` : `${styles.Filter}`}
-      method="post"
     >
       <div>
         <button
@@ -82,7 +81,7 @@ const Filters = (props) => {
           ❯
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
