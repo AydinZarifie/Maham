@@ -150,6 +150,9 @@ const HomePage = () => {
       setFilters(json.data);
     };
     fetchFilterData();
+    if (window.innerWidth < 820) {
+      setScrolledDown(true);
+    }
     const handleScroll = () => {
       const size = document.getElementById("container2");
       if (window.scrollY + 178 > size.offsetTop) {
@@ -157,10 +160,18 @@ const HomePage = () => {
       }
     };
 
+    const handleResize=()=>{
+      if (window.innerWidth < 830) {
+        setScrolledDown(true);
+      }
+    }
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleResize);
     };
   }, [filters, estates]);
 

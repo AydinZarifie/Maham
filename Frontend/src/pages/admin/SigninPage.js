@@ -151,11 +151,13 @@ const Signin = () => {
         const firstname = data.adminData.firstName;
         const lastname = data.adminData.lastName;
         const type = data.adminData.adminType;
+        const email=data.adminData.email;
 
         // const csrf = data.csrfToken;
         encodeAndStoreInCookies("token", token);
         encodeAndStoreInLocalStorage("firstname", firstname);
         encodeAndStoreInLocalStorage("lastname", lastname);
+        encodeAndStoreInLocalStorage("email", email);
         encodeAndStoreInCookies("type", type);
         // localStorage.setItem("type", type);
         // Cookies.set("csrfToken", csrf);

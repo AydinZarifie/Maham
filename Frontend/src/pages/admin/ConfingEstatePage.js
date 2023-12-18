@@ -32,10 +32,11 @@ import warningIcon from "../../images/warning-attention-svgrepo-com.svg";
 import deleteIcon2 from "../../images/delete-2-svgrepo-com2.svg";
 import editIcon from "../../images/edit-pencil-line-01-svgrepo-com.svg";
 
-/////////////////////web3///////////////////////
+/////////////////////web3/////////////////////
 import { mint, burn } from "../web3/MHM2023";
 import { ethers } from "ethers";
-///////////////////////////////////////////////
+import { retrieveAndDecodeInLocalStorage } from "../../util/auth";
+//////////////////////////////////////////
 const ConfingEstate = ({ method, estate }) => {
   const [loading, setLoading] = useState(false);
 
@@ -60,6 +61,7 @@ const ConfingEstate = ({ method, estate }) => {
 
   const scrollToError = () => {
     const errorElement = document.querySelector(`.${styles.invalid}`);
+    console.log(errorElement);
     if (errorElement) {
       errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -602,23 +604,25 @@ const ConfingEstate = ({ method, estate }) => {
     if (!signers._address) {
       //show error please connect or install your metamask
     }
+    
 
     const formData = new FormData();
     const address = await signers.getAddress();
     formData.append("wallet",address);
-    //set admin email wallet in formdata
+    formData.append("email",retrieveAndDecodeInLocalStorage("email"))
 
     const res = await fetchInstance("/admin/auth/authorizeAdmin", {
       method: 'POST',
       body: formData,
     });
+    
     if(res.status==400 || res.staus==403){
       //show error
     }
 
     setLoading(true);
 
-    setTouched({
+    await setTouched({
       title: true,
       countryName: true,
       cityName: true,
