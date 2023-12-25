@@ -2,10 +2,10 @@ import styles from "../../styles/preferences.module.css";
 
 import serachIcon from "../../images/search-svgrepo-com.svg";
 import filterIcon from "../../images/filter-alt-2-svgrepo-com (4).svg";
-import whiteSearchIcon from "../../images/search-white-svgrepo-com.svg"
+import whiteSearchIcon from "../../images/search-white-svgrepo-com.svg";
 
 import Filters from "../filter/Filters";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MultiRangeSlider from "../multiRangeSlider/MultiRangeSlider";
 
 const Preferences = (props) => {
@@ -24,43 +24,43 @@ const Preferences = (props) => {
   const CityFilterDivRef = useRef();
   const PriceFilterDivRef = useRef();
 
-  const toggleFilter = () => {
-    if (filterIsOpen) {
-      setFilterIsOpen(false);
-      CircleFilterRef.current.style.width = "320px";
-      CircleFilterRef.current.style.height = "40px";
-      CircleFilterRef.current.style.fontSize = ".9rem";
+  const openFilter = () => {
+    setFilterIsOpen(true);
+    CircleFilterRef.current.style.width = "72%";
+    CircleFilterRef.current.style.height = "52px";
+    CircleFilterRef.current.style.fontSize = "1rem";
 
-      OpenFilterRef.current.style.height = "00px";
-      OpenFilterRef.current.style.borderBottom = "0px solid rgb(209, 213, 219)";
+    OpenFilterRef.current.style.height = "90px";
+    OpenFilterRef.current.style.borderBottom = "none";
 
-      SearchCircleRef.current.style.minWidth = "35px";
-      SearchCircleRef.current.style.maxWidth = "35px";
-      SearchCircleRef.current.style.minHeight = "35px";
-      SearchCircleRef.current.style.maxHeight = "35px";
+    SearchCircleRef.current.style.minWidth = "47px";
+    SearchCircleRef.current.style.maxWidth = "47px";
+    SearchCircleRef.current.style.minHeight = "47px";
+    SearchCircleRef.current.style.maxHeight = "47px";
+  };
 
-      CountryFilterDivRef.current.style.height = "0px";
-      CountryFilterDivRef.current.style.border = "0px solid #ffffff";
+  const closeFilter = () => {
+    setFilterIsOpen(false);
+    CircleFilterRef.current.style.width = "320px";
+    CircleFilterRef.current.style.height = "40px";
+    CircleFilterRef.current.style.fontSize = ".9rem";
 
-      CityFilterDivRef.current.style.height = "0px";
-      CityFilterDivRef.current.style.border = "0px solid #ffffff";
+    OpenFilterRef.current.style.height = "00px";
+    OpenFilterRef.current.style.borderBottom = "0px solid rgb(209, 213, 219)";
 
-      PriceFilterDivRef.current.style.height = "0px";
-      PriceFilterDivRef.current.style.border = "0px solid #ffffff";
-    } else {
-      setFilterIsOpen(true);
-      CircleFilterRef.current.style.width = "72%";
-      CircleFilterRef.current.style.height = "52px";
-      CircleFilterRef.current.style.fontSize = "1rem";
+    SearchCircleRef.current.style.minWidth = "35px";
+    SearchCircleRef.current.style.maxWidth = "35px";
+    SearchCircleRef.current.style.minHeight = "35px";
+    SearchCircleRef.current.style.maxHeight = "35px";
 
-      OpenFilterRef.current.style.height = "90px";
-      OpenFilterRef.current.style.borderBottom = "none";
+    CountryFilterDivRef.current.style.height = "0px";
+    CountryFilterDivRef.current.style.border = "0px solid #ffffff";
 
-      SearchCircleRef.current.style.minWidth = "47px";
-      SearchCircleRef.current.style.maxWidth = "47px";
-      SearchCircleRef.current.style.minHeight = "47px";
-      SearchCircleRef.current.style.maxHeight = "47px";
-    }
+    CityFilterDivRef.current.style.height = "0px";
+    CityFilterDivRef.current.style.border = "0px solid #ffffff";
+
+    PriceFilterDivRef.current.style.height = "0px";
+    PriceFilterDivRef.current.style.border = "0px solid #ffffff";
   };
 
   const toggleCountryFilter = () => {
@@ -96,12 +96,29 @@ const Preferences = (props) => {
     CityFilterDivRef.current.style.border = "0px solid #ffffff";
   }
 
+  let counter = 0;
+
+  const handleScroll = () => {
+    counter++;
+    if (counter == 60) {
+      closeFilter();
+      counter=0;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <div className={styles.Filtering}>
         <Filters filters={props.filters} admin={false} />
 
-        <button className={styles.FilterandSearchBtn} onClick={toggleFilter}>
+        <button className={styles.FilterandSearchBtn} onClick={openFilter}>
           <img src={filterIcon} className={styles.FilterAndSearchIcn} />
         </button>
       </div>
@@ -226,15 +243,12 @@ const Preferences = (props) => {
             className={styles.SearchCircle}
             ref={SearchCircleRef}
           >
-            <img
-              src={whiteSearchIcon}
-              className={styles.SearchIcon}
-            />
+            <img src={whiteSearchIcon} className={styles.SearchIcon} />
           </span>
         </div>
       </div>
       {filterIsOpen && (
-        <div className={styles.OverlayFilter} onClick={toggleFilter}></div>
+        <div className={styles.OverlayFilter} onClick={closeFilter}></div>
       )}
 
       {/* <div className={styles.test}></div> */}

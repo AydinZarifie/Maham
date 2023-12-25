@@ -708,7 +708,7 @@
     bottom: 3%;
     width: 85%;
     background-color: #ffffff;
-    z-index: 1001;
+    z-index: 1004;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
@@ -1597,7 +1597,7 @@
   left: 0;
   background-color: #00000035;
   backdrop-filter: blur(1px);
-  z-index: 1000;
+  z-index: 1003;
   overflow: auto;
 }
 .GalleryMain {
@@ -1805,7 +1805,7 @@
   left: 0;
   background-color: #0000005c;
   backdrop-filter: blur(1px);
-  z-index: 999;
+  z-index: 1002;
   overflow: auto;
 }
 
@@ -1823,7 +1823,7 @@
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   gap: 14px;
   padding: 42px 0 24px 0;
-  z-index: 1000;
+  z-index: 1003;
   /* height: 200px; */
 }
 .PMDescription p {
@@ -1860,7 +1860,7 @@
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   gap: 14px;
   padding: 42px 0 24px 0;
-  z-index: 1000;
+  z-index: 1003;
 }
 .ApproverDescription span {
   display: flex;
@@ -2524,14 +2524,14 @@
 
 /* buy menu  */
 
-.BuyMenu {
+/* .BuyMenu {
   position: fixed;
-  top: 66px;
+  top: 65px;
   width: 100%;
   height: 0px;
   border-bottom: 0px solid rgb(209, 213, 219);
   background-color: white;
-  z-index: 99;
+  z-index: 1000;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2539,7 +2539,7 @@
   overflow: auto;
   transition: .3s;
   
-}
+} */
 /* Hide scrollbar for Chrome, Safari and Opera */
 .BuyMenu::-webkit-scrollbar {
   display: none;
@@ -2560,6 +2560,7 @@
 
 
 @media (min-width: 1000px) {
+
   .BuyMenuBody{
     width: 73%;
     display: flex;
@@ -2773,8 +2774,41 @@
     height: 20px;
   }
 }
-
+@media (min-width: 770px) {
+  .BuyMenu {
+    position: fixed;
+    top: 65px;
+    width: 100%;
+    height: 0px;
+    border-bottom: 0px solid rgb(209, 213, 219);
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    transition: .3s;
+    
+  } 
+}
 @media (max-width: 770px) {
+  .BuyMenu {
+    position: fixed;
+    top: 66px;
+    width: 100%;
+    height: 0px;
+    border-bottom: 0px solid rgb(209, 213, 219);
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    transition: .3s;
+    
+  }
   .BuyMenuBody{
     width: 97%;
     display: flex;

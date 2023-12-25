@@ -1,17 +1,14 @@
-
-
-
-.GetStartedBtn{
+.GetStartedBtn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:center ;
+  justify-content: center;
   text-decoration: none;
-  min-width: 150px;
-  margin-top:25%;
-  width: 32%;
-  height: 40px;
-  background-color: #ff0000;
+  min-width: 170px;
+  margin-top: 14%;
+  width: 29%;
+  height: 48px;
+  background-color: #d90000;
   border-radius: 60px;
   border: none;
   color: #ffffff;
@@ -26,15 +23,6 @@
     rgba(255, 64, 64, 0.237) 0px 0px 0px 1px;
   transform: translateY(1px);
 }
-
-
-
-
-
-
-
-
-
 
 .selectDiv {
   width: 82%;
@@ -53,7 +41,6 @@
   width: 100%;
 }
 
-
 .underline a {
   cursor: pointer;
   text-decoration: none;
@@ -67,7 +54,6 @@
 }
 .underline:hover a {
   color: #7b7b7b;
-  
 }
 
 .underline > a {
@@ -201,7 +187,8 @@
     font-size: 2.5rem;
     font-weight: 400;
     width: 70%;
-    min-width: 350px;
+    min-width: 450px;
+    line-height: 1.4;
   }
 
   .Sloganh4 {
@@ -209,9 +196,9 @@
     color: #ffffff;
     font-weight: 200;
     width: 68%;
-    min-width: 300px;
+    min-width: 450px;
     line-height: 2.2;
-    
+    margin-top: 50px;
   }
   .Sloganh4Div {
     width: 100%;
@@ -219,9 +206,13 @@
   }
 
   .ForHidden {
-   
     display: block;
-    margin-top: -65.8px;
+    margin-top: -100px;
+    /*  */
+    position: fixed;
+    z-index: 999;
+
+    /*  */
   }
 }
 @media (max-width: 820px) {
@@ -836,7 +827,6 @@
     font-size: 1.5rem;
     display: block;
   }
- 
 
   .FilterAdmin {
     display: flex;
@@ -860,7 +850,6 @@
     font-size: 1.5rem;
     display: none;
   }
-
 
   /*  Filter Div  */
   .row3 {
@@ -1015,8 +1004,6 @@
 .ImgDiv {
   width: 100%;
   overflow: hidden;
-
-
 }
 .Image {
   object-fit: cover;
@@ -1025,19 +1012,20 @@
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 780px;
+  height: 100%;
+  position: fixed;
   aspect-ratio: 4/2;
   filter: brightness(25%);
- 
+  animation: myColorChange 2s linear infinite;
 }
 /*  slogan  */
 .SloganDiv {
   opacity: 0;
 }
 .SloganDiv2 {
-  position: absolute;
+  position: fixed;
   top: -200px;
-  margin-left:30px;
+  margin-left: 6%;
   width: 42%;
   transition: all 2s ease-in-out;
 }
@@ -1505,7 +1493,6 @@
   gap: 4px;
   white-space: nowrap;
   overflow-x: scroll;
- 
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .InfoH4Limit65::-webkit-scrollbar {
@@ -1534,24 +1521,23 @@
   color: #2d2d2d;
 }
 
-.LikeIcon{
+.LikeIcon {
   position: absolute;
   width: 23px;
   height: 23px;
   z-index: 98;
   right: 12px;
-  top:12px;
-  transition: .3s;
+  top: 12px;
+  transition: 0.3s;
   cursor: pointer;
-  opacity: .7;
+  opacity: 0.7;
 }
-.LikeIcon:hover{
+.LikeIcon:hover {
   transform: scale(1.03);
-  opacity: .9;
+  opacity: 0.9;
 }
 
-
-.BedroomIcon{
+.BedroomIcon {
   width: 18px;
-  opacity: .6;
+  opacity: 0.6;
 }

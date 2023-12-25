@@ -153,11 +153,19 @@ const HomePage = () => {
     if (window.innerWidth < 820) {
       setScrolledDown(true);
     }
+    if(!scrolledDown){
+        document.body.style.overflow='hidden'
+    }else{
+      document.body.style.overflow=''
+    }
     const handleScroll = () => {
       const size = document.getElementById("container2");
-      if (window.scrollY + 178 > size.offsetTop) {
-        setScrolledDown(true);
-      }
+
+      
+     
+      // if (window.scrollY +130 > size.offsetTop) {
+      //   setScrolledDown(true);
+      // }
     };
 
     const handleResize=()=>{
@@ -173,7 +181,7 @@ const HomePage = () => {
       window.removeEventListener("scroll", handleScroll);
       window.addEventListener("resize", handleResize);
     };
-  }, [filters, estates]);
+  }, [filters, estates,scrolledDown]);
 
   const submitSearch = async (searchPhrase) => {
     const formData = new FormData();
@@ -224,7 +232,7 @@ const HomePage = () => {
         submitFilterSearch={submitFilterSearch}
       /> */}
       <Menu scrolledDown={scrolledDown} />
-      {scrolledDown ? null : <Slogan />}
+      {scrolledDown ? null : <Slogan onClicked={()=>setScrolledDown(true)} />}
       <Preferences
         clickHandlerForSearchShown={toggleSearchShown}
         clickHandlerForFilterShown={toggleFilterShown}

@@ -37,7 +37,7 @@ const Filters = (props) => {
 
   return (
     <div
-      className={props.admin ? `${styles.FilterAdmin}` : `${styles.Filter}`}
+      className={props.admin ? `${styles.Filter}` : `${styles.Filter}`}
     >
       <div>
         <button

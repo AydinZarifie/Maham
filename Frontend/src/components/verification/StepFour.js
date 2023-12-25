@@ -27,8 +27,7 @@ const StepFour = (props) => {
     <div className={styles.VerificationDiv}>
       {props.alert && (
         <Alert
-          lineColor="#0aff0e"
-          img={trueLogo}
+          success={true}
           title="Success!"
           detail="Your work has been successfully completed and your information has been saved"
           closeHandler={() => {

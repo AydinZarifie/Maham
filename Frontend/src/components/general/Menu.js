@@ -22,14 +22,14 @@ const Menu = (props) => {
   };
 
   const toggleGuide = () => {
-    if (guideRef.current.style.height == "260px") {
+    if (guideRef.current.style.height == "280px") {
       guideRef.current.style.height = "0px";
       guideRef.current.style.borderBottom = "0px";
       if (!props.scrolledDown) {
         setGuideButton(false)
       }
     } else {
-      guideRef.current.style.height = "260px";
+      guideRef.current.style.height = "280px";
       guideRef.current.style.borderBottom = "1px solid rgb(209, 213, 219)";
       if (!props.scrolledDown) {
         setGuideButton(true)
@@ -57,7 +57,11 @@ const Menu = (props) => {
           </span>
         </a>
       </div>
-      <div className={styles.menuLittle}>
+      <div 
+        className={
+          props.scrolledDown ? styles.menuLittle : styles.menuLittleTop
+        }>
+        
         <div
           className={
             props.scrolledDown ? styles.underline : styles.underlineTop
@@ -105,7 +109,10 @@ const Menu = (props) => {
       </div>
 
       <div
-        className={styles.Guide}
+       
+        className={
+          props.scrolledDown ? styles.Guide : styles.GuideTop
+        }
         onMouseEnter={toggleGuide}
         onMouseLeave={toggleGuide}
         onmousemove="ShowGuide()"

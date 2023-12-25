@@ -1,6 +1,3 @@
-
-
-
 .underlineTop .aTag {
   cursor: pointer;
   text-decoration: none;
@@ -11,17 +8,16 @@
   font-weight: 300;
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   font-size: 1em;
-  padding:  12px 13px 22px 13px;
+  padding: 12px 13px 22px 13px;
+
   border-radius: 8px 8px 0 0;
-  transition: .3s;
-
+  transition: 0.3s;
 }
-.underlineTop .aTag:hover{
-  color: #d7d7d7;
+.underlineTop .aTag:hover {
+  color: #9f9f9f;
 }
 
-
-.underlineTop .aTagEspi{
+.underlineTop .aTagEspi {
   cursor: pointer;
   text-decoration: none;
   outline: none;
@@ -31,15 +27,12 @@
   font-weight: 300;
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   font-size: 1em;
-  padding:  12px 13px 22px 13px;
+  padding: 12px 13px 22px 13px;
   border-radius: 8px 8px 0 0;
-  transition: .2s;
+  transition: 0.2s;
 }
 
-
-
-
-.underlineTop .aTagEspiHover{
+.underlineTop .aTagEspiHover {
   cursor: pointer;
   text-decoration: none;
   outline: none;
@@ -49,9 +42,9 @@
   /* font-weight: 300; */
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   font-size: 1em;
-  padding:  12px 13px 22px 13px;
+  padding: 12px 13px 27px 13px;
   border-radius: 8px 8px 0 0;
-  transition: .2s;
+  transition: 0.2s;
 
   background-color: #ffffff;
   color: #ff0000;
@@ -73,7 +66,7 @@
 .aTagEspiHover:after {
   /* right: -20px; */
   margin-left: 13px;
-  top: 57px;
+  top: 75px;
   border-radius: 0 0 0 10px;
   -moz-border-radius: 0 0 0 10px;
   -webkit-border-radius: 0 0 0 10px;
@@ -85,7 +78,7 @@
 .aTagEspiHover:before {
   /* left: -20px; */
   margin-left: -32px;
-  top: 57px;
+  top: 75px;
   border-radius: 0 0 10px 0;
   -moz-border-radius: 0 0 10px 0;
   -webkit-border-radius: 0 0 10px 0;
@@ -93,8 +86,6 @@
   -webkit-box-shadow: 10px 0 0 0 #ffffff;
   box-shadow: 10px 0 0 0 #ffffff;
 }
-
-
 
 @media (min-width: 820px) {
   .LogoDiv {
@@ -118,7 +109,7 @@
   .LogInBtn {
     width: 110px;
     height: 37px;
-    background-color: #FF0000;
+    background-color: #ff0000;
     border-radius: 60px;
     border: none;
     color: #ffffff;
@@ -139,7 +130,6 @@
     font-weight: 300;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     font-size: 1em;
-    
   }
   .underline:hover a {
     color: #4f4f4f;
@@ -166,20 +156,38 @@
     flex-direction: row;
     align-items: center;
     position: absolute;
-    width:calc(100% - 60px);
-    margin-left: 30px;
-    border-radius:10px ;
+    width: 100%;
+    /* margin-left: 30px; */
+    border-radius: 0 0 10px 10px;
     height: 0px;
     background-color: #ffffff;
-    top: 66px;
+    top: 67px;
     border-bottom: 0px solid rgb(255, 255, 255);
     overflow-x: scroll;
     overflow-y: hidden;
     z-index: 2;
     transition: 0.3s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   }
 
-
+  .GuideTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: calc(100% - 60px);
+    margin-left: 30px;
+    border-radius: 10px;
+    height: 0px;
+    background-color: #ffffff;
+    top: 85px;
+    border-bottom: 0px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    z-index: 2;
+    transition: 0.3s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
 
   .GuideSection {
     display: flex;
@@ -187,8 +195,9 @@
     align-items: center;
     border-right: 2px dashed #ef405773;
     width: 25%;
-    height: 80%;
+    height: 60%;
     gap: 15px;
+    padding: 30px;
   }
   .GuideSection:first-child {
     border-right: none;
@@ -197,11 +206,12 @@
     border-right: none;
   }
   .GuideSection h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #292929;
     margin: 0;
     font-weight: 700;
-    width: 80%;
+    width: 85%;
+    margin-bottom: 10px;
   }
   .GuideSection h4 {
     color: #545454;
@@ -211,7 +221,7 @@
     padding: 3px 6px;
     border-radius: 6px;
     transition: 0.3s;
-    width: 80%;
+    width: 85%;
     background-color: #ffffff;
     line-height: 2;
   }
@@ -243,7 +253,7 @@
     background-color: #ffffff;
     border-radius: 60px;
     border: none;
-    color:  #ff0000;
+    color: #d90000;
     cursor: pointer;
     font-size: 0.75rem;
     transition: 0.4s;
@@ -254,7 +264,7 @@
   .LogInBtn {
     width: 80px;
     height: 37px;
-    background-color: #FF0000;
+    background-color:#d90000;
     border-radius: 60px;
     border: none;
     color: #ffffff;
@@ -277,7 +287,6 @@
   }
   .underline:hover a {
     color: #4f4f4f;
-   
   }
 
   .underline > a {
@@ -308,7 +317,22 @@
     border-bottom: 1px solid rgb(255, 255, 255);
     overflow-x: scroll;
     z-index: 2;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    transition: 0.3s;
+  }
+  .GuideTop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background-color: #ffffff;
+    top: 67px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    overflow-x: scroll;
+    z-index: 2;
+    overflow-y: scroll;
     transition: 0.3s;
   }
   .GuideSection {
@@ -321,7 +345,7 @@
     /* gap: 15px; */
   }
   .GuideSection:first-child {
-    border-right: none;
+    border-bottom: none;
   }
   .GuideSection:last-child {
     border-bottom: none;
@@ -435,7 +459,7 @@
     background-color: #ffffff;
     border-radius: 6px;
     border: none;
-    color:  #ff0000;
+    color: #d90000;
     cursor: pointer;
     font-size: 0.6rem;
     transition: 0.4s;
@@ -447,7 +471,7 @@
   .LogInBtn {
     width: 60px;
     height: 34px;
-    background-color: #FF0000;
+    background-color: #d90000;
     border-radius: 6px;
     border: none;
     color: #ffffff;
@@ -496,21 +520,23 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  transition: 0.3s;
 }
 .HeaderTop {
   width: 100%;
   position: sticky;
   top: 0px;
-  height: 65.8px;
+  height: 100px;
   border-bottom: 0px solid rgb(209, 213, 219);
-  z-index: 999;
-  background-color:#ffffff00;
+  z-index: 9999;
+  background-color: #ffffff00;
   backdrop-filter: blur(4px);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  transition: 0.3s;
 }
 .Maham {
   text-decoration: none;
@@ -553,14 +579,14 @@
   padding-right: 5px;
 }
 
-.menuLittle {
+/* .menuLittle {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-top: 3px;
-}
-
-
+  justify-content: space-around;
+  width: 35%;
+} */
 
 /* .HeadBtn{
     display: flex;
@@ -654,6 +680,16 @@
   scrollbar-width: none; /* Firefox */
 }
 
+.GuideTop::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.GuideTop {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 /* .GuideSection {
     display: flex;
     flex-direction: column;
@@ -688,14 +724,10 @@
 
 .diffrentGuide {
   background-color: #ef405762;
-  padding: 10px ;
   border-radius: 6px;
-  margin: 0  20px ;
-  
+  margin: 0 20px;
 }
-.diffrentGuide h3 {
-  color: #ffffff;
-}
+
 .diffrentGuide h4 {
   color: #ffffff;
   background-color: #ef405708;
@@ -1185,7 +1217,26 @@
   white-space: nowrap;
 }
 
-@media (min-width: 970px) {
+@media (min-width: 800px) {
+  .menuLittle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 3px;
+    justify-content: space-around;
+    width: 28%;
+    transition: .3s;
+  }
+
+  .menuLittleTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 3px;
+    justify-content: space-around;
+    width: 35%;
+    transition: .3s;
+  }
   .EthPrice {
     width: 110px;
     height: 37px;
@@ -1199,7 +1250,21 @@
     gap: 3px;
   }
 }
-@media (max-width: 970px) {
+@media (max-width: 800px) {
+  .menuLittle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 3px;
+    transition: .3s;
+  }
+  .menuLittleTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 3px;
+    transition: .3s;
+  }
   .EthPrice {
     display: none;
   }

@@ -1,22 +1,11 @@
-html {
-    font-family: "Inter", sans-serif;
-    font-size: 100%;
-    background-color: white;
-    scroll-behavior: smooth;
-  }
-  body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
+
   .Header {
     width: 100%;
     position: sticky;
     top: 0px;
     height: 65.8px;
     border-bottom: 1px solid rgb(209, 213, 219);
-    z-index: 999;
+    z-index: 1001;
     background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: row;
@@ -40,6 +29,7 @@ html {
     top: 7px;
   }
   .Maham {
+    font-family: "sans-serif";
     text-decoration: none;
     color: #252525;
   }
@@ -133,14 +123,14 @@ html {
     }
   
     .OverlayFilter {
-      display: none;
+      /* display: none; */
       width: 100%;
       height: 100%;
       position: fixed;
       top: 0;
       left: 0;
       background-color: #0000004e;
-      z-index: 0;
+      z-index: 99;
     }
   }
   @media (max-width: 1000px) {
@@ -178,7 +168,7 @@ html {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      width: 90%;
+      width: 93%;
       gap: 15px;
     }
   }
@@ -514,7 +504,7 @@ html {
   
   .InputDiv {
     width: 100%;
-    display: none;
+    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 5px;
@@ -524,7 +514,7 @@ html {
   
   .InputDivCity {
     width: 100%;
-    display: none;
+    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 5px;

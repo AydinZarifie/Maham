@@ -4,6 +4,7 @@ html {
   background-color: white;
   scroll-behavior: smooth;
 }
+
 body {
   width: 100%;
   margin: 0;
@@ -170,13 +171,13 @@ body {
   border-left: 0.5px solid #cfcfcf;
   border-right: 0.5px solid #cfcfcf;
 }
-.DeleteAndEditDiv{
+.DeleteAndEditDiv {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
 }
-.Section2Head{
+.Section2Head {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -202,20 +203,21 @@ body {
   background-color: #f6f6f6;
 }
 .title {
+  width: calc(100% - 40px);
+  text-align: center;
   font-size: 1rem;
   min-width: 70px;
   white-space: nowrap;
-  max-width: 90px;
   color: #5a5a5a;
 }
 .DeleteIcon {
   width: 26px;
   height: 26px;
   cursor: pointer;
- transition: .3s;
+  transition: 0.3s;
 }
-.DeleteIcon:hover{
-transform: scale(1.05);
+.DeleteIcon:hover {
+  transform: scale(1.05);
 }
 
 /* .LocSection{
@@ -249,7 +251,7 @@ transform: scale(1.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 1px solid #cfcfcf
+  border-right: 1px solid #cfcfcf;
 }
 
 .InputDiv {
@@ -263,19 +265,25 @@ transform: scale(1.05);
   transition: 0.3s;
   margin-bottom: 5px;
 }
-.InputDivUnique{
+.InputDivUnique {
   width: 92%;
+
+  height: 45px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 5px;
-  height: 0px;
-  overflow: hidden;
   transition: 0.3s;
   margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cfcfcf;
+  position: sticky;
+  top: 85px;
+  background-color: #ffffff;
+  z-index: 2;
 }
 
-.ImportBtn  {
+.ImportBtn {
   width: 34px;
   height: 34px;
   border-radius: 6px;
@@ -294,7 +302,7 @@ transform: scale(1.05);
   background-color: #f6f6f6;
 }
 
-.InputDivHead{
+.InputDivHead {
   width: 92%;
   display: flex;
   flex-direction: row;
@@ -363,7 +371,7 @@ transform: scale(1.05);
   width: 70px;
   height: 34px;
   border-radius: 6px;
-  font-size: .8rem;
+  font-size: 0.8rem;
   background-color: #fff;
   border: 1px solid #cdcdcd;
   color: #5a5a5a;
@@ -379,12 +387,12 @@ transform: scale(1.05);
 }
 .EditIcon {
   width: 28px;
-  height: 28px; 
-cursor: pointer;
- transition: .3s;
+  height: 28px;
+  cursor: pointer;
+  transition: 0.3s;
 }
-.EditIcon:hover{
-transform: scale(1.05);
+.EditIcon:hover {
+  transform: scale(1.05);
 }
 
 .LocationEdit {
