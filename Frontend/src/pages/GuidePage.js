@@ -35,7 +35,7 @@ const GuidePage = () => {
 
   return (
     <>
-      <Menu />
+      <Menu scrolledDown={true} />
       <div className={styles.SideMenu} ref={SideMenuRef} id="SideMenuId">
         <div className={styles.OCDiv}>
           <div className={styles.OpenDiv} onClick={toggleMenu} ref={OpenDivRef}>

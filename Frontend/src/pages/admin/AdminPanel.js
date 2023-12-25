@@ -23,7 +23,6 @@ const AdminPanel = () => {
   const navigate = useNavigate();
 
   const closeFilter = () => {
-
     filter.current.style.visibility = "hidden";
     overlay.current.style.visibility = "hidden";
   };
@@ -82,20 +81,20 @@ const AdminPanel = () => {
     const formData = new FormData();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const address =  await signer.getAddress();
-    if(!address){
-      setError("Please connect or install the metamask")
+    const address = await signer.getAddress();
+    if (!address) {
+      setError("Please connect or install the metamask");
     }
-    
-    formData.append('wallet' , address)
- 
+
+    formData.append("wallet", address);
+
     const res = await fetchInstance("/admin/auth/authorizeAdmin", {
-      method: 'POST',
+      method: "POST",
       body: formData,
     });
 
-    if(res.status==400 || res.staus==403){
-      setError("Please connect with admin wallet address")
+    if (res.status == 400 || res.staus == 403) {
+      setError("Please connect with admin wallet address");
     }
     formData.append("email", email);
     formData.append("adminType", type);
@@ -121,31 +120,30 @@ const AdminPanel = () => {
       method: method,
       body: formData,
     });
-  
+
     if (response.ok) {
-
       ///blockchain proccess
-      addAdmin(walletAddress,signer).then(async (res) => {
-        const transactionFormData = new FormData();
-        transactionFormData.append('hash' , res.hash);
-        transactionFormData.append("method", "addAdmin");
-        transactionFormData.append("from", res.from);
-        transactionFormData.append("to", res.to);
-        let dateObject = new Date();
-        let day = dateObject.getDate();
-        let month = dateObject.getMonth();
-        let year = dateObject.getFullYear();
-        let date = year + "/" + (month + 1) + "/" + day;
-        transactionFormData.append("date", date);
+      addAdmin(walletAddress, signer)
+        .then(async (res) => {
+          const transactionFormData = new FormData();
+          transactionFormData.append("hash", res.hash);
+          transactionFormData.append("method", "addAdmin");
+          transactionFormData.append("from", res.from);
+          transactionFormData.append("to", res.to);
+          let dateObject = new Date();
+          let day = dateObject.getDate();
+          let month = dateObject.getMonth();
+          let year = dateObject.getFullYear();
+          let date = year + "/" + (month + 1) + "/" + day;
+          transactionFormData.append("date", date);
 
+          let { response } = await fetchInstance("/admin/transaction", {
+            method: "POST",
+            body: transactionFormData,
+          });
+          //send formdata value for backend --> url(/admin/transaction)
 
-        let { response } = await fetchInstance("/admin/transaction" , {
-          method: "POST",
-          body: transactionFormData,
-        });
-        //send formdata value for backend --> url(/admin/transaction)
-
-          if(response.ok){
+          if (response.ok) {
             setError(null);
             // alert("Admin successfully added");
             setAlert(
@@ -153,10 +151,11 @@ const AdminPanel = () => {
             );
             // navigate("/admin/admins");
           }
-        }).catch(async (err) => {
+        })
+        .catch(async (err) => {
           //show error alert and navigate to adminPanel
           //set fetch again to revert admin information (delete admin)
-          setError("Error");//set error
+          setError("Error"); //set error
           let { response } = await fetchInstance("url", {
             method: "POST",
             headers: {
@@ -166,16 +165,12 @@ const AdminPanel = () => {
               email: email,
             }),
           });
-        })
-        
-     
+        });
     }
     if (response.status == 401) {
       setError("Email or phone number already exists");
     }
-     
 
-    
     //for to length of wallet array and execute addAdmin//
     /*     for(let i=0;i<walletAddress.length;i++){
       const addAdmintTX = await addAdmin(signer , walletAddress[i]);
@@ -238,8 +233,7 @@ const AdminPanel = () => {
     <div className={styles.Main}>
       {alert && (
         <Alert
-          lineColor="#0aff0e"
-          img={trueLogo}
+          sucess={true}
           title="Success!"
           detail={alert}
           closeHandler={() => {

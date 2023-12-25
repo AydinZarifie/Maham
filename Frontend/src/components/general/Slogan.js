@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import sloganPicture from "../../images/modern-business-building-scenery-touching-sky.jpg";
 
-const Slogan = () => {
+const Slogan = (props) => {
   const sloganDiv = useRef(null);
 
   const scrollToEstates=()=>{
@@ -29,7 +29,7 @@ const Slogan = () => {
 
     if (sloganDiv) {
       sloganDiv.current.style.opacity = "1";
-      sloganDiv.current.style.top = "150px";
+      sloganDiv.current.style.top = "21%";
     }
 
     // const handleScroll = () => {
@@ -67,15 +67,19 @@ const Slogan = () => {
               className={`${styles.SloganDiv} ${styles.SloganDiv2}`}
             >
               <h1 className={styles.Sloganh1}>
-                Maham for everyone everywhere at any time
+            Maham for everyone
+            <br></br>
+            everywhere,
+            <br></br>
+            at any time !
               </h1>
               <div className={styles.Sloganh4Div}>
                 <h4 className={styles.Sloganh4}>
-                  Maham Company is developing with the support of the private
-                  sector and will soon change the real estate sales process
+              Maham Company is developing with the support of the private sector
+              and will soon change the real estate sales process
                 </h4>
               </div>
-              <a onClick={scrollToEstates} className={styles.GetStartedBtn} >
+          <a onClick={props.onClicked} className={styles.GetStartedBtn}>
                 Get Started
               </a>
             </div>

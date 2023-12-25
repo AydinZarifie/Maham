@@ -49,15 +49,15 @@ const ConfingEstate = ({ method, estate }) => {
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   const facilityLocationRef = useRef([]);
-  const facilityAddLocationRef=useRef([]);
+  // const facilityAddLocationRef=useRef([]);
 
-  const toggleAddLocation=(index)=>{
-    if( facilityAddLocationRef.current[index].style.height!="45px"){
-      facilityAddLocationRef.current[index].style.height="45px";
-    }else{
-      facilityAddLocationRef.current[index].style.height="0px";
-    }
-  }
+  // const toggleAddLocation=(index)=>{
+  //   if( facilityAddLocationRef.current[index].style.height!="45px"){
+  //     facilityAddLocationRef.current[index].style.height="45px";
+  //   }else{
+  //     facilityAddLocationRef.current[index].style.height="0px";
+  //   }
+  // }
 
   const scrollToError = () => {
     const errorElement = document.querySelector(`.${styles.invalid}`);
@@ -953,7 +953,7 @@ const ConfingEstate = ({ method, estate }) => {
     oldValues[index].input = "";
     console.log(oldValues);
     setFacilityLocation(oldValues);
-    toggleAddLocation(index);
+    // toggleAddLocation(index);
   };
 
   const deleteFromFacilityLocationItems = (index, deletingItem, event) => {
@@ -966,7 +966,7 @@ const ConfingEstate = ({ method, estate }) => {
   };
 
   const editFacilityLocationItem = (index, facilityLocation) => {
-    toggleAddLocation(index);
+    // toggleAddLocation(index);
     setFacilityLocation((prev) => [
       ...prev,
       (prev[index].input = facilityLocation),
@@ -1014,8 +1014,7 @@ const ConfingEstate = ({ method, estate }) => {
       <form method={method} encType="multipart/form-data">
         {deleteConfirmed && (
           <Alert
-            lineColor="#0aff0e"
-            img={trueLogo}
+            success={true}
             title="Success!"
             detail="Estate has been successfully deleted"
             closeHandler={() => {
@@ -1414,17 +1413,16 @@ const ConfingEstate = ({ method, estate }) => {
                       className={locationStyles.DeleteIcon}
                       onClick={() => deleteFromFacilityLocation(item.title)}
                     />
-                    <div className={locationStyles.InputDiv}>
+                    {/* <div className={locationStyles.InputDiv}>
                       <span
                         onClick={(event) =>
                           // addToFacilityLocationItems(index, event)
                           toggleAddLocation(index,event)
                         }
-                        
                       >
                         +
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}
@@ -1433,9 +1431,11 @@ const ConfingEstate = ({ method, estate }) => {
               {facilityLocation.map((parentItem, parentIndex) => (
                 <div className={locationStyles.SectionBody}>
                   <div className={locationStyles.Section}>
-                    <div className={locationStyles.InputDivUnique} ref={(element) =>
-                            (facilityAddLocationRef.current[parentIndex] = element)
-                          }>
+                    <div className={locationStyles.InputDivUnique}
+                    //  ref={(element) =>
+                    //         (facilityAddLocationRef.current[parentIndex] = element)
+                    //       }
+                          >
                       <div className={locationStyles.inputContainer}>
                         <input
                           type="text"
